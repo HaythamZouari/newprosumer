@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Project index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card shadow">
+                   <div class="card-body">
+                       <table class="table shadow">
+                           <thead>
+                           <tr>
+                               <th>Name</th>
+                               <th>Adress</th>
+                               <th>Description</th>
+                               <th>actions</th>
+
+                           </tr>
+                           </thead>
+                           <tbody>
+                           {% for project in projects %}
+                               {% if app.user ==project.user %}
+                                   <tr>
+                                       <td>{{ project.name }}</td>
+                                       <td>{{ project.adress }}</td>
+                                       <td>{{ project.description }}</td>
+                                       <td>
+                                           {% if project.consomation != null and project.finance != null %}
+                                               {% if project.pvgis != null or project.csvProd != null %}
+                                                   <a href="{{ path('rapport',{ 'id':project.id}) }}"><i class="fa fa-file" aria-hidden="true"></i></a>
+                                                   <a href="{{ path('results',{ 'id':project.id}) }}"><i class="fa fa-chart-area" aria-hidden="true"></i></a>
+                                                   {% endif %}
+                                           {% endif %}
+
+                                           <a href="{{ path('project_edit', {'id': project.id}) }}"><i class="fa fa-edit"></i></a>
+                                       </td>
+                                   </tr>
+                               {% endif %}
+                           {% endfor %}
+                           </tbody>
+                       </table>
+                       <br>
+                       <br>
+                       <div >
+                           <a class="btn btn-primary " href="{{ path('project_new') }}">Creer nouveau projet</a>
+                       </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

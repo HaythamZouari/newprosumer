@@ -1,0 +1,1515 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Rapport
+{% endblock %}
+{% block navbartop %}
+{% endblock %}
+{% block header %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row ">
+            <div class="col-xl-12 mb--6 mb-xl-6 ">
+                <div class="card  shadow">
+                    <div class="card-header">
+                        <h1>Hypothèses de la simulation</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {%  if project.csvprod == true %}
+                                <div class="col-xl-12 mb--6 mb-xl-6 ">
+                            {% else %}
+                                    <div class="col-xl-6 mb--6 mb-xl-6 ">
+                            {% endif %}
+
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-bordered ">
+                                        <thead class="thead-light">
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Puissance de la centrale</td>
+                                            <td >{{ puissance_centrale|number_format(3, '.', ' ') }}</td>
+                                            <td>kWc</td>
+                                        </tr>
+                                        <tr>
+                                           <td>Consommation annuelle</td>
+                                            <td>{{ cm_annual |number_format(3, '.', ' ')}}</td>
+                                            <td>kWh</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Transport de l’énergie</td>
+                                            {% if finance.TransportEng == true %}
+                                            <td>Oui</td>
+                                            {% else %}
+                                                <td>Non</td>
+
+                                            {% endif %}
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dégradation</td>
+                                            <td>{{ finance.degradation  }}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            {%  if project.csvprod == false %}
+                                <div class="col-xl-6 mb--6 mb-xl-6 ">
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center table-bordered ">
+                                            <thead class="thead-light">
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Latitude</td>
+                                                <td >{{ lat|number_format(2, '.', ' ') }}</td>
+                                                <td>°</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Longitude</td>
+                                                <td>{{ lon |number_format(2, '.', ' ')}}</td>
+                                                <td>°</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Inclinaison</td>
+                                                <td>{{ incl }}</td>
+                                                <td>°</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Taux des pertes</td>
+                                                <td>{{ loss }}</td>
+                                                <td>°</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Azimut</td>
+                                                <td>{{ azim }}</td>
+                                                <td>°</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="col-xl-12  mb-12 mb-xl-12">
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-bordered">
+                                        <thead class="thead-light">
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Capex</td>
+                                            <td >{{ finance.capex |number_format(3, '.', ' ')}}</td>
+                                            <td>DT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Montant de la dette</td>
+                                            <td>{{ finance.MontantDette |number_format(3, '.', ' ')}}</td>
+                                            <td>DT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Taux d'interet</td>
+                                            <td>{{ finance.TauxInteret }}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Periode de grace</td>
+                                            <td>{{ finance.DelaiGrace }}</td>
+                                            <td>Ans</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Duree de rembourcement </td>
+                                            <td>{{ finance.MaturiteProj }}</td>
+                                            <td>Ans</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Subvention</td>
+                                            <td>{{ finance.Subvention |number_format(0, '.', ' ')}}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tarif souscrit</td>
+                                            <td>{{ typeTarif }}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Duree du projet</td>
+                                            <td>{{ finance.DureeProj }}</td>
+                                            <td>Ans</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Taux d’augmentation du tarif de vente</td>
+                                            <td>{{ finance.AugTarifVende  }}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Taux d’augmentation du tarif d'achat</td>
+                                            <td>{{ finance.AugTarifAchat }}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Taux d’actualisation</td>
+                                            <td>{{ finance.TauxActualisation  }}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mb--6 mb-xl-6">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h1>Récapitulatif du projet</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-8 mb--6 mb-xl-6 ">
+                                <h4 class="text-primary">Récapitulatif énergétique</h4>
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-bordered ">
+                                        <thead class="thead-light">
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Puissance</td>
+                                            <td >{{ puissance_centrale }}</td>
+                                            <td>kWc</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Production PV 25 ans</td>
+                                            <td>{{ prod25ans|number_format(3, '.', ' ') }}</td>
+                                            <td>kWh</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Taux d’autoconsommation</td>
+                                            <td>{{ (T_autoC * 100)|number_format(2, '.', ' ')}}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Taux de couverture :</td>
+                                            <td>{{ (T_couverture * 100) |number_format(2, '.', ' ')}}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Taux de l’énergie cédée :</td>
+                                            <td>{{ (T_cedee  * 100)|number_format(2, '.', ' ')}}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Productible :</td>
+                                            <td>{{ productible|number_format(2, '.', ' ') }}</td>
+                                            <td>kWh/kWc</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h4 class="text-primary">Récapitulatif financier</h4>
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-bordered ">
+                                        <thead class="thead-light">
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>CAPEX</td>
+                                            <td >{{ finance.capex }}</td>
+                                            <td>DT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Subvention</td>
+                                            <td>{{ finance.subvention |number_format(0, '.', ' ')}}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>O&M </td>
+                                            <td>{{ finance.opex }}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Annuite :</td>
+                                            <td>{{ finance.annuite|number_format(3, '.', ' ') }}</td>
+                                            <td>DT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Facture de regularisation :</td>
+                                            {% if f_r ==0 %}
+                                            <td>{{ f_r }}</td>
+                                            {% else %}
+                                            <td>{{ f_r|number_format(3, '.', ' ') }}</td>
+                                            {% endif %}
+                                            <td>DT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cout du projet sur 25 ans :</td>
+                                            <td>{{ coutproj|number_format(3, '.', ' ') }}</td>
+                                            <td>DT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>VAN sur 25 ans :</td>
+                                            <td>{{ finance.van|number_format(3, '.', ' ') }}</td>
+                                            <td>DT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>LCOE sur 25 ans :</td>
+                                            <td>{{ lcoe|number_format(3, '.', ' ') }}</td>
+                                            <td>DT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TRI sur les capitaux propres :</td>
+                                            <td>{{ finance.Tricapitaux|number_format(2, '.', ' ') }}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TRI du projet :</td>
+                                            <td>{{ finance.tri25|number_format(2, '.', ' ') }}</td>
+                                            <td>%</td>
+                                        </tr>
+                                        <tr>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h4 class="text-primary">Récapitulatif des émissions des gaz</h4>
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-bordered ">
+                                        <thead class="thead-light">
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Taux de CO2 évité sur 25 ans</td>
+                                            <td >{{ co2evite|number_format(2, '.', ' ') }}</td>
+                                            <td>tep</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="col-xl-4  mb-6 mb-xl-6">
+                                <div class="card shadow">
+                                    <div class="card-blockquote ">
+                                        <h3 class="text-black-50">
+                                            <i class="fa fa-circle" style="font-size:10px" aria-hidden="true"></i> La puissane de la centrale est {{ puissance_centrale|number_format(3, '.', ' ') }} kWc <br><br><br>
+                                            <i class="fa fa-circle" style="font-size:10px" aria-hidden="true"></i>  Le CAPEX du projet est {{ finance.capex }} kDT <br><br><br>
+                                            <i class="fa fa-circle" style="font-size:10px" aria-hidden="true"></i>  Le TRI sur les capitaux propres est {{ finance.Tricapitaux |number_format(2, '.', ' ')}}% <br><br><br>
+                                            <i class="fa fa-circle" style="font-size:10px" aria-hidden="true"></i> Le taux limite de l’énergie Cédée est 30%. <br><br><br>
+                                            <i class="fa fa-circle" style="font-size:10px" aria-hidden="true"></i> Le taux de CO2 évité sur 25 ans est {{ co2evite|number_format(2, '.', ' ') }} tep <br><br><br>
+                                            <i class="fa fa-circle" style="font-size:10px" aria-hidden="true"></i> La subvention de l’FTE est 20 % du CAPEX limitée à 200 kDT.<br><br><br>
+                                            <i class="fa fa-circle" style="font-size:10px" aria-hidden="true"></i> L’autoproducteur facture l’énergie cédée mensuellement par postes horaires.<br><br><br>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mb--6 mb-xl-6">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h1>Analyse Energétique sans centrale photovoltaïque</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-7 mb-6 mb-sm-4">
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-bordered ">
+                                        <thead class="thead-light">
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Consommation annuelle (kWh)
+                                            </td>
+                                            <td>{{ cm_annual|number_format(0, '.', ' ') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tarif Souscrit</td>
+                                            <td>{{ typeTarif }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Facture annuelle (DT)</td>
+                                            <td>{{ facture_annuel|number_format(0, '.', ' ') }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 mb--6 mb-sm-4">
+                                <h4 class="text-primary">Tableau 1 Répartition de la consommation mensuelle</h4>
+                                <div class="table-responsive">
+                                    <table class="table-sm align-items-center table-bordered ">
+                                        <thead class="thead-light">
+                                        <th>
+                                            Consommation
+                                        </th>
+                                        <th>
+                                            Jour
+                                        </th>
+                                        <th>
+                                            Pointe été
+                                        </th>
+                                        <th>
+                                            Pointe Soir
+                                        </th>
+                                        <th>
+                                            Nuit
+                                        </th>
+                                        </thead>
+                                        <tbody>
+                                            {% set i = 0 %}
+                                            {% for month in cmmonth %}
+                                                {% if i != 0 %}
+                                                    <tr>
+                                                        <td>{{ i }}</td>
+                                                        {% for key,post in month %}
+                                                            <td> {{ post|round(3,'floor')|number_format(0, '.', ' ') }}</td>
+                                                        {% endfor %}
+                                                    </tr>
+                                                {% endif %}
+                                                {% set i = i + 1 %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-xl-5 mb-auto mb-xl-4">
+                                <div class="row">
+                                    <div class="col-xl-12 mb-auto mb-xl-4">
+                                        <div class="chart" id="rp_cm"></div>
+                                        <h5 class="text-primary text-center">Figure 1 Répartition de la consommation</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 mb-auto mb-xl-4">
+                                <div class="card shadow">
+                                    <div class="card-body">
+                                        <h4 class="text-black-50">
+                                            Le graphique ci-dessous présente une partie de la consommation (puissance en fonction du temps) du site étudié avec un pas horaire en se basant sur les données de la courbe de charge.
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 mb-auto mb-xl-12">
+                                <div class="chart" id="vh_cm"></div>
+                                <h5 class="text-primary text-center">Figure 2 Variation horaire de la consommation</h5>
+                            </div>
+                            <div class="col-xl-12 mb-auto mb-xl-12">
+                                <h4 class="text-black-50"> Cet histogramme décrit les fréquences des puissances appelés annuellement avec des pas horaires.</h4>
+                                <div class="chart" id="hm_cm"></div>
+                                <h5 class="text-primary text-center"> Figure 3 Histogramme de la consommation</h5>
+                                <h4 class="text-black-50">Ce graphique est le profil moyen journalier mensuel. C’est les variations de la consommation sur les 24h de la journée en se basant sur la courbe de charge et les valeurs de la consommation mensuelle.</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mb--6 mb-xl-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-12 mb--6 mb-xl-4">
+                                <div class="chart" id="heat_cm"></div>
+                                <h5 class="text-primary text-center">Figure 4 Plot Carpet de la consommation</h5>
+                            </div>
+                            <div class="col-xl-12 mb--6 mb-xl-4">
+                                <div class="card shadow">
+                                    <div class="card-body">
+                                        <h4 class="text-black-50">
+                                            Le plot carpet présente en abscisse les jours de l’an et en ordonné les heures de la journée.
+                                            Les variations de couleurs du noir au rouge traduisent les variations
+                                            des puissances appelés du plus faible au plus fort.
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mb--6 mb-xl-6">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h1>Analyse Energétique avec centrale photovoltaïque</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-8 mb--6 mb-sm-4">
+                                <h4 class="text-primary">Tableau 2 Répartition des différents paramètres par poste horaire</h4>
+                                <div class="table-responsive">
+                                    <table class="table-sm align-items-center table-bordered ">
+                                        <thead class="thead-light">
+                                        <th>
+                                            Bilan(KWH)
+                                        </th>
+                                        <th>
+                                            Jour
+                                        </th>
+                                        <th>
+                                            Pointe été
+                                        </th>
+                                        <th>
+                                            Pointe Soir
+                                        </th>
+                                        <th>
+                                            Nuit
+                                        </th>
+                                        <th>
+                                           TOTAL
+                                        </th>
+                                        </thead>
+                                        <tbody>
+                                        <tr id="t_charge">
+                                            <td>
+                                                TOTALE CHARGE
+                                            </td>
+                                        </tr>
+                                        <tr id="t_prod">
+                                            <td>
+                                                TOTALE PRODUITE
+                                            </td>
+                                        </tr>
+                                        <tr id="t_transportee">
+                                            <td>
+                                                TOTALE TRANSPORTEE
+                                            </td>
+                                        </tr>
+                                        <tr id="t_cedee">
+                                            <td>
+                                                TOTALE CEDEE
+                                            </td>
+                                        </tr>
+                                        <tr id="t_imp">
+                                            <td>
+                                                TOTALE IMPORTEE </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 mb-auto mb-xl-4">
+                                <div class="chart" id="auto_cm_imp"></div>
+                            </div>
+                            <div class="col-xl-12 mb--6 mb-sm-4">
+                                <div class="row">
+                                    <div class="col-xl-8 mb--6 mb-sm-4">
+                                        <div class="chart" id="rp_pd"></div>
+                                        <h5 class="text-primary text-center">Figure 5 répartition de l'énergie produite</h5>
+                                    </div>
+                                    <div class="col-xl-4 mb-auto mb-sm-4">
+                                        <div class="chart" id="pd_cm"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mb--6 mb-xl-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-12 mb--6 mb-xl-6">
+                                <div class="card shadow">
+                                    <div class="card-body">
+                                        Le graphique suivant affiche une superposition de la consommation avec la production sur une partie de l’année avec des pas horaires.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 mb--6 mb-xl-4">
+                                <div class="chart" id="timeseries_pd_cm"></div>
+                                <h5 class="text-primary text-center">Figure 7 Superposition de la courbe de production et la courbe de consommation</h5>
+
+                            </div>
+                            <div class="col-xl-12 mb--6 mb-sm-4">
+                                <h4 class="text-primary">Tableau 3 Consommation mensuelle après la centrale photovoltaïque</h4>
+                                <div class="table-responsive">
+                                    <table class="table-sm align-items-center table-bordered ">
+                                        <thead class="thead-light">
+                                        <th>
+                                        </th>
+                                        <th>
+                                            Jour (KWH)
+                                        </th>
+                                        <th>
+                                            Pointe été (KWH)                                        </th>
+                                        <th>
+                                            Pointe Soir (KWH)                                        </th>
+                                        <th>
+                                            Nuit (KWH)                                        </th>
+                                        </thead>
+                                        <tbody id="tableau_rp_m">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mb--6 mb-xl-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-12 mb--6 mb-xl-4">
+                                <div class="chart" id="rp_m_cm"></div>
+                                <h5 class="text-primary text-center">Figure 8 Répartition mensuelle de l'énergie consommée</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mb--6 mb-xl-6">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h1>Analyse financière</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-8 mb--6 mb-xl-6">
+                                <div class="row">
+                                    <div class="col-xl-12 mb--6 mb-xl-6">
+                                        <div class="table-responsive">
+                                            <table class="table align-items-center table-bordered">
+                                                <thead class="thead-light">
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>Capex</td>
+                                                    <td >{{ finance.capex |number_format(3, '.', ' ')}}</td>
+                                                    <td>DT</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Subvention</td>
+                                                    <td>{{ finance.subvention |number_format(3, '.', ' ')}}</td>
+                                                    <td>DT</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>O&M</td>
+                                                    <td>{{ finance.opex /100 * finance.capex }}</td>
+                                                    <td>DT</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Annuite</td>
+                                                    <td>{{ finance.annuite|number_format(3, '.', ' ') }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Facture de regularisation</td>
+                                                    <td>{{ finance.fregularisation[0]|number_format(3, '.', ' ') }}</td>
+                                                    <td>DT</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Gains par autoconsommation 1ére
+                                                        année</td>
+                                                    <td>{{ finance.GainTransporter[0] |number_format(3, '.', ' ')}}</td>
+                                                    <td>DT</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 mb--6 mb-xl-6">
+                                        <div class="table-responsive">
+                                            <table class="table align-items-center table-bordered">
+                                                <thead class="thead-light">
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>TRI</td>
+                                                    <td >{{ finance.tri25  |number_format(3, '.', ' ')}}</td>
+                                                    <td>%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>VAN</td>
+                                                    <td>{{ finance.van|number_format(3, '.', ' ') }}</td>
+                                                    <td>DT</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>LCOE</td>
+                                                    <td>{{ lcoe|number_format(3, '.', ' ') }}</td>
+                                                    <td>DT</td>
+                                                </tr>
+                                                <tr>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 mb--6 mb-xl-6">
+                                        <div class="chart" id="chat_cashflow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 mb--6 mb-xl-6">
+                                <h4>Tarif Uniforme</h4>
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-bordered">
+                                        <thead class="thead-light">
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                Prix du kWh
+                                            </td>
+                                            <td>
+                                                0.23DT
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Taxe municipale
+                                            </td>
+                                            <td>
+                                                0.05DT
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Redevance de
+                                                puissance
+                                            </td>
+                                            <td>
+                                                5DT
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h4>Tarif achat Par poste horaire</h4>
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-bordered">
+                                        <thead class="thead-light">
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Prix du kWh (jour)
+                                                </td>
+                                                <td>
+                                                    0.227DT
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Prix du kWh (Pointe été)                                                </td>
+                                                <td>
+                                                    0.343DT
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Prix du kWh (Pointe soir)                                                </td>
+                                                <td>
+                                                    0.309DT
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Prix du kWh (Nuit)
+                                                </td>
+                                                <td>
+                                                    0.179DT
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Taxe municipale
+                                                </td>
+                                                <td>
+                                                    0.05DT
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Redevance de
+                                                    puissance                                                </td>
+                                                <td>
+                                                    11DT
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h4>Tarif vente Par poste horaire</h4>
+                                <div class="table-responsive">
+                                    <table class="table align-items-center table-bordered">
+                                        <thead class="thead-light">
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                Prix du kWh (jour)
+                                            </td>
+                                            <td>
+                                                0.115DT
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Prix du kWh (Pointe été)
+                                            </td>
+                                            <td>
+                                                0.182DT
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Prix du kWh (Pointe soir)
+                                            </td>
+                                            <td>
+                                                0.168DT
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Prix du kWh (Nuit)
+                                            </td>
+                                            <td>
+                                                0.087DT
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="card shadow">
+                                    <div class="card-blockquote ">
+                                        <h3 class="text-black-50">
+                                            <i class="fa fa-circle" style="font-size:10px" aria-hidden="true"></i> Le TRI du projet est  {{ finance.tri25 }} % <br><br><br>
+                                        </h3>
+                                        <h3 class="text-black-50">
+                                            <i class="fa fa-circle" style="font-size:10px" aria-hidden="true"></i>  Le VAN {{ finance.van }} <br><br><br>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 mb--6 mb-xl-6">
+                <div class="card  shadow">
+                    <div class="card-header">
+                        <h3 class="mb-0">Cash flow</h3>
+                    </div>
+                    <dvi class="card-body">
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-bordered ">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Annee</th>
+                                    <th scope="col">Gain energie transportee(DT)</th>
+                                    <th scope="col">Gain energie cedee(Dt)</th>
+                                    <th scope="col">Gain par ans (DT)</th>
+                                    <th scope="col">Facture transpot (DT)</th>
+                                    <th scope="col">O&M  (DT)</th>
+                                    <th scope="col">Annuite (DT)</th>
+                                    <th scope="col">Facture de regularisation (DT)</th>
+                                    <th scope="col">Cash flows (DT)</th>
+                                    <th scope="col">Cash Flows cumules (DT)</th>
+                                    <th scope="col">CFADS (DT)</th>
+                                    <th scope="col">DSCR</th>
+                                </tr>
+                                </thead>
+                                <tbody id="result_finance">
+                                </tbody>
+                            </table>
+                        </div>
+                    </dvi>
+                </div>
+            </div>
+
+            <div class="col-xl-12 mb--6 mb-xl-6">
+                <div class="card shadow">
+                    <div class="card-body" >
+                        <div class="chart" id="final_chart"></div>
+                        <h5 class="text-primary text-center">Figure 10 Variation du DSCR sur la durée de remboursement du crédit</h5>
+
+                    </div>
+                </div>
+            </div>
+            </div>
+    </div>
+{% endblock %}
+{% block footer %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        let consomation_heatmap=[];
+        let _heatmap=[];
+        let production_heatmap=[];
+        let auto_consomer_heatmap=[];
+        let cedee_heatmap=[];
+        let importer_heatmap=[];
+        let consomation=[];
+        consomation[0]=[];
+        consomation[1]=[];
+        let production=[];
+        production[0]=[];
+        production[1]=[];
+        let auto_consome=[];
+        auto_consome[0]=[];
+        auto_consome[1]=[];
+        let cedee=[];
+        cedee[0]=[];
+        cedee[1]=[];
+        let importer=[];
+        importer[0]=[];
+        importer[1]=[];
+        let PH_consomation=[];
+        let PH_production=[];
+        let PH_auto_consome=[];
+        let PH_cedee=[];
+        let PH_importer=[];
+        PH_consomation[0]=0;
+        PH_consomation[1]=0;
+        PH_consomation[2]=0;
+        PH_consomation[3]=0;
+        PH_production[0]=0;
+        PH_production[1]=0;
+        PH_production[2]=0;
+        PH_production[3]=0;
+        PH_auto_consome[0]=0;
+        PH_auto_consome[1]=0;
+        PH_auto_consome[2]=0;
+        PH_auto_consome[3]=0;
+        PH_cedee[0]=0;
+        PH_cedee[1]=0;
+        PH_cedee[2]=0;
+        PH_cedee[3]=0;
+        PH_importer[0]=0;
+        PH_importer[1]=0;
+        PH_importer[2]=0;
+        PH_importer[3]=0;
+        let presence_data=0;
+        let trace1 = {};
+        let trace2 = {};
+        let trace3 = {};
+        let trace4 = {};
+        let trace5 = {};
+        let data=[];
+        let layout={};
+        let PH_cedee_ps=[];
+        let PH_autoconsomer_ps=[];
+        let PH_imp_ps=[];
+        let PH_autoconsomer_ps2=[];
+        let month_auto=[];
+        let month_imp=[];
+        let month_cm_t = [];
+        let cashflow=[];
+        let cashflow_cum=[];
+        let annuite=[];
+        let cfads=[];
+        let soldrep=[];
+        let dsacr=[];
+        let llcr=[];
+        let cfadstmp=[];
+        let llcrtmp=[];
+        for (let i = 0; i < 12; i++) {
+            month_cm_t[i]=0;
+        }
+        const reducer = (accumulator, currentValue) => accumulator + currentValue;
+        $(function () {
+            $.ajax({
+                url: "{{ path('project_results',{ 'id':project.id }) }}",
+                type : 'POST',
+                data : data,
+                dataType: 'json',
+                cache: false,
+                success: function (response) {
+                    for (let i = 0; i < response.maturiter; i++) {
+                        annuite[i]=response.annuite;
+                        cfads[i]=response.cfads[i];
+                    }
+                    let consomation_tmp = [];
+                    let production_tmp = [];
+                    let cedee_tmp = [];
+                    let importe_tmp = [];
+                    let auto_consome_tmp = [];
+                    let year = 0;
+                    for (let i = 0; i < response.consomation.length; i++) {
+                        dates = new Date(response.production[i][0] * 1000);
+                        dates.setHours(dates.getHours() - 1);
+                        year = dates.getFullYear();
+                        consomation[0][i] = dates;
+                        consomation[1][i] = response.consomation[i][1];
+                        month_cm_t[dates.getMonth()]+=response.consomation[i][1];
+                        production[0][i] = dates;
+                        production[1][i] = response.production[i][1];
+                        dates = new Date(response.auto_consomer[i][0] * 1000);
+                        auto_consome[0][i] = dates;
+                        auto_consome[1][i] = response.auto_consomer[i][1];
+                        cedee[0][i] = dates;
+                        cedee[1][i] = response.cedee[i][1];
+                        importer[0][i] = dates;
+                        importer[1][i] = response.importer[i][1];
+                        if (i > 0 && (i % 24) === 0) {
+                            consomation_heatmap.push(consomation_tmp);
+                            production_heatmap.push(production_tmp);
+                            cedee_heatmap.push(cedee_tmp);
+                            importer_heatmap.push(importe_tmp);
+                            auto_consomer_heatmap.push(auto_consome_tmp);
+                            consomation_tmp = [];
+                            production_tmp = [];
+                            cedee_tmp = [];
+                            importe_tmp = [];
+                            auto_consome_tmp = [];
+                            consomation_tmp.push(response.consomation[i][1]);
+                            production_tmp.push(response.production[i][1]);
+                            cedee_tmp.push(response.cedee[i][1]);
+                            auto_consome_tmp.push(response.auto_consomer[i][1]);
+                            importe_tmp.push(response.importer[i][0]);
+                        } else {
+                            consomation_tmp.push(response.consomation[i][1]);
+                            production_tmp.push(response.production[i][1]);
+                            cedee_tmp.push(response.cedee[i][1]);
+                            auto_consome_tmp.push(response.auto_consomer[i][1]);
+                            importe_tmp.push(response.importer[i][0]);
+                        }
+                    }
+                    console.log(consomation);
+                    for (let j = 1; j < response.PH_cedee.length; j++) {
+                        PH_consomation[0] += response.PH_consomation[j]['jour'];
+                        PH_consomation[3] += response.PH_consomation[j]['nuit'];
+                        PH_consomation[1] += response.PH_consomation[j]['ete'];
+                        PH_consomation[2] += response.PH_consomation[j]['soir'];
+                        PH_production[0] += response.PH_production[j]['jour'];
+                        PH_production[3] += response.PH_production[j]['nuit'];
+                        PH_production[1] += response.PH_production[j]['ete'];
+                        PH_production[2] += response.PH_production[j]['soir'];
+                        PH_auto_consome[0] += response.PH_auto_consomer[j]['jour'];
+                        PH_auto_consome[3] += response.PH_auto_consomer[j]['nuit'];
+                        PH_auto_consome[1] += response.PH_auto_consomer[j]['ete'];
+                        PH_auto_consome[2] += response.PH_auto_consomer[j]['soir'];
+                        PH_cedee[0] += response.PH_cedee[j]['jour'];
+                        PH_cedee[3] += response.PH_cedee[j]['nuit'];
+                        PH_cedee[1] += response.PH_cedee[j]['ete'];
+                        PH_cedee[2] += response.PH_cedee[j]['soir'];
+                        PH_importer[0] += response.PH_importer[j]['jour'];
+                        PH_importer[3] += response.PH_importer[j]['nuit'];
+                        PH_importer[1] += response.PH_importer[j]['ete'];
+                        PH_importer[2] += response.PH_importer[j]['soir'];
+                    }
+
+                    for (let i = 0; i <4 ; i++) {
+                        PH_cedee_ps[i]=(PH_cedee[i]/PH_production[i])*100;
+                        PH_autoconsomer_ps[i]=(PH_auto_consome[i]/PH_production[i])*100;
+                        PH_imp_ps[i]=(PH_importer[i]/PH_consomation[i])*100;
+                        PH_autoconsomer_ps2[i]=(PH_auto_consome[i]/PH_consomation[i])*100;
+
+
+
+                    }
+                    for (let i = 0; i < 12; i++) {
+                        month_auto[i]=response.month_auto[i+1];
+                        month_imp[i]=response.monthimp_unif[i+1];
+                        month_auto[i]/=month_cm_t[i];
+                        month_imp[i]/=month_cm_t[i];
+                        month_auto[i]*=100;
+                        month_imp[i]*=100;
+
+                    }
+
+
+                    let dataMonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+                    for (let i = response.delee; i <response.maturiter+response.delee ; i++) {
+                        dsacr[i-response.delee]=response.dsacr[i];
+                    }
+
+                    for (let i = 0; i <response.dureeProj ; i++) {
+                        cashflow[i]=response.cashflow[i];
+                        cashflow_cum[i]=response.cashflow_cum[i];
+                    }
+                    $("#temp_retour").append('<p>'+window.tempretour(response.dureeProj,cashflow)+'</p>');
+                    for (let i = 1; i <13 ; i++) {
+                        $('#tableau_rp_m').append(
+                            '<tr>' +
+                                '<td>'+dataMonth[i-1]+'</td>'+
+                                '<td>'+round(response.monthimp[i]['jour'],0)+'</td>'+
+                                '<td>'+round(response.monthimp[i]['ete'],0)+'</td>'+
+                                '<td>'+round(response.monthimp[i]['soir'],0)+'</td>'+
+                                '<td>'+round(response.monthimp[i]['nuit'],0)+'</td>'+
+
+                            '</tr>'
+                        );
+                    }
+                    //***********************PH consomer********************
+                    for (let j = response.delee; j < response.maturiter+response.delee ; j++) {
+                        cfadstmp[j-response.delee]=response.cfads[j];
+                    }
+                    data = [{
+                        values: PH_consomation,
+                        labels: ['jour','pointe ete','soir','nuit'],
+                        domain: {column: 0},
+                        name: 'Consommation',
+                        hoverinfo: 'label+percent+name',
+                        hole: .4,
+                        type: 'pie'
+                    }];
+
+                    layout = {
+                        title: 'Consommation',
+                        showlegend: false,
+                        annotations: [
+                            {
+                                font: {
+                                    size: 14
+                                },
+                                showarrow: false,
+                                text: ' ',
+
+                            }
+                        ]
+                    };
+                    Plotly.newPlot('rp_cm', data, layout, {responsive: true});
+                    //*********************************************************
+                    data = [];
+                    layout = {};
+                    //*********************Consomation timeseries**************
+                    trace1 = {
+                        type: "scatter",
+                        mode: "lines",
+                        name: 'Consommation',
+                        x: consomation[0],
+                        y: consomation[1],
+                        line: {color: '#17BECF'}
+                    };
+                    data.push(trace1);
+                    layout = {
+                        title: 'Time series',
+                        xaxis: {
+                            autorange: true,
+                            range: [consomation[0][0], consomation[0][consomation[0].length - 1]],
+                            rangeselector: {
+                                buttons: [
+                                    {
+                                        count: 1,
+                                        label: '1m',
+                                        step: 'month',
+                                        stepmode: 'backward'
+                                    },
+                                    {
+                                        count: 6,
+                                        label: '6m',
+                                        step: 'month',
+                                        stepmode: 'backward'
+                                    },
+                                    {step: 'all'}
+                                ]
+                            },
+                            rangeslider: {range: [consomation[0][0], consomation[0][consomation[0].length - 1]]},
+                            type: 'date'
+                        },
+                    };
+                    Plotly.newPlot('vh_cm', data, layout, {responsive: true});
+                    //*********************************************************
+                    data = [];
+                    layout = {};
+                    //*********************Consomation Histogram**************
+                    trace1 = {
+                        x: consomation[1],
+                        name: 'consommation',
+                        autobinx: true,
+                        histnorm: "count",
+                        marker: {
+                            color: "rgba(255, 100, 102, 0.7)",
+                            line: {
+                                color: "rgba(255, 100, 102, 1)",
+                                width: 0.01
+                            }
+                        },
+                        opacity: 0.5,
+                        type: "histogram",
+                    };
+                    data = [trace1];
+                    layout = {
+                        bargap: 0.05,
+                        bargroupgap: 0.2,
+                        barmode: "overlay",
+                        title: "Consomation",
+                        xaxis: {title: "puissance"},
+                        yaxis: {title: " "}
+                    };
+                    Plotly.newPlot('hm_cm', data, layout, {responsive: true});
+                    //*********************************************************
+                    data = [];
+                    layout = {};
+                    //*********************Consomation Heatmap**************
+                    data = [{
+                        z: consomation_heatmap,
+                        colorscale: 'Electric',
+                        type: 'heatmap'
+                    }];
+                    Plotly.newPlot('heat_cm', data, {yflip: true}, {responsive: true},);
+                    //***********************tableau Répartition des différents paramètres par poste horaire
+                    for (let i = 0; i < PH_consomation.length; i++) {
+                        $('#t_charge').append(
+                            "<td>" + round(PH_consomation[i], 0) + "</td>"
+                        );
+                        $('#t_transportee').append(
+                            "<td>" + round(PH_auto_consome[i], 0) + "</td>"
+                        );
+
+                        $('#t_prod').append(
+                            "<td>" + round(PH_production[i], 0) + "</td>"
+                        );
+                        $('#t_cedee').append(
+                            "<td>" + round(PH_cedee[i], 0) + "</td>"
+                        );
+                        $('#t_imp').append(
+                            "<td>" + round(PH_importer[i], 0) + "</td>"
+                        );
+                    }
+                    $('#t_charge').append(
+                        "<td>" + round(PH_consomation.reduce(reducer), 0) + "</td>"
+                    );
+                    $('#t_transportee').append(
+                        "<td>" + round(PH_auto_consome.reduce(reducer), 0) + "</td>"
+                    );
+                    $('#t_prod').append(
+                        "<td>" + round(PH_production.reduce(reducer), 0) + "</td>"
+                    );
+                    $('#t_cedee').append(
+                        "<td>" + round(PH_cedee.reduce(reducer), 0) + "</td>"
+                    );
+                    $('#t_imp').append(
+                        "<td>" + round(PH_importer.reduce(reducer), 0) + "</td>"
+                    );
+                    //************************************************************************
+                    data = [{
+                        values: [PH_auto_consome.reduce(reducer),PH_importer.reduce(reducer)],
+                        labels: ['Auto-consommee', 'importee'],
+                        domain: {column: 0},
+                        name: 'Auto-consommee , E-importee',
+                        hoverinfo: 'label+percent+name',
+                        hole: .4,
+                        type: 'pie'
+                    }];
+
+                    layout = {
+                        title: 'Auto-consommee , E-importee',
+                        showlegend: false,
+                        annotations: [
+                            {
+                                font: {
+                                    size: 14
+                                },
+                                showarrow: false,
+                                text: ' ',
+
+                            }
+                        ]
+                    };
+                    Plotly.newPlot('auto_cm_imp', data, layout, {responsive: true});
+                    //**************************************repartion energy produite**********************
+                    trace1 = {
+                        x: ['Jour','Ete','Soir','Nuit'],
+                        y: PH_autoconsomer_ps,
+                        name: 'Production',
+                        type: 'bar'
+                    };
+
+                    trace2 = {
+                        x: ['Jour','Ete','Soir','Nuit'],
+                        y: PH_cedee_ps,
+                        name: 'Auto-consommee',
+                        type: 'bar'
+                    };
+
+                    data = [trace1, trace2];
+
+                    layout = {barmode: 'stack'};
+
+                    Plotly.newPlot('rp_pd', data, layout,{responsive: true});
+
+                    //***********************prod/consomer********************
+                    data = [{
+                        values: [cedee[1].reduce(reducer)/production[1].reduce(reducer),auto_consome[1].reduce(reducer)/production[1].reduce(reducer)],
+                        labels: ['auto-consommee','cedee'],
+                        domain: {column: 0},
+                        hoverinfo: 'label+percent+name',
+                        hole: .4,
+                        type: 'pie'
+                    }];
+
+                    layout = {
+                        showlegend: false,
+                        annotations: [
+                            {
+                                font: {
+                                    size: 14
+                                },
+                                showarrow: false,
+                                text: ' ',
+
+                            }
+                        ]
+                    };
+                    Plotly.newPlot('pd_cm', data, layout, {responsive: true});
+                    //*********************************************************
+                    data = [];
+                    layout = {};
+                    //**************************************repartion energy produite (trensporter importer**********************
+                    /*
+                    trace1 = {
+                        x: ['Jour','Ete','Soir','Nuit'],
+                        y: PH_autoconsomer_ps2,
+                        name: 'Transporter',
+                        type: 'bar'
+                    };
+
+                    trace2 = {
+                        x: ['Jour','Ete','Soir','Nuit'],
+                        y: PH_imp_ps,
+                        name: 'Importer',
+                        type: 'bar'
+                    };
+
+                    data = [trace1, trace2];
+
+                    layout = {barmode: 'stack'};
+
+                    Plotly.newPlot('tp_imp', data, layout,{responsive: true});
+                    */
+                    //***********************cedee/importer********************
+                    /*
+                    data = [{
+                        values: [cedee[1].reduce(reducer),auto_consome[1].reduce(reducer)],
+                        labels: ['Cedee','Transporter'],
+                        domain: {column: 0},
+                        name: 'Cons',
+                        hoverinfo: 'label+percent+name',
+                        hole: .4,
+                        type: 'pie'
+                    }];
+
+                    layout = {
+                        title: 'Cons',
+                        showlegend: false,
+                        annotations: [
+                            {
+                                font: {
+                                    size: 14
+                                },
+                                showarrow: false,
+                                text: ' ',
+
+                            }
+                        ]
+                    };
+                    Plotly.newPlot('cedee_imp', data, layout, {responsive: true});
+                    //*********************************************************
+
+                     */
+                    data=[];
+                    trace1 = {
+                        type: "scatter",
+                        mode: "lines",
+                        name: 'Consommation',
+                        x: consomation[0],
+                        y: consomation[1],
+                        line: {color: '#17BECF'}
+                    };
+                    data.push(trace1);
+                    trace2 = {
+                        type: "scatter",
+                        mode: "lines",
+                        name: 'Production',
+                        x: production[0],
+                        y: production[1],
+                        line: {color: '#FFC300'}
+                    };
+                    data.push(trace2);
+
+                    layout = {
+                        title: 'Time series',
+                        xaxis: {
+                            autorange: true,
+                            range: [consomation[0][0], consomation[0][consomation[0].length-1]],
+                            rangeselector: {buttons: [
+                                    {
+                                        count: 1,
+                                        label: '1h',
+                                        step: 'hour',
+                                        stepmode: 'backward'
+                                    },
+                                    {
+                                        count: 6,
+                                        label: '6m',
+                                        step: 'month',
+                                        stepmode: 'backward'
+                                    },
+                                    {step: 'all'}
+                                ]},
+                            rangeslider: {range: [consomation[0][0], consomation[0][consomation[0].length-1]]},
+                            type: 'date'
+                        },
+                    };
+                    Plotly.newPlot('timeseries_pd_cm', data, layout,{responsive: true});
+                    //********************************************************************
+                    data=[];
+                    layout={};
+
+                    trace1 = {
+                        x: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+                        y: month_auto,
+                        name: 'Transportee',
+                        type: 'bar'
+                    };
+
+                    trace2 = {
+                        x: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+                        y: month_imp,
+                        name: 'Importee',
+                        type: 'bar'
+                    };
+
+                    data = [trace1, trace2];
+
+                    layout = {barmode: 'stack'};
+
+                    Plotly.newPlot('rp_m_cm', data, layout,{responsive: true});
+                    //***********************************************************************
+
+                    trace1 = {
+                        y: cashflow,
+                        name: 'Cash Flow',
+                        type: 'bar'
+                    };
+
+                    trace2 = {
+                        type: "scatter",
+                        mode: "lines",
+                        name: 'Cash Flow Cumles',
+                        y: cashflow_cum,
+
+                        line: {color: '#17BECF'}
+                    };
+
+                    data = [trace1, trace2];
+
+                    layout = {barmode: 'stack'};
+
+                    Plotly.newPlot('chat_cashflow', data, layout,{responsive: true});
+                    //*********************************************************
+
+                    trace1 = {
+                        y: annuite,
+                        name: 'Annuite',
+                        type: 'bar'
+                    };
+
+                    trace2 = {
+                        type: "scatter",
+                        mode: "lines",
+                        name: 'DSCR',
+                        y: dsacr,
+                        yaxis: 'y2',
+                        line: {color: '#17BECF'}
+                    };
+                    trace3 = {
+                        y: cfadstmp,
+                        name: 'CFADS',
+                        type: 'bar'
+                    };
+
+                    data = [trace1, trace2,trace3];
+
+                    layout = {
+                        barmode: 'group',
+                        yaxis2: {
+                            overlaying: 'y',
+                            side: 'right'
+                        },
+                        rangeslider: {range: [cfadstmp[0], cfadstmp[cfadstmp.length-1]]},
+                    };
+
+                    Plotly.newPlot('final_chart', data, layout,{responsive: true});
+                    console.log(cfads);
+                    //***********************************finance****************************************
+                    console.log(response.facture_regrularisation[0]);
+                    for(let i=0;i<response.delee;i++){
+                        llcr[i]=0;
+                        cfadstmp[i]=0;
+                        soldrep[i]=response.credit;
+
+                        $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
+                            "<td>"+round(response.gain_E_transporter[i],3)+"</td>"+
+                            "<td>"+round(response.gain_E_cedee[i],3)+"</td>"+
+                            "<td>"+round(response.gain_ans[i],3)+"</td>"+
+                            "<td>"+round(response.Facture_transport[i],3)+"</td>"+
+                            "<td>"+round(response.opex[i],3)+"</td>"+
+                            "<td></td>"+
+                            "<td></td>"+
+                            "<td>"+round(response.cashflow[i],3)+"</td>"+
+                            "<td>"+round(response.cashflow_cum[i],3)+"</td>"+
+                            "<td></td>"+
+                            "<td></td>"+
+                            +"</tr>"
+                        );
+                    }
+
+                    for(let i=response.delee;i<response.maturiter+response.delee;i++){
+                        llcrtmp[i]=window.van2(response.taux_credit,cfadstmp);
+                        soldrep[i]=(soldrep[i-1]*(1+(response.taux_credit/100)))-response.annuite;
+                        llcr[i]=window.van2(response.taux_credit,cfadstmp)/soldrep[i];
+                        $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
+                            "<td>"+round(response.gain_E_transporter[i],3)+"</td>"+
+                            "<td>"+round(response.gain_E_cedee[i],3)+"</td>"+
+                            "<td>"+round(response.gain_ans[i],3)+"</td>"+
+                            "<td>"+round(response.Facture_transport[i],3)+"</td>"+
+                            "<td>"+round(response.opex[i],3)+"</td>"+
+                            "<td>"+round(response.annuite,3)+"</td>"+
+                            "<td>"+round(response.facture_regrularisation[i],3)+"</td>"+
+                            "<td>"+round(response.cashflow[i],3)+"</td>"+
+                            "<td>"+round(response.cashflow_cum[i],3)+"</td>"+
+                            "<td>"+round(response.cfads[i],3)+"</td>"+
+                            "<td>"+round(response.dsacr[i],3)+"</td>"+
+
+                            +"</tr>"
+
+                        );
+
+                    }
+                    for(let i=response.maturiter+response.delee;i<30;i++){
+                        $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
+                            "<td>"+round(response.gain_E_transporter[i],3)+"</td>"+
+                            "<td>"+round(response.gain_E_cedee[i],3)+"</td>"+
+                            "<td>"+round(response.gain_ans[i],3)+"</td>"+
+                            "<td>"+round(response.Facture_transport[i],3)+"</td>"+
+                            "<td>"+round(response.opex[i],3)+"</td>"+
+                            "<td></td>"+
+                            "<td>"+round(response.facture_regrularisation[i],3)+"</td>"+
+                            "<td>"+round(response.cashflow[i],3)+"</td>"+
+                            "<td>"+round(response.cashflow_cum[i],3)+"</td>"+
+                            "<td>"+round(response.cfads[i],3)+"</td>"+
+                            "<td></td>"+
+
+                            +"</tr>"
+
+                        );
+
+                    }
+                }
+            });
+
+        });
+
+    </script>
+    </div>
+{% endblock %}
+

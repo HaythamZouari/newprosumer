@@ -1,0 +1,21 @@
+easy_admin:
+  list:
+    actions:
+      - { name: 'edit', icon: 'pencil', label: '' }
+      - { name: 'delete', icon: 'trash', label: '' }
+  entities:
+    Project:
+      class: App\Entity\Project
+      form:
+        fields:
+          - 'id'
+          - 'name'
+          - 'adress'
+          - 'description'
+          - 'user'
+          - 'pvwatt'
+          - 'pvgis'
+          - 'consomation'
+    Finance:
+      class: App\Entity\Finance
+

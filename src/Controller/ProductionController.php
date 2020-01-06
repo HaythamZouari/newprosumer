@@ -1,0 +1,169 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\CsvProd;
+use App\Entity\Project;
+use App\Entity\Pvgis;
+use App\Event\ProjectEvent;
+use App\Service\Datesorting;
+use App\Service\FileUpload;
+use Carbon\CarbonPeriod;
+use DateTime;
+use Psr\Log\LoggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+
+class ProductionController extends AbstractController
+{
+    /**
+     * @Route("/pvgis/{id}", name="pvgis")
+     */
+    public function pvgis(LoggerInterface $logger,EventDispatcherInterface $eventDispatcher, Project $project, Request $request)
+    {
+        $pvgis = new Pvgis();
+        $pvgis->setProject($project);
+        $pvgis->setLat((float)$request->get('lat'));
+        $pvgis->setAzimuth((float)$request->get('aspect'));
+        $pvgis->setLon((int)$request->get('lon'));
+        $pvgis->setLoss((float)$request->get('loss'));
+        $pvgis->setMountingType((int)$request->get('trackingtype'));
+        $pvgis->setPeakPower((float)$request->get('peakpower'));
+        $pvgis->setPvTech($request->get('technologies'));
+        $pvgis->setSlop((float)$request->get('angle'));
+        $httpClient = HttpClient::create();
+        $response = $httpClient->request('GET',
+            'http://re.jrc.ec.europa.eu/pvgis5/seriescalc.php?'.
+            '&lat='.$request->get('lat').
+            '&lon='.$request->get('lon').
+            '&raddadtabase'.$request->get('raddadtabase').
+            '&peakpower='.$request->get('peakpower').
+            '&pvtechchoice='.$request->get('technologies').
+            '&loss='.$request->get('loss').
+            '&angle='.$request->get('angle').
+            '&aspect='.$request->get('aspect').
+            '&trackingtype'.$request->get('trackingtype').
+            '&outputformat=basic'.
+            '&startyear=2015'.
+            '&pvcalculation=1'
+
+
+        );
+        $lines = explode(PHP_EOL, $response->getContent());
+        $array=[];
+        $data=[];
+        foreach ($lines as $line){
+            $array[]=str_getcsv($line);
+        }
+        $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2018-01-01 00:00' , CarbonPeriod::EXCLUDE_START_DATE);
+        $i=11;
+        foreach ($period as $key=>$date) {
+            $string=$array[$i][0];
+            $data[]=[(int)$date->getTimestamp(),(float)($array[$i][1])/1000];
+
+            $i++;
+
+        }
+        $data[count($data)-1][0]=$data[count($data)-1][0]-31536000;
+        /*
+            for($i=11;$i<8771;$i++){
+            $string=$array[$i][0];
+            $data[]=[strtotime(substr($string,0,4).
+                '/'.
+                substr($string,4,2).
+                '/'.substr($string,6,2).
+                ' '.(int)((substr($string,9,2))+1).':00'),(float)($array[$i][1]/1000)];
+
+        }
+        */
+
+        $logger->info('testt',$data);
+        $pvgis->setResult(Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($pvgis);
+        $project->setCsvProd(null);
+        $entityManager->flush();
+        $entityManager->persist($project);
+        $entityManager->flush();
+        $projectEvent = new ProjectEvent($project);
+        $eventDispatcher->dispatch(
+            ProjectEvent::NAME,
+            $projectEvent
+        );
+        return new JsonResponse(['data'=>$data,'data2'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data) ]);
+    }
+    /**
+     * @Route("/ninja/{id}", name="ninja")
+     */
+    public function ninja(Project $project , EventDispatcherInterface $eventDispatcher,Request $request)
+    {
+        $httpClient = HttpClient::create(['auth_bearer'=>'4171ff415c2962940501acb99ba088c98e6f6134']);
+        $response = $httpClient->request('GET',
+            'https://www.renewables.ninja/api/data/pv?lat='.$request->get('lat').
+            '&lon='.$request->get('lon').
+            '&date_from=2014-01-01&date_to=2015-01-01'.
+            '&dataset='.$request->get('raddatabase').
+            '&capacity='.$request->get('capacity').
+            '&system_loss='.$request->get('loss').
+            '&tracking='.$request->get(('tracking')).
+            '&tilt='.$request->get('tilt').
+            '&azim='.$request->get('azimuth').
+            '&format=json'
+        );
+
+        $ac = $response->toArray()['data'];
+        $ac_monthly=$response->toArray()['outputs']['ac_monthly'];
+        $date = new \DateTime('2014-01-01');
+        while ($dat = current($ac)) {
+            $data[]=[key($ac),$dat];
+
+            next($ac);
+        }
+
+        $projectEvent = new ProjectEvent($project);
+        $eventDispatcher->dispatch(
+            ProjectEvent::NAME,
+            $projectEvent
+        );
+        return new JsonResponse(['data'=>$response->toArray()]);
+    }
+    /**
+     * @Route("/readcsv/{id}",name="readcsv")
+     */
+    public function readcsv(EventDispatcherInterface $eventDispatcher,Request $request,FileUpload $fileUpload,Project $project){
+        $csvreader = new CsvProd();
+        $result=[];
+
+        $file = $request->files->get('file');
+        $filePath =$fileUpload->uploadcsv($file,'production');
+        //delete the first 13 lines of the csv code
+        shell_exec('sed -i 1,13d uploads/'.$filePath);
+        $csv = array_map('str_getcsv', file('uploads/'.$filePath));
+        for($i=0;$i<count($csv);$i++ ){
+            $csv[$i]=explode(';',$csv[$i][0]);
+            $result[$i][0]= DateTime::createFromFormat('d/m/Y H:i', $csv[$i][0])->getTimestamp()+1200;
+            $result[$i][1]=(float)$csv[$i][1];
+        }
+        $csvreader->setPath('uploads/'.$filePath);
+        $csvreader->setResult(Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$result));
+        //$csvreader->setResult($result);
+        $csvreader->setPuissence(((float)$request->get('csvpuiss')));
+        $csvreader->setProject($project);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($csvreader);
+        $entityManager->flush();
+        $project->setPvgis(null);
+        $entityManager->persist($project);
+        $entityManager->flush();
+        $projectEvent = new ProjectEvent($project);
+        $eventDispatcher->dispatch(
+            ProjectEvent::NAME,
+            $projectEvent
+        );
+        return new JsonResponse(['data'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$result),'da'=>$csv]);
+    }
+}

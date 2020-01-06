@@ -1,0 +1,67 @@
+<form class="production" id="productionForm" action="{{ path('ninja',{'id':project.id}) }}"  enctype="multipart/form-data">
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label class="form-control-label required" for="raddatabase">Solar radiation database</label>
+                <select name="raddatabase" class="form-control" id="raddatabase">
+                    <option value="merra2">MERRA-2 (global)</option>
+                    <option value="sarah">CM-SAF SARAH</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label required" for="capacity">Capacity (kW)</label>
+                <input type="number" class="form-control"  name="capacity" id="capacity" value="1" min="0" >
+            </div>
+            <div class="form-group">
+                <label class="form-control-label required" for="loss" >loss [%]</label>
+                <input type="number" class="form-control" step="0.01" min="0" value=0.01  max="1" name="loss" id="loss">
+            </div>
+            <div class="form-group">
+                <label class="form-control-label required" for="tracking">Tracking</label>
+                <select name="tracking" class="form-control" id="tracking">
+                    <option value=0>1-axis (azimuth)</option>
+                    <option value=1>2-axis (tilt & azimuth)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label required" for="tilt" >Tilt [°]</label>
+                <input type="number" class="form-control" step="0.01" min="0" value=0  name="tilt" id="tilt">
+            </div>
+            <div class="form-group">
+                <label class="form-control-label required" for="loss" >Azimuth [°]</label>
+                <input type="number" class="form-control" step="0.01" min="0" value=0  name="azimuth" id="loss">
+            </div>
+            <div class="text-center">
+                <button type="button" onclick="productionSubmit()" class="btn-secondary btn">Continue</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% block javascripts %}
+    <script>
+        function productionSubmit() {
+            {% if not app.user %}
+            window.location.replace('{{ path('security_login') }}')
+            {% endif %};
+            var data = $('#productionForm').serialize();
+            data='&'+data+'&lon='+$('#lon').val()+'&lat='+$('#lat').val();
+            console.log(data);
+            var url = $('#productionForm').attr('action');
+            $.ajax({
+                url: url,
+                type : 'POST',
+                data : data,
+                cache: false,
+                success: function (response) {
+                    console.log(response.data);
+                }
+            });
+            /*
+            $.get( url ,data,function (dat) {
+               console.log(dat);
+            });
+             */
+            return false;
+        };
+    </script>
+{% endblock %}

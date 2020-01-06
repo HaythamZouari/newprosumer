@@ -1,0 +1,834 @@
+<div class="row align-content-center">
+    <div class="col-xl-12 mb-4 mb-xl-12" >
+        <div class="row align-content-center">
+            <div class="col-xl-3 col-lg-6">
+            </div>
+            <div class="col-xl-3 col-lg-6">
+                <div class="card card-stats mb-4 mb-xl-0">
+                    <button  class="btn btn-lg" type="button" data-toggle="modal" data-target="#charts" >Graphiques</button>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6">
+                <div class="card card-stats mb-4 mb-xl-0">
+                    <button  class="btn btn-lg" type="button" data-toggle="modal" data-target="#myModal" id="tableaus" >Tableau</button>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6">
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12 mb-4 mb-xl-0 align-content-center" >
+        <div class="card">
+            <div class="card-body">
+                <h4 class="text-primary">Récapitulatif énergétique</h4>
+                <div class="table">
+                    <table class="table align-items-center table-bordered ">
+                        <thead class="thead-light">
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Puissance</td>
+                            {% if project.pvgis != null %}
+                                <td >{{ project.pvgis.peakpower }}</td>
+                            {% elseif project.csvprod != null %}
+                                <td >{{ project.csvprod.Puissence }}</td>
+                            {% endif %}
+                            <td>kWc</td>
+                        </tr>
+                        <tr id="prod25">
+                            <td>Production PV 25 ans</td>
+                        </tr>
+                        <tr id="t_autoc">
+                            <td>Taux d’autoconsommation</td>
+                        </tr>
+                        <tr id="t_couv">
+                            <td>Taux de couverture :</td>
+                        </tr>
+                        <tr id="t_cd">
+                            <td>Taux de l’énergie cédée :</td>
+                        </tr>
+                        <tr id="productible">
+                            <td>Productible :</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h4 class="text-primary">Récapitulatif financier</h4>
+                <div class="table">
+                    <table class="table align-items-center table-bordered ">
+                        <thead class="thead-light">
+                        </thead>
+                        <tbody>
+                        <tr>
+                            {% if project.finance != null %}
+                            <td>CAPEX</td>
+                            <td >{{ project.finance.capex }}</td>
+                            <td>DT</td>
+                        </tr>
+                        <tr>
+                            <td>Subvention</td>
+                            <td>{{ project.finance.subvention |number_format(0, '.', ' ')}}</td>
+                            <td>%</td>
+                        </tr>
+                        <tr>
+                            <td>O&M </td>
+                            <td>{{ project.finance.opex }}</td>
+                            <td>%</td>
+                        </tr>
+                        <tr>
+                            <td>Annuite :</td>
+                            <td>{{ project.finance.annuite|number_format(3, '.', ' ') }}</td>
+                            <td>DT</td>
+                        </tr>
+                        <tr  id="f_r">
+                            <td>Facture de regularisation :</td>
+                        </tr>
+                        <tr id="coutproj">
+                            <td>Cout du projet sur 25 ans :</td>
+                        </tr>
+                        <tr>
+                            <td>VAN sur 25 ans :</td>
+                            <td>{{ project.finance.van|number_format(3, '.', ' ') }}</td>
+                            <td>DT</td>
+                        </tr>
+                        <tr id="lcoe">
+                            <td>LCOE sur 25 ans :</td>
+                        </tr>
+                        <tr>
+                            <td>TRI sur les capitaux propres :</td>
+                            <td>{{ project.finance.Tricapitaux|number_format(2, '.', ' ') }}</td>
+                            <td>%</td>
+                        </tr>
+                        <tr>
+                            <td>TRI du projet :</td>
+                            <td>{{ project.finance.tri25|number_format(2, '.', ' ') }}</td>
+                            <td>%</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal resizer-handler" id="myModal" role="dialog">
+    <div class="modal-dialog-scrollable">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tableau</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                {{ include('result/popuptables.html.twig') }}
+            </div>
+            <br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal  resizer-handler" id="charts" role="dialog">
+    <div class="modal-dialog-scrollable modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tableau</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row align-content-center">
+                    <div class="col-xl-12 mb-4 mb-xl-0">
+                        <div class="card bg-gradient-primary shadow">
+                            <div class="card-header bg-transparent">
+                                <div class="row">
+                                    <div class="col-xl-3 mb-3 mb-xl-3">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="lescourb">
+                                                Les courbes
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="lescourb">
+                                                <button class="dropdown-item" type="button" id="consomer" >Consommation</button>
+                                                <button class="dropdown-item" type="button" id="produite">Production</button>
+                                                <button class="dropdown-item" type="button" id="autoconsomer">Auto-Consommation</button>
+                                                <button class="dropdown-item" type="button" id="cedee" >Cedee</button>
+                                                <button class="dropdown-item" type="button" id="importe" >Importee</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-7 mb-12 mb-xl-12">
+                                    </div>
+                                    <div class="col-xl-1  mb-12 mb-xl-12">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-primary btn-block dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="lescourb">
+                                                Type de diagrame
+                                            </button>
+                                            <div class="dropdown-menu col-xl-12" aria-labelledby="lescourb">
+                                                <button type="button"  class="dropdown-item" id="time_series">Time series</button>
+                                                <button type="button" class="dropdown-item"  id="histograme">Histogramme</button>
+                                                <button type="button" class="dropdown-item"  id="heatmap">Heat map</button>
+                                                <button type="button"  class="dropdown-item" id="donutsChart">Donut Chart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div  class="card-body">
+                                <div class="row">
+                                    <div   class="col">
+                                        <div id="chart_consomtation"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
+    <script>
+        let btn=0;
+        let consomation_heatmap1=[];
+        let consomation_heatmap=[];
+        let production_heatmap=[];
+        let auto_consomer_heatmap=[];
+        let cedee_heatmap=[];
+        let importer_heatmap=[];
+        let consomation=[];
+        consomation[0]=[];
+        consomation[1]=[];
+        let production=[];
+        production[0]=[];
+        production[1]=[];
+        let auto_consome=[];
+        auto_consome[0]=[];
+        auto_consome[1]=[];
+        let cedee=[];
+        cedee[0]=[];
+        cedee[1]=[];
+        let importer=[];
+        importer[0]=[];
+        importer[1]=[];
+        let PH_consomation=[];
+        let PH_production=[];
+        let PH_auto_consome=[];
+        let PH_cedee=[];
+        let PH_importer=[];
+        PH_consomation[0]=0;
+        PH_consomation[1]=0;
+        PH_consomation[2]=0;
+        PH_consomation[3]=0;
+        PH_production[0]=0;
+        PH_production[1]=0;
+        PH_production[2]=0;
+        PH_production[3]=0;
+        PH_auto_consome[0]=0;
+        PH_auto_consome[1]=0;
+        PH_auto_consome[2]=0;
+        PH_auto_consome[3]=0;
+        PH_cedee[0]=0;
+        PH_cedee[1]=0;
+        PH_cedee[2]=0;
+        PH_cedee[3]=0;
+        PH_importer[0]=0;
+        PH_importer[1]=0;
+        PH_importer[2]=0;
+        PH_importer[3]=0;
+        let presence_data=0;
+        $("#consomer").on('click',function () {
+            btn=1;
+        });
+        $("#produite").on('click',function () {
+            btn=2;
+        });
+        $("#autoconsomer").on('click',function () {
+            btn=3;
+        });
+        $("#cedee").on('click',function () {
+            btn=4;
+        });
+        $("#importe").on('click',function () {
+            btn=5;
+        });
+        $("#tableaus").on('click',function () {
+            for (let i = 0; i < consomation[0].length ; i++) {
+                $('#datatable').append("<tr><td>" +production[0][i]+"</td>"+
+                    "<td>"+round(consomation[1][i],3)+"</td>"+
+                    "<td>"+round(production[1][i],3)+"</td>"+
+                    "<td>"+round(auto_consome[1][i],3)+"</td>"+
+                    "<td>"+round(cedee[1][i],3)+"</td>"+
+                    "<td>"+round(importer[1][i],3)+"</td>"+
+                    +"</tr>"
+
+                );
+
+            }
+        });
+        let trace1 = {};
+        let trace2 = {};
+        let trace3 = {};
+        let trace4 = {};
+        let trace5 = {};
+        let data=[];
+        let layout={};
+        $('#time_series').on('click',function () {
+            data=[];
+            trace1 = {
+                type: "scatter",
+                mode: "lines",
+                name: 'Consomation',
+                x: consomation[0],
+                y: consomation[1],
+                line: {color: '#17BECF'}
+            };
+            data.push(trace1);
+            trace2 = {
+                type: "scatter",
+                mode: "lines",
+                name: 'Production',
+                x: production[0],
+                y: production[1],
+                line: {color: '#FFC300'}
+            };
+            data.push(trace2);
+
+            trace3= {
+                type: "scatter",
+                mode: "lines",
+                name: 'Auto consomation',
+                x: auto_consome[0],
+                y: auto_consome[1],
+                line: {color: '#C70039'}
+            };
+            data.push(trace3);
+            trace4 = {
+                type: "scatter",
+                mode: "lines",
+                name: 'Energie cedee',
+                x: cedee[0],
+                y: cedee[1],
+                line: {color: '#900C3F'}
+            };
+
+            data.push(trace4) ;
+            trace5 = {
+                type: "scatter",
+                mode: "lines",
+                name: 'Importer',
+                x: importer[0],
+                y: importer[1],
+                line: {color: '#DAF7A6'}
+            };
+            data.push(trace5);
+            layout = {
+                title: 'Time series',
+                xaxis: {
+                    autorange: true,
+                    range: [consomation[0][0], consomation[0][consomation[0].length-1]],
+                    rangeselector: {buttons: [
+                            {
+                                count: 1,
+                                label: '1h',
+                                step: 'hour',
+                                stepmode: 'backward'
+                            },
+                            {
+                                count: 6,
+                                label: '6m',
+                                step: 'month',
+                                stepmode: 'backward'
+                            },
+                            {step: 'all'}
+                        ]},
+                    rangeslider: {range: [consomation[0][0], consomation[0][consomation[0].length-1]]},
+                    type: 'date'
+                },
+            };
+            Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+        });
+        $('#histograme').on('click',function () {
+
+            if (btn===1){
+                trace1 = {
+                    x: consomation[1],
+                    name: 'consomation',
+                    autobinx: true,
+                    histnorm: "count",
+                    marker: {
+                        color: "rgba(255, 100, 102, 0.7)",
+                        line: {
+                            color:  "rgba(255, 100, 102, 1)",
+                            width: 0.01
+                        }
+                    },
+                    opacity: 0.5,
+                    type: "histogram",
+                };
+                data = [trace1];
+                layout = {
+                    bargap: 0.05,
+                    bargroupgap: 0.2,
+                    barmode: "overlay",
+                    title: "Consomation",
+                    xaxis: {title: "Puissance"},
+                    yaxis: {title: "Fréquence"}
+                };
+                Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+
+            }
+            else
+            if (btn===2){
+                trace1 = {
+                    x: production[1],
+                    name: 'Production',
+                    autobinx: true,
+                    histnorm: "count",
+                    marker: {
+                        color: "rgba(255, 100, 102, 0.7)",
+                        line: {
+                            color:  "rgba(255, 100, 102, 1)",
+                            width: 1
+                        }
+                    },
+                    opacity: 0.5,
+                    type: "histogram",
+                };
+                data = [trace1];
+                layout = {
+                    bargap: 0.05,
+                    bargroupgap: 0.2,
+                    barmode: "overlay",
+                    title: "Production",
+                    xaxis: {title: "Puissance"},
+                    yaxis: {title: "Fréquence"}
+                };
+                Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+
+            }
+            if (btn===3){
+                trace1 = {
+                    x: auto_consome[1],
+                    name: 'Auto consomer',
+                    autobinx: true,
+                    histnorm: "count",
+                    marker: {
+                        color: "rgba(255, 100, 102, 0.7)",
+                        line: {
+                            color:  "rgba(255, 100, 102, 1)",
+                            width: 0.01
+                        }
+                    },
+                    opacity: 0.5,
+                    type: "histogram",
+                };
+                data = [trace1];
+                layout = {
+                    bargap: 0.05,
+                    bargroupgap: 0.2,
+                    barmode: "overlay",
+                    title: "Auto consomation",
+                    xaxis: {title: "Puissance"},
+                    yaxis: {title: "Fréquence"}
+                };
+                Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+
+
+            }
+            if (btn===4){
+                trace1 = {
+                    x: cedee[1],
+                    name: 'Auto consomer',
+                    autobinx: true,
+                    histnorm: "count",
+                    marker: {
+                        color: "rgba(255, 100, 102, 0.7)",
+                        line: {
+                            color:  "rgba(255, 100, 102, 1)",
+                            width: 0.01
+                        }
+                    },
+                    opacity: 0.5,
+                    type: "histogram",
+                };
+                data = [trace1];
+                layout = {
+                    bargap: 0.05,
+                    bargroupgap: 0.2,
+                    barmode: "overlay",
+                    title: "Auto consomation",
+                    xaxis: {title: "Puissance"},
+                    yaxis: {title: "Fréquence"}
+                };
+                Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+
+            }
+            if (btn===5){
+                trace1 = {
+                    x: importer[1],
+                    name: 'Auto consomer',
+                    autobinx: true,
+                    histnorm: "count",
+                    marker: {
+                        color: "rgba(255, 100, 102, 0.7)",
+                        line: {
+                            color:  "rgba(255, 100, 102, 1)",
+                            width: 0.01
+                        }
+                    },
+                    opacity: 0.5,
+                    type: "histogram",
+                };
+                data = [trace1];
+                layout = {
+                    bargap: 0.05,
+                    bargroupgap: 0.2,
+                    barmode: "overlay",
+                    title: "Auto consomation",
+                    xaxis: {title: "Puissance"},
+                    yaxis: {title: "Fréquence"}
+                };
+                Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+
+            }
+
+        });
+        $('#heatmap').on('click',function () {
+            if (btn===1){
+                data = [{
+                    z:consomation_heatmap1,
+                    colorscale: 'Electric',
+                    type: 'heatmap'
+                }];
+                Plotly.newPlot('chart_consomtation', data,{responsive:true});
+            }
+            if (btn===2){
+                data = [{
+                    z:production_heatmap,
+                    colorscale: 'Electric',
+                    type: 'heatmap'
+                }];
+
+                Plotly.newPlot('chart_consomtation', data, {yflip:true}, {responsive:true},);
+
+            }
+            if (btn===3){
+                data = [{
+                    z:auto_consomer_heatmap,
+                    colorscale: 'Electric',
+                    type: 'heatmap'
+                }];
+
+                Plotly.newPlot('chart_consomtation', data, {yflip:true}, {responsive:true},);
+
+            }
+            if (btn===4){
+                data = [{
+                    z:cedee_heatmap,
+                    colorscale: 'Electric',
+                    type: 'heatmap'
+                }];
+
+                Plotly.newPlot('chart_consomtation', data, {yflip:true}, {responsive:true},);
+
+            }
+            if (btn===5){
+                data = [{
+                    z:importer_heatmap,
+                    colorscale: 'Electric',
+                    type: 'heatmap'
+                }];
+
+                Plotly.newPlot('chart_consomtation', data, {yflip:true}, {responsive:true},);
+
+            }
+        });
+        $('#donutsChart').on('click',function () {
+            if (btn===1){
+                data = [{
+                    values: PH_consomation,
+                    labels: ['jour','pointe ete','soir','nuit'],
+                    domain: {column: 0},
+                    name: 'Consomation',
+                    hoverinfo: 'label+percent+name',
+                    hole: .4,
+                    type: 'pie'
+                }];
+
+                layout = {
+                    title: 'Consomation',
+                    showlegend: false,
+                    annotations: [
+                        {
+                            font: {
+                                size: 14
+                            },
+                            showarrow: false,
+                            text: 'CM',
+
+                        }
+                    ]
+                };
+                Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+
+            }
+            if (btn===2){
+                data = [{
+                    values: PH_production,
+                    labels: ['jour','pointe ete','soir','nuit'],
+                    domain: {column: 0},
+                    name: 'Consomation',
+                    hoverinfo: 'label+percent+name',
+                    hole: .4,
+                    type: 'pie'
+                }];
+
+                layout = {
+                    title: 'Production',
+                    showlegend: false,
+                    annotations: [
+                        {
+                            font: {
+                                size: 14
+                            },
+                            showarrow: false,
+                            text: 'CM',
+
+                        }
+                    ]
+                };
+                Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+
+
+            }
+            if (btn===3){
+                data = [{
+                    values: PH_auto_consome,
+                    labels: ['jour','pointe ete','soir','nuit'],
+                    domain: {column: 0},
+                    name: 'Consomation',
+                    hoverinfo: 'label+percent+name',
+                    hole: .4,
+                    type: 'pie'
+                }];
+
+                layout = {
+                    title: 'Auto-consomer',
+                    showlegend: false,
+                    annotations: [
+                        {
+                            font: {
+                                size: 14
+                            },
+                            showarrow: false,
+                            text: 'CM',
+
+                        }
+                    ]
+                };
+                Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+
+
+            }
+            if (btn===4){
+                data = [{
+                    values: PH_cedee,
+                    labels: ['jour','pointe ete','soir','nuit'],
+                    domain: {column: 0},
+                    name: 'Consomation',
+                    hoverinfo: 'label+percent+name',
+                    hole: .4,
+                    type: 'pie'
+                }];
+
+                layout = {
+                    title: 'Cedee',
+                    showlegend: false,
+                    annotations: [
+                        {
+                            font: {
+                                size: 14
+                            },
+                            showarrow: false,
+                            text: 'CM',
+
+                        }
+                    ]
+                };
+                Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+
+
+            }
+            if (btn===5){
+                data = [{
+                    values: PH_importer,
+                    labels: ['jour','pointe ete','soir','nuit'],
+                    domain: {column: 0},
+                    name: 'Consomation',
+                    hoverinfo: 'label+percent+name',
+                    hole: .4,
+                    type: 'pie'
+                }];
+
+                layout = {
+                    title: 'Importer',
+                    showlegend: false,
+                    annotations: [
+                        {
+                            font: {
+                                size: 14
+                            },
+                            showarrow: false,
+                            text: 'CM',
+
+                        }
+                    ]
+                };
+                Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+
+
+            }
+        });
+
+        function res (url) {
+            if (presence_data===0){
+                presence_data=1;
+                $.ajax({
+                    url: "{{ path('project_results',{ 'id':project.id }) }}",
+                    type : 'POST',
+                    data : data,
+                    dataType: 'json',
+                    cache: false,
+                    success: function (response) {
+                        let consomation_tmp=[];
+                        let production_tmp=[];
+                        let cedee_tmp=[];
+                        let importe_tmp=[];
+                        let auto_consome_tmp=[];
+                        let year =0;
+                        for (let i = 0; i < response.consomation.length ; i++) {
+                            dates = new Date(response.production[i][0] * 1000);
+                            year = dates.getFullYear();
+                            consomation[0][i] = dates;
+                            consomation[1][i] = response.consomation[i][1];
+                            dates = new Date(response.production[i][0] * 1000);
+                            dates.setFullYear(year);
+                            production[0][i] = dates;
+                            production[1][i] = response.production[i][1];
+                            dates = new Date(response.auto_consomer[i][0] * 1000);
+                            dates.setFullYear(year);
+                            auto_consome[0][i]=dates;
+                            auto_consome[1][i]=response.auto_consomer[i][1];
+                            dates = new Date(response.cedee[i][0] * 1000);
+                            dates.setFullYear(year);
+                            cedee[0][i]=dates;
+                            cedee[1][i]=response.cedee[i][1];
+                            dates = new Date(response.importer[i][0] * 1000);
+                            dates.setFullYear(year);
+                            importer[0][i]=dates;
+                            importer[1][i]=response.importer[i][1];
+                            if(i>0 && (i%24)===0){
+                                consomation_heatmap.push(consomation_tmp);
+                                production_heatmap.push(production_tmp);
+                                cedee_heatmap.push(cedee_tmp);
+                                importer_heatmap.push(importe_tmp);
+                                auto_consomer_heatmap.push(auto_consome_tmp);
+                                consomation_tmp=[];
+                                production_tmp=[];
+                                cedee_tmp=[];
+                                importe_tmp=[];
+                                auto_consome_tmp=[];
+                                consomation_tmp.push(response.consomation[i][1]);
+                                production_tmp.push(response.production[i][1]);
+                                cedee_tmp.push(response.cedee[i][1]);
+                                auto_consome_tmp.push(response.auto_consomer[i][1]);
+                                importe_tmp.push(response.importer[i][1]);
+
+                            }
+                            else{
+                                consomation_tmp.push(response.consomation[i][1]);
+                                production_tmp.push(response.production[i][1]);
+                                cedee_tmp.push(response.cedee[i][1]);
+                                auto_consome_tmp.push(response.auto_consomer[i][1]);
+                                importe_tmp.push(response.importer[i][1]);
+                            }
+                        }
+                        for (let j = 1; j < response.PH_cedee.length ; j++) {
+                            PH_consomation[0]+=response.PH_consomation[j]['jour'];
+                            PH_consomation[3]+=response.PH_consomation[j]['nuit'];
+                            PH_consomation[1]+=response.PH_consomation[j]['ete'];
+                            PH_consomation[2]+=response.PH_consomation[j]['soir'];
+                            PH_production[0]+=response.PH_production[j]['jour'];
+                            PH_production[3]+=response.PH_production[j]['nuit'];
+                            PH_production[1]+=response.PH_production[j]['ete'];
+                            PH_production[2]+=response.PH_production[j]['soir'];
+                            PH_auto_consome[0]+=response.PH_auto_consomer[j]['jour'];
+                            PH_auto_consome[3]+=response.PH_auto_consomer[j]['nuit'];
+                            PH_auto_consome[1]+=response.PH_auto_consomer[j]['ete'];
+                            PH_auto_consome[2]+=response.PH_auto_consomer[j]['soir'];
+                            PH_cedee[0]+=response.PH_cedee[j]['jour'];
+                            PH_cedee[3]+=response.PH_cedee[j]['nuit'];
+                            PH_cedee[1]+=response.PH_cedee[j]['ete'];
+                            PH_cedee[2]+=response.PH_cedee[j]['soir'];
+                            PH_importer[0]+=response.PH_importer[j]['jour'];
+                            PH_importer[3]+=response.PH_importer[j]['nuit'];
+                            PH_importer[1]+=response.PH_importer[j]['ete'];
+                            PH_importer[2]+=response.PH_importer[j]['soir'];
+                        }
+                        consomation[0].sort(function(a,b) {
+                            return new Date(a.start).getTime() - new Date(b.start).getTime()
+                        });
+                        production[0].sort(function(a,b) {
+                            return new Date(a.start).getTime() - new Date(b.start).getTime()
+                        });
+                        cedee[0].sort(function(a,b) {
+                            return new Date(a.start).getTime() - new Date(b.start).getTime()
+                        });
+                        importer[0].sort(function(a,b) {
+                            return new Date(a.start).getTime() - new Date(b.start).getTime()
+                        });
+                        auto_consome[0].sort(function(a,b) {
+                            return new Date(a.start).getTime() - new Date(b.start).getTime()
+                        });
+                        console.log("consomation");
+                        console.log(consomation_heatmap);
+                        console.log("production");
+                        console.log(production);
+                        console.log("cedee");
+                        console.log(cedee);
+                        console.log('autoconsomation');
+                        console.log(auto_consome);
+                        console.log("importe");
+                        console.log(importer);
+                        $('#prod25').append(" <td>"+round(response.prod25,3)+"</td><td>kWh</td>");
+                        $('#lcoe').append("<td>"+round(response.lcoe,3)+"</td><td>DT</td>");
+                        $('#t_autoc').append("<td>"+round(response.t_auto*100,3)+"</td><td>%</td>");
+                        $('#t_couv').append("<td>"+round(response.t_couverture*100,3)+"</td><td>%</td>");
+                        $('#productible').append("<td>"+round(response.productible,3)+"</td><td>kWh/kWc</td>");
+                        $('#t_cd').append("<td>"+round(response.t_cedee*100,3)+"</td><td>%</td>");
+                        $('#f_r').append("<td>"+round(response.f_reg,3)+"</td><td></td>");
+                        $('#coutproj').append("<td>"+round(response.coutproj,3)+"</td><td>DT</td>");
+                    }
+                });
+
+            }
+        }
+        $(function () {
+            res();
+        })
+    </script>
+</div>

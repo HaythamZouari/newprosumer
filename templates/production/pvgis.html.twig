@@ -1,0 +1,111 @@
+<form class="production" id="pvgisForm" action="{{ path('pvgis',{'id':project.id}) }}"  enctype="multipart/form-data">
+    <div class="row">
+        <div class="col">
+                    <input type="hidden" name="raddatabase" value="PVGIS-CMSAF"/>
+            <div class="form-group">
+                <label class="form-control-label required">Type d'integration:</label>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label required">Fixe</label>
+                <input style="margin-right: 5px" type="radio" checked="checked" name="trackingtype"  value="0" onclick="fixe()">
+                <label class="form-control-label required">Axe Vertical</label>
+                <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=3 onclick="vAx()">
+                <label style="margin-right: 5px" class="form-control-label required">Axe Incline</label>
+                <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=5 onclick="iAx()">
+                <label style="margin-right: 5px" class="form-control-label required">Double Axe</label>
+                <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=2 onclick="dAx()">
+
+            </div>
+            <div class="form-group">
+                <label class="form-control-label required" for="angle" >Inclinaison [°]</label>
+                <input type="number" step="0.01" class="form-control" min="0" max="90" name="angle" id="angle" value="0">
+            </div>
+            <div class="form-group">
+                <label class="form-control-label required" for="aspect" >Azimuth [°]</label>
+                <input type="number" class="form-control" step="0.01" min="-180" max="180" value="0" name="aspect" id="aspect">
+            </div>
+            <input name="technologies" id="pvtechchoice"  value="crystSi" type="hidden">
+            <div class="form-group">
+                <label class="form-control-label required" for="peakpower" >Puissance crete[kWc]</label>
+                <input type="number" class="form-control" step="0.01" min="1" value=1  name="peakpower" id="peakpower">
+            </div>
+            <div class="form-group">
+                <label class="form-control-label required" for="loss" >Pertes [%]</label>
+                <input type="number" class="form-control" step="0.01" min="0" value=14  name="loss" id="loss">
+            </div>
+
+            <div class="text-center">
+                <button type="button" onclick="pvgisSubmit()" class="btn-secondary btn">Continuer</button>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    function fixe(){
+        $('#angle').prop('disabled',false);
+
+        $('#aspect').prop('disabled',false);
+    }
+    function vAx() {
+        $('#angle').prop('disabled',false);
+        $('#aspect').prop('disabled',true);
+
+    }
+    function dAx() {
+        $('#angle').prop('disabled',true);
+        $('#aspect').prop('disabled',true);
+
+    }
+    function iAx() {
+        $('#angle').prop('disabled',true);
+        $('#aspect').prop('disabled',false);
+
+    }
+
+    function pvgisSubmit() {
+        {% if not app.user %}
+        window.location.replace('{{ path('security_login') }}');
+        {% else %}
+            var data = $('#pvgisForm').serialize();
+            var url = $('#pvgisForm').attr('action');
+            console.log(data);
+            data=data+'&lon='+$('#lon').val()+'&lat='+$('#lat').val();
+        var url = $('#pvgisForm').attr('action');
+        $.ajax({
+                url: url,
+                type : 'POST',
+                data : data,
+                dataType: 'json',
+                cache: false,
+                success: function (response) {
+                    /*
+                    for (let i = 0; i < response.data.length ; i++) {
+                        dates =new Date(response.data[i][0]*1000);
+                        dates.setHours(dates.getHours()-1);
+                        response.data[i][0]=dates;
+                    }
+                    */
+                    for (let i = 0; i < response.data2.length ; i++) {
+                        dates =new Date(response.data2[i][0]*1000);
+                        dates.setHours(dates.getHours()-1);
+                        response.data2[i][0]=dates;
+                    }
+                    console.log(response.data);
+                    console.log(response.data2);
+                    $('#tabs-icons-text-3-tab').css("pointer-events"," visible");
+                    $('#tabs-icons-text-2-tab').css("pointer-events"," none")
+                    $('#tabs-icons-text-2').toggle();
+                    $('#tabs-icons-text-3').toggle();
+                    $('#tabs-icons-text-3-tab').addClass('active');
+                    $('#tabs-icons-text-2-tab').removeClass('active');
+                }
+            });
+            /*
+            $.get( url ,data,function (dat) {
+               console.log(dat);
+            });
+             */
+            return false;
+        {% endif %}
+    };
+</script>

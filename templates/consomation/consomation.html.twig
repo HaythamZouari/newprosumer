@@ -1,0 +1,524 @@
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+<div class="card bg-secondary shadow border-0">
+    <div class="card-header bg-transparent pb-5" >
+        <div class="card-body px-lg-5 py-lg-5">
+            <form class="consomation" id="consomationForm" action="{{ path('project_show',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
+                <div>
+                    <div class="form-group">
+                        <label class="form-control-label required" for="Tarif">Tarif</label>
+                        <br>
+                        <label class="form-control-label required">Uniforme</label>
+                        <input type="radio" checked="checked" name="tarif" id="tarif" value="0" data-toggle="collapse" data-target=".tarif"  aria-expanded="true" aria-controls="Uniforme PostHoraire">
+                        <label class="form-control-label required">Quatre postes horaires</label>
+                        <input type="radio"  name="tarif" id="tarif" value="1" data-toggle="collapse" data-target=".tarif"  aria-expanded="false" aria-controls="PostHoraire Uniforme">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label control-label required" for="exlimg">Courbe de charge (XLSX)</label>
+                        <div class="form-control-file" id="exlimg">
+                            <div class="dropzone" id="exlreader"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label required" for="dateDeb">Date de debut</label>
+                        <input type="date" name="dateDeb" id="dateDeb" class="form-control">
+                    </div>
+                    <div id="Uniforme" class="tarif form-group collapse multi-collapse show">
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Mois</th>
+                                    <th scope="col">Consommation mensuelle <span>(KWH)</span> </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Janvier
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number"  value="0"  step="0.001" min="0" class="form-control" name="date[1]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Fevrier
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number"  value="0" step="0.001" min="0" class="form-control" name="date[2]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Mars
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number"  value="0" step="0.001" min="0" class="form-control" name="date[3]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Avril
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001" value="0" min="0" class="form-control" name="date[4]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Mai
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="date[5]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Juin
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="date[6]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Juillet
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001" value="0" min="0" class="form-control" name="date[7]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Aout
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="date[8]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Septembre
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="date[9]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            October
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="date[10]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Novembre
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="date[11]">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Decembre
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="date[12]">
+                                    </td>
+                                </tr>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="PostHoraire" class="tarif form-group collapse multi-collapse">
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Mois</th>
+                                    <th scope="col">Jour (KWH)</th>
+                                    <th scope="col">Pointe ete (KWH)</th>
+                                    <th scope="col">Pointe soir (KWH)</th>
+                                    <th scope="col">Nuit (KWH)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Janvier
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][1]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][1]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][1]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Fevrier
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][2]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                        </div>
+                                    </th>
+
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][2]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][2]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Mars
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][3]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][3]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][3]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Avril
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][4]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][4]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][4]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Mai
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][5]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][5]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][5]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Juin
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][6]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[ete][6]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][6]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][6]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Juillet
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][7]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[ete][7]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][7]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][7]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Aout
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][8]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[ete][8]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][8]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][8]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Septembre
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][9]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][9]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][9]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            October
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][10]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][10]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][10]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Novembre
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][11]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][11]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][11]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            Decembre
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][12]">
+                                    </td>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][12]">
+                                        </div>
+                                    </th>
+                                    <th scope="row">
+                                        <div class="media align-items-center">
+                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][12]">
+                                        </div>
+                                    </th>
+                                </tr>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" name="continue" id="continue" onclick="consomationSubmit()"  class="btn-secondary btn">Continuer</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container-fluid " id="chart_container" style="display: none">
+    <div class="row justify-content-center">
+        <div class="col-xl">
+            <div class="card bg-secondary shadow border-0">
+                <div class="card-header bg-transparent pb-5" >
+                    <div class="card-body px-lg-5 py-lg-5" >
+                        <div class="" id="chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+<script>
+    Dropzone.autoDiscover = false;
+    var dropzone_default = new Dropzone("#exlreader", {
+        url: '{{ path('excelupload',{'id':project.id}) }}' ,
+        dictDefaultMessage: "Importer votre fichier",
+        maxFiles: 20,
+        dictMaxFilesExceeded: 'Only 20 file can be uploaded',
+        maxFilesize: 20,  // in Mb
+        acceptedFiles: ".xls,.xlsb,.xlsm,.xlsx,.xltm,.xlw,",
+        addRemoveLinks: false,
+        init: function () {
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+            });
+            this.on("sending", function (file, xhr, formData) {
+                // send additional data with the file as POST data if needed.
+                formData.append("tarif", $('[name=tarif]'));
+            });
+            this.on("success", function (file, response) {
+            /*    for (let i = 0; i < response.data.length ; i++) {
+                    dates =new Date(response.data[i][0]*1000);
+                    response.data[i][0]=dates;
+                }
+
+             */
+                console.log(response.data);
+            });
+        }
+
+    });
+</script>

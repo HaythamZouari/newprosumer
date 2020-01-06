@@ -1,0 +1,51 @@
+
+{#
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+#}
+<div class="form-group">
+    <label class="form-control-label required" for="csvpuiss">Puissence [kWc]</label>
+    <input type="value" class="form-control"  name="csvpuiss" id="csvpuiss"  value="20" min="0">
+</div>
+<div class="form-group">
+    <label class="form-control-label control-label required" for="csvimg">Courbe de production (csv)</label>
+    <div class="form-control-file" id="csvimg">
+        <div class="dropzone" id="csvreader"></div>
+    </div>
+</div>
+<script>
+    Dropzone.autoDiscover = false;
+    var dropzone_default = new Dropzone("#csvreader", {
+        url: '{{ path('readcsv',{'id': project.id}) }}' ,
+        dictDefaultMessage: "Importer votre fichier",
+        maxFiles: 1,
+        dictMaxFilesExceeded: 'Only 1 file can be uploaded',
+        maxFilesize: 20,  // in Mb
+        addRemoveLinks: false,
+        acceptedFiles: ".csv",
+        init: function () {
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+            });
+            this.on("sending", function (file, xhr, formData) {
+               formData.append('csvpuiss',$('#csvpuiss').val());
+                // send additional data with the file as POST data if needed.
+            });
+
+            this.on("success", function (file, response) {
+                for (let i = 0; i < response.data.length ; i++) {
+                    dates =new Date(response.data[i][0]*1000);
+                    dates.setHours(dates.getHours()-1);
+                    response.data[i][0]=dates;
+                }
+                $('#tabs-icons-text-3-tab').css("pointer-events"," visible");
+                $('#tabs-icons-text-2-tab').css("pointer-events"," none");
+                $('#tabs-icons-text-2').toggle();
+                $('#tabs-icons-text-3').toggle();
+                $('#tabs-icons-text-3-tab').addClass('active');
+                $('#tabs-icons-text-2-tab').removeClass('active');
+            });
+        }
+
+    });
+</script>

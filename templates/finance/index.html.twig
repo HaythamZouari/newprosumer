@@ -1,0 +1,121 @@
+<div class="card bg-secondary shadow border-0">
+    <div class="card-header bg-transparent pb-5" >
+        <div class="card-body px-lg-5 py-lg-5">
+            <form id="financeForm"  action="{{ path('finance',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                    <label class="form-control-label required" for="capex">Capex (DT)</label>
+                    <input type="number" name="capex" id="capex" min="0" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="subvention">Subvention (%)</label>
+                    <input type="number" name="subvention" max="100" id="subvention" min="0" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="opex">O&M (%)</label>
+                    <input type="number" name="opex" id="opex" max="100" min="0" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="duree_proj">Duree du projet (ans)</label>
+                    <input type="number" name="duree_proj" id="duree_proj" min="0" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="aug_tarif_v">Taux d'augmentation du tarif de vente (%)</label>
+                    <input type="number" name="aug_tarif_v" id="aug_tarif_v"  max="100" min="0" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="aug_tarif_a">Taux d'augmentation du tarif d'achat (%) </label>
+                    <input type="number" name="aug_tarif_a" id="aug_tarif_a" min="0"  max="100" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="taux_actualisation">Taux d'actualisation (%)</label>
+                    <input type="number" name="taux_actualisation" id="taux_actualisation" min="0"  max="100" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="">Degradation (%)</label>
+                    <input type="number" name="degradation" id="degradation" min="0" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox"   name="credit" id="credit">
+                    <label class="form-control-label required">Credit   </label>
+                    <input type="checkbox"  name="transport_energie" id="transport_energie">
+                    <label class="form-control-label required">Transport de  l'energie</label>
+                </div>
+                <div id="credits_div" style="display: none">
+                    <div class="form-group">
+                        <label class="form-control-label required" for="dette">Montant de la dette (DT)</label>
+                        <input type="number" name="dette" id="dette" min="0" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label required" for="interet">Taux d'interet (%)</label>
+                        <input type="number" name="interet" id="interet" min="0"  max="100" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label required" for="delai_grace">Delai de grace (ans)</label>
+                        <input type="number" name="delai_grace" id="delai_grace" min="0" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label required" for="maturite_proj">Duree de remboursement (ans)</label>
+                        <input type="number" name="maturite_proj" id="maturite_proj" min="0" class="form-control">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button"  id="finance"  onclick="financeSubmit()" class="btn-secondary btn">Continuer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
+<script>
+
+    let cashflowIn=0;
+    var capex=0;
+    var subv=0;
+    var cash_flow=[];
+    var gains=[];
+    var llcr=[];
+    var cash_flowc=[];
+    var taux_ac=0;
+    var credit=0;
+    var taux_credit=0;
+    let cfadstmp=[];
+    let soldrep=[];
+    let llcrtmp=[];
+    let cfads=[];
+    let i;
+    let j;
+    $('#credit').on('change',function () {
+       $('#credits_div').toggle();
+    });
+    function financeSubmit() {
+
+        {% if not app.user %}
+        window.location.replace('{{ path('security_login') }}');
+        {% else %}
+        var data = $('#financeForm').serialize();
+        var url = $('#financeForm').attr('action');
+        $.ajax({
+            url: url,
+            type : 'POST',
+            data : data,
+            dataType: 'json',
+            cache: false,
+            success: function (response) {
+                console.log(response.arr);
+                $('#tabs-icons-text-4-tab').css("pointer-events"," visible");
+                $('#tabs-icons-text-5-tab').css("pointer-events"," visible");
+                $('#tabs-icons-text-3-tab').css("pointer-events"," none");
+                $('#tabs-icons-text-4').toggle();
+                $('#tabs-icons-text-3').toggle();
+                $('#tabs-icons-text-4-tab').addClass('active');
+                $('#tabs-icons-text-3-tab').removeClass('active');
+                res();
+            }
+        });
+        return false;
+        {% endif %}
+    }
+
+</script>
