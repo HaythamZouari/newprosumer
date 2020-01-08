@@ -11,7 +11,7 @@
         "kenguest/services-openstreetmap": "^0.5.0",
         "knplabs/knp-snappy-bundle": "^1.6",
         "nesbot/carbon": "^2.22",
-        "phpoffice/phpspreadsheet": "^1.8",
+        "phpoffice/phpspreadsheet": "^1.10",
         "sensio/framework-extra-bundle": "^5.1",
         "spatie/async": "^1.0",
         "spipu/html2pdf": "^5.2",
