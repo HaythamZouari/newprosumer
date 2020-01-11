@@ -158,7 +158,10 @@ class ProjectController extends AbstractController
         $entityManager->flush();
         $session->set('avgweek',$tarifUni);
         $session->set('data',$data);
-        return new JsonResponse(['data'=>$project->getConsomation()->getAvgweek()]);
+        return new JsonResponse(['data'=>$project->getConsomation()->getAvgweek(),
+        'factor'=>$factor,
+        'somme'=>$tarifUni,
+        'courbe'=>$data]);
 
     }
 

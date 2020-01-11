@@ -508,6 +508,8 @@
             this.on("sending", function (file, xhr, formData) {
                 // send additional data with the file as POST data if needed.
                 formData.append("tarif", $('[name=tarif]'));
+                
+                
             });
             this.on("success", function (file, response) {
             /*    for (let i = 0; i < response.data.length ; i++) {
@@ -517,6 +519,9 @@
 
              */
                 console.log(response.data);
+                console.log(response.factor); 
+                console.log(response.somme);
+                console.log(response.courbe)              
             });
         }
 
