@@ -99,7 +99,7 @@ class ProjectController extends AbstractController
                    if((int)$date->format('w')==$i){
                        for($j =0;$j<=23;$j++){
                            if((int)$date->format('H')==$j){
-                               $tarifUni[0][$i][$j]=$tarifUni[0][$i][$j]+$datum[1];
+                               $tarifUni[0][$i][$j]+=(int)$datum[1];
                                $factor[0][$i][$j]++;
                            }
                        }
@@ -132,16 +132,17 @@ class ProjectController extends AbstractController
                     $factor[1][$i][$j]=$factor[0][$i][$j];
                 }
                 if($tarifUni[1][$i][$j]===0){
-                    $tarifUni[1][$i][$j]=$tarifUni[1][$i][$j];
+                    $tarifUni[1][$i][$j]=$tarifUni[0][$i][$j];
                 }
             }
         }
+/*
         for ($i =0 ; $i<7;$i++){
             for($j =0;$j<=23;$j++){
                 $tarifUni[0][$i][$j]/=$factor[0][$i][$j];
                 $tarifUni[1][$i][$j]/=$factor[1][$i][$j];
             }
-        }
+        }*/
         for ($i =0 ; $i<7;$i++) {
             array_push($tarifUni[0][$i], $tarifUni[0][$i][0]);
             array_push($tarifUni[0][$i], $tarifUni[0][$i][1]);

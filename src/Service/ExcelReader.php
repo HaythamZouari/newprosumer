@@ -63,21 +63,21 @@ class ExcelReader
         $data =[];
         $numsheet = $spreadsheet->getSheetCount();
 
-        if($numsheet===2){
+        if($numsheet===2){ /*si le nombre de feuilles du fichier eexcel est egal à 2 */
             foreach ($spreadsheet->getWorksheetIterator() as $worksheet) {
-                $worksheetit++;
-                if ($worksheetit ==2){
+                $worksheetit++; 
+                if ($worksheetit ==2){ /*à la deuxiéme feuille*/
                     foreach ($worksheet->getRowIterator() as $row) {
-                        $rowIndex = $row->getRowIndex();
-                        $cellIterator = $row->getCellIterator();
+                        $rowIndex = $row->getRowIndex(); /*$rowindex c'est le numéro de la ligne*/
+                        $cellIterator = $row->getCellIterator(); /* $celliterator pour lire toutes lees cellules de la feuille car il y'a des cellules vide*/
                         $cellIterator->setIterateOnlyExistingCells(false); // Loop over all cells, even if it is not set
-                        $val = 0;
+                        $val = 0; /* $val c'est un compteur pour les colonnes*/
                         $i=0;
                         foreach ($cellIterator as $cell) {
-                            if ($rowIndex >= 1 ) {
-                                if($val < 4) {
-                                    if ($val !=3)
-                                        $data[$val][] = $cell->getFormattedValue();
+                            if ($rowIndex >= 1 ) { /* si le numéro de la ligne est supérieur à 1 */
+                                if($val < 4) { 
+                                    if ($val !=3) /* si la colonne est entre 0 et 2*/
+                                        $data[$val][] = $cell->getFormattedValue(); /* remplir data avec les données des cellules excel de la ligne rang val*/
                                     $val = $val + 1;
                                 }
                             }
@@ -86,21 +86,21 @@ class ExcelReader
 
                 }
             }
-            $data[2] = array_map('floatval', $data[2]);
+            $data[2] = array_map('floatval', $data[2]); /*floatval retour le nombre relatif au contenu de $data[2] les valeur de puissance est array-map leurs donne des key*/
             $data1=[];
             $datevoid=$data[0][1];
             foreach (array_keys($data[0]) as $key) {
-                if (!empty($data[0][$key])){
+                if (!empty($data[0][$key])){ /* data[0] c'est la colonne qui contient les valeurs des dates chaque jour une valeur*/
                     $datevoid=$data[0][$key];
                 }
                 if ($key>0){
                     $min=explode(":",$data[1][$key]);
-                    if ($min[1]=="10"){
-                        if(($key%6)==1){
+                    if ($min[1]=="10"){ /* min[1] contient les valeurs des des heures XX:10*/
+                      /*  if(($key%6)==1){ j'ai supprimé cette condition car si la courbe contient des coupures alors stistfaire cette condition et la condition précédente va rendre les itération fausses*/
                             $data[0][$key]=DateTime::createFromFormat('d/m/Y H:i',$datevoid." ".$data[1][$key])->getTimestamp();
                             $data1[$i]=[$data[0][$key],$data[2][$key]];
                             $i++;
-                        }
+                       /* }*/
 
                     }
                 }
@@ -118,28 +118,42 @@ class ExcelReader
                         $val = 0;
                         $i=0;
                         foreach ($cellIterator as $cell) {
+                            $colIndex=$cell->getcolumn();
                             if ($rowIndex >= 1 ) {
-                                if($val < 3) {
-                                    if ($val !=2)
-                                        $data[$val][] = $cell->getFormattedValue();
-                                        $data[3][]= ExcelReader::frenshdate($worksheet->getTitle());
+                                if($val < 3) 
+                                    
+                                    $data[$val][] = $cell->getFormattedValue();
                                     $val = $val + 1;
-                                }
                             }
+          
                         }
+                       if ($rowIndex >= 1) {
+                        $data[3][]= ExcelReader::frenshdate($worksheet->getTitle());
+                        $rowIndex=$rowIndex+1;
+                       }
                     }
                 }
             }
+            $data[5]=$data[0];
             $data[0] = array_map('floatval', $data[0]);
             $data[1] = array_map('floatval', $data[1]);
+            $data5=[];
             $data1=[];
+            $data2=[];
+            $data4=[];
+            $X=[];
             foreach (array_keys($data[0]) as $key) {
-                if(($key%6)==1&&$key>1){
+               if(round(($data[0][$key]*144)%6)==1){
+              
+                    $X=round(($data[0][$key]*144))%6;
+                    $data5=$data[0][$key];
                     $data[3][$key]=(new DateTime($data[3][$key]))->getTimestamp();
+                    $data2=$data[3][$key];
                     $data[3][$key]=$data[3][$key]+($data[0][$key]* 86400);
-                    $data1[$i]=[$data[3][$key],$data[1][$key]];
+                    $data1[$i]=[$data[3][$key],$data[1][$key],$key,$data2,$data5,$X];
                     $i++;
-                }
+                
+               }
             }
         }
         else if ($numsheet===1){
@@ -163,6 +177,8 @@ class ExcelReader
                 }
             }
             $data[3] = array_map('floatval', $data[3]);
+            $data[1] = array_map('floatval', $data[1]);
+            $data[0] = array_map('floatval', $data[0]);
             $data1=[];
             if ((float)$data[0][0]==0&&(float)$data[0][1]==0){
                 foreach (array_keys($data[0]) as $key) {
@@ -177,10 +193,11 @@ class ExcelReader
             }
             else{
                 foreach (array_keys($data[0]) as $key) {
-                    if(($key%6)==1){
+                    $data6=$data[1][$key];
+                    if(round(($data[1][$key]*144)%6)==0){
                         $data[0][$key]=(($data[0][$key] - 25569+($data[1][$key])) * 86400);
                         $data1[$i][]=$data[0][$key];
-                        $data1[$i][]=$data[3][$key];
+                        $data1[$i][]=[$data[3][$key],$data6];
                         $i++;
                     }
                 }

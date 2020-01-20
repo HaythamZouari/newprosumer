@@ -489,6 +489,7 @@
         </div>
     </div>
 </div>
+<pre id="json"></pre>
 
 <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
 <script>
@@ -521,7 +522,8 @@
                 console.log(response.data);
                 console.log(response.factor); 
                 console.log(response.somme);
-                console.log(response.courbe)              
+                console.log(response.courbe)  
+                document.getElementById("json").innerHTML = JSON.stringify(response.courbe, undefined, 2);            
             });
         }
 
