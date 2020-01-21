@@ -136,13 +136,13 @@ class ProjectController extends AbstractController
                 }
             }
         }
-/*
+
         for ($i =0 ; $i<7;$i++){
             for($j =0;$j<=23;$j++){
                 $tarifUni[0][$i][$j]/=$factor[0][$i][$j];
                 $tarifUni[1][$i][$j]/=$factor[1][$i][$j];
             }
-        }*/
+        }
         for ($i =0 ; $i<7;$i++) {
             array_push($tarifUni[0][$i], $tarifUni[0][$i][0]);
             array_push($tarifUni[0][$i], $tarifUni[0][$i][1]);
@@ -161,8 +161,9 @@ class ProjectController extends AbstractController
         $session->set('data',$data);
         return new JsonResponse(['data'=>$project->getConsomation()->getAvgweek(),
         'factor'=>$factor,
-        'somme'=>$tarifUni,
-        'courbe'=>$data]);
+        'somme'=>$tariftmp,
+        'courbe'=>$data
+        ]);
 
     }
 
