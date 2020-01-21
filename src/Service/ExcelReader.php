@@ -43,7 +43,7 @@ class ExcelReader
             'september',
             'october',
             'novembre',
-            'decémbre',
+            'décembre',
         ];
         $date1 = explode(" ",$date);
         $finaldate=0;
@@ -143,7 +143,7 @@ class ExcelReader
             $data4=[];
             $X=[];
             foreach (array_keys($data[0]) as $key) {
-               if(round(($data[0][$key]*144)%6)==1){
+               if((round($data[0][$key]*144)%6)==1){
               
                     $X=round(($data[0][$key]*144))%6;
                     $data5=$data[0][$key];
@@ -153,7 +153,7 @@ class ExcelReader
                     $data1[$i]=[$data[3][$key],$data[1][$key],$key,$data2,$data5,$X];
                     $i++;
                 
-               }
+                }
             }
         }
         else if ($numsheet===1){
@@ -166,7 +166,7 @@ class ExcelReader
                     $val = 0;
                     $i=0;
                     foreach ($cellIterator as $cell) {
-                        if ($rowIndex >= 1 ) {
+                        if ($rowIndex > 1 ) {
                             if($val < 4) {
                                 if ($val !=2)
                                     $data[$val][] = $cell->getFormattedValue();
@@ -177,9 +177,7 @@ class ExcelReader
                 }
             }
             $data[3] = array_map('floatval', $data[3]);
-            $data[1] = array_map('floatval', $data[1]);
-            $data[0] = array_map('floatval', $data[0]);
-            $data1=[];
+            /*$data1=[];
             if ((float)$data[0][0]==0&&(float)$data[0][1]==0){
                 foreach (array_keys($data[0]) as $key) {
                     if($key==0&&$key==1){
@@ -191,17 +189,18 @@ class ExcelReader
                     }
                 }
             }
-            else{
+            else{*/
+                $data[1] = array_map('floatval', $data[1]);
+                $data[0] = array_map('floatval', $data[0]);
                 foreach (array_keys($data[0]) as $key) {
-                    $data6=$data[1][$key];
-                    if(round(($data[1][$key]*144)%6)==0){
+                    if(round($data[1][$key]*144)%6==0){
                         $data[0][$key]=(($data[0][$key] - 25569+($data[1][$key])) * 86400);
-                        $data1[$i][]=$data[0][$key];
-                        $data1[$i][]=[$data[3][$key],$data6];
+                        $data1[$i][]=round($data[0][$key]);
+                        $data1[$i][]=$data[3][$key];
                         $i++;
                     }
                 }
-            }
+           /* }*/
 
         }
 
