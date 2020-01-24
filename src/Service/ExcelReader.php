@@ -167,7 +167,7 @@ class ExcelReader
                     $val = 0;
                     $i=0;
                     foreach ($cellIterator as $cell) {
-                        if ($rowIndex >= 1 ) {
+                        if ($rowIndex > 2 ) {
                             if($val < 4) {
                                 if ($val !=2)
                                     $data[$val][] = $cell->getFormattedValue();
@@ -179,17 +179,17 @@ class ExcelReader
             }
             $data[3] = array_map('floatval', $data[3]);
             $data1=[];
-            if ((float)$data[0][0]==0&&(float)$data[0][1]==0){
+           /* if ((float)$data[0][0]==0&&(float)$data[0][1]==0){*/
                 foreach (array_keys($data[0]) as $key) {
-                    if($key==0&&$key==1){
+                  /*  if($key==0&&$key==1){
                     }
-                    else {
-                        if(($key%6)==2) {
+                    else {*/
+                        if(($key%6)==0) {
                             $data1[] =[ DateTime::createFromFormat('d/m/Y H:i', $data[0][$key] . " " . $data[1][$key])->getTimestamp(),$data[3][$key]];
                         }
-                    }
+                  /*  }*/
                 }
-            }
+          /*  }*//*
             else{
                 foreach (array_keys($data[0]) as $key) {
                     if(($key%6)==1){
@@ -199,7 +199,7 @@ class ExcelReader
                         $i++;
                     }
                 }
-            }
+            }*/
 
         }
 

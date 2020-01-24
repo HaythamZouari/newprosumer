@@ -143,13 +143,13 @@ class ProjectController extends AbstractController
                 $tarifUni[1][$i][$j]/=$factor[1][$i][$j];
             }
         }
-        for ($i =0 ; $i<7;$i++) {
+       /* for ($i =0 ; $i<7;$i++) {
             array_push($tarifUni[0][$i], $tarifUni[0][$i][0]);
             array_push($tarifUni[0][$i], $tarifUni[0][$i][1]);
             array_splice($tarifUni[0][$i], 0, 2);
 
 
-        }
+        }*/
 
 
         $project->getConsomation()->setAvgweek($tarifUni);
