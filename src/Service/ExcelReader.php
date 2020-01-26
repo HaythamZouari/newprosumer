@@ -157,6 +157,7 @@ class ExcelReader
                 }
             }
         }
+      
         else if ($numsheet===1){
             foreach ($spreadsheet->getWorksheetIterator() as $worksheet) {
                 $worksheetit++;
@@ -167,7 +168,7 @@ class ExcelReader
                     $val = 0;
                     $i=0;
                     foreach ($cellIterator as $cell) {
-                        if ($rowIndex > 2 ) {
+                        if ($rowIndex >= 1 ) {
                             if($val < 4) {
                                 if ($val !=2)
                                     $data[$val][] = $cell->getFormattedValue();
@@ -179,28 +180,30 @@ class ExcelReader
             }
             $data[3] = array_map('floatval', $data[3]);
             $data1=[];
-           /* if ((float)$data[0][0]==0&&(float)$data[0][1]==0){*/
-                foreach (array_keys($data[0]) as $key) {
-                  /*  if($key==0&&$key==1){
-                    }
-                    else {*/
-                        if(($key%6)==0) {
-                            $data1[] =[ DateTime::createFromFormat('d/m/Y H:i', $data[0][$key] . " " . $data[1][$key])->getTimestamp(),$data[3][$key]];
+            $data6=[];
+            $data7=[];
+            foreach (array_keys($data[0]) as $key) {
+                    $data6[3]=DateTime::createFromFormat('d/m/Y H:i', $data[0][3] . " " . $data[1][3]);
+                    
+                    
+                        if(($key%6)==2) {
+                            if (is_bool( $data6[3])){
+                                $data[0][$key]=(($data[0][$key] - 25569+($data[1][$key])) * 86400);
+                                $data1[$i][]=$data[0][$key];
+                                $data1[$i][]=$data[3][$key];
+                                $i++;
+                          
+                            }
+                            else{
+                                
+                             $data1[] =[ DateTime::createFromFormat('d/m/Y H:i', $data[0][$key] . " " . $data[1][$key])->getTimestamp(),$data[3][$key]];
+                             
+                                
+                            }
                         }
-                  /*  }*/
-                }
-          /*  }*//*
-            else{
-                foreach (array_keys($data[0]) as $key) {
-                    if(($key%6)==1){
-                        $data[0][$key]=(($data[0][$key] - 25569+($data[1][$key])) * 86400);
-                        $data1[$i][]=$data[0][$key];
-                        $data1[$i][]=$data[3][$key];
-                        $i++;
-                    }
-                }
-            }*/
-
+            }    
+                
+            
         }
 
         return $data1;
