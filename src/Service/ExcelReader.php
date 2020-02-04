@@ -183,17 +183,24 @@ class ExcelReader
             $data6=[];
             $data7=[];
             foreach (array_keys($data[0]) as $key) {
-                    $data6[3]=DateTime::createFromFormat('d/m/Y H:i', $data[0][3] . " " . $data[1][3]);
+                    $data6[$key]=DateTime::createFromFormat('d/m/Y H:i', $data[0][$key] . " " . $data[1][$key]);
                     
                     
                         if(($key%6)==2) {
-                            if (is_bool( $data6[3])){
+
+                                
+                            if ((is_float( $data6[$key]))||(is_bool( $data6[$key]))){
                                 $data[0][$key]=(($data[0][$key] - 25569+($data[1][$key])) * 86400);
                                 $data1[$i][]=$data[0][$key];
                                 $data1[$i][]=$data[3][$key];
                                 $i++;
                           
-                            }
+                            }/*
+
+                            elseif(is_bool( $data6[$key])){
+                                $data1[$i][]=0 ;
+
+                            }*/
                             else{
                                 
                              $data1[] =[ DateTime::createFromFormat('d/m/Y H:i', $data[0][$key] . " " . $data[1][$key])->getTimestamp(),$data[3][$key]];

@@ -18,6 +18,7 @@
                             <div class="dropzone" id="exlreader"></div>
                         </div>
                     </div>
+                    <pre id="plot"></pre>
                     <div class="form-group">
                         <label class="form-control-label required" for="dateDeb">Date de debut</label>
                         <input type="date" name="dateDeb" id="dateDeb" class="form-control">
@@ -489,10 +490,16 @@
         </div>
     </div>
 </div>
+
 <pre id="json"></pre>
 
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
 <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
 <script>
+ let courbe=[];
+        courbe[0]=[];
+        courbe[1]=[];
     Dropzone.autoDiscover = false;
     var dropzone_default = new Dropzone("#exlreader", {
         url: '{{ path('excelupload',{'id':project.id}) }}' ,
@@ -519,13 +526,76 @@
                 }
 
              */
+             let dates = [];
+             for (let i = 0; i < response.info.length ; i++) {
+                            dates[i] = new Date(response.info[i][0] * 1000);
+                            
+                            courbe[0][i] = dates[i];
+                            courbe[1][i] = response.info[i][1];
+                        }
+                let trace10 = {};
+
+
+        let data10=[];
+        let layout10={};
+         data10=[];
+            trace10 = {
+                type: "scatter",
+                mode: "lines",
+                name: 'Consomation',
+                x: courbe[0],
+                y: courbe[1],
+                line: {color: '#17BECF'}
+            };
+            data10.push(trace10);
+
+            layout10 = {
+                title: 'Time series',
+                xaxis: {
+                    autorange: true,
+                    range: [courbe[0][0], courbe[0][courbe[0].length-1]],
+                    rangeselector: {buttons: [
+                            {
+                                count: 1,
+                                label: '1h',
+                                step: 'hour',
+                                stepmode: 'backward'
+                            },
+                            {
+                                count: 6,
+                                label: '6m',
+                                step: 'month',
+                                stepmode: 'backward'
+                            },
+                            {step: 'all'}
+                        ]},
+                    rangeslider: {range: [courbe[0][0], courbe[0][courbe[0].length-1]]},
+                    type: 'date'
+                },
+            };
+            Plotly.newPlot('plot', data10, layout10,{responsive: true});        
                 console.log(response.data);
                 console.log(response.factor); 
                 console.log(response.somme);
-                console.log(response.courbe)  
-                document.getElementById("json").innerHTML = JSON.stringify(response, undefined, 2);            
+                console.log(response.info)  
+                console.log(dates)  
+                document.getElementById("json").innerHTML = JSON.stringify(response.info, undefined, 2);            
             });
         }
-
+        
+                        
+                        
+      
+                        
+    
     });
+
+   
+            
+                
+              /*  courbe[0].sort(function(a,b) {
+                            return new Date(a.start).getTime() - new Date(b.start).getTime()
+                        });*/
+    
+         
 </script>
