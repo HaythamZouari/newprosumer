@@ -93,6 +93,7 @@
 
         </div>
     </div>
+    <button type="button" onclick="retourres()" class="btn-secondary btn" style="width:100%">Retour</button>
 <div class="modal resizer-handler" id="myModal" role="dialog">
     <div class="modal-dialog-scrollable">
 
@@ -175,6 +176,7 @@
             </div>
         </div>
     </div>
+    
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
@@ -831,7 +833,14 @@
 
             }
         }
-
+        function retourres(){
+        $('#tabs-icons-text-3-tab').css("pointer-events"," visible");
+        $('#tabs-icons-text-4-tab').css("pointer-events"," none")
+        $('#tabs-icons-text-3').toggle();
+        $('#tabs-icons-text-4').toggle();
+        $('#tabs-icons-text-3-tab').addClass('active');
+        $('#tabs-icons-text-4-tab').removeClass('active');
+        }
     </script>
     </div>
 </div>
