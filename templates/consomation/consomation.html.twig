@@ -19,17 +19,17 @@
                         <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                                 
                             <li class="nav-item">
-                                <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>Contruire le profil de charge</a>
+                                <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-s-2-tab" data-toggle="tab" href="#tabs-icons-text-s-2" role="tab" aria-controls="tabs-icons-text-s-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>Contruire le profil de charge</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="ni ni-cloud-upload-96 mr-2"></i>Télécharger la courbe de charge</a>
+                                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-s-3-tab" data-toggle="tab" href="#tabs-icons-text-s-3" role="tab" aria-controls="tabs-icons-text-s-3" aria-selected="false"><i class="ni ni-cloud-upload-96 mr-2"></i>Télécharger la courbe de charge</a>
                             </li>
                         </ul>
                     </div>
                     <div class="card shadow">
                         <div class="card-body">
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+                                <div class="tab-pane fade show active" id="tabs-icons-text-s-2" role="tabpanel" aria-labelledby="tabs-icons-text-s-2-tab">
                                    <form>
                                         <div style="display: inline-block"><label class="form-control-label" >Domaine d'activité</label></div>
                                         <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state">
@@ -43,33 +43,33 @@
                                         </div></br>
                                         <div style="display: inline-block"><label class="form-control-label" >Nombre de Saisons</label></div>
                                         <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state" id="saison">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
+                                            <option id="sais1" value="1" >1</option>
+                                            <option id="sais2" value="2">2</option>
+                                            <option id="sais3" value="3" selected>3</option>
                                             </select>
                                         </div>
                                         </br>
                                         <div id= "saison1">
                                             <h4 style="display: font-size:1vw;">Saison1</h4>
-                                            <h4 style="display: inline-block;padding-left: 20%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
-                                            <lo style="display: inline-block;width:50%"> <input type="text" id="monthSlider1" /></lo><lo style="display: inline-block;width: 50%;padding-left: 40px;"><input type="text" id="hourSlider1" /> </lo></br>
+                                            <h4 style="display: inline-block;padding-left: 10%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
+                                            <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider1" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider1" /> </lo></br>
                                         </div>
                                         <div id = "saison2">
                                             <h4>Saison2</h4>
-                                            <h4 style="display: inline-block;padding-left: 20%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
-                                            <lo style="display: inline-block;width:50%"> <input type="text" id="monthSlider2" /></lo><lo style="display: inline-block;width: 50%;padding-left: 40px;"><input type="text" id="hourSlider2" /> </lo></br>
+                                            <h4 style="display: inline-block;padding-left: 10%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
+                                            <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider2" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider2" /> </lo></br>
                                         </div>   
 
                                         <div id = "saison3">
                                             <h4>Saison3</h4>
-                                            <h4 style="display: inline-block;padding-left: 20%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
-                                            <lo style="display: inline-block;width:50%"> <input type="text" id="monthSlider3" /></lo><lo style="display: inline-block;width: 50%;padding-left: 40px;"><input type="text" id="hourSlider3" /> </lo></br>
+                                            <h4 style="display: inline-block;padding-left: 10%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
+                                            <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider3" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider3" /> </lo></br>
                                         </div>   
                                                 <!-- <button id="ajouter2" class="btn-secondary btn">Nouvelle saison</button>-->
                                     </form>
                                 </div>
 
-                                <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                <div class="tab-pane fade" id="tabs-icons-text-s-3" role="tabpanel" aria-labelledby="tabs-icons-text-s-3-tab">
                                     <div class="form-group">
                                     <label class="form-control-label control-label required" for="exlimg">Courbe de charge (XLSX)</label>
                                     <div class="form-control-file" id="exlimg">
@@ -559,7 +559,7 @@
     </div>
 </div>
 
-<pre id="json"></pre>
+<!--<pre id="json"></pre>-->
 
                       
 <script src={{ asset('build/js/plugins/nouislider/distribute/nouislider.min.js')}}></script>
@@ -588,8 +588,6 @@
             this.on("sending", function (file, xhr, formData) {
                 // send additional data with the file as POST data if needed.
                 formData.append("tarif", $('[name=tarif]'));
-                
-                
             });
             this.on("success", function (file, response) {
             /*    for (let i = 0; i < response.data.length ; i++) {
@@ -725,33 +723,28 @@ var mySlider = new rSlider({
   
 
 
- /* $("#ajouter2").click(function(event){
-      
-    $("ol").append($($("lo")));
-   event.preventDefault();
-  });*/
-
-   function myFunction() {
-   var saison;
-   saison = document.getElementById("saison").value;
-   if (saison = 1) {
-       document.getElementById("saison1").style.display = "inline"; 
-       document.getElementById("saison2").style.display = "none";
-       document.getElementById("saison3").style.display = "none";
-   } else if (saison = 2)  { 
-      
-       document.getElementById("saison1").style.display = "inline"; 
-       document.getElementById("saison2").style.display = "inline";
-       document.getElementById("saison3").style.display = "none";
-
-   } else 
-       document.getElementById("saison1").style.display = "inline"; 
-       document.getElementById("saison2").style.display = "inline";
-       document.getElementById("saison3").style.display = "inline";
-   
-}
-            
-                
+    $(document).ready(function(){
+    $('#saison').on('change', function() {
+      if ( this.value == '1')
+      {
+        $("#saison1").show();
+         $("#saison2").hide();
+          $("#saison3").hide();
+      }
+      else if ( this.value == '2') {
+         $("#saison1").show();
+         $("#saison2").show();
+          $("#saison3").hide();
+      }
+      else {
+            $("#saison1").show();
+            $("#saison2").show();
+            $("#saison3").show();
+      }
+    });
+});
              
+
+      
          
 </script>
