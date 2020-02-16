@@ -185,6 +185,10 @@ class ProjectController extends AbstractController
             $dateFin->add(new \DateInterval('P1Y'));
             $avgweek=$project->getConsomation()->getAvgweek();
             $dataAvgW=[];
+            $datedebcong= new \DateTime($request->get('dateconge_deb'));
+            $datefincong= new \DateTime($request->get('dateconge_fin'));
+            $slider1= $request->get('monthSlider1');
+
             $i =0;
             if ($session->get('avgweek')[0][0][0]===$avgweek[0][0][0]){
                 $dataexl = $session->get('data');
@@ -244,7 +248,7 @@ class ProjectController extends AbstractController
                     }
                 }
                 //delete a hole year
-                $dataAvgW[count($dataAvgW)-1][0]=$dataAvgW[count($dataAvgW)-1][0]-31536000;
+               /* $dataAvgW[count($dataAvgW)-1][0]=$dataAvgW[count($dataAvgW)-1][0]-31536000;*/
                 if($request->get('tarif')==0){
                     $monthp = $request->get('date');
                     $month=[];
@@ -396,7 +400,7 @@ class ProjectController extends AbstractController
                     }
                 }
                 //delete a hole year
-                $dataAvgW[count($dataAvgW)-1][0]=$dataAvgW[count($dataAvgW)-1][0]-31536000;
+               /* $dataAvgW[count($dataAvgW)-1][0]=$dataAvgW[count($dataAvgW)-1][0]-31536000;*/
                 if($request->get('tarif')==0){
                     $monthp = $request->get('date');
                     $month=[];
@@ -500,6 +504,7 @@ class ProjectController extends AbstractController
 
             }
             $consomation->setDateDeb($dateDeb);
+
             $consomation->setDateFin($dateFin);
             $consomation->setConsomationAnnuel($dataAvgW);
             $consomation->setTypeTarif($request->get('tarif'));
@@ -509,7 +514,7 @@ class ProjectController extends AbstractController
             $entityManager->persist($consomation);
             $entityManager->persist($project);
             $entityManager->flush();
-            return new JsonResponse(['virgdata'=>$dataAvgW,'data'=>$dataAvgWtm,'data2'=>$monthtmp]);
+            return new JsonResponse(['virgdata'=>$dataAvgW,'data'=>$dataAvgWtm,'data2'=>$monthtmp,'alpha'=>$datedebcong,'beta'=>$datefincong,'gamma'=>$dateDeb,'delta'=>$slider1]);
         }
         return $this->render('project/show.html.twig', [
             'project' => $project,

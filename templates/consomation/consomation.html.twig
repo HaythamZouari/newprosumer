@@ -30,7 +30,7 @@
                         <div class="card-body">
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="tabs-icons-text-s-2" role="tabpanel" aria-labelledby="tabs-icons-text-s-2-tab">
-                                   <form>
+                                   <div>
                                         <div style="display: inline-block"><label class="form-control-label" style="font-size:1vw;">Domaine d'activité</label></div>
                                         <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state">
                                             <option>Industrie Textile</option>
@@ -75,31 +75,13 @@
                                         </div>   
                                         <div class="custom-control custom-checkbox mb-3">
                                         <input class="custom-control-input" id="customCheck3" type="checkbox">
-                                        <label class="custom-control-label" for="customCheck3"><h4 style="font-size:1vw;">Période de Congé /Arrét technique</h4></label>
-                                        <div class="input-daterange datepicker row align-items-center">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <div class="input-group input-group-alternative">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                                            </div>
-                                                            <input class="form-control" placeholder="Start date" type="text" value="06/18/2020">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <div class="input-group input-group-alternative">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                                            </div>
-                                                            <input class="form-control" placeholder="End date" type="text" value="06/22/2020">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <label class="custom-control-label" for="customCheck3"><h4 style="font-size:1vw;">Période de Congé /Arrét technique</h4></label></br>
+                                        <label class="form-control-label required" for="dateconge_deb" style="padding-left:30%">Début</label>
+                                        <lo style="display:inline-block";"width:45%" ><input type="date" name="dateconge_deb" id="dateconge_deb" class="form-control" ></lo>
+                                        <label class="form-control-label required" for="dateconge_fin">Fin</label>
+                                        <lo style="display:inline-block";"width:45%" ><input type="date" name="dateconge_fin" id="dateconge_fin" class="form-control" ></lo>
                                         </div>        
-                                    </form>
+                                    </div>
                                 </div>
 
                                 <div class="tab-pane fade" id="tabs-icons-text-s-3" role="tabpanel" aria-labelledby="tabs-icons-text-s-3-tab">
@@ -114,12 +96,6 @@
                             </div>
                         </div>
                     </div>  
-
-
-
-
-                   
-                   
                     <div class="form-group">
                         <label class="form-control-label required" for="dateDeb">Date de debut</label>
                         <input type="date" name="dateDeb" id="dateDeb" class="form-control">
@@ -592,7 +568,7 @@
     </div>
 </div>
 
-<!--<pre id="json"></pre>-->
+<pre id="json"></pre>
 
                       
 <script src={{ asset('build/js/plugins/nouislider/distribute/nouislider.min.js')}}></script>
@@ -629,16 +605,14 @@
                 }
 
              */
-             let dates = [];
-             for (let i = 0; i < response.info.length ; i++) {
-                            dates[i] = new Date(response.info[i][0] * 1000);
-                            
-                            courbe[0][i] = dates[i];
-                            courbe[1][i] = response.info[i][1];
-                        }
-                let trace10 = {};
-
-
+             
+        let dates = [];
+        for (let i = 0; i < response.info.length ; i++) {
+            dates[i] = new Date(response.info[i][0] * 1000);
+            courbe[0][i] = dates[i];
+            courbe[1][i] = response.info[i][1];
+            }    
+        let trace10 = {};
         let data10=[];
         let layout10={};
          data10=[];
@@ -680,9 +654,9 @@
                 console.log(response.data);
                 console.log(response.factor); 
                 console.log(response.somme);
-                console.log(response.info)  
-                console.log(dates)  
-                document.getElementById("json").innerHTML = JSON.stringify(response.info, undefined, 2);            
+                console.log(response.info);  
+                console.log(dates);  
+                document.getElementById("json").innerHTML = JSON.stringify(response.data, undefined, 2);            
             });
         }
     
@@ -691,7 +665,7 @@
                         
     
     });
-     var mySlider = new rSlider({
+     var mySlider1 = new rSlider({
         target: '#monthSlider1',
         values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         range: true,
@@ -797,7 +771,7 @@ var mySlider = new rSlider({
     });
 });
              
-
-      
+var slider=mySlider1.getValue();
+ console.log (slider[0]);     
          
 </script>

@@ -9,7 +9,6 @@ class Datesorting
     public static function SorteDate(int $consomation,array $production){
         $start=0;
         $firstpart=[];
-
         $secondpart=[];
         $datecon=new \DateTime();
         $datecon->setTimestamp($consomation);

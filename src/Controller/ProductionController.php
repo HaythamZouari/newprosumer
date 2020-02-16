@@ -38,7 +38,7 @@ class ProductionController extends AbstractController
         $httpClient = HttpClient::create();
         $response = $httpClient->request('GET',
             'http://re.jrc.ec.europa.eu/pvgis5/seriescalc.php?'.
-            '&lat='.$request->get('lat').
+            'lat='.$request->get('lat').
             '&lon='.$request->get('lon').
             '&raddadtabase'.$request->get('raddadtabase').
             '&peakpower='.$request->get('peakpower').
@@ -49,6 +49,7 @@ class ProductionController extends AbstractController
             '&trackingtype'.$request->get('trackingtype').
             '&outputformat=basic'.
             '&startyear=2015'.
+            '&endyear=2015'.
             '&pvcalculation=1'
 
 
@@ -60,7 +61,7 @@ class ProductionController extends AbstractController
             $array[]=str_getcsv($line);
         }
         $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2018-01-01 00:00' , CarbonPeriod::EXCLUDE_START_DATE);
-        $i=11;
+        $i=2;
         foreach ($period as $key=>$date) {
             $string=$array[$i][0];
             $data[]=[(int)$date->getTimestamp(),(float)($array[$i][1])/1000];
@@ -68,7 +69,7 @@ class ProductionController extends AbstractController
             $i++;
 
         }
-        $data[count($data)-1][0]=$data[count($data)-1][0]-31536000;
+        /*$data[count($data)-1][0]=$data[count($data)-1][0]-31536000;*/
         /*
             for($i=11;$i<8771;$i++){
             $string=$array[$i][0];
@@ -94,7 +95,7 @@ class ProductionController extends AbstractController
             ProjectEvent::NAME,
             $projectEvent
         );
-        return new JsonResponse(['data'=>$data,'data2'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data) ]);
+        return new JsonResponse(['data'=>$data,'data2'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data),'array'=>$array]);
     }
     /**
      * @Route("/ninja/{id}", name="ninja")
