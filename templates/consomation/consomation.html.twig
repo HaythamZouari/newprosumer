@@ -1,4 +1,4 @@
-<link rel="stylesheet" href={{ asset('build/js/plugins/range-slider-master/css/rSlider.min.css')}}>
+<link rel="stylesheet" href={{ asset('build/css/rSlider.min.css')}}>
 
 <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 <div class="card bg-secondary shadow border-0">
@@ -19,20 +19,20 @@
                         <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                                 
                             <li class="nav-item">
-                                <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>Contruire le profil de charge</a>
+                                <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-s-2-tab" data-toggle="tab" href="#tabs-icons-text-s-2" role="tab" aria-controls="tabs-icons-text-s-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i>Contruire le profil de charge</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="ni ni-cloud-upload-96 mr-2"></i>Télécharger la courbe de charge</a>
+                                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-s-3-tab" data-toggle="tab" href="#tabs-icons-text-s-3" role="tab" aria-controls="tabs-icons-text-s-3" aria-selected="false"><i class="ni ni-cloud-upload-96 mr-2"></i>Télécharger la courbe de charge</a>
                             </li>
                         </ul>
                     </div>
                     <div class="card shadow">
                         <div class="card-body">
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                                   <form>
-                                        <div style="display: inline-block"><label class="form-control-label" >Domaine d'activité</label></div>
-                                        <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state">
+                                <div class="tab-pane fade show active" id="tabs-icons-text-s-2" role="tabpanel" aria-labelledby="tabs-icons-text-s-2-tab">
+                                   <div>
+                                        <div style="display: inline-block"><label class="form-control-label" style="font-size:1vw;">Domaine d'activité</label></div>
+                                        <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state" id="activite" name="activite">
                                             <option>Industrie Textile</option>
                                             <option>Industrie électromécanique</option>
                                             <option>Industie agroalimentaire</option>
@@ -41,35 +41,51 @@
                                             <option>Modals</option>
                                             </select>
                                         </div></br>
-                                        <div style="display: inline-block"><label class="form-control-label" >Nombre de Saisons</label></div>
-                                        <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state" id="saison">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
+                                        <div style="display: inline-block"><label class="form-control-label" style="font-size:1vw;" for="saison" >Nombre de Saisons</label></div>
+                                        <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state" id="saison" name="saison">
+                                            <option id="sais1" value="1" >1</option>
+                                            <option id="sais2" value="2">2</option>
+                                            <option id="sais3" value="3" selected>3</option>
                                             </select>
                                         </div>
                                         </br>
                                         <div id= "saison1">
-                                            <h4 style="display: font-size:1vw;">Saison1</h4>
-                                            <h4 style="display: inline-block;padding-left: 20%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
-                                            <lo style="display: inline-block;width:50%"> <input type="text" id="monthSlider1" /></lo><lo style="display: inline-block;width: 50%;padding-left: 40px;"><input type="text" id="hourSlider1" /> </lo></br>
+                                            <h4 style="font-size:1vw;">Saison1</h4>
+                                            
+                                            <label class="form-control-label required" for="monthSlider1" style="display: inline-block;padding-left: 10%;font-size:1vw;">Plage mensuelle</label><label class="form-control-label required" for="hourSlider1" style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</label></br></br>
+                                            <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider1" name="monthSlider1" class="form-control" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider1" name="hourSlider1" class="form-control"/> </lo></br>
                                         </div>
                                         <div id = "saison2">
-                                            <h4>Saison2</h4>
-                                            <h4 style="display: inline-block;padding-left: 20%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
-                                            <lo style="display: inline-block;width:50%"> <input type="text" id="monthSlider2" /></lo><lo style="display: inline-block;width: 50%;padding-left: 40px;"><input type="text" id="hourSlider2" /> </lo></br>
+                                            <h4 style="font-size:1vw;">Saison2</h4>
+                                            <h4 style="display: inline-block;padding-left: 10%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
+                                            <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider2" name="monthSlider2" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider2" name="hourSlider2" /> </lo></br>
                                         </div>   
 
                                         <div id = "saison3">
-                                            <h4>Saison3</h4>
-                                            <h4 style="display: inline-block;padding-left: 20%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
-                                            <lo style="display: inline-block;width:50%"> <input type="text" id="monthSlider3" /></lo><lo style="display: inline-block;width: 50%;padding-left: 40px;"><input type="text" id="hourSlider3" /> </lo></br>
+                                            <h4 style="font-size:1vw;">Saison3</h4>
+                                            <h4 style="display: inline-block;padding-left: 10%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
+                                            <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider3" name="monthSlider3" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider3" name="hourSlider3" /> </lo></br>
                                         </div>   
-                                                <!-- <button id="ajouter2" class="btn-secondary btn">Nouvelle saison</button>-->
-                                    </form>
+                                        <div class="custom-control custom-checkbox mb-3">
+                                        <input class="custom-control-input" id="samediCheck" name="samediCheck" type="checkbox">
+                                        <label class="custom-control-label" for="samediCheck"><h4 style="font-size:1vw;">Travail Samedi</h4></label> <lo style="display: inline-block;width: 62%;padding-left: 70px;"><input type="text" id="hourSlider-samedi" name="hourSlider_samedi" /> </lo>
+                                        </div>   
+                                        <div class="custom-control custom-checkbox mb-3">
+                                        <input class="custom-control-input" id="dimancheCheck" name="dimancheCheck" type="checkbox">
+                                        <label class="custom-control-label" for="dimancheCheck"><h4 style="font-size:1vw;">Travail Dimanche</h4></label><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider-dimanche" name="hourSlider_dimanche" /> </lo>
+                                        </div>   
+                                        <div class="custom-control custom-checkbox mb-3">
+                                        <input class="custom-control-input" id="congeCheck" name="congeCheck" type="checkbox">
+                                        <label class="custom-control-label" for="congeCheck"><h4 style="font-size:1vw;">Période de Congé /Arrét technique</h4></label></br>
+                                        <label class="form-control-label required" for="dateconge_deb" style="padding-left:40%">Début</label>
+                                        <lo style="display:inline-block";"width:45%" ><input type="date" name="dateconge_deb" id="dateconge_deb" class="form-control" ></lo>
+                                        <label class="form-control-label required" for="dateconge_fin">Fin</label>
+                                        <lo style="display:inline-block";"width:45%" ><input type="date" name="dateconge_fin" id="dateconge_fin" class="form-control" ></lo>
+                                        </div>        
+                                    </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                <div class="tab-pane fade" id="tabs-icons-text-s-3" role="tabpanel" aria-labelledby="tabs-icons-text-s-3-tab">
                                     <div class="form-group">
                                     <label class="form-control-label control-label required" for="exlimg">Courbe de charge (XLSX)</label>
                                     <div class="form-control-file" id="exlimg">
@@ -81,12 +97,6 @@
                             </div>
                         </div>
                     </div>  
-
-
-
-
-                   
-                   
                     <div class="form-group">
                         <label class="form-control-label required" for="dateDeb">Date de debut</label>
                         <input type="date" name="dateDeb" id="dateDeb" class="form-control">
@@ -97,7 +107,7 @@
                                 <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Mois</th>
-                                    <th scope="col">Consommation mensuelle <span>(KWH)</span> </th>
+                                    <th scope="col">Consommation mensuelle <span>(kWh)</span> </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -559,11 +569,11 @@
     </div>
 </div>
 
-<pre id="json"></pre>
+<!--<pre id="json"></pre>-->
 
                       
 <script src={{ asset('build/js/plugins/nouislider/distribute/nouislider.min.js')}}></script>
- <script src={{ asset('build/js/plugins/range-slider-master/js/rSlider.min.js')}}></script>
+ <script src={{ asset('build/js/rSlider.min.js')}}></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
 <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
@@ -588,8 +598,6 @@
             this.on("sending", function (file, xhr, formData) {
                 // send additional data with the file as POST data if needed.
                 formData.append("tarif", $('[name=tarif]'));
-                
-                
             });
             this.on("success", function (file, response) {
             /*    for (let i = 0; i < response.data.length ; i++) {
@@ -598,16 +606,14 @@
                 }
 
              */
-             let dates = [];
-             for (let i = 0; i < response.info.length ; i++) {
-                            dates[i] = new Date(response.info[i][0] * 1000);
-                            
-                            courbe[0][i] = dates[i];
-                            courbe[1][i] = response.info[i][1];
-                        }
-                let trace10 = {};
-
-
+             
+        let dates = [];
+        for (let i = 0; i < response.info.length ; i++) {
+            dates[i] = new Date(response.info[i][0] * 1000);
+            courbe[0][i] = dates[i];
+            courbe[1][i] = response.info[i][1];
+            }    
+        let trace10 = {};
         let data10=[];
         let layout10={};
          data10=[];
@@ -649,8 +655,8 @@
                 console.log(response.data);
                 console.log(response.factor); 
                 console.log(response.somme);
-                console.log(response.info)  
-                console.log(dates)  
+                console.log(response.info);  
+                console.log(dates);  
                 document.getElementById("json").innerHTML = JSON.stringify(response.info, undefined, 2);            
             });
         }
@@ -660,7 +666,7 @@
                         
     
     });
-     var mySlider = new rSlider({
+     var mSlider1 = new rSlider({
         target: '#monthSlider1',
         values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         range: true,
@@ -671,7 +677,7 @@
     
     });
      
-    var mySlider = new rSlider({
+    var hSlider1 = new rSlider({
         target: '#hourSlider1',
         values: [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13,14,15,16,17,18,19,20,21,22,23],
         range: true,
@@ -681,7 +687,7 @@
         /*set: [1, 12]*/
     });
   
-var mySlider = new rSlider({
+var mSlider2 = new rSlider({
         target: '#monthSlider2',
         values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         range: true,
@@ -692,7 +698,7 @@ var mySlider = new rSlider({
     
     });
      
-    var mySlider = new rSlider({
+    var hSlider2 = new rSlider({
         target: '#hourSlider2',
         values: [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13,14,15,16,17,18,19,20,21,22,23],
         range: true,
@@ -702,7 +708,7 @@ var mySlider = new rSlider({
         /*set: [1, 12]*/
     });
 
-    var mySlider = new rSlider({
+    var mSlider3 = new rSlider({
         target: '#monthSlider3',
         values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         range: true,
@@ -713,8 +719,28 @@ var mySlider = new rSlider({
     
     });
      
-    var mySlider = new rSlider({
+    var hSlider3 = new rSlider({
         target: '#hourSlider3',
+        values: [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13,14,15,16,17,18,19,20,21,22,23],
+        range: true,
+        tooltip: true,
+        scale: true,
+        labels: false,
+        /*set: [1, 12]*/
+    });
+  
+  var samediSlider = new rSlider({
+        target: '#hourSlider-samedi',
+        values: [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13,14,15,16,17,18,19,20,21,22,23],
+        range: true,
+        tooltip: true,
+        scale: true,
+        labels: false,
+        /*set: [1, 12]*/
+    });
+
+     var dimancheSlider = new rSlider({
+        target: '#hourSlider-dimanche',
         values: [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13,14,15,16,17,18,19,20,21,22,23],
         range: true,
         tooltip: true,
@@ -725,33 +751,28 @@ var mySlider = new rSlider({
   
 
 
- /* $("#ajouter2").click(function(event){
-      
-    $("ol").append($($("lo")));
-   event.preventDefault();
-  });*/
-
-   function myFunction() {
-   var saison;
-   saison = document.getElementById("saison").value;
-   if (saison = 1) {
-       document.getElementById("saison1").style.display = "inline"; 
-       document.getElementById("saison2").style.display = "none";
-       document.getElementById("saison3").style.display = "none";
-   } else if (saison = 2)  { 
-      
-       document.getElementById("saison1").style.display = "inline"; 
-       document.getElementById("saison2").style.display = "inline";
-       document.getElementById("saison3").style.display = "none";
-
-   } else 
-       document.getElementById("saison1").style.display = "inline"; 
-       document.getElementById("saison2").style.display = "inline";
-       document.getElementById("saison3").style.display = "inline";
-   
-}
-            
-                
+    $(document).ready(function(){
+    $('#saison').on('change', function() {
+      if ( this.value == '1')
+      {
+        $("#saison1").show();
+         $("#saison2").hide();
+          $("#saison3").hide();
+      }
+      else if ( this.value == '2') {
+         $("#saison1").show();
+         $("#saison2").show();
+          $("#saison3").hide();
+      }
+      else {
+            $("#saison1").show();
+            $("#saison2").show();
+            $("#saison3").show();
+      }
+    });
+});
              
+var slider=mySlider1.getValue();
+ console.log (slider[0]);     
          
 </script>

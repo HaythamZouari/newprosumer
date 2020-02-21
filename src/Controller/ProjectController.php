@@ -184,6 +184,155 @@ class ProjectController extends AbstractController
             $dateFin= new \DateTime($request->get('dateDeb'));
             $dateFin->add(new \DateInterval('P1Y'));
             $avgweek=$project->getConsomation()->getAvgweek();
+            $activite=$request->get('activite');
+            $dimancheCheck=$request->get('dimancheCheck');
+            $hourSlider_dimanche=$request->get('hourSlider_dimanche');
+            $hourSlider_samedi=$request->get('hourSlider_samedi');
+            $hourSlider1=$request->get('hourSlider1');
+            $hourSlider2=$request->get('hourSlider2');
+            $hourSlider3=$request->get('hourSlider3');
+            $monthSlider1=$request->get('monthSlider1');
+            $monthSlider2=$request->get('monthSlider2');
+            $monthSlider3=$request->get('monthSlider3');
+            $saison=$request->get('saison');
+            $samediCheck=$request->get('samediCheck');
+            $dateconge_deb= new \DateTime($request->get('dateconge_deb'));
+            $dateconge_fin= new \DateTime($request->get('dateconge_fin'));
+            
+////////////////////////////////////////////////////////////////////////////////////////////
+
+            $hourSliderreq1=explode(',',$hourSlider1);
+            $hourSliderreq2=explode(',',$hourSlider2);
+            $hourSliderreq3=explode(',',$hourSlider3);
+            $hourSliderreqS=explode(',',$hourSlider_samedi);
+            $hourSliderreqD=explode(',',$hourSlider_dimanche);
+
+            $Phd=1;$Phf=1;$Phm=4;$Phad=2;$Phad=2;$Pham=2;$Phn=0;
+
+            $hd1=(int)$hourSliderreq1[0];$hf1=(int)$hourSliderreq1[1];$hm1=round(($hd1+$hf1)/2);$had1=round(($hd1+$hm1)/2);$ham1=round(($hf1+$hm1)/2);
+            $hd2=(int)$hourSliderreq2[0];$hf2=(int)$hourSliderreq2[1];$hm2=round(($hd2+$hf2)/2);$had2=round(($hd2+$hm2)/2);$ham2=round(($hf2+$hm2)/2);
+            $hd3=(int)$hourSliderreq3[0];$hf3=(int)$hourSliderreq3[1];$hm3=round(($hd3+$hf3)/2);$had3=round(($hd3+$hm3)/2);$ham3=round(($hf3+$hm3)/2);
+            $hdS=(int)$hourSliderreqS[0];$hfS=(int)$hourSliderreqS[1];$hmS=round(($hdS+$hfS)/2);$hadS=round(($hdS+$hmS)/2);$hamS=round(($hfS+$hmS)/2);
+            $hdD=(int)$hourSliderreqD[0];$hfD=(int)$hourSliderreqD[1];$hmD=round(($hdD+$hfD)/2);$hadD=round(($hdD+$hmD)/2);$hamD=round(($hfD+$hmD)/2);        
+                $synWeek1[7]=[24];
+                $synWeek2[7]=[24];
+                $synWeek3[7]=[24];
+                for( $i =0 ; $i<7;$i++){
+                    for($j = 0 ; $j<=23;$j++){
+                    
+                        $synWeek1[$i][$j]=0;
+                        $synWeek2[$i][$j]=0;
+                        $synWeek3[$i][$j]=0;
+                    }
+                }
+                        
+                for($i =0 ; $i<5;$i++){
+                    for($j = 0 ; $j<=23;$j++){
+                        if (($j>=$hd1) && ($j<=$hf1)){
+                            
+                                if ($j=$hd1){
+                                    $synWeek1[$i][$j]=$Phd;
+                                }    
+                                elseif ($j=$hf1){
+                                    $synWeek1[$i][$j]=$Phf;
+                                }
+                                elseif ($j=$hm1){
+                                    $synWeek1[$i][$j]=$Phm;
+                                }
+                                elseif ($j=$had1){
+                                    $synWeek1[$i][$j]=$Phad;
+                                }
+                                elseif ($j=$ham1){
+                                    $synWeek1[$i][$j]=$Pham;
+                                }       
+                                else {
+                                    $synWeek1[$i][$j]=rand($Phad, $Pham);
+                                } 
+                            }
+                           
+                        else {
+                            $synWeek1[$i][$j]=$Phn;
+                        }
+                        
+                    }
+                }
+                
+                $i=5;   
+                if ($samediCheck='on'){
+                
+                    for($j = 0 ; $j<=23;$j++){
+                        if ($j>=$hdS && $j<=$hfS){
+                            switch ($synWeek1[$i][$j]) {
+                                case $j=$hdS:
+                                    $synWeek1[$i][$j]=$Phd;
+                                    break;
+                                case $j=$hfS:
+                                    $synWeek1[$i][$j]=$Phf;
+                                    break;
+                                case $j=$hmS:
+                                    $synWeek1[$i][$j]=$Phm;
+                                    break;
+                                case $j=$hadS:
+                                    $synWeek1[$i][$j]=$Phad;
+                                    break;
+                                case $j=$hamS:
+                                    $synWeek1[$i][$j]=$Pham;
+                                    break;        
+                                default:
+                                    $synWeek1[$i][$j]=mt_rand($Phad, $Pham);
+                            }
+                        }    
+                        else {
+                            $synWeek1[$i][$j]=$Phn;
+                        }
+                        
+                    }
+                }
+                else {
+                    for($j = 0 ; $j<=23;$j++){
+
+                        $synWeek1[$i][$j]=$Phn; 
+                    }
+                }  
+
+                $i=6;   
+                if ($dimancheCheck='on'){
+                
+                    for($j = 0 ; $j<=23;$j++){
+                        if ($j>=$hdD && $j<=$hfD){
+                            switch ($synWeek1[$i][$j]) {
+                                case $j=$hdD:
+                                    $synWeek1[$i][$j]=$Phd;
+                                    break;
+                                case $j=$hfD:
+                                    $synWeek1[$i][$j]=$Phf;
+                                    break;
+                                case $j=$hmD:
+                                    $synWeek1[$i][$j]=$Phm;
+                                    break;
+                                case $j=$hadD:
+                                    $synWeek1[$i][$j]=$Phad;
+                                    break;
+                                case $j=$hamD:
+                                    $synWeek1[$i][$j]=$Pham;
+                                    break;        
+                                default:
+                                    $synWeek1[$i][$j]=mt_rand($Phad, $Pham);
+                            }
+                        }    
+                        else {
+                            $synWeek1[$i][$j]=$Phn;
+                        }
+                        
+                    }
+                }
+                else {
+                    for($j = 0 ; $j<=23;$j++){
+
+                        $synWeek1[$i][$j]=$Phn; 
+                    }
+                }    
+
             $dataAvgW=[];
             $i =0;
             if ($session->get('avgweek')[0][0][0]===$avgweek[0][0][0]){
