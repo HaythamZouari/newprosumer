@@ -184,6 +184,7 @@ class ProjectController extends AbstractController
             $dateFin= new \DateTime($request->get('dateDeb'));
             $dateFin->add(new \DateInterval('P1Y'));
             $avgweek=$project->getConsomation()->getAvgweek();
+           
             $activite=$request->get('activite');
             $dimancheCheck=$request->get('dimancheCheck');
             $hourSlider_dimanche=$request->get('hourSlider_dimanche');
@@ -199,15 +200,32 @@ class ProjectController extends AbstractController
             $dateconge_deb= new \DateTime($request->get('dateconge_deb'));
             $dateconge_fin= new \DateTime($request->get('dateconge_fin'));
             
-////////////////////////////////////////////////////////////////////////////////////////////
-
+            
+            if (empty($avgweek[0][0][0])){
+            
             $hourSliderreq1=explode(',',$hourSlider1);
             $hourSliderreq2=explode(',',$hourSlider2);
             $hourSliderreq3=explode(',',$hourSlider3);
             $hourSliderreqS=explode(',',$hourSlider_samedi);
             $hourSliderreqD=explode(',',$hourSlider_dimanche);
+            $monthSliderreq1=explode(',',$monthSlider1);
+            $monthSliderreq2=explode(',',$monthSlider2);
+            $monthSliderreq3=explode(',',$monthSlider3);
 
-            $Phd=1;$Phf=1;$Phm=4;$Phad=2;$Phad=2;$Pham=2;$Phn=0;
+            if ($saison==1) {
+                $hourSliderreq2=[24,24];
+                $hourSliderreq3=[24,24];
+                $monthSliderreq2=[24,24];
+                $monthSliderreq3=[24,24];
+            }
+            elseif($saison==2){
+                $hourSliderreq3=[24,24];
+                $monthSliderreq3=[24,24];
+
+            }
+
+
+            $Phd=1;$Phf=1;$Phm=20;$Phad=15;$Pham=15;$Phn=0;
 
             $hd1=(int)$hourSliderreq1[0];$hf1=(int)$hourSliderreq1[1];$hm1=round(($hd1+$hf1)/2);$had1=round(($hd1+$hm1)/2);$ham1=round(($hf1+$hm1)/2);
             $hd2=(int)$hourSliderreq2[0];$hf2=(int)$hourSliderreq2[1];$hm2=round(($hd2+$hf2)/2);$had2=round(($hd2+$hm2)/2);$ham2=round(($hf2+$hm2)/2);
@@ -217,32 +235,24 @@ class ProjectController extends AbstractController
                 $synWeek1[7]=[24];
                 $synWeek2[7]=[24];
                 $synWeek3[7]=[24];
-                for( $i =0 ; $i<7;$i++){
-                    for($j = 0 ; $j<=23;$j++){
-                    
-                        $synWeek1[$i][$j]=0;
-                        $synWeek2[$i][$j]=0;
-                        $synWeek3[$i][$j]=0;
-                    }
-                }
-                        
-                for($i =0 ; $i<5;$i++){
+
+                for($i =1 ; $i<6;$i++){
                     for($j = 0 ; $j<=23;$j++){
                         if (($j>=$hd1) && ($j<=$hf1)){
                             
-                                if ($j=$hd1){
+                                if ($j==$hd1){
                                     $synWeek1[$i][$j]=$Phd;
-                                }    
-                                elseif ($j=$hf1){
+                                }  
+                                elseif ($j==$hf1){
                                     $synWeek1[$i][$j]=$Phf;
                                 }
-                                elseif ($j=$hm1){
+                                elseif ($j==$hm1){
                                     $synWeek1[$i][$j]=$Phm;
                                 }
-                                elseif ($j=$had1){
+                                elseif ($j==$had1){
                                     $synWeek1[$i][$j]=$Phad;
                                 }
-                                elseif ($j=$ham1){
+                                elseif ($j==$ham1){
                                     $synWeek1[$i][$j]=$Pham;
                                 }       
                                 else {
@@ -256,83 +266,388 @@ class ProjectController extends AbstractController
                         
                     }
                 }
+                                
+                if ($samediCheck=='on'){
+                                
+                                        for($j = 0 ; $j<=23;$j++){
+                                            if ($j>=$hdS && $j<=$hfS){
+                                                if ($j==$hdS) {
+                                                $synWeek1[6][$j]=$Phd;
+                                                }
+                                                if ($j==$hfS) {
+                                                    $synWeek1[6][$j]=$Phf;
+                                                    }
+                                                if ($j==$hmS) {
+                                                    $synWeek1[6][$j]=$Phm;
+                                                    }    
+                                                if ($j==$hadS) {
+                                                    $synWeek1[6][$j]=$Phad;
+                                                    } 
+                                                if ($j==$hamS) {
+                                                    $synWeek1[6][$j]=$Pham;
+                                                    } 
+                                                else {
+                                                    $synWeek1[6][$j]=mt_rand($Phad, $Pham);
+                                                }
+                                            }    
+                                            else {
+                                                $synWeek1[6][$j]=$Phn;
+                                            }
+                                            
+                                        }
+                }
+                else {
+                                        for($j = 0 ; $j<=23;$j++){
+                    
+                                            $synWeek1[6][$j]=$Phn; 
+                                        }
+                }    
+                                                
+                if ($dimancheCheck=='on'){
+                                
+                                    for($j = 0 ; $j<=23;$j++){
+                                        if ($j>=$hdD && $j<=$hfD){
+                                            if ($j==$hdD) {
+                                            $synWeek1[0][$j]=$Phd;
+                                            }
+                                            if ($j==$hfD) {
+                                                $synWeek1[0][$j]=$Phf;
+                                                }
+                                            if ($j==$hmD) {
+                                                $synWeek1[0][$j]=$Phm;
+                                                }    
+                                            if ($j==$hadD) {
+                                                $synWeek1[0][$j]=$Phad;
+                                                } 
+                                            if ($j==$hamD) {
+                                                $synWeek1[0][$j]=$Pham;
+                                                } 
+                                            else {
+                                                $synWeek1[0][$j]=mt_rand($Phad, $Pham);
+                                            }
+                                                    
+                                        }
+                                            
+                                        else {
+                                            $synWeek1[0][$j]=$Phn;
+                                        }
+                                        
+                                    }
+                                }
+                else {
+                                
+                    for($j = 0 ; $j<=23;$j++){
+                    
+                                        $synWeek1[0][$j]=$Phn; 
+                                    }
+                }
+                for($i =1 ; $i<6;$i++){
+                    for($j = 0 ; $j<=23;$j++){
+                         if (($j>=$hd2) && ($j<=$hf2)){
+                            if ($j==$hd2){
+                                $synWeek2[$i][$j]=$Phd;
+                                }  
+                            elseif ($j==$hf2){
+                                $synWeek2[$i][$j]=$Phf;
+                                }
+                            elseif ($j==$hm2){
+                                $synWeek2[$i][$j]=$Phm;
+                                }
+                            elseif ($j==$had2){
+                                $synWeek2[$i][$j]=$Phad;
+                                }
+                            elseif ($j==$ham2){
+                                $synWeek2[$i][$j]=$Pham;
+                                }       
+                            else {
+                                $synWeek2[$i][$j]=rand($Phad, $Pham);
+                                } 
+                            }
+                                           
+                        else {
+                            $synWeek2[$i][$j]=$Phn;
+                        }
+                                        
+                    }
+                }
+                                
+                if ($samediCheck=='on'){
+                                
+                                    for($j = 0 ; $j<=23;$j++){
+                                        if ($j>=$hdS && $j<=$hfS){
+                                            if ($j==$hdS) {
+                                            $synWeek1[6][$j]=$Phd;
+                                            }
+                                            if ($j==$hfS) {
+                                                $synWeek1[6][$j]=$Phf;
+                                                }
+                                            if ($j==$hmS) {
+                                                $synWeek1[6][$j]=$Phm;
+                                                }    
+                                            if ($j==$hadS) {
+                                                $synWeek1[6][$j]=$Phad;
+                                                } 
+                                            if ($j==$hamS) {
+                                                $synWeek1[6][$j]=$Pham;
+                                                } 
+                                            else {
+                                                $synWeek1[6][$j]=mt_rand($Phad, $Pham);
+                                            }
+                                        }    
+                                        else {
+                                            $synWeek1[6][$j]=$Phn;
+                                        }
+                                        
+                                    }
+                }
+                else {
+                                    for($j = 0 ; $j<=23;$j++){
                 
-                $i=5;   
-                if ($samediCheck='on'){
+                                        $synWeek1[6][$j]=$Phn; 
+                                    }
+                }    
+                                                         
+                if ($dimancheCheck=='on'){
+                            
+                                for($j = 0 ; $j<=23;$j++){
+                                    if ($j>=$hdD && $j<=$hfD){
+                                        if ($j==$hdD) {
+                                        $synWeek1[0][$j]=$Phd;
+                                        }
+                                        if ($j==$hfD) {
+                                            $synWeek1[0][$j]=$Phf;
+                                            }
+                                        if ($j==$hmD) {
+                                            $synWeek1[0][$j]=$Phm;
+                                            }    
+                                        if ($j==$hadD) {
+                                            $synWeek1[0][$j]=$Phad;
+                                            } 
+                                        if ($j==$hamD) {
+                                            $synWeek1[0][$j]=$Pham;
+                                            } 
+                                        else {
+                                            $synWeek1[0][$j]=mt_rand($Phad, $Pham);
+                                        }
+                                                
+                                    }
+                                        
+                                    else {
+                                        $synWeek1[0][$j]=$Phn;
+                                    }
+                                    
+                                }
+                }
+                else {
+                                for($j = 0 ; $j<=23;$j++){
                 
+                                    $synWeek1[0][$j]=$Phn; 
+                                }
+                } 
+
+                for($i =1 ; $i<6;$i++){
+                    for($j = 0 ; $j<=23;$j++){
+                        if (($j>=$hd3) && ($j<=$hf3)){
+                            
+                                if ($j==$hd3){
+                                    $synWeek3[$i][$j]=$Phd;
+                                }  
+                                elseif ($j==$hf3){
+                                    $synWeek3[$i][$j]=$Phf;
+                                }
+                                elseif ($j==$hm3){
+                                    $synWeek3[$i][$j]=$Phm;
+                                }
+                                elseif ($j==$had3){
+                                    $synWeek3[$i][$j]=$Phad;
+                                }
+                                elseif ($j==$ham3){
+                                    $synWeek3[$i][$j]=$Pham;
+                                }       
+                                else {
+                                    $synWeek3[$i][$j]=rand($Phad, $Pham);
+                                } 
+                            }
+                           
+                        else {
+                            $synWeek3[$i][$j]=$Phn;
+                        }
+                        
+                    }
+                }
+                
+                if ($samediCheck=='on'){
+                                
                     for($j = 0 ; $j<=23;$j++){
                         if ($j>=$hdS && $j<=$hfS){
-                            switch ($synWeek1[$i][$j]) {
-                                case $j=$hdS:
-                                    $synWeek1[$i][$j]=$Phd;
-                                    break;
-                                case $j=$hfS:
-                                    $synWeek1[$i][$j]=$Phf;
-                                    break;
-                                case $j=$hmS:
-                                    $synWeek1[$i][$j]=$Phm;
-                                    break;
-                                case $j=$hadS:
-                                    $synWeek1[$i][$j]=$Phad;
-                                    break;
-                                case $j=$hamS:
-                                    $synWeek1[$i][$j]=$Pham;
-                                    break;        
-                                default:
-                                    $synWeek1[$i][$j]=mt_rand($Phad, $Pham);
+                            if ($j==$hdS) {
+                            $synWeek1[6][$j]=$Phd;
+                            }
+                            if ($j==$hfS) {
+                                $synWeek1[6][$j]=$Phf;
+                                }
+                            if ($j==$hmS) {
+                                $synWeek1[6][$j]=$Phm;
+                                }    
+                            if ($j==$hadS) {
+                                $synWeek1[6][$j]=$Phad;
+                                } 
+                            if ($j==$hamS) {
+                                $synWeek1[6][$j]=$Pham;
+                                } 
+                            else {
+                                $synWeek1[6][$j]=mt_rand($Phad, $Pham);
                             }
                         }    
                         else {
-                            $synWeek1[$i][$j]=$Phn;
+                            $synWeek1[6][$j]=$Phn;
                         }
                         
                     }
                 }
                 else {
                     for($j = 0 ; $j<=23;$j++){
-
-                        $synWeek1[$i][$j]=$Phn; 
+                
+                        $synWeek1[6][$j]=$Phn; 
                     }
-                }  
-
-                $i=6;   
-                if ($dimancheCheck='on'){
+                }    
+                
+                if ($dimancheCheck=='on'){
                 
                     for($j = 0 ; $j<=23;$j++){
                         if ($j>=$hdD && $j<=$hfD){
-                            switch ($synWeek1[$i][$j]) {
-                                case $j=$hdD:
-                                    $synWeek1[$i][$j]=$Phd;
-                                    break;
-                                case $j=$hfD:
-                                    $synWeek1[$i][$j]=$Phf;
-                                    break;
-                                case $j=$hmD:
-                                    $synWeek1[$i][$j]=$Phm;
-                                    break;
-                                case $j=$hadD:
-                                    $synWeek1[$i][$j]=$Phad;
-                                    break;
-                                case $j=$hamD:
-                                    $synWeek1[$i][$j]=$Pham;
-                                    break;        
-                                default:
-                                    $synWeek1[$i][$j]=mt_rand($Phad, $Pham);
+                            if ($j==$hdD) {
+                            $synWeek1[0][$j]=$Phd;
                             }
-                        }    
+                            if ($j==$hfD) {
+                                $synWeek1[0][$j]=$Phf;
+                                }
+                            if ($j==$hmD) {
+                                $synWeek1[0][$j]=$Phm;
+                                }    
+                            if ($j==$hadD) {
+                                $synWeek1[0][$j]=$Phad;
+                                } 
+                            if ($j==$hamD) {
+                                $synWeek1[0][$j]=$Pham;
+                                } 
+                            else {
+                                $synWeek1[0][$j]=mt_rand($Phad, $Pham);
+                            }
+                                    
+                        }
+                            
                         else {
-                            $synWeek1[$i][$j]=$Phn;
+                            $synWeek1[0][$j]=$Phn;
                         }
                         
                     }
                 }
                 else {
                     for($j = 0 ; $j<=23;$j++){
-
-                        $synWeek1[$i][$j]=$Phn; 
+                
+                        $synWeek1[0][$j]=$Phn; 
                     }
-                }    
+                } 
 
+                    $dataSynW=[];
+                    $period = CarbonPeriod::create($dateDeb->format('y-m-d'),'PT1H',$dateFin->format('y-m-d') , CarbonPeriod::EXCLUDE_START_DATE);
+                    foreach ($period as $key=>$date) {
+                        if(((int)$date->format('m') )>= $monthSliderreq1[0] && ((int)$date->format('m'))<= $monthSliderreq1[1]) {
+                            $dataSynW[] = [$date->getTimestamp(),$synWeek1[((int)$date->format('w'))][((int)$date->format('H'))]];
+                        }
+                        elseif(((int)$date->format('m') )>= $monthSliderreq2[0] && ((int)$date->format('m'))<= $monthSliderreq2[1]){
+                            $dataSynW[] = [$date->getTimestamp(),$synWeek2[((int)$date->format('w'))][((int)$date->format('H'))]];
+                        }
+                        else{
+                            $dataSynW[] = [$date->getTimestamp(),$synWeek3[((int)$date->format('w'))][((int)$date->format('H'))]];
+                        }
+                    }
+
+                    for ($i=0;$i<count($dataSynW);$i++) {
+                        $date = new \DateTime();
+                        $date->setTimestamp($dataSynW[$i][0]);
+                        
+                        if((((int)$date->format('m'))>=((int)$dateconge_deb->format('m')))&&(((int)$date->format('m'))<=((int)$dateconge_fin->format('m')))){
+                            if ((((int)$date->format('d')))>=(((int)$dateconge_deb->format('d')))&&(((int)$date->format('d'))<=((int)$dateconge_fin->format('d')))){
+                                $dataSynW[$i][1]=$Phn;
+                            }
+                        }
+                        else{
+                        
+                            if(((int)$date->format('d'))==1&&((int)$date->format('m'))==1){
+                                $dataSynW[$i][1]=$Phn;
+                            }
+                            elseif(((int)$date->format('d'))==14&&((int)$date->format('m'))==1){
+                                $dataSynW[$i][1]=$Phn;
+                            }
+                            elseif(((int)$date->format('d'))==20&&((int)$date->format('m'))==3){
+                                $dataSynW[$i][1]=$Phn;
+                            }
+                            elseif(((int)$date->format('d'))==9&&((int)$date->format('m'))==4){
+                                $dataSynW[$i][1]=$Phn;
+                            }
+                            elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==5){
+                                $dataSynW[$i][1]=$Phn;
+                            }
+                            elseif(((int)$date->format('d'))==25&&((int)$date->format('m'))==7){
+                                $dataSynW[$i][1]=$Phn;
+                            }
+                            elseif(((int)$date->format('d'))==13&&((int)$date->format('m'))==8){
+                                $dataSynW[$i][1]=$Phn;
+                            }
+                            elseif(((int)$date->format('d'))==15&&((int)$date->format('m'))==10){
+                                $dataSynW[$i][1]=$Phn;
+                            }
+                        }    
+                    }
+
+                    $monthp = $request->get('date');
+                    $month=[];
+                    for($i=0;$i<13;$i++){
+                        $month[$i]=0;
+
+                    }
+                    foreach ($dataSynW as $item) {
+                        $date = new \DateTime();
+                        $date->setTimestamp($item[0]);
+                        $month[((int)$date->format('m'))]+=$item[1];
+                    }
+                    $monthtmp=$month;
+                    for($i =1 ; $i <13; $i++){
+                        if ($monthtmp[$i]==0) {
+                            $month[$i]=0;
+                        }
+                        else{
+                        $month[$i]=(float)$monthp[$i]/$month[$i];
+                        }
+                    }
+
+                    $dataSynWtm=$dataSynW;
+                    for ($i=0;$i<count($dataSynW);$i++) {
+                        $date = new \DateTime();
+                        $date->setTimestamp($dataSynW[$i][0]);
+                        $months=(int)$date->format('m');
+                        $day=(int)$date->format('d');
+                        $dataSynW[$i][1]*=$month[(int)((new \DateTime())->setTimestamp($dataSynW[$i][0])->format('m'))];
+                    }
+                    $month=[];
+                        for($i=0;$i<13;$i++){
+                            $month[$i]['jour']=0;
+                            $month[$i]['ete']=0;
+                            $month[$i]['soir']=0;
+                            $month[$i]['nuit']=0;
+
+                        }
+                    $consomation->setCmMonth(PostHoraire::PostHoraire($dataSynW));
+                        $dataAvgW=$dataSynW;
+                        $dataAvgWtm=$dataSynWtm;
+
+                    //******************************************************* 
+
+                
+                    }
+            else {            
             $dataAvgW=[];
             $i =0;
             if ($session->get('avgweek')[0][0][0]===$avgweek[0][0][0]){
@@ -393,7 +708,7 @@ class ProjectController extends AbstractController
                     }
                 }
                 //delete a hole year
-                $dataAvgW[count($dataAvgW)-1][0]=$dataAvgW[count($dataAvgW)-1][0]-31536000;
+               /* $dataAvgW[count($dataAvgW)-1][0]=$dataAvgW[count($dataAvgW)-1][0]-31536000;*/
                 if($request->get('tarif')==0){
                     $monthp = $request->get('date');
                     $month=[];
@@ -408,9 +723,13 @@ class ProjectController extends AbstractController
                     }
                     $monthtmp=$month;
                     for($i =1 ; $i <13; $i++){
+                        if ($monthtmp[$i]==0) {
+                            $month[$i]=0;
+                        }
+                        else{
                         $month[$i]=(float)$monthp[$i]/$month[$i];
+                        }
                     }
-
                     $dataAvgWtm=$dataAvgW;
                     for ($i=0;$i<count($dataAvgW);$i++) {
                         $date = new \DateTime();
@@ -545,7 +864,7 @@ class ProjectController extends AbstractController
                     }
                 }
                 //delete a hole year
-                $dataAvgW[count($dataAvgW)-1][0]=$dataAvgW[count($dataAvgW)-1][0]-31536000;
+               /* $dataAvgW[count($dataAvgW)-1][0]=$dataAvgW[count($dataAvgW)-1][0]-31536000;*/
                 if($request->get('tarif')==0){
                     $monthp = $request->get('date');
                     $month=[];
@@ -648,6 +967,7 @@ class ProjectController extends AbstractController
                 }
 
             }
+        }
             $consomation->setDateDeb($dateDeb);
             $consomation->setDateFin($dateFin);
             $consomation->setConsomationAnnuel($dataAvgW);

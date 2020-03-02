@@ -37,9 +37,12 @@
                     {{ include('production/csvreader.html.twig') }}
                 </div>
             </div>
+              <button type="button" onclick="retourpvgis()" class="btn-secondary btn"style="width:100%">Retour</button>
         </div>
     </div>
+  
 </div>
+
 {% block javascripts %}
     <script>
         /*
@@ -62,5 +65,13 @@
             $('#csvdiv').show();
 
         }
+        function retourpvgis(){
+                    $('#tabs-icons-text-1-tab').css("pointer-events"," visible");
+                    $('#tabs-icons-text-2-tab').css("pointer-events"," none")
+                    $('#tabs-icons-text-1').toggle();
+                    $('#tabs-icons-text-2').toggle();
+                    $('#tabs-icons-text-1-tab').addClass('active');
+                    $('#tabs-icons-text-2-tab').removeClass('active');
+   };
     </script>
 {% endblock %}
