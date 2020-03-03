@@ -178,7 +178,7 @@
         </div>
     </div>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
+    <script src={{ asset('build/js/transpose.js')}}></script>
     <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
     <script>
         let btn=0;
@@ -493,7 +493,7 @@
         $('#heatmap').on('click',function () {
             if (btn===1){
                 data = [{
-                    z:consomation_heatmap1,
+                    z:consomation_heatmap,
                     colorscale: 'Electric',
                     type: 'heatmap'
                 }];
@@ -729,11 +729,11 @@
                             importer[0][i]=dates;
                             importer[1][i]=response.importer[i][1];
                             if(i>0 && (i%24)===0){
-                                consomation_heatmap.push(consomation_tmp);
-                                production_heatmap.push(production_tmp);
-                                cedee_heatmap.push(cedee_tmp);
-                                importer_heatmap.push(importe_tmp);
-                                auto_consomer_heatmap.push(auto_consome_tmp);
+                                consomation_heatmap1.push(consomation_tmp);
+                                production_heatmap1.push(production_tmp);
+                                cedee_heatmap1.push(cedee_tmp);
+                                importer_heatmap1.push(importe_tmp);
+                                auto_consomer_heatmap1.push(auto_consome_tmp);
                                 consomation_tmp=[];
                                 production_tmp=[];
                                 cedee_tmp=[];
@@ -754,15 +754,15 @@
                                 importe_tmp.push(response.importer[i][1]);
                             }
                         }
-                        for (let i = 1; i < 24 ; i++) {
-                            for (let j = 0; j < 365; j++) {
-                                consomation_heatmap1[j][i]=consomation_heatmap[i][j];
-                                production_heatmap1[j][i]=production_heatmap1[i][j];
-                                auto_consomer_heatmap1[j][i]=auto_consomer_heatmap[i][j];
-                                cedee_heatmap1[j][i]=cedee_heatmap[i][j];
-                                importer_heatmap1[j][i]=importer_heatmap[i][j];
-                            }
-                        }
+
+                         /*transposer heatmap */
+                   
+                    consomation_heatmap=new transpose(consomation_heatmap1);
+                    production_heatmap=new transpose(production_heatmap1);
+                    cedee_heatmap=new transpose(cedee_heatmap1);
+                    importer_heatmap=new transpose(importer_heatmap1);
+                    auto_consomer_heatmap=new transpose(auto_consomer_heatmap1);
+
                         for (let j = 1; j < response.PH_cedee.length ; j++) {
                             PH_consomation[0]+=response.PH_consomation[j]['jour'];
                             PH_consomation[3]+=response.PH_consomation[j]['nuit'];
