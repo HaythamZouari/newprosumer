@@ -173,7 +173,7 @@ class ProjectController extends AbstractController
      */
     public function show(Project $project,Request $request,Session $session)
     {
-
+        date_default_timezone_set("Africa/Tunis");
         if ($request->isXmlHttpRequest()){
             $consomation = new Consomation();
             $dateDeb= new \DateTime($request->get('dateDeb'));
@@ -225,7 +225,7 @@ class ProjectController extends AbstractController
             }
 
 
-            $Phd=1;$Phf=1;$Phm=20;$Phad=15;$Pham=15;$Phn=0;
+            $Phd=1;$Phf=1;$Phm=20;$Phad=12;$Pham=12;$Phn=0;
 
             $hd1=(int)$hourSliderreq1[0];$hf1=(int)$hourSliderreq1[1];$hm1=round(($hd1+$hf1)/2);$had1=round(($hd1+$hm1)/2);$ham1=round(($hf1+$hm1)/2);
             $hd2=(int)$hourSliderreq2[0];$hf2=(int)$hourSliderreq2[1];$hm2=round(($hd2+$hf2)/2);$had2=round(($hd2+$hm2)/2);$ham2=round(($hf2+$hm2)/2);
@@ -256,7 +256,7 @@ class ProjectController extends AbstractController
                                     $synWeek1[$i][$j]=$Pham;
                                 }       
                                 else {
-                                    $synWeek1[$i][$j]=rand($Phad, $Pham);
+                                    $synWeek1[$i][$j]=rand($Phad, $Phm);
                                 } 
                             }
                            
@@ -287,7 +287,7 @@ class ProjectController extends AbstractController
                                                     $synWeek1[6][$j]=$Pham;
                                                     } 
                                                 else {
-                                                    $synWeek1[6][$j]=mt_rand($Phad, $Pham);
+                                                    $synWeek1[6][$j]=mt_rand($Phad, $Phm);
                                                 }
                                             }    
                                             else {
@@ -323,7 +323,7 @@ class ProjectController extends AbstractController
                                                 $synWeek1[0][$j]=$Pham;
                                                 } 
                                             else {
-                                                $synWeek1[0][$j]=mt_rand($Phad, $Pham);
+                                                $synWeek1[0][$j]=mt_rand($Phad, $Phm);
                                             }
                                                     
                                         }
@@ -360,7 +360,7 @@ class ProjectController extends AbstractController
                                 $synWeek2[$i][$j]=$Pham;
                                 }       
                             else {
-                                $synWeek2[$i][$j]=rand($Phad, $Pham);
+                                $synWeek2[$i][$j]=rand($Phad, $Phm);
                                 } 
                             }
                                            
@@ -376,26 +376,26 @@ class ProjectController extends AbstractController
                                     for($j = 0 ; $j<=23;$j++){
                                         if ($j>=$hdS && $j<=$hfS){
                                             if ($j==$hdS) {
-                                            $synWeek1[6][$j]=$Phd;
+                                            $synWeek2[6][$j]=$Phd;
                                             }
                                             if ($j==$hfS) {
-                                                $synWeek1[6][$j]=$Phf;
+                                                $synWeek2[6][$j]=$Phf;
                                                 }
                                             if ($j==$hmS) {
-                                                $synWeek1[6][$j]=$Phm;
+                                                $synWeek2[6][$j]=$Phm;
                                                 }    
                                             if ($j==$hadS) {
-                                                $synWeek1[6][$j]=$Phad;
+                                                $synWeek2[6][$j]=$Phad;
                                                 } 
                                             if ($j==$hamS) {
-                                                $synWeek1[6][$j]=$Pham;
+                                                $synWeek2[6][$j]=$Pham;
                                                 } 
                                             else {
-                                                $synWeek1[6][$j]=mt_rand($Phad, $Pham);
+                                                $synWeek2[6][$j]=mt_rand($Phad, $Phm);
                                             }
                                         }    
                                         else {
-                                            $synWeek1[6][$j]=$Phn;
+                                            $synWeek2[6][$j]=$Phn;
                                         }
                                         
                                     }
@@ -403,7 +403,7 @@ class ProjectController extends AbstractController
                 else {
                                     for($j = 0 ; $j<=23;$j++){
                 
-                                        $synWeek1[6][$j]=$Phn; 
+                                        $synWeek2[6][$j]=$Phn; 
                                     }
                 }    
                                                          
@@ -412,28 +412,28 @@ class ProjectController extends AbstractController
                                 for($j = 0 ; $j<=23;$j++){
                                     if ($j>=$hdD && $j<=$hfD){
                                         if ($j==$hdD) {
-                                        $synWeek1[0][$j]=$Phd;
+                                        $synWeek2[0][$j]=$Phd;
                                         }
                                         if ($j==$hfD) {
-                                            $synWeek1[0][$j]=$Phf;
+                                            $synWeek2[0][$j]=$Phf;
                                             }
                                         if ($j==$hmD) {
-                                            $synWeek1[0][$j]=$Phm;
+                                            $synWeek2[0][$j]=$Phm;
                                             }    
                                         if ($j==$hadD) {
-                                            $synWeek1[0][$j]=$Phad;
+                                            $synWeek2[0][$j]=$Phad;
                                             } 
                                         if ($j==$hamD) {
-                                            $synWeek1[0][$j]=$Pham;
+                                            $synWeek2[0][$j]=$Pham;
                                             } 
                                         else {
-                                            $synWeek1[0][$j]=mt_rand($Phad, $Pham);
+                                            $synWeek2[0][$j]=mt_rand($Phad, $Phm);
                                         }
                                                 
                                     }
                                         
                                     else {
-                                        $synWeek1[0][$j]=$Phn;
+                                        $synWeek2[0][$j]=$Phn;
                                     }
                                     
                                 }
@@ -441,7 +441,7 @@ class ProjectController extends AbstractController
                 else {
                                 for($j = 0 ; $j<=23;$j++){
                 
-                                    $synWeek1[0][$j]=$Phn; 
+                                    $synWeek2[0][$j]=$Phn; 
                                 }
                 } 
 
@@ -465,7 +465,7 @@ class ProjectController extends AbstractController
                                     $synWeek3[$i][$j]=$Pham;
                                 }       
                                 else {
-                                    $synWeek3[$i][$j]=rand($Phad, $Pham);
+                                    $synWeek3[$i][$j]=rand($Phad, $Phm);
                                 } 
                             }
                            
@@ -481,26 +481,26 @@ class ProjectController extends AbstractController
                     for($j = 0 ; $j<=23;$j++){
                         if ($j>=$hdS && $j<=$hfS){
                             if ($j==$hdS) {
-                            $synWeek1[6][$j]=$Phd;
+                            $synWeek3[6][$j]=$Phd;
                             }
                             if ($j==$hfS) {
-                                $synWeek1[6][$j]=$Phf;
+                                $synWeek3[6][$j]=$Phf;
                                 }
                             if ($j==$hmS) {
-                                $synWeek1[6][$j]=$Phm;
+                                $synWeek3[6][$j]=$Phm;
                                 }    
                             if ($j==$hadS) {
-                                $synWeek1[6][$j]=$Phad;
+                                $synWeek3[6][$j]=$Phad;
                                 } 
                             if ($j==$hamS) {
-                                $synWeek1[6][$j]=$Pham;
+                                $synWeek3[6][$j]=$Pham;
                                 } 
                             else {
-                                $synWeek1[6][$j]=mt_rand($Phad, $Pham);
+                                $synWeek3[6][$j]=mt_rand($Phad, $Phm);
                             }
                         }    
                         else {
-                            $synWeek1[6][$j]=$Phn;
+                            $synWeek3[6][$j]=$Phn;
                         }
                         
                     }
@@ -508,7 +508,7 @@ class ProjectController extends AbstractController
                 else {
                     for($j = 0 ; $j<=23;$j++){
                 
-                        $synWeek1[6][$j]=$Phn; 
+                        $synWeek3[6][$j]=$Phn; 
                     }
                 }    
                 
@@ -517,28 +517,28 @@ class ProjectController extends AbstractController
                     for($j = 0 ; $j<=23;$j++){
                         if ($j>=$hdD && $j<=$hfD){
                             if ($j==$hdD) {
-                            $synWeek1[0][$j]=$Phd;
+                            $synWeek3[0][$j]=$Phd;
                             }
                             if ($j==$hfD) {
-                                $synWeek1[0][$j]=$Phf;
+                                $synWeek3[0][$j]=$Phf;
                                 }
                             if ($j==$hmD) {
-                                $synWeek1[0][$j]=$Phm;
+                                $synWeek3[0][$j]=$Phm;
                                 }    
                             if ($j==$hadD) {
-                                $synWeek1[0][$j]=$Phad;
+                                $synWeek3[0][$j]=$Phad;
                                 } 
                             if ($j==$hamD) {
-                                $synWeek1[0][$j]=$Pham;
+                                $synWeek3[0][$j]=$Pham;
                                 } 
                             else {
-                                $synWeek1[0][$j]=mt_rand($Phad, $Pham);
+                                $synWeek3[0][$j]=mt_rand($Phad, $Pham);
                             }
                                     
                         }
                             
                         else {
-                            $synWeek1[0][$j]=$Phn;
+                            $synWeek3[0][$j]=$Phn;
                         }
                         
                     }
@@ -546,7 +546,7 @@ class ProjectController extends AbstractController
                 else {
                     for($j = 0 ; $j<=23;$j++){
                 
-                        $synWeek1[0][$j]=$Phn; 
+                        $synWeek3[0][$j]=$Phn; 
                     }
                 } 
 
