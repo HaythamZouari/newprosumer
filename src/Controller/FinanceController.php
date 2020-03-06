@@ -78,16 +78,22 @@ class FinanceController extends AbstractController
                 $gain[]=$g_E_cedee[$i]+$g_E_transporter[$i];
             }
             if ($finance->getCredit()===true){
-                $annuite= FinanceService::Anuite($project);
-                for ($i=0;$i<count($g_E_cedee);$i++)
-                    $CFADS[$i]= ($gain[$i]-(($finance->getOpex()/100)*$finance->getCapex())- $f_transporter[$i] - $f_regularisation[$i]);
+                $annuite= FinanceService::Anuite($finance->getMaturiteProj(),$finance->getDelaiGrace(),$project);
+                $opex=FinanceService::opex($project);
+                $delee=$finance->getDelaiGrace();
+                $maturite=$finance->getMaturiteProj();
+
+                for ($i=0;$i<$delee+$maturite;$i++)
+                    $CFADS[$i]= ($gain[$i]-$opex[$i]- $f_transporter[$i] - $f_regularisation[$i]);
+               /* for ($i=$delee+$maturite;$i<30;$i++)
+                    $CFADS[$i]=0;*/
             }
             else{
                 for ($i=0;$i<30;$i++){
                     $CFADS[$i]=0;
                 }
             }
-            $depense =FinanceService::depenses($frais_exp,$annuite,$f_regularisation,$f_transporter,$finance->getMaturiteProj(),$finance->getDelaiGrace());
+            $depense =FinanceService::depenses($opex,$annuite,$f_regularisation,$f_transporter,$finance->getMaturiteProj(),$finance->getDelaiGrace());
             for($i=0;$i<count($depense);$i++){
                 $dep+=$depense[$i];
             }
@@ -95,7 +101,7 @@ class FinanceController extends AbstractController
                 $cash_flow[]=$gain[$i] - $depense[$i];
             }
             for($i=0;$i<$finance->getMaturiteProj()+$finance->getDelaiGrace();$i++){
-                $dscr[$i]=(float)($CFADS[$i]/$annuite);
+                $dscr[$i]=(float)($CFADS[$i]/$annuite[$i]);
             }
             $cash_flow_cumule[0]=$cash_flow[0]+FinanceService::cashflowInt($project);
             for($i=1;$i<count($cash_flow);$i++){

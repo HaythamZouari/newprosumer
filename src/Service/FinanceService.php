@@ -85,11 +85,21 @@ class FinanceService
         }
         return $result;
     }
-    public static function Anuite(Project $project){
-        return ((($project->getFinance()->getTauxInteret()/100)*
+    public static function Anuite(int $maturite,int $delee,Project $project){
+        $result=[];
+        for($i=0;$i<$delee;$i++){
+            $result[$i]=($project->getFinance()->getTauxInteret()/100)*($project->getFinance()->getMontantDette());
+        }
+        for($i=$delee;$i<($delee+$maturite);$i++){
+            $result[$i]=((($project->getFinance()->getTauxInteret()/100)*
             $project->getFinance()->getMontantDette())/
             (1-pow((1+($project->getFinance()->getTauxInteret()/100)),-$project->getFinance()->getMaturiteProj()))
         );
+        }
+        for($i=($delee+$maturite);$i<30;$i++){   
+            $result[$i]=0;
+        }
+        return $result;
     }
     //if
     public static function factureRegularisation(array $gain_cedee,Project $project){
@@ -140,23 +150,23 @@ class FinanceService
 
 
     }
-    public static function depenses(array $frais_exp,float $annuite,array $f_reg,array $f_transport,int $maturite,int $delee){
+    public static function depenses(array $frais_exp,array $annuite,array $f_reg,array $f_transport,int $maturite,int $delee){
         $result=[];
         for($i=0;$i<$delee;$i++){
-            $result[$i]=$frais_exp[$i]+$f_reg[$i]+$f_transport[$i];
+            $result[$i]=$frais_exp[$i]+$f_reg[$i]+$f_transport[$i]+$annuite[$i];
         }
         for($i=$delee;$i<($delee+$maturite);$i++){
-            $result[$i]=$frais_exp[$i]+$annuite+$f_reg[$i]+$f_transport[$i];
+            $result[$i]=$frais_exp[$i]+$annuite[$i]+$f_reg[$i]+$f_transport[$i];
         }
         for($i=($maturite+$delee);$i<(count($f_transport));$i++){
             $result[$i]=$frais_exp[$i]+$f_reg[$i]+$f_transport[$i];
         }
         return $result;
     }
-    public static function depenses2(array $frais_exp,float $annuite,array $f_reg){
+    public static function depenses2(array $frais_exp,array $annuite,array $f_reg){
         $result=[];
         for($i=0;$i<count($frais_exp);$i++){
-            $result[$i]=$frais_exp[$i]+$annuite+$f_reg[$i];
+            $result[$i]=$frais_exp[$i]+$annuite[$i]+$f_reg[$i];
         }
         return $result;
     }
@@ -169,7 +179,7 @@ class FinanceService
         }
         return $result;
     }
-    public static function LLCR(Project $project, float $annuite,array $cfads){
+    public static function LLCR(Project $project, array $annuite,array $cfads){
         $result=[];
 
         for($i=0;$i<$project->getFinance()->getMaturiteProj();$i++){
@@ -179,7 +189,7 @@ class FinanceService
 
             }
             $result[]=($tmp_result/(
-                $project->getFinance()->getMontantDette() - ($i*$annuite)
+                $project->getFinance()->getMontantDette() - ($i*$annuite[$i])
                 ))
             ;
         }

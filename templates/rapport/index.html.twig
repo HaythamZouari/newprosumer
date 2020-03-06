@@ -951,8 +951,8 @@
                 dataType: 'json',
                 cache: false,
                 success: function (response) {
-                    for (let i = 0; i < response.maturiter; i++) {
-                        annuite[i]=response.annuite;
+                    for (let i = 0; i < response.maturiter+response.delee; i++) {
+                        annuite[i]=response.annuite[i];
                         cfads[i]=response.cfads[i];
                     }
                     let consomation_tmp = [];
@@ -1052,8 +1052,8 @@
 
 
                     let dataMonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
-                    for (let i = response.delee; i <response.maturiter+response.delee ; i++) {
-                        dsacr[i-response.delee]=response.dsacr[i];
+                    for (let i = 0; i <response.maturiter+response.delee ; i++) {
+                        dsacr[i]=response.dsacr[i];
                     }
 
                     for (let i = 0; i <response.dureeProj ; i++) {
@@ -1074,8 +1074,8 @@
                         );
                     }
                     //***********************PH consomer********************
-                    for (let j = response.delee; j < response.maturiter+response.delee ; j++) {
-                        cfadstmp[j-response.delee]=response.cfads[j];
+                    for (let j = 0; j < response.maturiter+response.delee ; j++) {
+                        cfadstmp[j]=response.cfads[j];
                     }
                     data = [{
                         values: PH_consomation,
@@ -1479,12 +1479,12 @@
                             "<td>"+round(response.gain_ans[i],3)+"</td>"+
                             "<td>"+round(response.Facture_transport[i],3)+"</td>"+
                             "<td>"+round(response.opex[i],3)+"</td>"+
-                            "<td></td>"+
-                            "<td></td>"+
+                            "<td>"+round(response.annuite[i],3)+"</td>"+
+                            "<td>"+round(response.facture_regrularisation[i],3)+"</td>"+
                             "<td>"+round(response.cashflow[i],3)+"</td>"+
                             "<td>"+round(response.cashflow_cum[i],3)+"</td>"+
-                            "<td></td>"+
-                            "<td></td>"+
+                            "<td>"+round(response.cfads[i],3)+"</td>"+
+                            "<td>"+round(response.dsacr[i],3)+"</td>"+
                             +"</tr>"
                         );
                     }
@@ -1499,7 +1499,7 @@
                             "<td>"+round(response.gain_ans[i],3)+"</td>"+
                             "<td>"+round(response.Facture_transport[i],3)+"</td>"+
                             "<td>"+round(response.opex[i],3)+"</td>"+
-                            "<td>"+round(response.annuite,3)+"</td>"+
+                            "<td>"+round(response.annuite[i],3)+"</td>"+
                             "<td>"+round(response.facture_regrularisation[i],3)+"</td>"+
                             "<td>"+round(response.cashflow[i],3)+"</td>"+
                             "<td>"+round(response.cashflow_cum[i],3)+"</td>"+
@@ -1522,7 +1522,7 @@
                             "<td>"+round(response.facture_regrularisation[i],3)+"</td>"+
                             "<td>"+round(response.cashflow[i],3)+"</td>"+
                             "<td>"+round(response.cashflow_cum[i],3)+"</td>"+
-                            "<td>"+round(response.cfads[i],3)+"</td>"+
+                            "<td></td>"+
                             "<td></td>"+
 
                             +"</tr>"
