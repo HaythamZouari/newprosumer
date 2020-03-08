@@ -841,6 +841,7 @@
                                     <th scope="col">Cash Flows cumules (DT)</th>
                                     <th scope="col">CFADS (DT)</th>
                                     <th scope="col">DSCR</th>
+                                    <th scope="col">LLCR</th>
                                 </tr>
                                 </thead>
                                 <tbody id="result_finance">
@@ -1054,6 +1055,10 @@
                     let dataMonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
                     for (let i = 0; i <response.maturiter+response.delee ; i++) {
                         dsacr[i]=response.dsacr[i];
+                    }
+
+                     for (let i = 0; i <response.maturiter+response.delee ; i++) {
+                        llcr[i]=response.llcr[i];
                     }
 
                     for (let i = 0; i <response.dureeProj ; i++) {
@@ -1469,9 +1474,8 @@
                     //***********************************finance****************************************
                     console.log(response.facture_regrularisation[0]);
                     for(let i=0;i<response.delee;i++){
-                        llcr[i]=0;
-                        cfadstmp[i]=0;
-                        soldrep[i]=response.credit;
+                        
+                        
 
                         $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
                             "<td>"+round(response.gain_E_transporter[i],3)+"</td>"+
@@ -1485,14 +1489,13 @@
                             "<td>"+round(response.cashflow_cum[i],3)+"</td>"+
                             "<td>"+round(response.cfads[i],3)+"</td>"+
                             "<td>"+round(response.dsacr[i],3)+"</td>"+
+                            "<td>"+round(response.llcr[i],3)+"</td>"
                             +"</tr>"
                         );
                     }
 
                     for(let i=response.delee;i<response.maturiter+response.delee;i++){
-                        llcrtmp[i]=window.van2(response.taux_credit,cfadstmp);
-                        soldrep[i]=(soldrep[i-1]*(1+(response.taux_credit/100)))-response.annuite;
-                        llcr[i]=window.van2(response.taux_credit,cfadstmp)/soldrep[i];
+                        
                         $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
                             "<td>"+round(response.gain_E_transporter[i],3)+"</td>"+
                             "<td>"+round(response.gain_E_cedee[i],3)+"</td>"+
@@ -1505,7 +1508,7 @@
                             "<td>"+round(response.cashflow_cum[i],3)+"</td>"+
                             "<td>"+round(response.cfads[i],3)+"</td>"+
                             "<td>"+round(response.dsacr[i],3)+"</td>"+
-
+                            "<td>"+round(response.llcr[i],3)+"</td>"
                             +"</tr>"
 
                         );

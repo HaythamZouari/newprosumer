@@ -64,7 +64,7 @@ class FinanceController extends AbstractController
             $f_transporter=[];
             $f_regularisation=FinanceService::factureRegularisation($g_E_cedee,$project);
             $frais_exp=FinanceService::fraisExploitation($project);
-
+            $opex=FinanceService::opex($project);
             if ($finance->getTransportEng() ==true){
                 $f_transporter=FinanceService::facteurTransport($project);
             }
@@ -79,7 +79,7 @@ class FinanceController extends AbstractController
             }
             if ($finance->getCredit()===true){
                 $annuite= FinanceService::Anuite($finance->getMaturiteProj(),$finance->getDelaiGrace(),$project);
-                $opex=FinanceService::opex($project);
+                
                 $delee=$finance->getDelaiGrace();
                 $maturite=$finance->getMaturiteProj();
 
@@ -123,7 +123,7 @@ class FinanceController extends AbstractController
             array_unshift($CFADS, (-1*($finance->getCapex()*(1- ($finance->getSubvention()/100)))));
             array_unshift($cash_flow,FinanceService::cashflowInt($project));
             $finance->setTri25(((float)Finances::IRR($CFADS,0.1))*100);
-            $finance->setTricapitaux((float)Finances::IRR($cash_flow,0.1)*100);
+            $finance->setTricapitaux((float)Finances::IRR($cash_flow,0.3)*100);
             array_unshift($cash_flow,$finance->getTauxActualisation()/100);
             $finance->setVan(Finances::NPV($cash_flow));
             $this->getDoctrine()->getManager()->persist($finance);

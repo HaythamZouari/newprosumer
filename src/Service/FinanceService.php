@@ -181,20 +181,23 @@ class FinanceService
     }
     public static function LLCR(Project $project, array $annuite,array $cfads){
         $result=[];
+        $solderep=[];
+        $tmp_result=[];
 
-        for($i=0;$i<$project->getFinance()->getMaturiteProj();$i++){
-            $tmp_result=0;
-            for($j=$i;$j<$project->getFinance()->getMaturiteProj();$j++){
-                $tmp_result += $cfads[$j]/pow((1+($project->getFinance()->getTauxActualisation()/100)),$j);
+        for($i=0;$i<($project->getFinance()->getMaturiteProj())+($project->getFinance()->getDelaiGrace());$i++){
+            $tmp_result[$i]=0; 
+            $k=1;          
+            for($j=$i;$j<($project->getFinance()->getMaturiteProj())+($project->getFinance()->getDelaiGrace());$j++){
+
+                $tmp_result[$i] += $cfads[$j]/pow((1+($project->getFinance()->getTauxActualisation()/100)),$k);
+                $k++;
 
             }
-            $result[]=($tmp_result/(
-                $project->getFinance()->getMontantDette() - ($i*$annuite[$i])
-                ))
-            ;
+            $solderep[0]=$project->getFinance()->getMontantDette();
+            $solderep[$i+1]=$solderep[$i]*(1+(($project->getFinance()->getTauxInteret())/100))-$annuite[$i];            
+            $result[$i]=($tmp_result[$i]/$solderep[$i]);           
         }
         return $result;
-
     }
     public static function cashflowInt(Project $project){
        return -(float)(($project->getFinance()->getCapex()) *
