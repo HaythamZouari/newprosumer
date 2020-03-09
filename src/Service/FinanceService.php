@@ -86,7 +86,10 @@ class FinanceService
         return $result;
     }
     public static function Anuite(int $maturite,int $delee,Project $project){
-        $result=[];
+        for($i=0;$i<30;$i++){
+            $result[$i]=0;
+        }
+       
         for($i=0;$i<$delee;$i++){
             $result[$i]=($project->getFinance()->getTauxInteret()/100)*($project->getFinance()->getMontantDette());
         }

@@ -60,7 +60,7 @@ class FinanceController extends AbstractController
             $cash_flow_cumule=[];
             $CFADS=[];
             $dscr=[];
-            $annuite=0;
+            $annuite=[];
             $f_transporter=[];
             $f_regularisation=FinanceService::factureRegularisation($g_E_cedee,$project);
             $frais_exp=FinanceService::fraisExploitation($project);

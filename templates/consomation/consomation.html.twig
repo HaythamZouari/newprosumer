@@ -6,15 +6,7 @@
         <div class="card-body px-lg-5 py-lg-5">
             <form class="consomation" id="consomationForm" action="{{ path('project_show',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
                 <div>
-                    <div class="form-group">
-                        <label class="form-control-label required" for="Tarif">Tarif</label>
-                        <br>
-                        <label class="form-control-label required">Uniforme</label>
-                        <input type="radio" checked="checked" name="tarif" id="tarif" value="0" data-toggle="collapse" data-target=".tarif"  aria-expanded="true" aria-controls="Uniforme PostHoraire">
-                        <label class="form-control-label required">Quatre postes horaires</label>
-                        <input type="radio"  name="tarif" id="tarif" value="1" data-toggle="collapse" data-target=".tarif"  aria-expanded="false" aria-controls="PostHoraire Uniforme">
-                    </div>
-                    
+                                        
                     <div class="nav-wrapper">
                         <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                                 
@@ -96,7 +88,15 @@
                             </div>
                             </div>
                         </div>
-                    </div>  
+                    </div>  </br>
+                    <div class="form-group">
+                        <label class="form-control-label required" for="Tarif">Tarif</label>
+                        <br>
+                        <label class="form-control-label required">Uniforme</label>
+                        <input type="radio" checked="checked" name="tarif" id="tarif" value="0" data-toggle="collapse" data-target=".tarif"  aria-expanded="true" aria-controls="Uniforme PostHoraire">
+                        <label class="form-control-label required">Quatre postes horaires</label>
+                        <input type="radio"  name="tarif" id="tarif" value="1" data-toggle="collapse" data-target=".tarif"  aria-expanded="false" aria-controls="PostHoraire Uniforme">
+                    </div>
                     <div class="form-group">
                         <label class="form-control-label required" for="dateDeb">Date de debut</label>
                         <input type="date" name="dateDeb" id="dateDeb" class="form-control">

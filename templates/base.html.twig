@@ -28,7 +28,7 @@
 <div class="main-content">
     <!-- Navbar -->
     {% block navbartop %}
-                <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+                <nav class="navbar navbar-top navbar-expand-md navbar-light" id="navbar-main">
 
                     <div class="container-fluid">
                         <!-- Toggler -->
@@ -36,7 +36,7 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <!-- Brand -->
-                        <a class="navbar-brand pt-0" href={{ path("dashboard") }}>
+                        <a class="navbar-brand pt-0 mr-6" href={{ path("dashboard") }}>
                             <img src="{{ asset('build/img/brand/blue.png') }}" class="navbar-brand-img em">
                         </a>
                         <!-- User -->
@@ -92,7 +92,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link " href="{{ path('project_index') }}">
                                         <i class="ni ni-folder-17 text-orange"></i>
-                                        <span class="text-gray">
+                                        <span class="font-weight-bold text-gray">
                                         Projets
                                         </span>
                                     </a>
@@ -100,7 +100,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link " href="">
                                         <i class="ni ni-single-02 text-yellow"></i>
-                                        <span class="text-gray">
+                                        <span class="font-weight-bold text-gray">
                                             Contactez nous
                                         </span>
                                     </a>
@@ -109,7 +109,7 @@
                                     <li class="nav-item  text-gray">
                                         <a class="nav-link" href="{{ path('security_login') }}">
                                             <i class="ni ni-key-25 text-info"></i>
-                                            <span class="text-gray">
+                                            <span class="font-weight-bold text-gray">
                                                 Login
                                             </span>
                                         </a>
@@ -117,7 +117,7 @@
                                     <li class="nav-item text-gray">
                                         <a class="nav-link" href="{{ path('user_register') }}">
                                             <i class="ni ni-circle-08 text-pink"></i>
-                                            <span class="text-gray">
+                                            <span class=" font-weight-bold text-gray">
                                             Register
                                             </span>
                                         </a>
@@ -127,7 +127,7 @@
                                         <a class="nav-link" href="{{ path('security_logout') }}">
                                             <i class="ni ni-user-run text-red"></i>
 
-                                            <span class="text-gray">
+                                            <span class="font-weight-bold text-gray">
                                             Logout
                                             </span>
                                         </a>
@@ -188,21 +188,19 @@
     {% endblock %}
 
     <!-- Header -->
-    <div class="header bg-gradient-white pb-0 pt-5 pt-md-8">
+    <div class="header bg-gradient-white pb-0 py-3 pt-5 pt-md-5">
         <div class="container-fluid">
             <div class="header-body">
                 {% block header %}
                     <div class="row">
 
-                        <div class="col-xl-12" >
-                            <img src="{{ asset('build/img/brand/Image7.png') }}" class="img-fluid" alt="Responsive image">
-                        </div>
+                       
                     </div>
                 {% endblock %}
             </div>
         </div>
     </div>
-    <div class="container-fluid mt-7">
+    <div class="container-fluid mt-4">
         {% block body %}
         <div class="row">
             <div class="col-sm-1">

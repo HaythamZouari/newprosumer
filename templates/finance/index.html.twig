@@ -1,5 +1,6 @@
-<div class="card bg-secondary shadow border-0">
+<div class="card bg-secondary">
     <div class="card-header bg-transparent pb-5" >
+        <div class="card-body px-lg-5 py-lg-5">
         <div class="card-body px-lg-5 py-lg-5">
             <form id="financeForm"  action="{{ path('finance',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
                 <div class="form-group">
@@ -67,6 +68,7 @@
             </form>
         </div>
     </div>
+</div>
 </div>
 <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
 <script>
