@@ -111,13 +111,13 @@ class ResultController extends AbstractController
             }
             $f_reg=$project->getFinance()->getFRegularisation()[0];
             if(!$project->getFinance()->getTransportEng()){
-                for($i=0;$i<(count($project->getFinance()->getGainTransporter()));$i++){
+                for($i=0;$i<(count($project->getFinance()->getfactransport()));$i++){
                    $f_transport[]=0;
                 }
             }
             else {
                 for($i=0;$i<(count($project->getFinance()->getGainTransporter()));$i++){
-                    $f_transport[]=$project->getFinance()->getGainTransporter()[$i];
+                    $f_transport[]=$project->getFinance()->getfactransport()[$i];
                 }
 
             }

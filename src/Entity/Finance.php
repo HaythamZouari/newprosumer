@@ -112,6 +112,11 @@ class Finance
     private $f_regularisation = [];
 
     /**
+     * @ORM\Column(type="array")
+     */
+    private $factransport = [];
+
+    /**
      * @ORM\Column(type="float")
      */
     private $van;
@@ -432,9 +437,21 @@ class Finance
         return $this->f_regularisation;
     }
 
+    public function getfactransport(): ?array
+    {
+        return $this->factransport;
+    }
+
     public function setFRegularisation(array $f_regularisation): self
     {
         $this->f_regularisation = $f_regularisation;
+
+        return $this;
+    }
+
+    public function setfactransport(array $factransport): self
+    {
+        $this->factransport = $factransport;
 
         return $this;
     }

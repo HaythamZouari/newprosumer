@@ -107,8 +107,9 @@ class FinanceController extends AbstractController
             for($i=1;$i<count($cash_flow);$i++){
                 $cash_flow_cumule[$i]=$cash_flow_cumule[$i-1]+$cash_flow[$i];
             }
-
+            
             $finance->setAnnuite($annuite);
+            $finance->setfactransport($f_transporter);
             $finance->setDepense($dep);
             $finance->setGainCedee($g_E_cedee);
             $finance->setGainTransporter($g_E_transporter);
