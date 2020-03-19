@@ -59,6 +59,7 @@ class ProjectListner implements EventSubscriberInterface
             $production=$project->getPvgis()->getResult() ;
         else if($project->getCsvProd() != null)
             $production=$project->getCsvProd()->getResult();
+            
         for ($i=0;$i<count($consomation);$i++){
             if($consomation[$i][1]<$production[$i][1]){
                 $auto_consomer[$i]=[$production[$i][0],$consomation[$i][1]];

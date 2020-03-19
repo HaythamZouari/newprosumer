@@ -51,16 +51,20 @@ class ProductionController extends AbstractController
             '&startyear=2015'.
             '&endyear=2015'.
             '&pvcalculation=1'
+        ); 
+        
 
 
-        );
         $lines = explode(PHP_EOL, $response->getContent());
+        
         $array=[];
+        
         $data=[];
         foreach ($lines as $line){
             $array[]=str_getcsv($line);
         }
-    $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2017-12-31 23:00' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
+       
+        $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2017-12-31 23:00' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
         $i=2;
         foreach ($period as $key=>$date) {
             /*$string=$array[$i][0];*/
@@ -69,6 +73,131 @@ class ProductionController extends AbstractController
             $i++;
 
         }
+
+        
+
+        
+        if ((($request->get('peakpower2'))!=0) && (($request->get('peakpower3'))==0)) {
+            $response2 = $httpClient->request('GET',
+                'http://re.jrc.ec.europa.eu/pvgis5/seriescalc.php?'.
+                '&lat='.$request->get('lat').
+                '&lon='.$request->get('lon').
+                '&raddadtabase'.$request->get('raddadtabase').
+                '&peakpower='.$request->get('peakpower2').
+                '&pvtechchoice='.$request->get('technologies').
+                '&loss='.$request->get('loss2').
+                '&angle='.$request->get('angle2').
+                '&aspect='.$request->get('aspect2').
+                '&trackingtype'.$request->get('trackingtype2').
+                '&outputformat=basic'.
+                '&startyear=2015'.
+                '&endyear=2015'.
+                '&pvcalculation=1'       
+            
+            );
+            $array=[];
+            $array2=[];
+
+            $lines2 = explode(PHP_EOL, $response2->getContent());
+
+            foreach ($lines2 as $line){
+                $array2[]=str_getcsv($line);
+            }
+
+            $lines = explode(PHP_EOL, $response->getContent());
+        
+           
+            
+            $data=[];
+            foreach ($lines as $line){
+                $array[]=str_getcsv($line);
+            }
+           
+            $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2017-12-31 23:00' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
+            $i=2;
+            foreach ($period as $key=>$date) {
+                /*$string=$array[$i][0];*/
+                $data[]=[(int)$date->getTimestamp(),((float)($array[$i][1])+(float)($array2[$i][1]))/1000];
+    
+                $i++;
+    
+            }
+
+        };
+
+
+        if (($request->get('peakpower3'))!=0) {
+            $response2 = $httpClient->request('GET',
+                'http://re.jrc.ec.europa.eu/pvgis5/seriescalc.php?'.
+                '&lat='.$request->get('lat').
+                '&lon='.$request->get('lon').
+                '&raddadtabase'.$request->get('raddadtabase').
+                '&peakpower='.$request->get('peakpower2').
+                '&pvtechchoice='.$request->get('technologies').
+                '&loss='.$request->get('loss2').
+                '&angle='.$request->get('angle2').
+                '&aspect='.$request->get('aspect2').
+                '&trackingtype'.$request->get('trackingtype2').
+                '&outputformat=basic'.
+                '&startyear=2015'.
+                '&endyear=2015'.
+                '&pvcalculation=1'       
+            
+            );
+
+            $response3 = $httpClient->request('GET',
+                'http://re.jrc.ec.europa.eu/pvgis5/seriescalc.php?'.
+                '&lat='.$request->get('lat').
+                '&lon='.$request->get('lon').
+                '&raddadtabase'.$request->get('raddadtabase').
+                '&peakpower='.$request->get('peakpower3').
+                '&pvtechchoice='.$request->get('technologies').
+                '&loss='.$request->get('loss3').
+                '&angle='.$request->get('angle3').
+                '&aspect='.$request->get('aspect3').
+                '&trackingtype'.$request->get('trackingtype3').
+                '&outputformat=basic'.
+                '&startyear=2015'.
+                '&endyear=2015'.
+                '&pvcalculation=1'       
+            
+            );
+
+            
+            $array=[];
+            $array2=[];
+            $array3=[];
+
+            $lines2 = explode(PHP_EOL, $response2->getContent());
+            $lines3 = explode(PHP_EOL, $response3->getContent());
+            $lines = explode(PHP_EOL, $response->getContent());
+        
+            
+            $data=[];
+            foreach ($lines as $line){
+                $array[]=str_getcsv($line);
+            }
+
+            foreach ($lines2 as $line){
+                $array2[]=str_getcsv($line);
+            }
+
+            foreach ($lines3 as $line){
+                $array3[]=str_getcsv($line);
+            }
+
+           
+            $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2017-12-31 23:00' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
+            $i=2;
+            foreach ($period as $key=>$date) {
+                /*$string=$array[$i][0];*/
+                $data[]=[(int)$date->getTimestamp(),((float)($array[$i][1])+(float)($array2[$i][1])+(float)($array3[$i][1]))/1000];
+    
+                $i++;
+    
+            }
+
+        };
        /* $data[count($data)-1][0]=$data[count($data)-1][0]-31536000;*/
         /*
             for($i=11;$i<8771;$i++){
@@ -106,21 +235,23 @@ class ProductionController extends AbstractController
         $response = $httpClient->request('GET',
             'https://www.renewables.ninja/api/data/pv?lat='.$request->get('lat').
             '&lon='.$request->get('lon').
-            '&date_from=2014-01-01&date_to=2015-01-01'.
+            '&date_from=2014-01-01&date_to=2014-12-31'.
             '&dataset='.$request->get('raddatabase').
             '&capacity='.$request->get('capacity').
-            '&system_loss='.$request->get('loss').
+            '&system_loss='.($request->get('loss')/100).
             '&tracking='.$request->get(('tracking')).
             '&tilt='.$request->get('tilt').
             '&azim='.$request->get('azimuth').
             '&format=json'
         );
-
+        
         $ac = $response->toArray()['data'];
-        $ac_monthly=$response->toArray()['outputs']['ac_monthly'];
+        
+        /*$ac_elec= current($ac)[0]->toArray()['electricity'];*/
         $date = new \DateTime('2014-01-01');
         while ($dat = current($ac)) {
-            $data[]=[key($ac),$dat];
+            
+            $data[]=[key($ac),array_values($dat)[0]];
 
             next($ac);
         }
@@ -130,7 +261,7 @@ class ProductionController extends AbstractController
             ProjectEvent::NAME,
             $projectEvent
         );
-        return new JsonResponse(['data'=>$response->toArray()]);
+        return new JsonResponse(['data'=>$response->toArray(),'values'=>$data,'dat'=>$ac]);
     }
     /**
      * @Route("/readcsv/{id}",name="readcsv")

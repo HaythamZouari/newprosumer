@@ -2,48 +2,147 @@
     <div class="row">
         <div class="col">
                     <input type="hidden" name="raddatabase" value="PVGIS-CMSAF"/>
-            <div class="form-group">
-                <label class="form-control-label required">Type d'integration:</label>
+            <div id="sschamp1">
+                <div class="form-group">
+                    <label class="form-control-label required">Sous-Champ 1</label>
+                </div>        
+                <div class="form-group">
+                    <label class="form-control-label required">Type d'integration:</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required">Fixe</label>
+                    <input style="margin-right: 5px" type="radio" checked="checked" name="trackingtype"  value="0" onclick="fixe()">
+                    <label class="form-control-label required">Axe Vertical</label>
+                    <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=3 onclick="vAx()">
+                    <label style="margin-right: 5px" class="form-control-label required">Axe Incline</label>
+                    <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=5 onclick="iAx()">
+                    <label style="margin-right: 5px" class="form-control-label required">Double Axe</label>
+                    <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=2 onclick="dAx()">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="angle" >Inclinaison [°]</label>
+                    <input type="number" step="0.01" class="form-control" min="0" max="90" name="angle" id="angle" value="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="aspect" >Azimuth [°]</label>
+                    <input type="number" class="form-control" step="0.01" min="-180" max="180" value="0" name="aspect" id="aspect">
+                </div>
+                <input name="technologies" id="pvtechchoice"  value="crystSi" type="hidden">
+                <div class="form-group">
+                    <label class="form-control-label required" for="peakpower" >Puissance crete[kWc]</label>
+                    <input type="number" class="form-control" step="0.01" min="1" value=1  name="peakpower" id="peakpower">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="loss" >Pertes [%]</label>
+                    <input type="number" class="form-control" step="0.01" min="0" value=14  name="loss" id="loss">
+                </div>
+                <div class="text-center">
+                    <button type="button" onclick="add_sous_champ2()" class="btn-secondary btn">Ajouter sous-champ</button>    
+                </div>
+            </div>   
+            <div id="sschamp2">
+                <div class="form-group">
+                    <label class="form-control-label required">Sous-Champ 2</label>
+                </div>
+                    <div class="form-group">
+                    <label class="form-control-label required">Type d'integration:</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required">Fixe</label>
+                    <input style="margin-right: 5px" type="radio" checked="checked" name="trackingtype2"  value="0" onclick="fixe()">
+                    <label class="form-control-label required">Axe Vertical</label>
+                    <input style="margin-right: 5px" type="radio"  name="trackingtype2"  value=3 onclick="vAx()">
+                    <label style="margin-right: 5px" class="form-control-label required">Axe Incline</label>
+                    <input style="margin-right: 5px" type="radio"  name="trackingtype2"  value=5 onclick="iAx()">
+                    <label style="margin-right: 5px" class="form-control-label required">Double Axe</label>
+                    <input style="margin-right: 5px" type="radio"  name="trackingtype2"  value=2 onclick="dAx()">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="angle2" >Inclinaison [°]</label>
+                    <input type="number" step="0.01" class="form-control" min="0" max="90" name="angle2" id="angle2" value="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="aspect2" >Azimuth [°]</label>
+                    <input type="number" class="form-control" step="0.01" min="-180" max="180" value="0" name="aspect2" id="aspect2">
+                </div>
+                <input name="technologies" id="pvtechchoice"  value="crystSi" type="hidden">
+                <div class="form-group">
+                    <label class="form-control-label required" for="peakpower2" >Puissance crete[kWc]</label>
+                    <input type="number" class="form-control" step="0.01" min="1" value=0  name="peakpower2" id="peakpower2">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="loss2" >Pertes [%]</label>
+                    <input type="number" class="form-control" step="0.01" min="0" value=14  name="loss2" id="loss2">
+                </div>
+                <div class="text-center">
+                <button type="button" onclick="add_sous_champ3()" class="btn-secondary btn">Ajouter sous-champ</button>
+                </div> 
             </div>
-            <div class="form-group">
-                <label class="form-control-label required">Fixe</label>
-                <input style="margin-right: 5px" type="radio" checked="checked" name="trackingtype"  value="0" onclick="fixe()">
-                <label class="form-control-label required">Axe Vertical</label>
-                <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=3 onclick="vAx()">
-                <label style="margin-right: 5px" class="form-control-label required">Axe Incline</label>
-                <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=5 onclick="iAx()">
-                <label style="margin-right: 5px" class="form-control-label required">Double Axe</label>
-                <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=2 onclick="dAx()">
+            <div id="sschamp3">
+                <div class="form-group">
+                    <label class="form-control-label required">Sous-Champ 3</label>
+                </div>
+                    <div class="form-group">
+                    <label class="form-control-label required">Type d'integration:</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required">Fixe</label>
+                    <input style="margin-right: 5px" type="radio" checked="checked" name="trackingtype3"  value="0" onclick="fixe()">
+                    <label class="form-control-label required">Axe Vertical</label>
+                    <input style="margin-right: 5px" type="radio"  name="trackingtype3"  value=3 onclick="vAx()">
+                    <label style="margin-right: 5px" class="form-control-label required3">Axe Incline</label>
+                    <input style="margin-right: 5px" type="radio"  name="trackingtype3"  value=5 onclick="iAx()">
+                    <label style="margin-right: 5px" class="form-control-label required">Double Axe</label>
+                    <input style="margin-right: 5px" type="radio"  name="trackingtype3"  value=2 onclick="dAx()">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="angle3" >Inclinaison [°]</label>
+                    <input type="number" step="0.01" class="form-control" min="0" max="90" name="angle3" id="angle3" value="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="aspect3" >Azimuth [°]</label>
+                    <input type="number" class="form-control" step="0.01" min="-180" max="180" value="0" name="aspect3" id="aspect3">
+                </div>
+                <input name="technologies" id="pvtechchoice"  value="crystSi" type="hidden">
+                <div class="form-group">
+                    <label class="form-control-label required" for="peakpower3" >Puissance crete[kWc]</label>
+                    <input type="number" class="form-control" step="0.01" min="1" value=0 name="peakpower3" id="peakpower3">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label required" for="loss3" >Pertes [%]</label>
+                    <input type="number" class="form-control" step="0.01" min="0" value=14  name="loss3" id="loss3">
+                </div>
+                
+            </div>
+           
 
-            </div>
-            <div class="form-group">
-                <label class="form-control-label required" for="angle" >Inclinaison [°]</label>
-                <input type="number" step="0.01" class="form-control" min="0" max="90" name="angle" id="angle" value="0">
-            </div>
-            <div class="form-group">
-                <label class="form-control-label required" for="aspect" >Azimuth [°]</label>
-                <input type="number" class="form-control" step="0.01" min="-180" max="180" value="0" name="aspect" id="aspect">
-            </div>
-            <input name="technologies" id="pvtechchoice"  value="crystSi" type="hidden">
-            <div class="form-group">
-                <label class="form-control-label required" for="peakpower" >Puissance crete[kWc]</label>
-                <input type="number" class="form-control" step="0.01" min="1" value=1  name="peakpower" id="peakpower">
-            </div>
-            <div class="form-group">
-                <label class="form-control-label required" for="loss" >Pertes [%]</label>
-                <input type="number" class="form-control" step="0.01" min="0" value=14  name="loss" id="loss">
-            </div>
-
-            <div class="text-center">
-                <button type="button" onclick="pvgisSubmit()" class="btn-secondary btn">Continuer</button>
-                 
-            </div>
+            
         </div>
+       
+    </div>
+     <div class="text-center">
+             <button type="button" onclick="pvgisSubmit()" class="btn-secondary btn">Continuer</button>
     </div>
     
 </form>
 
 <script>
+
+    function add_sous_champ2(){
+            $('#sschamp2').show('active');
+            $('#sschamp1').hide('active');
+           
+            
+    }
+
+    function add_sous_champ3(){
+            $('#sschamp3').show('active');
+            $('#sschamp2').hide('active');
+            $('#sschamp1').hide('active');
+           
+            
+    }
+
     function fixe(){
         $('#angle').prop('disabled',false);
 
@@ -96,6 +195,7 @@
                     console.log(response.data);
                     console.log(response.data2);
                     console.log(response.array);
+                    console.log(response.array2);
                     $('#tabs-icons-text-3-tab').css("pointer-events"," visible");
                     $('#tabs-icons-text-2-tab').css("pointer-events"," none")
                     $('#tabs-icons-text-2').toggle();
