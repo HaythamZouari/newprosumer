@@ -50,6 +50,11 @@ class Project
      */
     private $pvgis;
 
+     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Ninja", inversedBy="project", cascade={"persist", "remove"})
+     */
+    private $ninja;
+
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Consomation", inversedBy="project", cascade={"persist", "remove"})
@@ -164,6 +169,18 @@ class Project
     public function setPvgis($pvgis): self
     {
         $this->pvgis = $pvgis;
+
+        return $this;
+    }
+
+    public function getNinja(): ?Ninja
+    {
+        return $this->ninja;
+    }
+
+    public function setNinja($ninja): self
+    {
+        $this->ninja = $ninja;
 
         return $this;
     }

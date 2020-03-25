@@ -109,6 +109,8 @@ class FinanceService
         $cedee=$project->getCedee();
         if ($project->getPvgis()!=null)
             $prod=$project->getPvgis()->getResult();
+        if ($project->getNinja()!=null)
+            $prod=$project->getNinja()->getResult();    
         if($project->getCsvProd()!=null)
             $prod=$project->getCsvProd()->getResult();
 

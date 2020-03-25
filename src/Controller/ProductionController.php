@@ -2,21 +2,22 @@
 
 namespace App\Controller;
 
+use DateTime;
+use App\Entity\Ninja;
+use App\Entity\Pvgis;
 use App\Entity\CsvProd;
 use App\Entity\Project;
-use App\Entity\Pvgis;
-use App\Event\ProjectEvent;
-use App\Service\Datesorting;
-use App\Service\FileUpload;
 use Carbon\CarbonPeriod;
-use DateTime;
+use App\Event\ProjectEvent;
+use App\Service\FileUpload;
+use App\Service\Datesorting;
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductionController extends AbstractController
 {
@@ -216,6 +217,7 @@ class ProductionController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($pvgis);
         $project->setCsvProd(null);
+        $project->setNinja(null);
         $entityManager->flush();
         $entityManager->persist($project);
         $entityManager->flush();
@@ -231,6 +233,16 @@ class ProductionController extends AbstractController
      */
     public function ninja(Project $project , EventDispatcherInterface $eventDispatcher,Request $request)
     {
+        $ninja = new Ninja();
+        $ninja->setProject($project);
+        $ninja->setLat((float)$request->get('lat'));
+        $ninja->setAzimuth((float)$request->get('azimuth'));
+        $ninja->setLon((int)$request->get('lon'));
+        $ninja->setLoss((float)$request->get('loss'));
+        $ninja->setTracking((int)$request->get('tracking'));
+        $ninja->setCapacity((float)$request->get('capacity'));
+        $ninja->setRaddatabase($request->get('raddatabase'));
+        $ninja->setTilt((float)$request->get('tilt'));
         $httpClient = HttpClient::create(['auth_bearer'=>'4171ff415c2962940501acb99ba088c98e6f6134']);
         $response = $httpClient->request('GET',
             'https://www.renewables.ninja/api/data/pv?lat='.$request->get('lat').
@@ -248,18 +260,39 @@ class ProductionController extends AbstractController
         $ac = $response->toArray()['data'];
         
         /*$ac_elec= current($ac)[0]->toArray()['electricity'];*/
-        $date = new \DateTime('2014-01-01');
+       
         while ($dat = current($ac)) {
             
-            $data[]=[key($ac),array_values($dat)[0]];
+            $data1[]=[key($ac),array_values($dat)[0]];
 
             next($ac);
         }
+        
+        
 
-        $projectEvent = new ProjectEvent($project);
-        $eventDispatcher->dispatch(
-            ProjectEvent::NAME,
-            $projectEvent
+    $period = CarbonPeriod::create('2014-01-01 00:00','PT1H','2014-12-31 23:00' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
+    $i=0;
+    foreach ($period as $key=>$date) {
+        /*$string=$array[$i][0];*/
+        $data[]=[(int)$date->getTimestamp(),(float)($data1[$i][1])];
+
+        $i++;
+
+    }
+
+            
+            $ninja->setResult(Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($ninja);
+            $project->setCsvProd(null);
+            $project->setPvgis(null);
+            $entityManager->flush();
+            $entityManager->persist($project);
+            $entityManager->flush();
+            $projectEvent = new ProjectEvent($project);
+            $eventDispatcher->dispatch(
+                ProjectEvent::NAME,
+                $projectEvent
         );
         return new JsonResponse(['data'=>$response->toArray(),'values'=>$data,'dat'=>$ac]);
     }

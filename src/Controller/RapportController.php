@@ -45,6 +45,18 @@ class RapportController extends AbstractController
             $incl = $project->getPvgis()->getSlop();
             $loss=$project->getPvgis()->getLoss();
         }
+
+        if($project->getNinja()!=null){
+            for ($i=0;$i<count($project->getNinja()->getResult());$i++) {
+               $prd_annuel+= $project->getNinja()->getResult()[$i][1];
+            }
+            $ps_centrale=$project->getNinja()->getCapacity();
+            $lat=$project->getNinja()->getLat();
+            $lon=$project->getNinja()->getLon();
+            $azimut=$project->getNinja()->getAzimuth();
+            $incl = $project->getNinja()->getTilt();
+            $loss=$project->getNinja()->getLoss();
+        }
         else if($project->getCsvProd()!=null){
             for ($i=0;$i<count($project->getCsvProd()->getResult());$i++) {
                 $prd_annuel+= $project->getCsvProd()->getResult()[$i][1];

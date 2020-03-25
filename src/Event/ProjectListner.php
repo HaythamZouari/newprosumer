@@ -57,6 +57,8 @@ class ProjectListner implements EventSubscriberInterface
         $consomation=$project->getConsomation()->getConsomationAnnuel();
         if($project->getPvgis() != null)
             $production=$project->getPvgis()->getResult() ;
+        else if($project->getNinja() != null)
+            $production=$project->getNinja()->getResult() ;    
         else if($project->getCsvProd() != null)
             $production=$project->getCsvProd()->getResult();
             

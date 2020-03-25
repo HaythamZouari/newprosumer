@@ -19,8 +19,9 @@
             <div class="form-group">
                 <label class="form-control-label required" for="tracking">Tracking</label>
                 <select name="tracking" class="form-control" id="tracking">
-                    <option value=0>1-axis (azimuth)</option>
-                    <option value=1>2-axis (tilt & azimuth)</option>
+                    <option value=0>Fixe</option>
+                    <option value=1>1-axis (azimuth)</option>
+                    <option value=2>2-axis (tilt & azimuth)</option>
                 </select>
             </div>
             <div class="form-group">
@@ -44,19 +45,27 @@
             window.location.replace('{{ path('security_login') }}')
             {% endif %};
             var data = $('#productionForm').serialize();
+            var url = $('#productionForm').attr('action');
             data='&'+data+'&lon='+$('#lon').val()+'&lat='+$('#lat').val();
             console.log(data);
-            var url = $('#productionForm').attr('action');
+            
             $.ajax({
                 url: url,
                 type : 'POST',
                 data : data,
                 cache: false,
+                dataType: 'json',
                 success: function (response) {
                     console.log(response.data);
                     console.log(response.values);
                     console.log(response.elec);
                     console.log(response.dat);
+                     $('#tabs-icons-text-3-tab').css("pointer-events"," visible");
+                    $('#tabs-icons-text-2-tab').css("pointer-events"," none")
+                    $('#tabs-icons-text-2').toggle();
+                    $('#tabs-icons-text-3').toggle();
+                    $('#tabs-icons-text-3-tab').addClass('active');
+                    $('#tabs-icons-text-2-tab').removeClass('active');
                 }
             });
             /*

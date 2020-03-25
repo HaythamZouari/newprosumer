@@ -28,8 +28,8 @@ class ResultController extends AbstractController
             }
             if($project->getPvgis()!=null)
                 $prodvalue=$project->getPvgis()->getResult();
-            if($project->getPvwatt()!=null)
-                $prodvalue=$project->getPvwatt()->getResult();
+            if($project->getNinja()!=null)
+                $prodvalue=$project->getNinja()->getResult();
             $monthimp=[];
             $monthimp_uniform=[];
             $month_auto=[];
@@ -96,6 +96,12 @@ class ResultController extends AbstractController
                     $prd_annuel+= $project->getCsvProd()->getResult()[$i][1];
                 }
                 $ps_centrale=$project->getCsvProd()->getPuissence();
+            }
+            else if($project->getNinja()!=null){
+                for ($i=0;$i<count($project->getNinja()->getResult());$i++) {
+                    $prd_annuel+= $project->getNinja()->getResult()[$i][1];
+                }
+                $ps_centrale=$project->getNinja()->getCapacity();    
             }
             for ($i=0;$i<25;$i++){
                 $prod25ans+=(float)($prd_annuel-($prd_annuel*((pow($project->getFinance()->getDegradation(),$i))/100)));
