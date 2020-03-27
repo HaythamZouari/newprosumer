@@ -10,12 +10,12 @@
             {{ error.messageKey|trans(error.messageData, 'security') }}
         </div>
     {% endif %}
-    <div class="container mt--8 pb-5">
+    <div class="container mt--10 pb-5">
     <div class="row justify-content-center">
     <div class="col-lg-5 col-md-7 mt-5">
     <div class="card bg-secondary shadow border-0">
     <div class="card-header bg-transparent pb-5">
-        <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
+        <!--div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
         <div class="btn-wrapper text-center">
             <a href="#" class="btn btn-neutral btn-icon">
                 <span class="btn-inner--icon"><img src={{ asset('build/img/icons/common/google.svg') }}></span>
@@ -26,17 +26,17 @@
     <div class="card-body px-lg-5 py-lg-5">
     <div class="text-center text-muted mb-4">
         <small>Or sign in with credentials</small>
-    </div>
+    </div-->
 
     <form action="{{ path('security_login') }}" method="post">
         <div>
             <div class="form-group">
-                <label class="form-control-label required" for="username">Username</label>
+                <label class="form-control-label required" for="username">Nom d'utilisateur</label>
                 <input type="text" id="username" name="_username" required="required" class="form-control"
                        value="{{ last_username }}">
             </div>
             <div class="form-group">
-                <label class="form-control-label required" for="password">Password</label>
+                <label class="form-control-label required" for="password">Mot de passe</label>
                 <input type="password" id="password" name="_password" required="required" class="form-control">
             </div>
             <div class="text-center">
@@ -50,10 +50,10 @@
     </div>
         <div class="row mt-3">
             <div class="col-6">
-                <a href="#" class="text-light"><small>Forgot password?</small></a>
+                <a href="#" class="text-light"><small>Mot de passe oublié</small></a>
             </div>
             <div class="col-6 text-right">
-                <a href="{{ path('user_register') }}" class="text-light"><small>Create new account</small></a>
+                <a href="{{ path('user_register') }}" class="text-light"><small>Créer un nouveau compte</small></a>
             </div>
         </div>
     </div>

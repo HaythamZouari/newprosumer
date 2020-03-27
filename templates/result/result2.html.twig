@@ -32,6 +32,8 @@
                                 <td >{{ project.pvgis.peakpower }}</td>
                             {% elseif project.csvprod != null %}
                                 <td >{{ project.csvprod.Puissence }}</td>
+                            {% elseif project.ninja != null %}
+                                <td >{{ project.ninja.capacity }}</td>    
                             {% endif %}
                             <td>kWc</td>
                         </tr>
@@ -72,12 +74,12 @@
                         </tr>
                         <tr>
                             <td>O&M </td>
-                            <td>{{ project.finance.opex }}</td>
+                            <td>{{ project.finance.opex}}</td>
                             <td>%</td>
                         </tr>
                         <tr>
                             <td>Annuite :</td>
-                            <td>{{ project.finance.annuite|number_format(3, '.', ' ') }}</td>
+                            <td>{{ project.finance.annuite|number_format(0, '.', ' ') }}</td>
                             <td>DT</td>
                         </tr>
                         <tr  id="f_r">
@@ -88,7 +90,7 @@
                         </tr>
                         <tr>
                             <td>VAN sur 25 ans :</td>
-                            <td>{{ project.finance.van|number_format(3, '.', ' ') }}</td>
+                            <td>{{ project.finance.van|number_format(0, '.', ' ') }}</td>
                             <td>DT</td>
                         </tr>
                         <tr id="lcoe">
@@ -825,22 +827,22 @@
                         console.log(auto_consome);
                         console.log("importe");
                         console.log(importer);
-                        $('#prod25').append(" <td>"+round(response.prod25,3)+"</td><td>kWh</td>");
+                        $('#prod25').append(" <td>"+round(response.prod25,0)+"</td><td>kWh</td>");
                         $('#lcoe').append("<td>"+round(response.lcoe,3)+"</td><td>DT</td>");
-                        $('#t_autoc').append("<td>"+round(response.t_auto*100,3)+"</td><td>%</td>");
-                        $('#t_couv').append("<td>"+round(response.t_couverture*100,3)+"</td><td>%</td>");
-                        $('#productible').append("<td>"+round(response.productible,3)+"</td><td>kWh/kWc</td>");
-                        $('#t_cd').append("<td>"+round(response.t_cedee*100,3)+"</td><td>%</td>");
-                        $('#f_r').append("<td>"+round(response.f_reg,3)+"</td><td></td>");
-                        $('#coutproj').append("<td>"+round(response.coutproj,3)+"</td><td>DT</td>");
-                         $('#capexres').append("<td>"+round(response.capex,3)+"</td><td></td>");
+                        $('#t_autoc').append("<td>"+round(response.t_auto*100,2)+"</td><td>%</td>");
+                        $('#t_couv').append("<td>"+round(response.t_couverture*100,2)+"</td><td>%</td>");
+                        $('#productible').append("<td>"+round(response.productible,0)+"</td><td>kWh/kWc</td>");
+                        $('#t_cd').append("<td>"+round(response.t_cedee*100,2)+"</td><td>%</td>");
+                        $('#f_r').append("<td>"+round(response.f_reg,0)+"</td><td></td>");
+                        $('#coutproj').append("<td>"+round(response.coutproj,0)+"</td><td>DT</td>");
+                         $('#capexres').append("<td>"+round(response.capex,0)+"</td><td></td>");
                         $('#tricapres').append("<td>"+round(response.tricap,3)+"</td><td>%</td>");
-                        $('#trires').append("<td>"+round(response.tri25,3)+"</td><td>%</td>");
-                        $('#subvres').append("<td>"+round(response.subv,3)+"</td><td>%</td>");
+                        $('#trires').append("<td>"+round(response.tri25,0)+"</td><td>%</td>");
+                        $('#subvres').append("<td>"+round(response.subv)+"</td><td>%</td>");
                         $('#omres').append("<td>"+round(response.opex,3)+"</td><td>%</td>");
-                        $('#annuiteres').append("<td>"+round(response.annuite,3)+"</td><td>%</td>");
-                        $('#vanres').append("<td>"+round(response.van,3)+"</td><td>DT</td>");
-                        $('#puissanceres').append("<td>"+round(response.peak,3)+"</td><td>kWh</td>");
+                        $('#annuiteres').append("<td>"+round(response.annuite,0)+"</td><td>%</td>");
+                        $('#vanres').append("<td>"+round(response.van,0)+"</td><td>DT</td>");
+                        $('#puissanceres').append("<td>"+round(response.peak,2)+"</td><td>kWh</td>");
                     }
                 });
 

@@ -162,7 +162,8 @@ class ProjectController extends AbstractController
         return new JsonResponse(['data'=>$project->getConsomation()->getAvgweek(),
         'factor'=>$factor,
         'somme'=>$tariftmp,
-        'info'=>$data
+        'info'=>$data,
+        'tt'=>$dateDebexl
         ]);
 
     }

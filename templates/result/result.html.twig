@@ -121,7 +121,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tableau</h4>
+                <h4 class="modal-title">Graphiques</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -814,22 +814,22 @@
                         console.log("production");
                         console.log(production);
                         
-                        $('#prod25').append(" <td>"+round(response.prod25,3)+"</td><td>kWh</td>");
+                        $('#prod25').append(" <td>"+round(response.prod25,0)+"</td><td>kWh</td>");
                         $('#lcoe').append("<td>"+round(response.lcoe,3)+"</td><td>DT</td>");
-                        $('#t_autoc').append("<td>"+round(response.t_auto*100,3)+"</td><td>%</td>");
-                        $('#t_couv').append("<td>"+round(response.t_couverture*100,3)+"</td><td>%</td>");
-                        $('#productible').append("<td>"+round(response.productible,3)+"</td><td>kWh/kWc</td>");
-                        $('#t_cd').append("<td>"+round(response.t_cedee*100,3)+"</td><td>%</td>");
-                        $('#f_r').append("<td>"+round(response.f_reg,3)+"</td><td></td>");
-                        $('#coutproj').append("<td>"+round(response.coutproj,3)+"</td><td>DT</td>");
+                        $('#t_autoc').append("<td>"+round(response.t_auto*100,2)+"</td><td>%</td>");
+                        $('#t_couv').append("<td>"+round(response.t_couverture*100,2)+"</td><td>%</td>");
+                        $('#productible').append("<td>"+round(response.productible,0)+"</td><td>kWh/kWc</td>");
+                        $('#t_cd').append("<td>"+round(response.t_cedee*100,2)+"</td><td>%</td>");
+                        $('#f_r').append("<td>"+round(response.f_reg,0)+"</td><td></td>");
+                        $('#coutproj').append("<td>"+round(response.coutproj,0)+"</td><td>DT</td>");
                         $('#capexres').append("<td>"+round(response.capex,3)+"</td><td></td>");
-                        $('#tricapres').append("<td>"+round(response.tricap,3)+"</td><td>%</td>");
-                        $('#trires').append("<td>"+round(response.tri25,3)+"</td><td>%</td>");
-                        $('#subvres').append("<td>"+round(response.subv,3)+"</td><td>%</td>");
+                        $('#tricapres').append("<td>"+round(response.tricap,2)+"</td><td>%</td>");
+                        $('#trires').append("<td>"+round(response.tri25,2)+"</td><td>%</td>");
+                        $('#subvres').append("<td>"+round(response.subv,0)+"</td><td>%</td>");
                         $('#omres').append("<td>"+round(response.opex,3)+"</td><td>%</td>");
                         $('#annuiteres').append("<td>"+round(response.annuite,3)+"</td><td>%</td>");
-                        $('#vanres').append("<td>"+round(response.van,3)+"</td><td>DT</td>");
-                        $('#puissanceres').append("<td>"+round(response.peak,3)+"</td><td>kWh</td>");
+                        $('#vanres').append("<td>"+round(response.van,0)+"</td><td>DT</td>");
+                        $('#puissanceres').append("<td>"+round(response.peak,2)+"</td><td>kWh</td>");
 
 
                     }

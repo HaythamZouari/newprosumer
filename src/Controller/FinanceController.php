@@ -52,8 +52,13 @@ class FinanceController extends AbstractController
             $finance->setTarifUni(0.256);
             $finance->setTarifTransport(0.007);
             $finance->setTauxActualisation((float)$request->get('taux_actualisation'));
-            if($request->get('transport_energie') ==0)
+            if($request->get('transport_energie') ==0){
                 $g_E_transporter =FinanceService::gainEnergieTransporterUnif($finance->getTarifUni(),$project);
+            }
+
+            else  {
+                $g_E_transporter =FinanceService::gainEnergieTransporterHoraire($finance->getTarifHoraire(),$project);
+            }  
             $g_E_cedee=FinanceService::gainEnergieCedee($finance->getTarifHoraire(),$project);
             $gain=[];
             $cash_flow=[];
@@ -74,7 +79,7 @@ class FinanceController extends AbstractController
                 }
             }
 
-            for ($i=0;$i<count($g_E_cedee);$i++) {
+            for ($i=0;$i<30;$i++) {
                 $gain[]=$g_E_cedee[$i]+$g_E_transporter[$i];
             }
             if ($finance->getCredit()===true){
