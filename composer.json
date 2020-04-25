@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "ext-intl": "*",
         "ext-json": "*",
+        "dompdf/dompdf": "^0.8.5",
         "easycorp/easyadmin-bundle": "^2.3",
         "kenguest/services-openstreetmap": "^0.5.0",
         "knplabs/knp-snappy-bundle": "^1.6",

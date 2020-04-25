@@ -226,8 +226,51 @@ class ProjectController extends AbstractController
 
             }
 
-
-            $Phd=1;$Phf=1;$Phm=1;$Phad=1;$Pham=1;$Phn=1;
+            if ($activite=='Abattoir'){
+                $Phd=119;$Phf=120;$Phm=494;$Phad=360;$Pham=372;$Phn=63;
+                 }
+            elseif ($activite=='Agroalimentaire'){
+                $Phd=134;$Phf=104;$Phm=175;$Phad=209;$Pham=195;$Phn=50;
+                }
+             elseif ($activite=='Bureautique'){
+                $Phd=404;$Phf=418;$Phm=590;$Phad=618;$Pham=632;$Phn=394;
+                }
+            elseif ($activite=='Extraction'){
+                $Phd=394;$Phf=336;$Phm=496;$Phad=269;$Pham=457;$Phn=19;
+                    }
+             elseif ($activite=='Datacenter'){
+                $Phd=496;$Phf=493;$Phm=520;$Phad=510;$Pham=510;$Phn=490;
+                }
+             elseif ($activite=='Electromecanique'){
+                $Phd=1486;$Phf=1519;$Phm=1876;$Phad=1832;$Pham=1703;$Phn=1150;
+                }
+             elseif ($activite=='Frigorifique'){
+                $Phd=122;$Phf=160;$Phm=200;$Phad=140;$Pham=180;$Phn=160;
+                }
+             elseif ($activite=='Hotellerie'){
+                $Phd=247;$Phf=294;$Phm=308;$Phad=346;$Pham=326;$Phn=187;
+                }
+             elseif ($activite=='Hypermarche'){
+                $Phd=677;$Phf=676;$Phm=826;$Phad=848;$Pham=827;$Phn=416;
+                }
+             elseif ($activite=='Laitiere'){
+                $Phd=800;$Phf=900;$Phm=1200;$Phad=1270;$Pham=1100;$Phn=820;
+                }
+             elseif ($activite=='Meuble'){
+                $Phd=118;$Phf=80;$Phm=170;$Phad=180;$Pham=90;$Phn=42;
+                }
+             elseif ($activite=='Plastique'){
+                $Phd=123;$Phf=122;$Phm=264;$Phad=262;$Pham=274;$Phn=115;
+                }
+             elseif ($activite=='Poulailler'){
+                $Phd=175;$Phf=178;$Phm=173;$Phad=165;$Pham=166;$Phn=32;
+                }
+             elseif ($activite=='Textile'){
+                $Phd=129;$Phf=122;$Phm=87;$Phad=120;$Pham=130;$Phn=25;
+                }
+            elseif ($activite=='Pharmaceutique'){
+            $Phd=47;$Phf=68;$Phm=120;$Phad=78;$Pham=92;$Phn=36;
+                }      
 
             $hd1=(int)$hourSliderreq1[0];$hf1=(int)$hourSliderreq1[1];$hm1=round(($hd1+$hf1)/2);$had1=round(($hd1+$hm1)/2);$ham1=round(($hf1+$hm1)/2);
             $hd2=(int)$hourSliderreq2[0];$hf2=(int)$hourSliderreq2[1];$hm2=round(($hd2+$hf2)/2);$had2=round(($hd2+$hm2)/2);$ham2=round(($hf2+$hm2)/2);

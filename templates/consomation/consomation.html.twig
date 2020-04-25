@@ -1,7 +1,7 @@
 <link rel="stylesheet" href={{ asset('build/css/rSlider.min.css')}}>
 
 <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
-<div class="card bg-secondary">
+<div class="card bg-secondary border border-0">
     <div class="card-header bg-transparent pb-5" >
         <div class="card-body px-lg-5 py-lg-5">
             <form class="consomation" id="consomationForm" action="{{ path('project_show',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
@@ -18,22 +18,32 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="tab-content" id="myTabContent">
+                    <div >
+                        <div >
+                            <div class=" ml-3 tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="tabs-icons-text-s-2" role="tabpanel" aria-labelledby="tabs-icons-text-s-2-tab">
                                    <div>
-                                        <div style="display: inline-block"><label class="form-control-label" style="font-size:1vw;">Domaine d'activité</label></div>
+                                        <div style="display: inline-block"><label class="form-control-label" >Domaine d'activité</label></div>
                                         <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state" id="activite" name="activite">
-                                            <option>Industrie Textile</option>
-                                            <option>Industrie électromécanique</option>
-                                            <option>Industie agroalimentaire</option>
-                                            <option>Administration</option>
-                                            <option>Forms</option>
-                                            <option>Modals</option>
+                                            <option>Abattoir</option>
+                                            <option>Agroalimentaire</option>
+                                            <option>Bureautique</option>
+                                            <option>Extraction</option>
+                                            <option>Datacenter</option>
+                                            <option>Electromecanique</option>
+                                            <option>Frigorifique</option>
+                                            <option>Hotellerie</option>
+                                            <option>Hypermarche</option>
+                                            <option>Laitiere</option>
+                                            <option>Meuble</option>
+                                            <option>Plastique</option>
+                                            <option>Poulailler</option>
+                                            <option>Textile</option>
+                                            <option>Pharmaceutique</option>
+
                                             </select>
                                         </div></br>
-                                        <div style="display: inline-block"><label class="form-control-label" style="font-size:1vw;" for="saison" >Nombre de Saisons</label></div>
+                                        <div style="display: inline-block"><label class="form-control-label"  for="saison" >Nombre de Saisons</label></div>
                                         <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state" id="saison" name="saison">
                                             <option id="sais1" value="1" >1</option>
                                             <option id="sais2" value="2">2</option>
@@ -42,36 +52,36 @@
                                         </div>
                                         </br>
                                         <div id= "saison1">
-                                            <h4 style="font-size:1vw;">Saison1</h4>
+                                            <h4>Saison1</h4>
                                             
-                                            <label class="form-control-label required" for="monthSlider1" style="display: inline-block;padding-left: 10%;font-size:1vw;">Plage mensuelle</label><label class="form-control-label required" for="hourSlider1" style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</label></br></br>
+                                            <label class="form-control-label required" for="monthSlider1" style="display: inline-block;padding-left: 10%;">Plage mensuelle</label><label class="form-control-label required" for="hourSlider1" style="display: inline-block;padding-left: 40%;">Plage horaire</label></br></br>
                                             <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider1" name="monthSlider1" class="form-control" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider1" name="hourSlider1" class="form-control"/> </lo></br>
                                         </div>
                                         <div id = "saison2">
-                                            <h4 style="font-size:1vw;">Saison2</h4>
-                                            <h4 style="display: inline-block;padding-left: 10%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
+                                            <h4 >Saison2</h4>
+                                            <h4 style="display: inline-block;padding-left: 10%">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;">Plage horaire</h4></br></br>
                                             <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider2" name="monthSlider2" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider2" name="hourSlider2" /> </lo></br>
                                         </div>   
 
                                         <div id = "saison3">
-                                            <h4 style="font-size:1vw;">Saison3</h4>
-                                            <h4 style="display: inline-block;padding-left: 10%;font-size:1vw;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;font-size:1vw;">Plage horaire</h4></br></br>
+                                            <h4 >Saison3</h4>
+                                            <h4 style="display: inline-block;padding-left: 10%;">Plage mensuelle</h4><h4 style="display: inline-block;padding-left: 40%;">Plage horaire</h4></br></br>
                                             <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider3" name="monthSlider3" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider3" name="hourSlider3" /> </lo></br>
                                         </div>   
                                         <div class="custom-control custom-checkbox mb-3">
                                         <input class="custom-control-input" id="samediCheck" name="samediCheck" type="checkbox">
-                                        <label class="custom-control-label" for="samediCheck"><h4 style="font-size:1vw;">Travail Samedi</h4></label> <lo style="display: inline-block;width: 62%;padding-left: 70px;"><input type="text" id="hourSlider-samedi" name="hourSlider_samedi" /> </lo>
+                                        <label class="custom-control-label" for="samediCheck"><h4>Travail Samedi</h4></label> <lo style="display: inline-block;width: 62%;padding-left: 70px;"><input type="text" id="hourSlider-samedi" name="hourSlider_samedi" /> </lo>
                                         </div>   
                                         <div class="custom-control custom-checkbox mb-3">
                                         <input class="custom-control-input" id="dimancheCheck" name="dimancheCheck" type="checkbox">
-                                        <label class="custom-control-label" for="dimancheCheck"><h4 style="font-size:1vw;">Travail Dimanche</h4></label><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider-dimanche" name="hourSlider_dimanche" /> </lo>
+                                        <label class="custom-control-label" for="dimancheCheck"><h4>Travail Dimanche</h4></label><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider-dimanche" name="hourSlider_dimanche" /> </lo>
                                         </div>   
                                         <div class="custom-control custom-checkbox mb-3">
                                         <input class="custom-control-input" id="congeCheck" name="congeCheck" type="checkbox">
-                                        <label class="custom-control-label" for="congeCheck"><h4 style="font-size:1vw;">Période de Congé /Arrét technique</h4></label></br>
-                                        <label class="form-control-label required" for="dateconge_deb" style="padding-left:40%">Début</label>
+                                        <label class="custom-control-label" for="congeCheck"><h4 >Période de Congé /Arrét technique</h4></label><br>
+                                        <label class="form-control-label required" for="dateconge_deb"><h4 >Début</h4></label>
                                         <lo style="display:inline-block";"width:45%" ><input type="date" name="dateconge_deb" id="dateconge_deb" class="form-control" ></lo>
-                                        <label class="form-control-label required" for="dateconge_fin">Fin</label>
+                                        <label class="form-control-label required" for="dateconge_fin"><h4 >Fin</h4></label>
                                         <lo style="display:inline-block";"width:45%" ><input type="date" name="dateconge_fin" id="dateconge_fin" class="form-control" ></lo>
                                         </div>        
                                     </div>
@@ -98,7 +108,7 @@
                         <input type="radio"  name="tarif" id="tarif" value="1" data-toggle="collapse" data-target=".tarif"  aria-expanded="false" aria-controls="PostHoraire Uniforme">
                     </div>
                     <div class="form-group">
-                        <label class="form-control-label required" for="dateDeb">Date de debut</label>
+                        <label class="form-control-label required" for="dateDeb">Date de début</label>
                         <input type="date" name="dateDeb" id="dateDeb" class="form-control">
                     </div>
                     <div id="Uniforme" class="tarif form-group collapse multi-collapse show">

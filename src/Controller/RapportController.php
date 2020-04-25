@@ -87,21 +87,24 @@ class RapportController extends AbstractController
         }
 
         $month=PostHoraire::PostHoraire($project->getConsomation()->getConsomationAnnuel());
-        /*
+    
+        if (isset($_REQUEST['download'])=='download') { 
 
+        
         $pdfOptions = new Options();
 
         // Instantiate Dompdf with our options
         $dompdf = new Dompdf($pdfOptions);
-
+            
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('rapport/index.html.twig', [
+            'cmmonth'=>$month,
             'loss'=>$loss,
             'incl'=>$incl,
             'f_r'=>$f_reg,
             'facture_annuel'=>($cm_annuel*$project->getFinance()->getTarifUni()),
             'tri'=>$project->getFinance()->getTri25(),
-            'co2evite'=>($prod25ans*(0.57/100)),
+            'co2evite'=>($prod25ans*(0.57/1000)),
             'productible'=>$productible,
             'prod25ans'=>$prod25ans,
             'azim'=>$azimut,
@@ -115,26 +118,25 @@ class RapportController extends AbstractController
             'T_couverture'=>(float)($prd_annuel/$cm_annuel),
             'T_cedee'=>(float)($cedee_annuel/$prd_annuel),
             'typeTarif'=>$TarifSouscrit,
-            'coutproj'=>($project->getFinance()->getDepense()+$project->getFinance()->getCapex())/25,
-            'lcoe'=>(($project->getFinance()->getDepense()+$project->getFinance()->getCapex())/25)/$prod25ans,
+            'coutproj'=>($project->getFinance()->getDepense()+$project->getFinance()->getCapex()-$project->getFinance()->getCredit()-$project->getFinance()->getSubvention()),
+            'lcoe'=>(($project->getFinance()->getDepense()+$project->getFinance()->getCapex())-$project->getFinance()->getCredit()-$project->getFinance()->getSubvention())/$prod25ans,
         ]);
-        $html .='<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">'.
-    '<link href="/home/riadh/project/public/build/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />'.
-    '<link href="/home/riadh/project/public/build/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />'.
-    '<link href="/home/riadh/project/public/build/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />';
-
+        $html .='<link rel="stylesheet" href="C:/Users/zouar/documents/projets/prosumers/public/build/css/screen.css"/>';
+            
+        define("DOMPDF_ENABLE_JAVASCRIPT", true);    
         // Load HTML to Dompdf
         $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4','landscape');
+        $dompdf->setPaper('A4','portrait');
         // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
         // Render the HTML as PDF
         $dompdf->render();
 
         // Output the generated PDF to Browser (force download)
-        $dompdf->stream("mypdf.pdf", [
-            "Attachment" => true
+        $dompdf->stream("Rapport d'étude.pdf", [
+            "Attachment" => false
         ]);
-        */
+        };
+    
         return $this->render('rapport/index.html.twig', [
 
             'cmmonth'=>$month,

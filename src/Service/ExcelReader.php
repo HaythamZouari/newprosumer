@@ -40,8 +40,8 @@ class ExcelReader
             'juin',
             'juillet',
             'aout',
-            'september',
-            'october',
+            'septembre',
+            'octobre',
             'novembre',
             'décembre',
         ];

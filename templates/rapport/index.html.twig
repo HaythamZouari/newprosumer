@@ -1,4 +1,5 @@
 
+
 {% block title %}
     Rapport
 {% endblock %}
@@ -46,11 +47,11 @@
 
    {% block body %}
 
-   <body><div id="content" class="wrapper">
+   <body><div  class="wrapper">
     <!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
 
         <header class="global-header group">
-            <span class="header-page-logo"><a href="/http://www.terrapinbrightgreen.com"><img src="/build/img/brand/blue.png" alt="logo"></a></span>
+            <span class="header-page-logo"><a href="/http://www.prosumers.tn/project/"><img src="/build/img/brand/blue.png" alt="logo"></a></span>
             <span class="header-page-sections"><a href="#" class="my_popup_open"><i class="fa fa-bars"></i><span class="label"> Sections</span></a></span>
             <span class="header-page-download"><a href="#" class="my_popup_open"><i class="fa fa-download"></i><span class="label"> Download</span></a></span>
 <!-- *** NOTE: These share icons in the Global Header utilize the ShareThis service. In order to work, you'll need to sign up for the free service and update the script down in the footer. *** -->
@@ -58,16 +59,19 @@
         </header>
     <!-- REPORT COVER -->
 <!-- The report cover simply provides a visual introduction to the text. -->
-
+<div id="content">
 <!-- *** UPDATE: Update these cover elements. The background image is controlled in the "COVER" section of the file "_4_template.scss". *** -->
-        <div class="report-cover group">
+        <div class="report-cover group" >
+        
             <div class="cover-text">
                 <h1 class="cover-text-title">RAPPORT D'ETUDE ENERGETIQUE ET FINANCIERE</h1>
-                <p class="cover-text-subtitle">POUR LE PROJET D'AUTOCONSOMMATION RACCORDE AU RESEAU HTA DE PUISSANCE 200kWc DE ENERGY TOOLKIT</p>
+                <p class="cover-text-subtitle">POUR LE PROJET D'AUTOCONSOMMATION RACCORDE AU RESEAU HTA DE PUISSANCE {{ puissance_centrale }}kWc DE {{ project.adress  }}</p>
                 <!--<img class="cover-logo" src="" alt="Logo"><!-- _Add logo here -->
                 <span class="cover-text-arrow"><a href="#front-matter"><i class="fa fa-angle-down"></i></a></span>
             </div>
+           
         </div>
+        
   <div class="article-container">
 
             <div class="main group">
@@ -78,12 +82,12 @@
                 <section id="front-matter" class="section group anchor">
 
                     <div class="report-overview group">
-                        <h1>Front Matter</h1>
+                        
                         <div id="abstract" class="group">
                             <h2>Abstract</h2>
                             <div class="abstract-text">
                                 <p>Le modèle économique du solaire traverse actuellement une phase de profonde évolution: la poursuite attendue de la baisse des coûts des installations photovoltaïques et de la hausse des prix de l'électricité à la consommation rend compétitif les petites installations photovoltaïques sur bâtiment (ou au sol) par rapport au prix de l'électricité vendue  aux industriels. Une telle évolution conduit à un développement spontané d’installations en autoproduction / autoconsommation.Ce basculement est déjà une réalité en Tunisie(où le prix de l'électricité est plus élevé), qui a d’ailleurs mis en place un dispositif encadrant l’autoconsommation / autoproduction.</p>                                
-                                </div>
+                            </div>
                         </div>
 
                         <nav id="table-of-contents" >
@@ -104,19 +108,20 @@
                             <h2>Notes</h2>
                             <a class="showhide"><i class="fa fa-angle-down"></i></a>
                             <div class="showhide-target">
-                                <h3>Acknowledgements</h3>
-                                <p>The authors would like to thank the Peer Review Committee for their valuable contributions. The authors would also like to thank Olin Nettles for his proofreading assistance. The opinions and conclusions in this report are solely those of the authors and do not necessarily reflect the views of the reviewers.</p>
-                                <h3>Copyright and Commercial Use</h3>
+                                <p> Les données de l'introduction relatifs aux processus d deveoppement des centrales photovoltaique, du contexte énergétique et du cadre réglementaire sont des extraits du <a href="http://www.tunisieindustrie.gov.tn/upload/ENR/Guide_detaille_ENR_tunisie_mai2019.pdf">Guide détaillé des projets de énergies renouvelables en Tunisie.</a></p> 
+                                <!--h3>Copyright and Commercial Use</h3>
                                 <p>This article is available to the general public without fee or other access control. Anyone may read this article or use it for their own personal or academic purposes. No commercial use of any kind is permitted unless specific permission is granted in writing in advance. The copyright of this article is by Terrapin Bright Green, LLC.</p>
                                 <h3>Peer Review Committee</h3>
-                                <p>Judith Heerwagen, J. H. Heerwagen & Associates; Vivian Loftness, Carnegie Mellon University Center for Building Performance & Diagnostics; Susan Painter, AC Martin Partners</p>
+                                <p>Judith Heerwagen, J. H. Heerwagen & Associates; Vivian Loftness, Carnegie Mellon University Center for Building Performance & Diagnostics; Susan Painter, AC Martin Partners</p-->
                             </div>
                         </div><!-- end #notes -->
-
+                       
                         <div id="download" class="group">
                             <h2><i class="fa fa-download"></i> Download</h2>
                             <div class="download-formats">
-                                <a class="download-file button" href="#">PDF</a>
+                             <a href="javascript:demoFromHTML()" class="button">PDF</a>
+                                
+                                
                             </div>
                         </div><!-- end #download -->
 
@@ -130,14 +135,14 @@
 
                 <section class="body-matter group stickem-container"><!-- Only used for .section-context element -->
 
-                    <h1>Body Matter</h1>
+                  
 
 <!-- Start: Section 1 - INTRODUCTION -->
-
-                    <section id="introduction" class="section anchor group">
+          
+                    
 
                         <div class="section-context stickem">
-                            <span class="section-context-label">Reading Now:</span>
+                            <span class="section-context-label">En cours de lecture:</span>
                             <ul class="nav">
                                 <li>
                                     <a href="#introduction">1. Introduction</a>
@@ -157,7 +162,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#the-economic-advantages-of-biophilia-in-sectors-of-society">2. The Economic Advantages of Biophilia in Sectors of Society</a>
+                                    <a href="#the-economic-advantages-of-biophilia-in-sectors-of-society">2. </a>
                                     <ul class="nav">
                                         <li>
                                             <a href="#driving-profit-margins-in-the-workplace">2.1 Driving profit margins in the workplace</a>
@@ -172,7 +177,7 @@
                                         <li><a href="#property-value-crime-and-well-being-the-cost-benefits-of-nature-in-communities">2.5 Property Value, Crime, and Well-being</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#going-forward-with-biophilic-design">3. Going Forward with Biophilic Design</a></li>
+                                <li><a href="#going-forward-with-biophilic-design">3. </a></li>
                             </ul>
                         </div>
 
@@ -180,39 +185,27 @@
                             <span class="quick-links-item back-to-top"><a href="#content"><i class="fa fa-arrow-up"></i><br />Back to Top</a></span>
                             <span class="quick-links-item next-section" style="display: none;"><a href="#">&nbsp;</a></span>
                         </div>
-
+                 
+                  
+                   
+                    <section id="introduction" class="section anchor group">
                         <div class="section-content group">
-                            <h2><span class="number">1. </span>Introduction</h2>
-                            <span class="permalink"><a href="#introduction"><i class="fa fa-link"></i> link to this section</a></span>
-                            <p>Humans have traditionally improved the places in which we live and work to increase our comfort and productivity. These improvements have been based upon technological advancements that improved the health and welfare of building occupants, but have paid little attention to more subtle physiological needs. Recent advancement in our understanding of natural systems, coupled with a growing understanding of the subtle neurological and physiological functions associated with contact with nature, have allowed us to identify strategies to increase economic gains, improve productivity, and strengthen the social fabric of communities. Although the cognitive benefits of biophilia are well studied by the scientific community, the economic benefits of biophilic design accrued through implementing its many associated strategies remain an understudied element of producing the best designs for our built environment.</p>
-                            <div class="callout">
-                                <div class="callout-container group">
-                                    <figure class="img-container">
-                                        <img src="/img/biophilia_fallingwater-1200.jpg" alt="Frank Llyod Wright's Falling Water">
-                                        <figcaption>Photo courtesy of Figuura.</figcaption>
-                                    </figure>
-                                    <p class="callout-headline">Emotional affiliations</p>
-                                    <p>Biophilia is the innately emotional affiliation of human beings to other living organisms. Life around us exceeds in complexity and beauty anything else humanity is ever likely to encounter.  – E.O. Wilson, 1984.</p>
-                                </div>
-                            </div>
-                            <p>In the last twenty years, studies examining the human attraction to nature have yielded convincing evidence that link interactions with nature with positive gains in productivity, increased healing rates, and even enhanced learning comprehension, in a wide range of sectors. These investments in health and productivity may affect more sectors than initially anticipated. The monetary gains from providing people access to biophilic design elements produces results ranging from remarkable sales boosts in retail stores, to taxpayer savings stemming from improved student test scores, to safer urban communities.</p>
-                            <p>This paper presents to a general audience an argument in favor of biophilic design, by examining scientific studies of nature’s effect on productivity and human health in a variety of built environments, and assigning economic values to these outcomes in an effort to promote the large-scale deployment of biophilic design. The aim of this exercise is to show the economic value in paying attention to biophilic design, not just as a luxury, but as a way to improve profits. In order to understand the case for utilizing biophilic design, it is crucial to discuss how productivity, health, and well-being can be measured—ranging from reduced absenteeism to greater worker satisfaction—and translated into dollar savings. Our investigation into “human capital management” will provide the foundation to understand why society can no longer afford to ignore the value of nature. Highlighting specific case studies will then provide insight into how best management practices in biophilic design can render profit through smart yet simple natural design strategies.</p>
+                                <h2><span class="number">1. </span>Introduction</h2>
+                                <span class="permalink"><a href="#introduction"><i class="fa fa-link"></i> link to this section</a></span>
+                                <p>Les modèles financiers pour les investissements d’autoconsommation prennent en compte diverses hypothèses techniques liées aux variables d’entrées tels que les revenus de la production de centrales photovoltaïques, les dépenses en capital (CAPEX) et les dépenses d'exploitation (OPEX).
+                                    Les modèles financiers PV sont utilisés par les développeurs de projets, les banques et les gestionnaires d'actifs pour évaluer la rentabilité d'un projet PV. 
+                                    La tâche consiste à prévoir le flux de trésorerie actualisé aussi précisément que possible, afin d'évaluer si le projet représente une opportunité d'investissement intéressante. 
+                                    Dans ce  rapport on présente les principaux résultats de la modélisation technique et financière d’un projet PV pour des fins d’autoconsommation  afin de prévoir l’impact énergétique et financier de l’investissement.
+                                </p>
 
+                               
+                        
                             <section class="anchor" id="methodologie">
                                 <h3><span class="number">1.1 </span>Méthodologie</h3>
                                 <span class="permalink"><a href="#methodologie"><i class="fa fa-link"></i> lien de vers ce chapitre</a></span>
                                     <p>Les modèles financiers PV sont utilisés par les développeurs de projets et les banques pour évaluer la rentabilité d'un projet PV. La tâche consiste à prévoir le flux de trésorerie actualisé aussi précisément que possible, afin d'évaluer si le projet représente une opportunité d'investissement intéressante.
                                     Un modèle financier PV typique aborde les sujets suivants:</p>
-                                    <div class="callout">
-                                    <div class="callout-container group">
-                                        <figure class="img-container">
-                                            <img src="/img/biophilia_bio-1200.jpg" alt="People gathered in a park">
-                                            <figcaption>Photo courtesy of Stephen Doyle.</figcaption>
-                                        </figure>
-                                        <p class="callout-headline">Biophilia as a concept</p>
-                                        <p>The concept of biophilia implies that humans hold a biological need for connection with nature on physical, mental, and social levels and this connection affects our personal well-being, productivity, and societal relationships. – Sheeps Meadow, 2004. </p>
-                                    </div>
-                                    </div>
+                                    
                                     <ul>
                                         <li>Estimation des ressources d'irradiance</li>
                                         <li>Estimation des pertes et du rendement énergétique du système, y compris la dégradation du système</li>
@@ -220,22 +213,14 @@
                                         <li>Dépenses d'exploitation, y compris l'exploitation et l'entretien et la location de terrains</li>
                                         <li>Coût du financement et fiscalité</li>
                                     </ul>     
-                                    <p>Lorsque des informations spécifiques au projet sont collectées sur ces sujets, il est possible de calculer les flux de trésorerie du projet. L'indicateur clé de performance le plus populaire utilisé pour évaluer la performance financière du PV projet sera le TRI et le ROI sur le capital investi. Comme les investisseurs aiment rarement les surprises, le niveau d'incertitude lié au TRI / ROI est également intéressant.</p>
+                                    <p>Lorsque des informations spécifiques au projet sont collectées sur ces sujets, il est possible de calculer les flux de trésorerie du projet. L'indicateur clé de performance le plus populaire utilisé pour évaluer la performance financière du PV projet sera le TRI et le ROI sur le capital investi.</p>
                                        
                             </section><!-- end "#methodologie" -->
-
+                        
                             <section class="anchor" id="contexte-energetique">
                                 <h3><span class="number">1.2 </span>Contexte énergétique</h3>
                                 <span class="permalink"><a href="#contexte-energetique"><i class="fa fa-link"></i> link to this section</a></span>
-                                <div class="callout">
-                                    <div class="callout-container group">
-                                        <figure class="img-container">
-                                            <img src="/img/biophilia-scjwaxbuilding-1200.jpg" alt="Frank Lloyd Wright’s SC Johnson Wax building">
-                                        </figure>
-                                        <p class="callout-headline">Biophilia & The Savanna</p>
-                                        <p>Frank Lloyd Wright’s design for the SC Johnson Wax building is reminiscent of a savanna forest, providing the same biophilic feeling of refuge that a real savanna would provide. The skillful use of nature of the space makes this building’s design particularly resonant, and is probably the reason that it has remained largely unchanged for the past 73 years. – Frank Lloyd Wright, SC Johnson Wax Building, 1936</p>
-                                    </div>
-                                </div>
+                                 
                                 <p>Etant donné l'évolution des prix du gaz naturel, les tarifs de vente de l'électricité ont fait l'objet de plusieurs augmentations. Ces ajustements sont sporadiques et dépendent de l'évolution des prix du pétrole, du taux de change de la monnaie nationale et des politiques des différents gouvernements au sujet de la subvention accordée par l'Etat allouée au secteur de l'énergie.</p>
                                 <p>Comparés aux tarifs de 2010, les augmentations ont été significatives et, exception faite des ménages à faible consommation (tarif social), ont touché tous les consommateurs d'électricité. A titre indicatif, les prix pratiqués de l’électricité aux entreprises raccordées au réseau moyenne tension et ayant souscrit au tarif uniforme ont enregistré une augmentation de l’ordre de 41% depuis 2010.</p>
                                 <p>Jusqu’au 2013, les tarifs de l’électricité à postes horaires pratiqués pour les abonnés en MT étaient à 4 postes : Jour, Pointe, Soir et Nuit. Les postes horaires Jour, Pointe, Soir et Nuit sont définis comme suit:</p>
@@ -292,36 +277,39 @@
                                 </table>
                                  
 
-
+                                    <img id="png-export"></img>
                                  <figure class="img-container img-column group">
                                     <chart id="tarif-horaire"></chart> 
-                                    <figcaption ><span class="caption-headline">Biophilia can re-engage losses from unproductive operating costs</span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption>
+                                   <img id="png-export"></img>
+                                    
+                                    <!--figcaption ><span class="caption-headline">Biophilia can re-engage losses from unproductive operating costs</span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption-->
                                 </figure>
 
                                 <figure class="img-container img-column group">
                                     <chart id="tarif-uniforme"></chart> 
-                                    <figcaption ><span class="caption-headline">Biophilia can re-engage losses from unproductive operating costs</span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption>
+                                    <!--figcaption ><span class="caption-headline">Biophilia can re-engage losses from unproductive operating costs</span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption-->
                                 </figure>
                                 
 
                                 <figure class="img-container img-column group">
                                     <chart id="rep-puissance"></chart> 
-                                    <figcaption ><span class="caption-headline">Biophilia can re-engage losses from unproductive operating costs</span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption>
+                                    <!--figcaption ><span class="caption-headline">Biophilia can re-engage losses from unproductive operating costs</span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption-->
                                 </figure>
                         
                                 
                                 
-                                <li> Régime de l’autoconsommation MT et HT</li>
-                                    <p>Le nouveau dispositif promulgué par la loi 12-2015 a pour objectif de décliner ce régime à des projets de taille plus importante, raccordés
+                                
+                                <p>Le nouveau dispositif promulgué par la loi 12-2015 a pour objectif de décliner ce régime à des projets de taille plus importante, raccordés
                                     aux réseaux MT et HT. Sur la période 2017-2018, 66 projets photovoltaïques en MT ont été autorisés par le Ministère pour une puissance
                                     totale de 15,3 MWc. Au total, la puissance autorisée en MT est de 17MWc (70 projets). Aucun projet éolien n’a encore été autorisé sous ce
                                     régime.
                                     L’objectif actualisé de l’avis 01/2016 prévoit pour 2022 une capacité de 210 MW dans le cadre du régime d’autoconsommation (130 MW
-                                    pour le solaire PV et 80 MW pour l’éolien). </p>
+                                    pour le solaire PV et 80 MW pour l’éolien).
+                                </p>
 
-                                </section><!-- end #contexte-energetique -->
-
-                                <section class="anchor" id="cadre-reglementaire">
+                            </section><!-- end #contexte-energetique -->
+                        
+                            <section class="anchor" id="cadre-reglementaire">
                                     <h3><span class="number">1.3 </span>Cadre réglementaire</h3>
                                     <span class="permalink"><a href="#cadre-reglementaire"><i class="fa fa-link"></i> link to this section</a></span>
                                     <h4><span class="number">1.3.1 </span>Loi n°2015-12</h4></br>
@@ -365,9 +353,9 @@
                                     </ul>
 
                                                                         
-                                </section><!-- end #cadre-reglementaire -->
+                            </section><!-- end #cadre-reglementaire -->
 
-                                <section class="anchor" id="processus-de-developpement">
+                            <section class="anchor" id="processus-de-developpement">
                                     <h3><span class="number">1.4 </span>Processus de developpemnet</h3>
                                     <span class="permalink"><a href="#processus-de-developpement"><i class="fa fa-link"></i> link to this section</a></span>
 
@@ -378,8 +366,7 @@
                                     électricité à partir des énergies renouvelables. On parle alors de
                                     projet d’autoconsommation.
                                     Ces projets d’autoconsommation peuvent être des projets solaires ou
-                                    éoliens. Dans la suite du guide, les différences dans les procédures
-                                    entre ces deux technologies sont explicitées, si elles existent.
+                                    éoliens.
                                     Les projets d’autoconsommation permettent de consommer sa propre
                                     électricité instantanément, et ainsi réaliser des économies sur ses
                                     factures. Mais également de revendre les excédents de sa production
@@ -387,40 +374,44 @@
                                     contrat conclu entre les deux parties (dans la limite des 30% de la
                                     production annuelle de l’installation). L’autoconsommateur est donc
                                     aussi autoproducteur.
-                                    On distingue deux configurations :
-                                    1. Les projets sur site, sans transport d’électricité sur le réseau.
-                                    Le lieu de production de l’électricité est aussi le lieu de
-                                    consommation. Pour le solaire PV, cela peut concerner des projets
-                                    sur toiture ou au sol par exemple.
-                                    2. Les projets sur site déporté, avec transport d’électricité sur le
-                                    réseau. En effet, les projets reliés au réseau MT/HT ont en général une capacité élevée (>40kW en général, mais ce n’est qu’une
-                                    valeur indicative) nécessitant un espace important pour installer
-                                    les équipements de production, ce qui n’est pas forcément
-                                    possible sur le site de consommation. Il est alors nécessaire de
-                                    transporter l’électricité produite sur le réseau.<p>
+                                    <ul>On distingue deux configurations :
+                                    <li> Les projets sur site, sans transport d’électricité sur le réseau.
+                                    </li>
+                                    <li>Les projets sur site déporté, avec transport d’électricité sur le
+                                    réseau.</li></ul></p>
 
                                     <h4><span class="number">1.4.1 </span>Les projets sur site, sans transport d’électricité sur le réseau.</h4>
 
-                                    <p>La première configuration possible pour un projet d’autoconsommation est un projet sans transport d’électricité sur le réseau.
-                                    Dans ce cas, le lieu de production de l’électricité est aussi le lieu de consommation. Pour le solaire PV, cela peut concerner des projets sur
-                                    toiture ou au sol par exemple. Il est cependant nécessaire de disposer de suffisamment d’espace pour installer tous les équipements
+                                    <p>La première configuration possible pour un projet d’autoconsommation est
+                                     un projet sans transport d’électricité sur le réseau.
+                                    Dans ce cas, le lieu de production de l’électricité est aussi le lieu de consommation.
+                                     Pour le solaire PV, cela peut concerner des projets sur
+                                    toiture ou au sol par exemple. Il est cependant nécessaire de disposer de suffisamment
+                                     d’espace pour installer tous les équipements
                                     nécessaires à la production.
-                                    Les particularités de cette configuration par rapport au cas avec transport, depuis un site déporté sont :
-                                    • Il n’y a pas besoin d’identifier un site pour accueillir les installations de production d’électricité à partir d’énergie renouvelable puisque
-                                    le site de production est lui même site de consommation. Il est donc fait l’hypothèse pour la configuration d’autoconsommation sans
-                                    transport qu’il n’y a pas d’étape de sélection du site. A toute fin utile, le lecteur peut toutefois trouver des renseignements
-                                    complémentaires sur cette étape dans la partie sur l’autoconsommation avec transport (voir Etape 1: Sélection de Site).
-                                    • Les procédures de raccordement de l’installation au réseau pour la revente des excédents, peuvent être allégées, voir même non
-                                    nécessaires dans le cas où le site de consommation disposerait déjà des infrastructures de raccordement suffisantes au réseau MT/HT.
-                                    Enfin, certaines procédures listées dans la présente partie sont fournies à titre informatif et leur application doit être évaluée au cas par
-                                    cas par le porteur projet, en fonction du type de projet (éolien, PV sur toiture, PV sur sol) et de sa taille. Ceci est notamment le cas pour
+                                    Les particularités de cette configuration par rapport au cas avec transport, depuis un site 
+                                    déporté sont :
+                                    <p> .Il n’y a pas besoin d’identifier un site pour accueillir les installations de production 
+                                    d’électricité à partir d’énergie renouvelable puisque
+                                    le site de production est lui même site de consommation. Il est donc fait l’hypothèse pour 
+                                    la configuration d’autoconsommation sans
+                                    transport qu’il n’y a pas d’étape de sélection du site. </p>
+                                   
+                                    <p>. Les procédures de raccordement de l’installation au réseau pour la revente des excédents, 
+                                    peuvent être allégées, voir même non
+                                    nécessaires dans le cas où le site de consommation disposerait déjà des infrastructures de 
+                                    raccordement suffisantes au réseau MT/HT.</p>
+                                    <p>Enfin, certaines procédures listées dans la présente partie sont fournies à titre informatif 
+                                    et leur application doit être évaluée au cas par
+                                    cas par le porteur projet, en fonction du type de projet (éolien, PV sur toiture, PV sur sol)
+                                     et de sa taille. Ceci est notamment le cas pour
                                     l’étude d’impact environnementale (EIE), le permis de circuler, ou le permis de bâtir.</p>
 
                                     <p>Le processus global de développement d’un projet d’autoconsommation sans transport d’électricité sur le réseau est décrit ci dessous.</p>
 
                                     
 
-
+                                    <div style="overflow-x:auto;">
                                     <table>
                                     <tr>
                                         <th>I. Etudes de faisabilité et préparation</th>
@@ -434,10 +425,10 @@
                                         </td>
                                     </tr> 
                                     </table> 
-                                   
+                                   </div>
 
 
-
+                                <div style="overflow-x:auto;">
                                     <table>
                                     <tr>
                                         <th>II. Autorisations</th>
@@ -447,7 +438,9 @@
                                         </td>
                                     </tr> 
                                     </table> 
-                                    
+                                </div>  
+
+                                <div style="overflow-x:auto;">  
 
                                     <table>
                                     <tr>
@@ -463,7 +456,9 @@
                                         </td>
                                     </tr> 
                                     </table>  
+                                </div>
 
+                                <div style="overflow-x:auto;">
 
                                     <table>
                                     <tr>
@@ -479,28 +474,31 @@
                                         </td>
                                     </tr> 
                                     </table>  
-
+                                </div>
 
                                     <h4><span class="number">1.4.2 </span>Les projets sur site déporté, avec transport d’électricité sur le réseau </h4>
-                                    <p>La seconde configuration possible pour un projet d’autoconsommation est un projet avec transport d’électricité sur le réseau.
-                                    Dans ce cas, le lieu de production de l’électricité n’est pas le lieu où cette électricité sera consommée. En effet, il est nécessaire de
-                                    disposer de suffisamment d’espace pour installer tous les équipements nécessaires à la production et cela n’est pas forcément possible sur le
+                                    <p>La seconde configuration possible pour un projet d’autoconsommation est un projet avec
+                                     transport d’électricité sur le réseau.
+                                    Dans ce cas, le lieu de production de l’électricité n’est pas le lieu où cette électricité
+                                     sera consommée. En effet, il est nécessaire de
+                                    disposer de suffisamment d’espace pour installer tous les équipements nécessaires à la production 
+                                    et cela n’est pas forcément possible sur le
                                     lieu de consommation. L’électricité est alors transportée sur le réseau.
                                     Les particularités de cette configuration par rapport au cas sans transport sur le réseau sont :
-                                    • Il est nécessaire d’identifier un site pour accueillir les installations de production d’électricité à partir d’énergie renouvelable, ce qui
-                                    engendre des procédures et précautions spécifiques. Un étape de sélection du site est donc présentée dans les pages suivantes.
-                                    • Les travaux et études nécessaires au raccordement de l’installation au réseau, pour la revente des excédents à la STEG ainsi que le
-                                    transport vers le site de consommation, sont potentiellement plus importantes, tout particulièrement si le site déporté n’est pas déjà ou
-                                    suffisamment raccordé au réseau.
-                                    Plusieurs procédures sont toutefois similaires au cas d’autoconsommation sans transport comme les procédures liées aux Autorisations,
-                                    au Financement et au Raccordement. Afin d’alléger la présente partie, ces procédures n’ont donc pas été reprises en intégralité. Le
-                                    lecteur trouvera des liens vers la partie 4.1 dédiée à l’autoconsommation sans transport pour les procédures similaires.
-                                    Certaines procédures listées dans la présente partie sont fournies à titre informatif et leur application doit être évaluée au cas par cas par le
-                                    porteur projet, en fonction du type de projet (éolien, PV sur toiture, PV sur sol) et de sa taille. Ceci est notamment le cas pour l’étude
-                                    d’impact environnementale (EIE), le permis de bâtir ou le permis de circuler.</p>
+                                    • Il est nécessaire d’identifier un site pour accueillir les installations de production 
+                                    d’électricité à partir d’énergie renouvelable, ce qui
+                                    engendre des procédures et précautions spécifiques. 
+                                    • Les travaux et études nécessaires au raccordement de l’installation au réseau, pour la revente 
+                                    des excédents à la STEG ainsi que le
+                                    transport vers le site de consommation, sont potentiellement plus importantes, tout particulièrement
+                                     si le site déporté n’est pas déjà ou suffisamment raccordé au réseau.
+                                    Plusieurs procédures sont toutefois similaires au cas d’autoconsommation sans transport comme les 
+                                    procédures liées aux Autorisations,
+                                    au Financement et au Raccordement. 
+                                    </p>
 
                                     <p>Les processus global de développement d’un projet d’autoconsommation avec transport d’électricité sur le réseau est décrit ci dessous.</p>
-
+                                <div style="overflow-x:auto;">    
                                     <table>
                                     <tr>
                                         <th>I. Sélection du site</th>
@@ -513,7 +511,8 @@
                                         </td>
                                     </tr> 
                                     </table>  
-
+                                </diV>
+                                <div style="overflow-x:auto;">
 
                                     <table>
                                     <tr>
@@ -527,7 +526,9 @@
                                         </td>
                                     </tr> 
                                     </table> 
+                                </div>
 
+                                <div style="overflow-x:auto;">        
 
 
                                     <table>
@@ -543,7 +544,9 @@
                                         </td>
                                     </tr> 
                                     </table> 
-                                    
+                                </div>
+
+                                <div style="overflow-x:auto;">    
 
                                     <table>
                                     <tr>
@@ -559,7 +562,9 @@
                                         </td>
                                     </tr> 
                                     </table>  
+                                </div>
 
+                                <div style="overflow-x:auto;">            
 
                                     <table>
                                     <tr>
@@ -575,26 +580,31 @@
                                         </td>
                                     </tr> 
                                     </table>
-                                </section><!-- end #processus-de-developpement -->
+                                </div>    
+                            </section><!-- end #processus-de-developpement -->
 
                         </div><!-- end .section-content -->
                     </section><!-- end #introduction -->
 
-<!-- End:   SECTION 1 - INTRODUCTION -->
-
-                    <section class="section anchor group" id="hyposthese">
+                    <!-- End:   SECTION 1 - INTRODUCTION -->
+             
+                    <section  class="section anchor group" id="hypothese">
                         <div class="section-content group">
                             <h2><span class="number">2. </span>Hypothèses de la simulation</h2>
                             <span class="permalink"><a href="#hypothese"><i class="fa fa-link"></i> link to this section</a></span>
-                                        <table>
+
+                            <p> Les tableaux qui suivent présentent les hypothéses qui ont fait la base de la simulation afin d'obtenir les résultats du rapport.
+                                <div style="overflow-x:auto;">    
+                                        
+                                    <table>
                                         <tr>
                                             <td>Puissance de la centrale</td>
-                                            <td >{{ puissance_centrale|number_format(3, '.', ' ') }}</td>
+                                            <td >{{ puissance_centrale|number_format(2, '.', ' ') }}</td>
                                             <td>kWc</td>
                                         </tr>
                                         <tr>
                                            <td>Consommation annuelle</td>
-                                            <td>{{ cm_annual |number_format(3, '.', ' ')}}</td>
+                                            <td>{{ cm_annual |number_format(0, '.', ' ')}}</td>
                                             <td>kWh</td>
                                         </tr>
                                         <tr>
@@ -614,13 +624,12 @@
                                         </tr>
                                         
                                     </table>
-
+                                </div>    
 
                                      {%  if project.csvprod == false %}
+                                    <div style="overflow-x:auto;">
                                 
                                         <table class="table align-items-center table-bordered ">
-                                            
-                                            
                                             <tr>
                                                 <td>Latitude</td>
                                                 <td >{{ lat|number_format(2, '.', ' ') }}</td>
@@ -646,23 +655,22 @@
                                                 <td>{{ azim }}</td>
                                                 <td>°</td>
                                             </tr>
-                                            
                                         </table>
-                                    
-                            {% endif %}
+                                    </div>
+                                    {% endif %}
 
-
+                                <div style="overflow-x:auto;">
                            
                                     <table>
                                     
                                         <tr>
                                             <td>Capex</td>
-                                            <td >{{ finance.capex |number_format(3, '.', ' ')}}</td>
+                                            <td >{{ finance.capex |number_format(0, '.', ' ')}}</td>
                                             <td>DT</td>
                                         </tr>
                                         <tr>
                                             <td>Montant de la dette</td>
-                                            <td>{{ finance.MontantDette |number_format(3, '.', ' ')}}</td>
+                                            <td>{{ finance.MontantDette |number_format(0, '.', ' ')}}</td>
                                             <td>DT</td>
                                         </tr>
                                         <tr>
@@ -713,33 +721,20 @@
                                         
                                     </table>
                                 
-
-
-
-
-                            <p>Humans have evolved and progressed alongside nature and its systems. Because of this, the human mind and body function with improved efficiency when natural elements are present. Biophilic design optimizes productivity, healing time, learning functions, and community cohesion as the perfect partnering mechanism for business vendors, hospital owners, school administrators, contractors, and city planners alike who are seeking to reap maximal value through development and design.</p>
-                            <p>The benefits of biophilia span many sectors. From the evidence presented, biophilic elements show productivity increases among staff when provided with nature in the workplace, with economic benefits ranging from $1,000 per employee to $3.6 million company-wide.</p>
-                            <div class="callout">
-                                <div class="callout-container group">
-                                    <figure class="img-container img-secondary">
-                                        <img src="img/biophilia-view-1200.jpg" alt="Pier rendering">
-                                        <figcaption>Photo courtesy of Cook+Fox Architects.</figcaption>
-                                    </figure>
-                                    <p>In this image, the view to the distance provides a sense of prospect, while the built enclosure provides refuge. The water’s reflection and the abundant daylight provide exposure to nature. This scene is an example of good biophilic design that facilitates an interaction between natural elements, natural materials, spatial characteristics and the occupant’s sensory experience. </p>
                                 </div>
-                            </div>
-                            <p>In the $2.5 trillion healthcare industry, simply increasing views from hospital beds to nature could yield over $93 million in annual savings nationwide as patients require less time in the hospital to recover from major surgery. The significant nationwide healthcare savings in recovery from these surgeries alone indicates that testing the effects of biophilia in other areas of healthcare is a worthwhile and potentially lucrative endeavor. Retail shops with natural greenery and daylighting consistently yield higher profit margins than their dim counterparts, offering a 12% competitive advantage for shops with more greenery and 40% for quality daylighting. Children, the most vulnerable yet influential members of society, have been found to improve their test scores by 7-26% and have fewer absences from school when they are given access to daylighting. The network of communities that span the United States can economically benefit from the presence of nature, from reduced crime levels to the reduced need for medication among members of the community.</p>
-                            <p>Recent research from neuroscience and endocrinology show the crucial role that experiencing nature has for our physiological well-being. Implementing biophilic design into our workplaces, healthcare system, educational environments and communities is not just a nice amenity. It has profound economic benefits. It is now imperative that we bring nature into our built environment. <i class="fa fa-square"></i></p>
+
+
 
                         </div><!-- end .section-content -->
                     </section><!-- end #going-forward-with-biophilic-design -->
 
 
-
-                    <section class="section anchor group" id="recap">
+                    <section  class="section anchor group" id="recap">
                         <div class="section-content group">
                             <h2><span class="number">3. </span>Récapitulatif du projet</h2>
                             <span class="permalink"><a href="#recap"><i class="fa fa-link"></i> link to this section</a></span>
+                            <h4>Récapitulatif énergétique</h4>
+                               <div style="overflow-x:auto;">
                                 <table>
                                 <tr>
                                             <td>Puissance</td>
@@ -748,7 +743,7 @@
                                         </tr>
                                         <tr>
                                             <td>Production PV 25 ans</td>
-                                            <td>{{ prod25ans|number_format(3, '.', ' ') }}</td>
+                                            <td>{{ prod25ans|number_format(0, '.', ' ') }}</td>
                                             <td>kWh</td>
                                         </tr>
                                         <tr>
@@ -768,14 +763,14 @@
                                         </tr>
                                         <tr>
                                             <td>Productible :</td>
-                                            <td>{{ productible|number_format(2, '.', ' ') }}</td>
+                                            <td>{{ productible|number_format(0, '.', ' ') }}</td>
                                             <td>kWh/kWc</td>
                                         </tr>
                                         
                                     </table>
-                               
+                               </div>
                                 <h4>Récapitulatif financier</h4>
-                                
+                                <div style="overflow-x:auto;">
                                     <table>
                                         
                                         
@@ -794,28 +789,24 @@
                                             <td>{{ finance.opex }}</td>
                                             <td>%</td>
                                         </tr>
-                                        <tr>
-                                            <td>Annuite :</td>
-                                            <td>{{ finance.annuite|number_format(3, '.', ' ') }}</td>
-                                            <td>DT</td>
-                                        </tr>
+                                        
                                         <tr>
                                             <td>Facture de regularisation :</td>
                                             {% if f_r ==0 %}
                                             <td>{{ f_r }}</td>
                                             {% else %}
-                                            <td>{{ f_r|number_format(3, '.', ' ') }}</td>
+                                            <td>{{ f_r|number_format(0, '.', ' ') }}</td>
                                             {% endif %}
                                             <td>DT</td>
                                         </tr>
                                         <tr>
                                             <td>Cout du projet sur 25 ans :</td>
-                                            <td>{{ coutproj|number_format(3, '.', ' ') }}</td>
+                                            <td>{{ coutproj|number_format(0, '.', ' ') }}</td>
                                             <td>DT</td>
                                         </tr>
                                         <tr>
                                             <td>VAN sur 25 ans :</td>
-                                            <td>{{ finance.van|number_format(3, '.', ' ') }}</td>
+                                            <td>{{ finance.van|number_format(0, '.', ' ') }}</td>
                                             <td>DT</td>
                                         </tr>
                                         <tr>
@@ -836,9 +827,9 @@
                                        
                                         
                                     </table>
-                               
-                                <h4>Récapitulatif des émissions des gaz</h4>
-                                
+                               </div>
+                                <h4>Récapitulatif des émissions des gazs    </h4>
+                                <div style="overflow-x:auto;">
                                     <table>
                                         
                                         <tr>
@@ -848,123 +839,56 @@
                                         </tr>
                                         
                                     </table>
-
-                                    <p>La puissane de la centrale est {{ puissance_centrale|number_format(3, '.', ' ') }} kWc <br><br><br>
+                                </div>
+                                    <!--p>La puissane de la centrale est {{ puissance_centrale|number_format(3, '.', ' ') }} kWc <br><br><br>
                                     <p>Le CAPEX du projet est {{ finance.capex }} kDT <br><br><br>
                                     <p>Le TRI sur les capitaux propres est {{ finance.Tricapitaux |number_format(2, '.', ' ')}}% <br><br><br>
                                     <p>Le taux limite de l’énergie Cédée est 30%. <br><br><br>
                                     <p>Le taux de CO2 évité sur 25 ans est {{ co2evite|number_format(2, '.', ' ') }} tep <br><br><br>
                                     <p>La subvention de l’FTE est 20 % du CAPEX limitée à 200 kDT.<br><br><br>
-                                    <p>’autoproducteur facture l’énergie cédée mensuellement par postes horaires.<br><br><br>
+                                    <p>’autoproducteur facture l’énergie cédée mensuellement par postes horaires.<br><br><br-->
 
 
-
-                            <p>Humans have evolved and progressed alongside nature and its systems. Because of this, the human mind and body function with improved efficiency when natural elements are present. Biophilic design optimizes productivity, healing time, learning functions, and community cohesion as the perfect partnering mechanism for business vendors, hospital owners, school administrators, contractors, and city planners alike who are seeking to reap maximal value through development and design.</p>
-                            <p>The benefits of biophilia span many sectors. From the evidence presented, biophilic elements show productivity increases among staff when provided with nature in the workplace, with economic benefits ranging from $1,000 per employee to $3.6 million company-wide.</p>
-                            <div class="callout">
-                                <div class="callout-container group">
-                                    <figure class="img-container img-secondary">
-                                        <img src="img/biophilia-view-1200.jpg" alt="Pier rendering">
-                                        <figcaption>Photo courtesy of Cook+Fox Architects.</figcaption>
-                                    </figure>
-                                    <p>In this image, the view to the distance provides a sense of prospect, while the built enclosure provides refuge. The water’s reflection and the abundant daylight provide exposure to nature. This scene is an example of good biophilic design that facilitates an interaction between natural elements, natural materials, spatial characteristics and the occupant’s sensory experience. </p>
-                                </div>
-                            </div>
-                            <p>In the $2.5 trillion healthcare industry, simply increasing views from hospital beds to nature could yield over $93 million in annual savings nationwide as patients require less time in the hospital to recover from major surgery. The significant nationwide healthcare savings in recovery from these surgeries alone indicates that testing the effects of biophilia in other areas of healthcare is a worthwhile and potentially lucrative endeavor. Retail shops with natural greenery and daylighting consistently yield higher profit margins than their dim counterparts, offering a 12% competitive advantage for shops with more greenery and 40% for quality daylighting. Children, the most vulnerable yet influential members of society, have been found to improve their test scores by 7-26% and have fewer absences from school when they are given access to daylighting. The network of communities that span the United States can economically benefit from the presence of nature, from reduced crime levels to the reduced need for medication among members of the community.</p>
-                            <p>Recent research from neuroscience and endocrinology show the crucial role that experiencing nature has for our physiological well-being. Implementing biophilic design into our workplaces, healthcare system, educational environments and communities is not just a nice amenity. It has profound economic benefits. It is now imperative that we bring nature into our built environment. <i class="fa fa-square"></i></p>
 
                         </div><!-- end .section-content -->
                     </section><!-- end #going-forward-with-biophilic-design -->
-       
-        <section class="section anchor group" id="sans-centrale">
+
+                    <section  class="section anchor group" id="sans-centrale">
                         <div class="section-content group">
                             <h2><span class="number">3. </span>Analyse Energétique sans centrale photovoltaïque</h2>
                             <span class="permalink"><a href="#sans-centrale"><i class="fa fa-link"></i> link to this section</a></span>
 
                                     <p>Un des éléments majeurs qui conditionnent la
-                                    faisabilité et la pertinence d’un projet d’autoconsommation est que le site dispose d’un profil
+                                    faisabilité et la pertinence d’un projet d’autoconsommation 
+                                    est que le site dispose d’un profil
                                     de consommation électrique qui soit le plus en
                                     phase possible avec la production d’énergie solaire.
                                     Le cas le plus favorable étant une consommation
                                     faible nocturne, forte diurne, 7J/7 toute l’année 
                                     avec une augmentation des consommations en
-période estivale.
-Le graphe ci-après présente en orange un profil
-de consommation (ou profil de charge) hebdomadaire qui est très bien adapté à une application en
-autoconsommation.Pour déterminer le profil de consommation du site,
-il faut connaitre a minima les données de consommations moyennes horaires. Ces informations ne
-sont pas toujours accessibles et disponibles pour le
-maître d’ouvrage car ils dépendent du type d’abonnement souscrit et du type de compteur d’énergie 
-installé au point de livraison. Les informations données généralement sur les factures des fournisseurs
-d’énergie sont des cumuls mensuels pour lesquels
-il n’est pas possible de visualiser l’évolution de la
-consommation au cours d’une journée ou d’une
-semaine.Tous les sites alimentés depuis le réseau moyenne
-tension (HTA) disposent de compteur capable de
-mesurer les données de consommation avec une
-moyenne sur 10 min dont l’information en moyenne
-horaire est disponible auprès du fournisseur d’énergie sur demande.
-Les données sont très souvent transmises au
-travers d’un fichier compatible avec le tableur Excel
-qui permet de tracer une courbe hebdomadaire
-de la puissance moyenne horaire pour chaque
-heure et cela pour plusieurs semaines de l’année
-et évaluer si le profil de charge est favorable à
-l’autoconsommation.
-Des exemples de profils de charges plus ou moins
-favorables pour l’autoconsommation sont présentés
-ci-dessous pour aider le maître d’ouvrage à évaluer
-l’intérêt de son projet.Les autres cas de profil de charge très favorables
-peuvent être des usines, des hôpitaux, des centres
-logistiques de stockage de produits frais, des bâtiments d’élevage, des centres commerciaux ouverts 6.5 j/7j, des bâtiments d’archives, des bâtiments
-de datacenter.
-Sur ces types de bâtiment il est possible d’atteindre des taux d’autoconsommation de 100 %.
-Les profils de charges qui font apparaître de la
-consommation 5 ou 6 jours dans la semaine avec
-une consommation de fond le week-end reste
-favorable à l’autoconsommation dans le cas où
-la consommation annuelle reste au même niveau
-toute l’année.
-Le profil de charge de type tertiaire peut ne pas
-être pertinent dans le cas où il apparaît un effet
-important de saisonnalité telle que des périodes
-de congés ou les vacances scolaires en période estivale. C’est le cas des établissements d’enseignement en général, école, lycée et collège.
-De manière générale, toutes les activités de bureaux
-et de commerces présentent des profils de charge
-favorables d’autant plus que l’on retrouve des dispositifs de climatisation, de production de froid et
-de chauffage à partir de pompe à chaleur fonctionnant à l’électricité.Les sites avec des profils de charges qui font
-apparaître de fortes consommations la nuit ou seulement quelques jours par semaine ne sont pas du
-tout adaptés à l’autoconsommation du fait d’une
-disponibilité de l’énergie solaire au moment où il
-n’y a pas de consommation. C’est typiquement le
-cas de salles de spectacle, de salles polyvalentes
-ou de certaines salles de sport.
-Dans le cas où l’on dimensionne une installation sur
-le talon de consommation, le taux d’autoproduction calculé est très faible et le projet ne présente
-donc pas d’intérêt économique particulier. Dans
-le cas où l’installation est dimensionnée sur les
-jours de fortes consommations (Cf profil type 1.3)
-alors une très grande quantité d’énergie produite
-par la centrale ne peut pas être consommée sur le
-site. Le taux d’autoconsommation calculé est très
-bas ce qui ne présente pas non plus de pertinence
-économique.
-Parmi les courbes de charges non adaptées, on
-retrouve aussi les sites dont l’activité nécessite de
-très fortes consommations de façon ponctuelle
-durant quelques minutes tout au long de la journée. 
-Cela peut être des pompes de relevage d’eau, des
-stations d’épuration d’eaux usées ou des process
-industriels. Dans les cas de figure où les profils de
-charge ne sont pas adaptés, il reste possible d’étudier un projet photovoltaïque avec vente totale de
-l’énergie ou bien la vente en surplus. Dans ce dernier cas, le prix de vente de l’électricité doit être du
-même niveau que le prix d’achat ou supérieur pour
-présenter un intérêt économique.
-
+                                    période estivale.
+                                    Pour déterminer le profil de consommation du site,
+                                    il faut connaitre a minima les données de consommations moyennes horaires. 
+                                    Les informations données généralement sur les factures des fournisseurs
+                                    d’énergie sont des cumuls mensuels pour lesquels
+                                    il n’est pas possible de visualiser l’évolution de la
+                                    consommation au cours d’une journée ou d’une
+                                    semaine.Tous les sites alimentés depuis le réseau moyenne
+                                    tension (HTA) disposent de compteur capable de
+                                    mesurer les données de consommation avec une
+                                    moyenne sur 10 min .
+                                    Les données sont très souvent transmises au
+                                    travers d’un fichier compatible avec le tableur Excel
+                                    qui permet de tracer une courbe hebdomadaire
+                                    de la puissance moyenne horaire pour chaque
+                                    heure et cela pour plusieurs semaines de l’année
+                                    et évaluer si le profil de charge est favorable à
+                                    l’autoconsommation.
+                                    
                                     </p>
-           
+                                    <div style="overflow-x:auto;">
                   
-                                    <table>
+                                        <table>
                                        
                                         <tr>
                                             <td>Consommation annuelle (kWh)
@@ -981,9 +905,9 @@ présenter un intérêt économique.
                                         </tr>
                                        
                                     </table>
-                                
+                                </div>
                               <h4>Tableau 1 Répartition de la consommation mensuelle</h4>
-                               
+                               <div style="overflow-x:auto;">
                                     <table>
                                         
                                         <th>
@@ -1001,7 +925,6 @@ présenter un intérêt économique.
                                         <th>
                                             Nuit
                                         </th>
-                                        
                                         <tbody>
                                             {% set i = 0 %}
                                             {% for month in cmmonth %}
@@ -1016,59 +939,66 @@ présenter un intérêt économique.
                                                 {% set i = i + 1 %}
                                             {% endfor %}
                                         </tbody>
+                                       
+                                        
                                     </table>
+                                </div>    
                                     <figure class="img-container img-column group">
                                         <chart id="rp_cm"></chart> 
                                         <figcaption ><span class="caption-headline">Répartition de la consommation</span> Ce graphique présente la répartition de la consommation électrique annuelle selon les postes horaires. Dans cette répartition on considére le changement de postes horaires en été et en hiver comme décrit dans l'introduction. Cette répartition se base sur la courbe de charge de la consommation électrique soit synthétisée à partir de l'outil de création de courbe de charge ou à partir de la courbe de charge fournie par la STEG. </figcaption>
                                     </figure>
-                                    <p>Le graphique ci-dessous présente une partie de la consommation (puissance en fonction du temps) du site étudié avec un pas horaire en se basant sur les données de la courbe de charge.</p>
+                                   
                                 
                                     <figure class="img-container img-full group">
                                             <chart id="vh_cm"></chart> 
-                                            <figcaption ><span class="caption-headline">Variation horaire de la consommation</span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption>
+                                            <figcaption ><span class="caption-headline">Variation horaire de la consommation</span> Le graphique ci-dessous présente une partie de la consommation (puissance en fonction du temps) du site étudié avec un pas horaire en se basant sur les données de la courbe de charge.</figcaption>
                                     </figure>
-                                    <p>Le graphique ci-dessous présente une partie de la consommation (puissance en fonction du temps) du site étudié avec un pas horaire en se basant sur les données de la courbe de charge.</p>
+                                    
                                 
                                     <figure class="img-container img-full group">
                                             <chart id="hm_cm"></chart> 
-                                            <figcaption ><span class="caption-headline">Histogramme de la consommation</span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption>
+                                            <figcaption ><span class="caption-headline">Histogramme de la consommation</span> Cet histogramme décrit les fréquences des puissances appelés annuellement avec des pas horaires.</figcaption>
                                     </figure>
                                     
-                                <p> Cet histogramme décrit les fréquences des puissances appelés annuellement avec des pas horaires.</p>
                                 
                                 
-                                <p>Ce graphique est le profil moyen journalier mensuel. C’est les variations de la consommation sur les 24h de la journée en se basant sur la courbe de charge et les valeurs de la consommation mensuelle.</p>
+                                
+                                
                            
                                     <figure class="img-container img-full group">
                                         <chart id="heat_cm"></chart> 
-                                        <figcaption ><span class="caption-headline"></span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption>
+                                        <figcaption ><span class="caption-headline"></span>Le plot carpet présente en abscisse les jours de l’an et en ordonné les heures de la journée.
+                                            Les variations de couleurs du noir au rouge traduisent les variations
+                                            des puissances appelés du plus faible au plus fort.</figcaption>
                                     </figure>
                                 
                             
-                                        <p>
-                                            Le plot carpet présente en abscisse les jours de l’an et en ordonné les heures de la journée.
-                                            Les variations de couleurs du noir au rouge traduisent les variations
-                                            des puissances appelés du plus faible au plus fort.
-                                        </p>
                         </div>
-                    </section>                    
-                 <section class="section anchor group" id="avec-centrale">
+                    </section>  
+
+                    <section  class="section anchor group" id="avec-centrale">
                         <div class="section-content group">
-                            <h2><span class="number">5. </span>Analyse Energétique avec centrale photovoltaïque</h2>
-                            <span class="permalink"><a href="#avec-centrale"><i class="fa fa-link"></i> link to this section</a></span>
+                                <h2><span class="number">5. </span>Analyse Energétique avec centrale photovoltaïque</h2>
+                                <span class="permalink"><a href="#avec-centrale"><i class="fa fa-link"></i> link to this section</a></span>
                                 <p>
-                                Les données sur les ressources solaires sont extrêmement importantes pour que le système PV puisse faire une estimation précise de la production d'électricité photovoltaïque et une sélection de site appropriée
-                                La production annuelle d'électricité du système change avec la variation du profil d'irradiation solaire pour différents emplacements.
+                                    Les données sur les ressources solaires sont extrêmement importantes pour que le système PV
+                                     puisse faire une estimation précise de la production d'électricité photovoltaïque et une
+                                      sélection de site appropriée
+                                    La production annuelle d'électricité du système change avec la variation du profil d'irradiation
+                                     solaire pour différents emplacements.
                                 </p>
 
                                 <p>PVgis Database</p>
-                               <p> La connexion à la base de données de PVgis permet d'obtenir l'ensemble complet de données du rayonnement solaire et d'autres données nécessaires pour calculer la puissance PV heure par heure pendant de longues périodes. PVGIS permet également d'effectuer le calcul de la puissance PV horaire.  </p>
+                                <p> La connexion à la base de données de PVgis permet d'obtenir l'ensemble complet de données 
+                                du rayonnement solaire et d'autres données nécessaires pour calculer la puissance PV heure 
+                                par heure pendant de longues périodes. PVGIS permet également d'effectuer le calcul de la puissance
+                                 PV horaire.  </p>
 
                                 <p>PVsyst</p>
-                                <p>Des données horaires de prooduction  sont générés à  partir des résultats de simulation de PVsyst tout en précisant la configuration éxacte de la centrale photovoltaique </p>
-                   
-                                <h4>Tableau 2 Répartition des différents paramètres par poste horaire</h4>
-                               
+                                <p>Des données horaires de prooduction  sont générés à  partir des résultats de simulation 
+                                de PVsyst tout en précisant la configuration éxacte de la centrale photovoltaique </p>
+                                  <h4>Tableau 2 Répartition des différents paramètres par poste horaire</h4>
+                                <div style="overflow-x:auto;">
                                     <table>
                                        
                                         <th>
@@ -1116,31 +1046,32 @@ présenter un intérêt économique.
                                         </tr>
                                        
                                     </table>
-
-                                    <figure class="img-container img-column group">
-                                        <chart id="auto_cm_imp"></chart> 
-                                        <figcaption ><span class="caption-headline"></span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption>
-                                    </figure>
+                                </div>   
+                                  
+                                <figure class="img-container img-column group">
+                                    <chart id="auto_cm_imp"></chart> 
+                                    <figcaption ><span class="caption-headline"></span>Ce graphique indique la répartition de la consommation aprés l'installation de la centrale photovoltaique entre énergie autoproduite et énergie importée du réseau"</figcaption>
+                                </figure>
                             
-                                    <figure class="img-container img-column group">
-                                        <chart id="rp_pd"></chart> 
-                                        <figcaption ><span class="caption-headline"></span>Répartition de l'énergie produite</figcaption>
-                                    </figure>
+                                <figure class="img-container img-column group">
+                                    <chart id="rp_pd"></chart> 
+                                    <figcaption ><span class="caption-headline"></span>Répartition de l'énergie produite</figcaption>
+                                </figure>
                                   
                                     
-                                    <figure class="img-container img-column group">
-                                        <chart id="pd_cm"></chart> 
-                                        <figcaption ><span class="caption-headline"></span>Répartition de l'énergie produite</figcaption>
-                                    </figure>
-                                    <p>Le graphique suivant affiche une superposition de la consommation avec la production sur une partie de l’année avec des pas horaires.</p>
+                                <figure class="img-container img-column group">
+                                    <chart id="pd_cm"></chart> 
+                                    <figcaption ><span class="caption-headline"></span>Répartition de l'énergie produite</figcaption>
+                                </figure>
+                                <p>Le graphique suivant affiche une superposition de la consommation avec la production sur une partie de l’année avec des pas horaires.</p>
                                     
-                                    <figure class="img-container img-full group">
-                                        <chart id="timeseries_pd_cm"></chart> 
-                                        <figcaption ><span class="caption-headline"></span>Superposition de la courbe de production et la courbe de consommation</figcaption>
-                                    </figure>
+                                <figure class="img-container img-full group">
+                                    <chart id="timeseries_pd_cm"></chart> 
+                                    <figcaption ><span class="caption-headline"></span>Superposition de la courbe de production et la courbe de consommation</figcaption>
+                                </figure>
                                                            
                                 <h4>Tableau 3 Consommation mensuelle après la centrale photovoltaïque</h4>
-                                
+                                <div style="overflow-x:auto;">
                                     <table>
                                         <th>
                                            Mois 
@@ -1149,65 +1080,37 @@ présenter un intérêt économique.
                                             Jour (kWh)
                                         </th>
                                         <th>
-                                            Pointe été (kWh)                                        </th>
+                                            Pointe été (kWh)                                        
+                                        </th>
                                         <th>
-                                            Pointe Soir (kWh)                                        </th>
+                                            Pointe Soir (kWh)                                        
+                                        </th>
                                         <th>
-                                            Nuit (kWh)                                        </th>
+                                            Nuit (kWh)                                        
+                                        </th>
                                         <th>
-                                            Toltal (kWh)                                        </th>    
+                                            Toltal (kWh)                                       
+                                         </th>    
                                         </thead>
-                                        <tbody id="tableau_rp_m">
+                                       <tbody id="tableau_rp_m">
                                         </tbody>
                                     </table>
-
-                                     <figure class="img-container img-column group">
-                                        <chart id="rp_m_cm"></chart> 
-                                        <figcaption ><span class="caption-headline"></span>Répartition mensuelle de l'énergie consommée</figcaption>
-                                    </figure>
+                                </div>
+                                <figure class="img-container img-column group">
+                                    <chart id="rp_m_cm"></chart> 
+                                    <figcaption ><span class="caption-headline"></span>Répartition mensuelle de l'énergie consommée</figcaption>
+                                </figure>
             
                                 
                         </div>
-                    </section>    
-                    
-                    <section class="section anchor group" id="finance">
+                    </section>  
+                    <section  class="section anchor group" id="finance">
                         <div class="section-content group">
                             <h2><span class="number">6. </span>Analyse financière</h2>
                             <span class="permalink"><a href="#finance"><i class="fa fa-link"></i> link to this section</a></span>
-                                <p>La décision de réaliser un projet d’autoconsommation doit être prise à partir des résultats et des
-recommandations consignés dans l’étude de faisabilité. Pour s’assurer du succès d’un tel projet, il est
-conseillé de ne pas prendre trop de temps entre la
-date de réalisation des études et la réalisation du
-projet. En effet, de très nombreuses hypothèses
-sont nécessaires à l’élaboration du plan d’affaires
-qui doit déterminer l’intérêt économique de l’opération. Parmi ces hypothèses, il y en a certaines qui
-impactent fortement le résultat du plan d’affaires:
-– Durée prise en compte pour le calcul de l’intérêt économique de l’opération,
-– Le prix actuel de l’électricité (toutes taxes
-comprises),
-– Valeur du pourcentage d’évolution annuelle
-des coûts de l’électricité sur la durée du plan
-d’affaires,
-– Valeur du pourcentage de dégradation
-annuelle des modules en fonction de la technologie utilisée (Poly Si, Mono Si, Couche
-mince, etc.),
-– Valeur du taux d’actualisation de l’argent,
-– Valeur du taux d’inflation,
-– Montant de l’investissement de l’opération,
-– Montant des coûts de maintenance préventive, du télésuivi et des coûts éventuels de
-dépannage.
-Il est fortement conseillé au MOA de challenger
-ces valeurs d’hypothèses avec ses services et/
-ou conseils financiers même si certaines d’entre
-elles sont basées sur des prévisions et de définir le
-type d’indicateur financier qui permettra la prise de
-décision. Parmi les indicateurs financiers les plus
-généralement utilisés, on trouve:
-
-</p>
-                            
+                              
                         
-                    
+                                        <div style="overflow-x:auto;">
                                             <table >
                                                 
                                                 <tr>
@@ -1243,7 +1146,9 @@ généralement utilisés, on trouve:
                                                 </tr>
                                                
                                             </table>
-                                        
+                                        </div>
+
+                                        <div style="overflow-x:auto;">
                                     
                                             <table>
                                                 
@@ -1262,19 +1167,21 @@ généralement utilisés, on trouve:
                                                     <td>{{ lcoe|number_format(3, '.', ' ') }}</td>
                                                     <td>DT</td>
                                                 </tr>
-                                                
+                                              </table>
+                                             </div>   
                                                
                                          <figure class="img-container img-full group">
                                     <chart id="chat_cashflow"></chart> 
-                                    <figcaption ><span class="caption-headline">Figure 10 Variation du DSCR sur la durée de remboursement du crédit</span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption>
+                                    <figcaption ><span class="caption-headline">Figure 10 Variation du DSCR sur la durée de remboursement du crédit</span></figcaption>
                              </figure>
                         
                                     
                                       
                                    
                             
-                                <h4>Tarif Uniforme</h4>
-                                
+                                <!--h4>Tarif Uniforme</h4>
+                                <div style="overflow-x:auto;">
+                                    <table>
                                         <tr>
                                             <td>
                                                 Prix du kWh
@@ -1303,9 +1210,9 @@ généralement utilisés, on trouve:
                                         </tr>
                                         
                                     </table>
-                              
+                                </div>
                                 <h4>Tarif achat Par poste horaire</h4>
-                                
+                                <div style="overflow-x:auto;">
                                     <table >
                                        
                                         
@@ -1358,9 +1265,9 @@ généralement utilisés, on trouve:
                                             </tr>
                                       
                                     </table>
-                               
+                               </div>
                                 <h4>Tarif vente Par poste horaire</h4>
-                                
+                                <div style="overflow-x:auto;">
                                     <table>
                                         
                                         <tr>
@@ -1398,12 +1305,12 @@ généralement utilisés, on trouve:
                                         </tr>
                                         
                                     </table>
-                               
+                               </div>
                                 
                                             <p> Le TRI du projet est  {{ finance.tri25 }} % </p>
                                         
                                         
-                                            <p>  Le VAN {{ finance.van }} </p>
+                                            <p>  Le VAN {{ finance.van }} </p-->
                                       
            
                         <h3 >Cash flow</h3>
@@ -1429,8 +1336,8 @@ généralement utilisés, on trouve:
                                 <tbody id="result_finance">
                                 </tbody>
                             </table>
-                        </div>
-                        <div style="overflow-x:auto;">
+                        
+                        
 
                             <table id="cash_tab2" >
                                
@@ -1453,9 +1360,9 @@ généralement utilisés, on trouve:
                                 <tbody id="result_finance2">
                                 </tbody>
                             </table>
-                        </div>    
+                      
 
-                        <div style="overflow-x:auto;">    
+                        
 
                              <table id="cash_tab3" >
                                
@@ -1478,72 +1385,51 @@ généralement utilisés, on trouve:
                                 <tbody id="result_finance3">
                                 </tbody>
                             </table>
-                                
+                         </div>       
                             
 
-                             <figure class="img-container img-full group">
-                                    <chart id="final_chart"></chart> 
-                                    <figcaption ><span class="caption-headline">Figure 10 Variation du DSCR sur la durée de remboursement du crédit</span> More than 90% of a company’s operating costs are linked to human resources, and financial losses due to absenteeism and presenteeism account for 4%. Commercial spaces that give occupants access to nature serve as a release to outside stresses, and tend to cause less environmental stress themselves. It makes fiscal sense for companies to try to eliminate environmental stress that cost them thousands of dollars per year in employee costs.</figcaption>
-                             </figure>
+                        <figure class="img-container img-full group">
+                            <chart id="final_chart"></chart> 
+                            <figcaption ><span class="caption-headline">Figure 10 Variation du DSCR sur la durée de remboursement du crédit</span> </figcaption>
+                        </figure>
                         
-            </div>
-        </section>
-<!-- MY_POP OVERLAY MENU -->
-
-        <div id="my_popup">
-            <h1>Overlay Menu</h1>
-            <header class="group my_popup-header my_popup-section">
-                <p class="my_popup_close-return"><a class="my_popup_close"><i class="fa fa-chevron-left"></i> Continue reading</a></p>
-                <h2>The Economics of Biophilia</h2>
-                <p class="report-subtitle">Why designing with nature in mind makes financial sense</p>
-                <p class="author">By <a href="http://www.terrapinbrightgreen.com">Terrapin Bright Green</a></p>
-            </header>
-            <div class="group my_popup-download my_popup-section">
-                <h3><i class="fa fa-download"></i> Download</h3>
-                <span class="showhide"><i class="fa fa-angle-down showhide-toggle-open"></i></span>
-                <div class="download-formats showhide-target group">
-                    <a class="download-file button" href="#">PDF</a>
-                </div>
-            </div>
-            <div class="group my_popup-table-of-contents my_popup-section">
-                <h3>Table of Contents</h3>
-                <ol class="nested-numbers">
-                    <li><a href="#introduction" class="localnav">Introduction</a>
-                        <ol class="nested-numbers">
-                            <li><a href="#methodologie" class="localnav">Methodologie</a></li>
-                            <li><a href="#contexte-energetique" class="localnav">Contexte énergétique</a></li>
-                            <li><a href="#cadre-reglementaire" class="localnav">Cadre réglementaire</a></li>
-                            <li><a href="#processus-de-developpement" class="localnav">Processus de developpement</a></li>
-                        </ol>
-                    </li>
-                    
-                </ol>
-            </div>
-            <div id="my_popup-share" class="group my_popup-share my_popup-section">
-                <h3><i class="fa fa-share"></i> Share</h3>
+                        </div>
+                    </section>
+               </div>
+ </div>              
+                               
                 
-                <span class='st_email_large' displayText='Email'></span>
-            </div>
-            <div class="my_popup-close-button"><a class="my_popup_close my_popup_close-x"><i class="fa fa-times"></i></a></div>
-        </div>
-
-
-
-        <div class="bp-indicator">
-            <div class="bp-item bp-small"><img src="/img/bpidentifier-default.gif">Default: Small</div>
-            <div class="bp-item bp-small-1"><img src="/img/bpidentifier-small-1.gif">Small 1</div>
-            <div class="bp-item bp-small-2"><img src="/img/bpidentifier-small-2.gif">Small 2</div>
-            <div class="bp-item bp-medium"><img src="/img/bpidentifier-medium.gif">Medium</div>
-            <div class="bp-item bp-medium-1"><img src="/img/bpidentifier-medium-1.gif">Medium 1</div>
-            <div class="bp-item bp-medium-2"><img src="/img/bpidentifier-medium-2.gif">Medium 2</div>
-            <div class="bp-item bp-large"><img src="/img/bpidentifier-large.gif">Large</div>
-            <div class="bp-item bp-large-1"><img src="/img/bpidentifier-large-1.gif">Large 1</div>
-            <div class="bp-item bp-large-2"><img src="/img/bpidentifier-large-2.gif">Large 2</div>
-            <div class="bp-item bp-large-3"><img src="/img/bpidentifier-large-3.gif">Large 3</div>
-        </div>
 {% endblock %}
 {% block javascripts %}
 
+<script>
+
+
+
+
+function downloadSubmit() {
+
+        
+        
+        
+        var data = $('#rapportForm').serialize();
+        var url = $('#rapportForm').attr('action');
+        $.ajax({
+            url: url,
+            type : 'POST',
+            data : data,
+            dataType: 'json',
+            cache: false,
+        });
+        
+        
+};
+ </script>
+       <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+         <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+         <script src="https://github.com/cburgmer/rasterizeHTML.js"></script>
+        
         <script src='/build/js/transpose.js'></script>
     <script src='/build/js/plugins/jquery/dist/jquery.min.js'></script>
           <script src='/build/js/plotly-latest.min.js'></script>
@@ -2441,6 +2327,73 @@ généralement utilisés, on trouve:
        
 </script>
 
+
+
+<script>
+        function demoFromHTML() {
+        var d3 = Plotly.d3;
+        var img_png = d3.select('#png-export');
+        Plotly.plot(
+            'tarif-horaire'
+            
+        ).then(function(gd){
+            Plotly.toImage(gd,{height:300,width:400})
+            .then(function(url){
+                img_png.attr("src", url);
+                return Plotly.toImage(gd,{format:'png',height:300,width:400});
+            })
+        })
+       
+
+          document.getElementById('tarif-horaire').innerHTML = document.getElementById('png-export').innerHTML;
+               
+            
+            
+        var pdf = new jsPDF('p', 'pt', 'a4');
+        // source can be HTML-formatted string, or a reference
+        // to an actual DOM element from which the text will be scraped.
+        source = $('#content')[0];
+        
+        
+       
+
+        
+        
+        // we support special element handlers. Register them with jQuery-style 
+        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+        // There is no support for any other type of selectors 
+        // (class, of compound) at this time.
+        specialElementHandlers = {
+            // element with id of "bypass" - jQuery style selector
+            '#bypassme': function (element, renderer) {
+                // true = "handled elsewhere, bypass text extraction"
+                return true
+            }
+        };
+        margins = {
+            top: 80,
+            bottom: 60,
+            left: 40,
+            width: 522
+        };
+        // all coords and widths are in jsPDF instance's declared units
+        // 'inches' in this case
+        pdf.fromHTML(
+            source, // HTML string or DOM elem ref.
+            margins.left, // x coord
+            margins.top, { // y coord
+                'width': margins.width, // max width of content on PDF
+                'elementHandlers': specialElementHandlers
+            },
+
+            function (dispose) {
+                // dispose: object with X, Y of the last line add to the PDF 
+                //          this allow the insertion of new lines after html
+                pdf.save('Test.pdf');
+            }, margins
+        );
+    }
+</script>
             
 
 

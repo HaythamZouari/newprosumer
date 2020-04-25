@@ -15,6 +15,7 @@
     },
     "dependencies": {
         "financejs": "^4.1.0",
+        "html2canvas": "^1.0.0-rc.5",
         "jquery": "^3.4.1",
         "popper.js": "^1.15.0"
     }

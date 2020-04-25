@@ -26,13 +26,13 @@
             </li>
         </ul>
     </div>
-    <div class="container-fluid" >
+    <div>
         <div class="row">
-            <div class="col-xl">
-                <div class="card body">
+            <div class=" ml-2 col-xl ">
+                <div>
                     
                         <div class="card" id="tabs-icons-text-1">
-                            <div class="card-body">
+                            <div>
                                 {{ include('consomation/consomation.html.twig') }}
                             </div>
                         </div>
@@ -106,3 +106,13 @@
         }
     </script>
 {% endblock %}
+ {% block stylesheets %}
+  <style>
+ @media only screen and  (min-width: 1000px) {
+  
+  .row {
+    width: 1000px;
+  }
+}
+</style>
+ {% endblock %}

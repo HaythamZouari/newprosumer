@@ -14,8 +14,8 @@ class ProjectType extends AbstractType
     {
         $builder
             ->add('name',TextType::class, ['label' => 'Nom'])
-            ->add('adress',TextType::class,['required' => false])
-            ->add('description',TextType::class, [
+            ->add('adress',TextType::class,['label' => 'Client','required' => false])
+            ->add('description',TextType::class, ['label' => 'Description',
                 'required' => false,
             ])
         ;

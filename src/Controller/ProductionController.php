@@ -33,7 +33,7 @@ class ProductionController extends AbstractController
         $pvgis->setLon((int)$request->get('lon'));
         $pvgis->setLoss((float)$request->get('loss'));
         $pvgis->setMountingType((int)$request->get('trackingtype'));
-        $pvgis->setPeakPower((float)$request->get('peakpower'));
+        $pvgis->setPeakPower(((float)$request->get('peakpower'))+((float)$request->get('peakpower2'))+((float)$request->get('peakpower3')));
         $pvgis->setPvTech($request->get('technologies'));
         $pvgis->setSlop((float)$request->get('angle'));
         $httpClient = HttpClient::create();
@@ -247,7 +247,7 @@ class ProductionController extends AbstractController
         $response = $httpClient->request('GET',
             'https://www.renewables.ninja/api/data/pv?lat='.$request->get('lat').
             '&lon='.$request->get('lon').
-            '&date_from=2014-01-01&date_to=2014-12-31'.
+            '&date_from=2019-01-01&date_to=2019-12-31'.
             '&dataset='.$request->get('raddatabase').
             '&capacity='.$request->get('capacity').
             '&system_loss='.($request->get('loss')/100).
