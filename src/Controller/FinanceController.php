@@ -88,16 +88,12 @@ class FinanceController extends AbstractController
                 $delee=$finance->getDelaiGrace();
                 $maturite=$finance->getMaturiteProj();
 
-                for ($i=0;$i<$delee+$maturite;$i++)
+                for ($i=0;$i<25;$i++)
                     $CFADS[$i]= ($gain[$i]-$opex[$i]- $f_transporter[$i] - $f_regularisation[$i]);
                /* for ($i=$delee+$maturite;$i<30;$i++)
                     $CFADS[$i]=0;*/
             }
-            else{
-                for ($i=0;$i<30;$i++){
-                    $CFADS[$i]=0;
-                }
-            }
+           
             $depense =FinanceService::depenses($opex,$annuite,$f_regularisation,$f_transporter,$finance->getMaturiteProj(),$finance->getDelaiGrace());
             for($i=0;$i<count($depense);$i++){
                 $dep+=$depense[$i];
