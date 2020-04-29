@@ -95,7 +95,7 @@ class FinanceController extends AbstractController
             }
            
             $depense =FinanceService::depenses($opex,$annuite,$f_regularisation,$f_transporter,$finance->getMaturiteProj(),$finance->getDelaiGrace());
-            for($i=0;$i<count($depense);$i++){
+            for($i=0;$i<25;$i++){
                 $dep+=$depense[$i];
             }
             for($i=0;$i<30;$i++) {
