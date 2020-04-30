@@ -2,20 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Consomation;
+use DateTimeZone;
 use App\Entity\Project;
-use App\Form\ProjectType;
-use App\Repository\ProjectRepository;
-use App\Service\ExcelReader;
-use App\Service\FileUpload;
-use App\Service\PostHoraire;
 use Carbon\CarbonPeriod;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Form\ProjectType;
+use App\Entity\Consomation;
+use App\Service\FileUpload;
+use App\Service\ExcelReader;
+use App\Service\PostHoraire;
+use App\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/project")
@@ -75,7 +76,7 @@ class ProjectController extends AbstractController
         $file = $request->files->get('file');
         $filePath =$fileUpload->upload($file,'consomation');
         $data=ExcelReader::createDataFromSpreadsheet('uploads/'.$filePath);
-        $date = new \DateTime();
+        $date = new \DateTime(null, new DateTimeZone('UTC'));
         $dateDebexl=$data[0][0];
         $dateFinexl=$data[count($data)-1][0];
         $session->set('dateDebExl',$dateDebexl);
@@ -716,7 +717,7 @@ class ProjectController extends AbstractController
                                 }
                             }
                             for($i=0;$i<count($dataSynW);$i++) {
-                                $date = new \DateTime();
+                                $date = new \DateTime(null, new DateTimeZone('UTC'));
                                 $date->setTimestamp($dataSynW[$i][0]);
                                 if (((int)$date->format('m')) > 5 && ((int)$date->format('m')) < 9) {
                                     if( (int)$date->format('H')>6&&(int)$date->format('H')<9 ||
@@ -791,7 +792,7 @@ class ProjectController extends AbstractController
                 array_pop($dataAvgW);
 
                 for ($i=0;$i<count($dataAvgW);$i++) {
-                    $date = new \DateTime();
+                    $date = new \DateTime(null, new DateTimeZone('UTC'));
                     $date->setTimestamp($dataAvgW[$i][0]);
                     if(((int)$date->format('d'))==1&&((int)$date->format('m'))==1){
                         $dataAvgW[$i][1]=$avgweek[1][0][((int)$date->format('H'))];
@@ -827,7 +828,7 @@ class ProjectController extends AbstractController
                         $month[$i]=0;
                     }
                     foreach ($dataAvgW as $item) {
-                        $date = new \DateTime();
+                        $date = new \DateTime(null, new DateTimeZone('UTC'));
                         $date->setTimestamp($item[0]);
                         $month[((int)$date->format('m'))]+=$item[1];
                     }
@@ -842,11 +843,11 @@ class ProjectController extends AbstractController
                     }
                     $dataAvgWtm=$dataAvgW;
                     for ($i=0;$i<count($dataAvgW);$i++) {
-                        $date = new \DateTime();
+                        $date = new \DateTime(null, new DateTimeZone('UTC'));
                         $date->setTimestamp($dataAvgW[$i][0]);
                         $months=(int)$date->format('m');
                         $day=(int)$date->format('d');
-                        $dataAvgW[$i][1]*=$month[(int)((new \DateTime())->setTimestamp($dataAvgW[$i][0])->format('m'))];
+                        $dataAvgW[$i][1]*=$month[(int)((new \DateTime(null, new DateTimeZone('UTC')))->setTimestamp($dataAvgW[$i][0])->format('m'))];
                     }
                     $month=[];
                     for($i=0;$i<13;$i++){
@@ -893,7 +894,7 @@ class ProjectController extends AbstractController
                         }
                     }
                     for($i=0;$i<count($dataAvgW);$i++) {
-                        $date = new \DateTime();
+                        $date = new \DateTime(null, new DateTimeZone('UTC'));
                         $date->setTimestamp($dataAvgW[$i][0]);
                         if (((int)$date->format('m')) > 5 && ((int)$date->format('m')) < 9) {
                             if( (int)$date->format('H')>6&&(int)$date->format('H')<9 ||
