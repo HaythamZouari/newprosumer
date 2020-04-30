@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
+use DateTimeZone;
 use App\Entity\Project;
-use App\Service\FinanceService;
 use App\Service\PostHoraire;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Service\FinanceService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/result")
