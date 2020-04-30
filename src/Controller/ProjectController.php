@@ -938,7 +938,7 @@ class ProjectController extends AbstractController
             $entityManager->persist($consomation);
             $entityManager->persist($project);
             $entityManager->flush();
-            return new JsonResponse(['virgdata'=>$dataAvgW,'data'=>$dataAvgWtm,'data2'=>$monthtmp]);
+            return new JsonResponse(['virgdata'=>$dataAvgW,'data'=>$dataAvgWtm,'data2'=>$monthtmp,'period'=>$period]);
     }
         return $this->render('project/show.html.twig', [
             'project' => $project,
