@@ -345,7 +345,7 @@
                 title: 'Time series',
                 xaxis: {
                     autorange: true,
-                    range: [consomation[0][0], consomation[0][consomation[0].length-1]],
+                    range: [consomation[0][1], consomation[0][consomation[0].length-1]],
                     rangeselector: {buttons: [
                             {
                                 count: 1,
@@ -361,7 +361,7 @@
                             },
                             {step: 'all'}
                         ]},
-                    rangeslider: {range: [consomation[0][0], consomation[0][consomation[0].length-1]]},
+                    rangeslider: {range: [consomation[0][1], consomation[0][consomation[0].length-1]]},
                     type: 'date'
                 },
             };

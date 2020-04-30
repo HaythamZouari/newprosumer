@@ -13,10 +13,10 @@ class Datesorting
         $firstpart=[];
 
         $secondpart=[];
-        $datecon=new \DateTime(null, new DateTimeZone('UTC'));
+        $datecon=new \DateTime(null, new DateTimeZone('Africa/Tunis'));
         $datecon->setTimestamp($consomation);
         for ($i=0;$i<count($production);$i++){
-            $date = new \DateTime(null, new DateTimeZone('UTC'));
+            $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
             $date->setTimestamp($production[$i][0]);
             if((int)$date->format('m')===(int)$datecon->format('m')){
                 if ((int)$date->format('d')===(int)$datecon->format('d')){
