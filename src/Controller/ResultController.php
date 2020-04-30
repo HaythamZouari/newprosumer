@@ -43,7 +43,7 @@ class ResultController extends AbstractController
 
             }
             foreach ($project->getImporte() as $item) {
-                $date = new \DateTime();
+                $date = new \DateTime(null, new DateTimeZone('UTC'));
                 $date->setTimestamp($item[0]);
                 if (((int)$date->format('m')) > 5 && ((int)$date->format('m')) < 9) {
                     if( (int)$date->format('H')>=7&&(int)$date->format('H')<=8 ||
@@ -75,7 +75,7 @@ class ResultController extends AbstractController
 
             }
             for($i=0;$i<count($project->getAutoConsomer());$i++){
-                $date = new \DateTime();
+                $date = new \DateTime(null, new DateTimeZone('UTC'));
                 $date->setTimestamp($project->getAutoConsomer()[$i][0]);
                 $monthimp_uniform[((int)$date->format('m'))]+=$project->getImporte()[$i][1];
                 $month_auto[((int)$date->format('m'))]+=$project->getAutoConsomer()[$i][1];

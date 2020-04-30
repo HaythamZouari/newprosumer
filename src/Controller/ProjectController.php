@@ -175,14 +175,14 @@ class ProjectController extends AbstractController
      */
     public function show(Project $project,Request $request,Session $session)
     {
-        date_default_timezone_set("Africa/Tunis");
+        
     if ($request->isXmlHttpRequest()){
         
             $consomation =$project->getConsomation();
             $dateDeb= new \DateTime($request->get('dateDeb'));
-            $dateDebexel= new \DateTime();
+            $dateDebexel= new \DateTime(null, new DateTimeZone('UTC'));
             $dateDebexel->setTimestamp($session->get('dateDebExl'));
-            $dateFinexel= new \DateTime();
+            $dateFinexel= new \DateTime(null, new DateTimeZone('UTC'));
             $dateFinexel->setTimestamp($session->get('dateFinExl'));
             $dateFin= new \DateTime($request->get('dateDeb'));
             $dateFin->add(new \DateInterval('P1Y'));
@@ -611,7 +611,7 @@ class ProjectController extends AbstractController
                     }
 
                     for ($i=0;$i<count($dataSynW);$i++) {
-                        $date = new \DateTime();
+                        $date = new \DateTime(null, new DateTimeZone('UTC'));
                         $date->setTimestamp($dataSynW[$i][0]);
                         
                         if((((int)$date->format('m'))>=((int)$dateconge_deb->format('m')))&&(((int)$date->format('m'))<=((int)$dateconge_fin->format('m')))){
@@ -655,7 +655,7 @@ class ProjectController extends AbstractController
 
                     }
                     foreach ($dataSynW as $item) {
-                        $date = new \DateTime();
+                        $date = new \DateTime(null, new DateTimeZone('UTC'));
                         $date->setTimestamp($item[0]);
                         $month[((int)$date->format('m'))]+=$item[1];
                     }
@@ -671,11 +671,11 @@ class ProjectController extends AbstractController
 
                     $dataSynWtm=$dataSynW;
                     for ($i=0;$i<count($dataSynW);$i++) {
-                        $date = new \DateTime();
+                        $date = new \DateTime(null, new DateTimeZone('UTC'));
                         $date->setTimestamp($dataSynW[$i][0]);
                         $months=(int)$date->format('m');
                         $day=(int)$date->format('d');
-                        $dataSynW[$i][1]*=$month[(int)((new \DateTime())->setTimestamp($dataSynW[$i][0])->format('m'))];
+                        $dataSynW[$i][1]*=$month[(int)((new \DateTime(null, new DateTimeZone('UTC')))->setTimestamp($dataSynW[$i][0])->format('m'))];
                     }
                     $month=[];
                         for($i=0;$i<13;$i++){
