@@ -11,10 +11,10 @@ class Datesorting
         $firstpart=[];
 
         $secondpart=[];
-        $datecon=new \DateTime();
+        $datecon=new \DateTime(null, new DateTimeZone('UTC'));
         $datecon->setTimestamp($consomation);
         for ($i=0;$i<count($production);$i++){
-            $date = new \DateTime();
+            $date = new \DateTime(null, new DateTimeZone('UTC'));
             $date->setTimestamp($production[$i][0]);
             if((int)$date->format('m')===(int)$datecon->format('m')){
                 if ((int)$date->format('d')===(int)$datecon->format('d')){
