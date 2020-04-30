@@ -65,7 +65,7 @@ class ProductionController extends AbstractController
             $array[]=str_getcsv($line);
         }
        
-        $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2017-12-31 23:00','America/Toronto' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
+        $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2017-12-31 23:00' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
         $i=2;
         foreach ($period as $key=>$date) {
             /*$string=$array[$i][0];*/
@@ -114,7 +114,7 @@ class ProductionController extends AbstractController
                 $array[]=str_getcsv($line);
             }
            
-            $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2017-12-31 23:00','America/Toronto' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
+            $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2017-12-31 23:00' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
             $i=2;
             foreach ($period as $key=>$date) {
                 /*$string=$array[$i][0];*/
@@ -188,7 +188,7 @@ class ProductionController extends AbstractController
             }
 
            
-            $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2017-12-31 23:00','America/Toronto' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
+            $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2017-12-31 23:00' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
             $i=2;
             foreach ($period as $key=>$date) {
                 /*$string=$array[$i][0];*/
@@ -226,7 +226,7 @@ class ProductionController extends AbstractController
             ProjectEvent::NAME,
             $projectEvent
         );
-        return new JsonResponse(['data'=>$data,'array'=>$array,'data2'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data) ]);
+        return new JsonResponse(['period'=>$period,'data'=>$data,'array'=>$array,'data2'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data) ]);
     }
     /**
      * @Route("/ninja/{id}", name="ninja")
@@ -270,7 +270,7 @@ class ProductionController extends AbstractController
         
         
 
-    $period = CarbonPeriod::create('2014-01-01 00:00','PT1H','2014-12-31 23:00','America/Toronto' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
+    $period = CarbonPeriod::create('2014-01-01 00:00','PT1H','2014-12-31 23:00' /*, CarbonPeriod::EXCLUDE_START_DATE*/);
     $i=0;
     foreach ($period as $key=>$date) {
         /*$string=$array[$i][0];*/
