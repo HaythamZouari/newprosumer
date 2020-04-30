@@ -65,7 +65,7 @@ class ProductionController extends AbstractController
             $array[]=str_getcsv($line);
         }
        
-        $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2017-12-31 23:00' , CarbonPeriod::EXCLUDE_START_DATE);
+        $period = CarbonPeriod::create('2017-01-01 00:00','PT1H','2018-01-01 00:00' , CarbonPeriod::EXCLUDE_START_DATE);
         $i=2;
         foreach ($period as $key=>$date) {
             /*$string=$array[$i][0];*/
