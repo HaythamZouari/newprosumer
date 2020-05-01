@@ -123,6 +123,14 @@
                                 
                                 
                             </div>
+
+                             <div id="download" class="group">
+                            <h2><i class="fa fa-download"></i> Download</h2>
+                            <div class="download-formats">
+                             <button id="downloadPdfBtn" class="button">NEWPDF</button>
+                                
+                                
+                            </div>
                         </div><!-- end #download -->
 
                     </div><!-- end .report-overview -->
@@ -1402,7 +1410,29 @@
 {% endblock %}
 {% block javascripts %}
 
+<script src="https://www.sejda.com/js/sejda-js-api.min.js"></script>
+
 <script>
+
+
+  document.getElementById('downloadPdfBtn')
+    .addEventListener('click', function(e){
+      SejdaJsApi.htmlToPdf({
+        filename: 'out.pdf',
+        /* leave blank for one long page */
+        pageSize: 'a4',
+        publishableKey: 'api_public_y0urap1k3yh3r3',
+        htmlCode: document.querySelector('html').innerHTML,
+        /* url: window.location.href */
+        always: function() {
+          // PDF download should have started
+        },
+        error: function(err) {
+          console.error(err);
+          alert('An error occurred');
+        }
+      });
+    })
 
 
 
