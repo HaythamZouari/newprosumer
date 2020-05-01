@@ -1,12 +1,10 @@
+<!DOCTYPE html>
+<html>
 
 
-{% block title %}
-    Rapport
-{% endblock %}
-{% block navbartop %}
-{% endblock %}
-{% block header %}
-
+<head>
+ <link rel="stylesheet" href="/build/css/screen.css">
+ 
 
 
         <meta charset="utf-8">
@@ -25,14 +23,13 @@
         <meta property="article:publisher"        content="http://www.facebook.com/example/" /><!-- _Add URL to publisher/author's Facebook page -->
         <meta property="og:url"                   content="http://www.example.com/" /><!-- _Add Report's URL -->
         <meta property="og:image"                 content="http://www.example.com/img/pic.jpg" /><!-- _Add URL to medium-sized horizontal cover image -->
-
+</head>
 
         <!-- The HTML5 Shiv enables use of HTML5 sectioning elements in legacy Internet Explorer and provides basic HTML5 styling for Internet Explorer 6-9, Safari 4.x (and iPhone 3.x), and Firefox 3.x. - https://github.com/aFarkas/html5shiv -->
         <script src="/build/js/vendor/html5shiv-printshiv.min.js"></script>
 
         <!-- Screen styles -->
-        <link rel="stylesheet" href="/build/css/screen.css">
-
+      
         <!-- Print styles 
         <link rel="stylesheet" href="/build/css/print.css" type="text/css" media="print" />-->
 
@@ -43,17 +40,11 @@
         <script type="text/javascript" src="//use.typekit.net/ptd6qqr.js"></script>
         <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   
-   {% endblock %}
+  
 
     
 
-   {% block stylesheets %} 
-        <link rel="stylesheet" href="/build/css/screen.css">
-
-    {% endblock %}
-
-   {% block body %}
-
+   
    <body><div  class="wrapper">
     <!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
 
@@ -1405,8 +1396,6 @@
  </div>              
                                
                 
-{% endblock %}
-{% block javascripts %}
 
 <script src="https://www.sejda.com/js/sejda-js-api.min.js"></script>
 
@@ -2108,7 +2097,7 @@ function downloadSubmit() {
                         },
                     };
                     Plotly.newPlot('timeseries_pd_cm', data, layout,{responsive: true});
-                    //********************************************************************
+                   
                     data=[];
                     layout={};
 
@@ -2131,7 +2120,7 @@ function downloadSubmit() {
                     layout = {barmode: 'stack'};
 
                     Plotly.newPlot('rp_m_cm', data, layout,{responsive: true});
-                    //***********************************************************************
+                   
 
                     trace1 = {
                         y: cashflow,
@@ -2153,8 +2142,7 @@ function downloadSubmit() {
                     layout = {barmode: 'stack'};
 
                     Plotly.newPlot('chat_cashflow', data, layout,{responsive: true});
-                    //*********************************************************
-
+                  
                     trace1 = {
                         y: annuite,
                         name: 'Annuite',
@@ -2188,7 +2176,7 @@ function downloadSubmit() {
 
                     Plotly.newPlot('final_chart', data, layout,{responsive: true});
                     console.log(cfads);
-                    //***********************************finance****************************************
+                    
                     console.log(response.facture_regrularisation[0]);
                     for(let i=0;i<response.delee;i++){
                         
@@ -2425,10 +2413,15 @@ function downloadSubmit() {
         );
     }
 </script>
+
+<style>
+
+    
+</style>
             
+</html>
 
 
-{% endblock %}
    
 
 
