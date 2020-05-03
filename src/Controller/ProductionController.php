@@ -270,7 +270,7 @@ class ProductionController extends AbstractController
         
         
 
-    $period = CarbonPeriod::create('2014-01-01 00:00','PT1H','2014-12-31 23:00' , CarbonPeriod::EXCLUDE_START_DATE);
+    $period = CarbonPeriod::create('2014-01-01 00:00','PT1H','2015-01-01 00:00' , CarbonPeriod::EXCLUDE_START_DATE);
     $i=0;
     foreach ($period as $key=>$date) {
         /*$string=$array[$i][0];*/
