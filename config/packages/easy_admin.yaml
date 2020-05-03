@@ -5,6 +5,8 @@ easy_admin:
       - { name: 'delete', icon: 'trash', label: '' }
   entities:
     Project:
+      class: App\Entity\User
+    Project:
       class: App\Entity\Project
       form:
         fields:
