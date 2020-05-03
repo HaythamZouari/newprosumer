@@ -29,9 +29,9 @@ class Mailer
     }
     public  function sendConfirmationEmail(User $user){
         $message =(new \Swift_Message())
-            ->setSubject('Welcome to the app!')
+            ->setSubject('Bienvenue à Prosumers!')
             ->setFrom($this->mailFrom)
-            ->setTo($user->getEmail())
+            ->setTo('contact@prosumers.tn')
             ->setBody($this->twig->render('email/registration.html.twig',['user'=>$user]),'text/html');
         $this->mailer->send($message);
     }
