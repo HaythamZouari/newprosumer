@@ -275,7 +275,7 @@
             trace1 = {
                 type: "scatter",
                 mode: "lines",
-                name: 'Consomation',
+                name: 'Consommation',
                 x: consomation[0],
                 y: consomation[1],
                 line: {color: '#17BECF'}
@@ -294,7 +294,7 @@
             trace3= {
                 type: "scatter",
                 mode: "lines",
-                name: 'Auto consomation',
+                name: 'Auto consommation',
                 x: auto_consome[0],
                 y: auto_consome[1],
                 line: {color: '#C70039'}
@@ -313,7 +313,7 @@
             trace5 = {
                 type: "scatter",
                 mode: "lines",
-                name: 'Importer',
+                name: 'Importée',
                 x: importer[0],
                 y: importer[1],
                 line: {color: '#DAF7A6'}
@@ -350,7 +350,7 @@
             if (btn===1){
                 trace1 = {
                     x: consomation[1],
-                    name: 'consomation',
+                    name: 'consommation',
                     autobinx: true,
                     histnorm: "count",
                     marker: {
@@ -368,7 +368,7 @@
                     bargap: 0.05,
                     bargroupgap: 0.2,
                     barmode: "overlay",
-                    title: "Consomation",
+                    title: "Consommation",
                     xaxis: {title: "Puissance"},
                     yaxis: {title: "Fréquence"}
                 };
@@ -425,7 +425,7 @@
                     bargap: 0.05,
                     bargroupgap: 0.2,
                     barmode: "overlay",
-                    title: "Auto consomation",
+                    title: "Auto consommation",
                     xaxis: {title: "Puissance"},
                     yaxis: {title: "Fréquence"}
                 };
@@ -454,7 +454,7 @@
                     bargap: 0.05,
                     bargroupgap: 0.2,
                     barmode: "overlay",
-                    title: "Auto consomation",
+                    title: "Auto consommation",
                     xaxis: {title: "Puissance"},
                     yaxis: {title: "Fréquence"}
                 };
@@ -482,7 +482,7 @@
                     bargap: 0.05,
                     bargroupgap: 0.2,
                     barmode: "overlay",
-                    title: "Auto consomation",
+                    title: "Auto consommation",
                     xaxis: {title: "Puissance"},
                     yaxis: {title: "Fréquence"}
                 };
@@ -551,14 +551,14 @@
                     values: PH_consomation,
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consomation',
+                    name: 'Consommation',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
                 }];
 
                 layout = {
-                    title: 'Consomation',
+                    title: 'Consommation',
                     showlegend: false,
                     annotations: [
                         {
@@ -579,7 +579,7 @@
                     values: PH_production,
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consomation',
+                    name: 'Consommation',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
@@ -608,14 +608,14 @@
                     values: PH_auto_consome,
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consomation',
+                    name: 'Consommation',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
                 }];
 
                 layout = {
-                    title: 'Auto-consomer',
+                    title: 'Auto-consommée',
                     showlegend: false,
                     annotations: [
                         {
@@ -637,7 +637,7 @@
                     values: PH_cedee,
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consomation',
+                    name: 'Consommation',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
@@ -666,14 +666,14 @@
                     values: PH_importer,
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consomation',
+                    name: 'Consommation',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
                 }];
 
                 layout = {
-                    title: 'Importer',
+                    title: 'Importée',
                     showlegend: false,
                     annotations: [
                         {
@@ -820,16 +820,16 @@
                         $('#t_couv').append("<td>"+round(response.t_couverture*100,2)+"</td><td>%</td>");
                         $('#productible').append("<td>"+round(response.productible,0)+"</td><td>kWh/kWc</td>");
                         $('#t_cd').append("<td>"+round(response.t_cedee*100,2)+"</td><td>%</td>");
-                        $('#f_r').append("<td>"+round(response.f_reg,0)+"</td><td></td>");
+                        $('#f_r').append("<td>"+round(response.f_reg,0)+"</td><td>DT</td>");
                         $('#coutproj').append("<td>"+round(response.coutproj,0)+"</td><td>DT</td>");
-                        $('#capexres').append("<td>"+round(response.capex,3)+"</td><td></td>");
+                        $('#capexres').append("<td>"+round(response.capex,3)+"</td><td>DT</td>");
                         $('#tricapres').append("<td>"+round(response.tricap,2)+"</td><td>%</td>");
                         $('#trires').append("<td>"+round(response.tri25,2)+"</td><td>%</td>");
-                        $('#subvres').append("<td>"+round(response.subv,0)+"</td><td>%</td>");
-                        $('#omres').append("<td>"+round(((response.opex)*(response.capex)),0)+"</td><td>%</td>");
-                        $('#annuiteres').append("<td>"+round(response.annuite[5],0)+"</td><td>%</td>");
+                        $('#subvres').append("<td>"+(round(response.subv,0)*round(response.capex,0))+"</td><td>DT</td>");
+                        $('#omres').append("<td>"+round(response.opex[0],0)+"</td><td>DT</td>");
+                        $('#annuiteres').append("<td>"+round(response.annuite[5],0)+"</td><td>DT</td>");
                         $('#vanres').append("<td>"+round(response.van,0)+"</td><td>DT</td>");
-                        $('#puissanceres').append("<td>"+round(response.peak,2)+"</td><td>kWh</td>");
+                        $('#puissanceres').append("<td>"+round(response.peak,2)+"</td><td>kWc</td>");
 
 
                     }

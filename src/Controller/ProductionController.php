@@ -30,7 +30,7 @@ class ProductionController extends AbstractController
         $pvgis->setProject($project);
         $pvgis->setLat((float)$request->get('lat'));
         $pvgis->setAzimuth((float)$request->get('aspect'));
-        $pvgis->setLon((int)$request->get('lon'));
+        $pvgis->setLon((float)$request->get('lon'));
         $pvgis->setLoss((float)$request->get('loss'));
         $pvgis->setMountingType((int)$request->get('trackingtype'));
         $pvgis->setPeakPower(((float)$request->get('peakpower'))+((float)$request->get('peakpower2'))+((float)$request->get('peakpower3')));

@@ -246,7 +246,7 @@ class ProjectController extends AbstractController
                 $Phd=1486;$Phf=1519;$Phm=1876;$Phad=1832;$Pham=1703;$Phn=1150;
                 }
              elseif ($activite=='Frigorifique'){
-                $Phd=122;$Phf=160;$Phm=200;$Phad=140;$Pham=180;$Phn=160;
+                $Phd=140;$Phf=160;$Phm=200;$Phad=140;$Pham=180;$Phn=130;
                 }
              elseif ($activite=='Hotellerie'){
                 $Phd=247;$Phf=294;$Phm=308;$Phad=346;$Pham=326;$Phn=187;

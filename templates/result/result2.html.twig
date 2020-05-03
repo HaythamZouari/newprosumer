@@ -297,7 +297,7 @@
             trace1 = {
                 type: "scatter",
                 mode: "lines",
-                name: 'Consomation',
+                name: 'Consommation',
                 x: consomation[0],
                 y: consomation[1],
                 line: {color: '#17BECF'}
@@ -316,7 +316,7 @@
             trace3= {
                 type: "scatter",
                 mode: "lines",
-                name: 'Auto consomation',
+                name: 'Auto consommation',
                 x: auto_consome[0],
                 y: auto_consome[1],
                 line: {color: '#C70039'}
@@ -335,7 +335,7 @@
             trace5 = {
                 type: "scatter",
                 mode: "lines",
-                name: 'Importer',
+                name: 'Importée',
                 x: importer[0],
                 y: importer[1],
                 line: {color: '#DAF7A6'}
@@ -372,7 +372,7 @@
             if (btn===1){
                 trace1 = {
                     x: consomation[1],
-                    name: 'consomation',
+                    name: 'consommation',
                     autobinx: true,
                     histnorm: "count",
                     marker: {
@@ -390,7 +390,7 @@
                     bargap: 0.05,
                     bargroupgap: 0.2,
                     barmode: "overlay",
-                    title: "Consomation",
+                    title: "Consommation",
                     xaxis: {title: "Puissance"},
                     yaxis: {title: "Fréquence"}
                 };
@@ -447,7 +447,7 @@
                     bargap: 0.05,
                     bargroupgap: 0.2,
                     barmode: "overlay",
-                    title: "Auto consomation",
+                    title: "Auto consommation",
                     xaxis: {title: "Puissance"},
                     yaxis: {title: "Fréquence"}
                 };
@@ -476,7 +476,7 @@
                     bargap: 0.05,
                     bargroupgap: 0.2,
                     barmode: "overlay",
-                    title: "Auto consomation",
+                    title: "Auto consommation",
                     xaxis: {title: "Puissance"},
                     yaxis: {title: "Fréquence"}
                 };
@@ -504,7 +504,7 @@
                     bargap: 0.05,
                     bargroupgap: 0.2,
                     barmode: "overlay",
-                    title: "Auto consomation",
+                    title: "Auto consommation",
                     xaxis: {title: "Puissance"},
                     yaxis: {title: "Fréquence"}
                 };
@@ -569,14 +569,14 @@
                     values: PH_consomation,
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consomation',
+                    name: 'Consommation',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
                 }];
 
                 layout = {
-                    title: 'Consomation',
+                    title: 'Consommation',
                     showlegend: false,
                     annotations: [
                         {
@@ -597,7 +597,7 @@
                     values: PH_production,
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consomation',
+                    name: 'Consommation',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
@@ -626,14 +626,14 @@
                     values: PH_auto_consome,
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consomation',
+                    name: 'Consommation',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
                 }];
 
                 layout = {
-                    title: 'Auto-consomer',
+                    title: 'Auto-consomée',
                     showlegend: false,
                     annotations: [
                         {
@@ -655,7 +655,7 @@
                     values: PH_cedee,
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consomation',
+                    name: 'Consommation',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
@@ -684,14 +684,14 @@
                     values: PH_importer,
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consomation',
+                    name: 'Consommation',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
                 }];
 
                 layout = {
-                    title: 'Importer',
+                    title: 'Importée',
                     showlegend: false,
                     annotations: [
                         {
