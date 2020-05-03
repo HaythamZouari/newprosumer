@@ -133,7 +133,7 @@ class Finance
     private $wacc;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="float")
      */
     private $annuite;
 
@@ -494,12 +494,12 @@ class Finance
         return $this;
     }
 
-    public function getAnnuite(): ?array
+    public function getAnnuite(): ?float
     {
         return $this->annuite;
     }
 
-    public function setAnnuite(array $annuite): self
+    public function setAnnuite(float $annuite): self
     {
         $this->annuite = $annuite;
 
