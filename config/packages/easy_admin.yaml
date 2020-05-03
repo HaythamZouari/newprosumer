@@ -20,4 +20,8 @@ easy_admin:
           - 'consomation'
     Finance:
       class: App\Entity\Finance
+    Consomation:
+      class: App\Entity\Consomation 
+    Pvgis:
+      class: App\Entity\Pvgis     
 
