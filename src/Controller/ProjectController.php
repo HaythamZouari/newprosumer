@@ -333,7 +333,7 @@ class ProjectController extends AbstractController
                                                     $synWeek1[6][$j]=$Pham;
                                                     } 
                                                 else {
-                                                    $synWeek1[6][$j]=mt_rand($Phad, $Phm);
+                                                    $synWeek1[6][$j]=mt_rand(min($Phad, $Phm),max($Phad, $Phm));
                                                 }
                                             }    
                                             else {
@@ -369,7 +369,7 @@ class ProjectController extends AbstractController
                                                 $synWeek1[0][$j]=$Pham;
                                                 } 
                                             else {
-                                                $synWeek1[0][$j]=mt_rand($Phad, $Phm);
+                                                $synWeek1[0][$j]=mt_rand(min($Phad, $Phm),max($Phad, $Phm));
                                             }
                                                     
                                         }
@@ -437,7 +437,7 @@ class ProjectController extends AbstractController
                                                 $synWeek2[6][$j]=$Pham;
                                                 } 
                                             else {
-                                                $synWeek2[6][$j]=mt_rand($Phad, $Phm);
+                                                $synWeek2[6][$j]=mt_rand(min($Phad, $Phm),max($Phad, $Phm));
                                             }
                                         }    
                                         else {
@@ -473,7 +473,7 @@ class ProjectController extends AbstractController
                                             $synWeek2[0][$j]=$Pham;
                                             } 
                                         else {
-                                            $synWeek2[0][$j]=mt_rand($Phad, $Phm);
+                                            $synWeek2[0][$j]=mt_rand(min($Phad, $Phm),max($Phad, $Phm));
                                         }
                                                 
                                     }
@@ -542,7 +542,7 @@ class ProjectController extends AbstractController
                                 $synWeek3[6][$j]=$Pham;
                                 } 
                             else {
-                                $synWeek3[6][$j]=mt_rand($Phad, $Phm);
+                                $synWeek3[6][$j]=mt_rand(min($Phad, $Phm),max($Phad, $Phm));
                             }
                         }    
                         else {
@@ -578,7 +578,7 @@ class ProjectController extends AbstractController
                                 $synWeek3[0][$j]=$Pham;
                                 } 
                             else {
-                                $synWeek3[0][$j]=mt_rand($Phad, $Pham);
+                                $synWeek3[0][$j]=mt_rand(min($Phad, $Pham),max($Phad, $Pham));
                             }
                                     
                         }

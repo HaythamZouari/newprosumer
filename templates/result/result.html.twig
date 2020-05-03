@@ -826,8 +826,8 @@
                         $('#tricapres').append("<td>"+round(response.tricap,2)+"</td><td>%</td>");
                         $('#trires').append("<td>"+round(response.tri25,2)+"</td><td>%</td>");
                         $('#subvres').append("<td>"+round(response.subv,0)+"</td><td>%</td>");
-                        $('#omres').append("<td>"+round(response.opex,3)+"</td><td>%</td>");
-                        $('#annuiteres').append("<td>"+round(response.annuite,3)+"</td><td>%</td>");
+                        $('#omres').append("<td>"+round(((response.opex)*(response.capex)),0)+"</td><td>%</td>");
+                        $('#annuiteres').append("<td>"+round(response.annuite[5],0)+"</td><td>%</td>");
                         $('#vanres').append("<td>"+round(response.van,0)+"</td><td>DT</td>");
                         $('#puissanceres').append("<td>"+round(response.peak,2)+"</td><td>kWh</td>");
 

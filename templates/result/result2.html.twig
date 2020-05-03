@@ -64,7 +64,7 @@
                         <tr>
                             {% if project.finance != null %}
                             <td>CAPEX</td>
-                            <td >{{ project.finance.capex }}</td>
+                            <td >{{ project.finance.capex |number_format(0, '.', ' ')}}</td>
                             <td>DT</td>
                         </tr>
                         <tr>
@@ -74,12 +74,12 @@
                         </tr>
                         <tr>
                             <td>O&M </td>
-                            <td>{{ project.finance.opex}}</td>
-                            <td>%</td>
+                            <td>{{ ((project.finance.opex)*(project.finance.capex))/100 |number_format(0, '.', ' ')}}</td>
+                            <td>DT</td>
                         </tr>
                         <tr>
-                            <td>Annuite :</td>
-                            <td>{{ project.finance.annuite|number_format(0, '.', ' ') }}</td>
+                            <td>Annuite </td>
+                            <td>{{ project.finance.annuite[5]|number_format(0, '.', ' ') }}</td>
                             <td>DT</td>
                         </tr>
                         <tr  id="f_r">
@@ -839,8 +839,8 @@
                         $('#tricapres').append("<td>"+round(response.tricap,3)+"</td><td>%</td>");
                         $('#trires').append("<td>"+round(response.tri25,0)+"</td><td>%</td>");
                         $('#subvres').append("<td>"+round(response.subv)+"</td><td>%</td>");
-                        $('#omres').append("<td>"+round(response.opex,3)+"</td><td>%</td>");
-                        $('#annuiteres').append("<td>"+round(response.annuite,0)+"</td><td>%</td>");
+                        $('#omres').append("<td>"+round((response.opex)*(response.capex),0)+"</td><td>%</td>");
+                        $('#annuiteres').append("<td>"+round(response.annuite[5],0)+"</td><td>%</td>");
                         $('#vanres').append("<td>"+round(response.van,0)+"</td><td>DT</td>");
                         $('#puissanceres').append("<td>"+round(response.peak,2)+"</td><td>kWh</td>");
                     }

@@ -2,22 +2,22 @@
     <div class="row">
         <div class="col">
             <div class="form-group">
-                <label class="form-control-label required" for="raddatabase">Solar radiation database</label>
+                <label class="form-control-label required" for="raddatabase">Base de données irradiance</label>
                 <select name="raddatabase" class="form-control" id="raddatabase">
                     <option value="merra2">MERRA-2 (global)</option>
                     <option value="sarah">CM-SAF SARAH</option>
                 </select>
             </div>
             <div class="form-group">
-                <label class="form-control-label required" for="capacity">Capacity (kW)</label>
+                <label class="form-control-label required" for="capacity">Puissance (kW)</label>
                 <input type="number" class="form-control"  name="capacity" id="capacity" value="1" min="0" >
             </div>
             <div class="form-group">
-                <label class="form-control-label required" for="loss" >loss [%]</label>
+                <label class="form-control-label required" for="loss" >Pertes [%]</label>
                 <input type="number" class="form-control" step="0.01" min="0" value=0.01  max="1" name="loss" id="loss">
             </div>
             <div class="form-group">
-                <label class="form-control-label required" for="tracking">Tracking</label>
+                <label class="form-control-label required" for="tracking">Fixation</label>
                 <select name="tracking" class="form-control" id="tracking">
                     <option value=0>Fixe</option>
                     <option value=1>1-axis (azimuth)</option>
@@ -25,7 +25,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label class="form-control-label required" for="tilt" >Tilt [°]</label>
+                <label class="form-control-label required" for="tilt" >Inclianison [°]</label>
                 <input type="number" class="form-control" step="0.01" min="0" value=0  name="tilt" id="tilt">
             </div>
             <div class="form-group">
@@ -33,7 +33,7 @@
                 <input type="number" class="form-control" step="0.01" min="0" value=0  name="azimuth" id="loss">
             </div>
             <div class="text-center">
-                <button type="button" onclick="productionSubmit()" class="btn-secondary btn">Continue</button>
+                <button type="button" onclick="productionSubmit()" class="btn-secondary btn">Continuer</button>
             </div>
         </div>
     </div>

@@ -236,7 +236,7 @@ class ProductionController extends AbstractController
         $ninja = new Ninja();
         $ninja->setProject($project);
         $ninja->setLat((float)$request->get('lat'));
-        $ninja->setAzimuth((float)$request->get('azimuth'));
+        $ninja->setAzimuth(((float)$request->get('azimuth'))+180);
         $ninja->setLon((int)$request->get('lon'));
         $ninja->setLoss((float)$request->get('loss'));
         $ninja->setTracking((int)$request->get('tracking'));
@@ -253,7 +253,7 @@ class ProductionController extends AbstractController
             '&system_loss='.($request->get('loss')/100).
             '&tracking='.$request->get(('tracking')).
             '&tilt='.$request->get('tilt').
-            '&azim='.$request->get('azimuth').
+            '&azim='.($request->get('azimuth')+180).
             '&format=json'
         );
         
