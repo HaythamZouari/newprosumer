@@ -17,8 +17,8 @@
         }
     </style>
     <div class="map-canvas">
-    <input type="hidden" value="0" name="lon" id="lon">
-    <input type="hidden" name="lat" id="lat">
+    <input type="hidden" value="10" name="lon" id="lon">
+    <input type="hidden" value="36" name="lat" id="lat">
         
     <div class="map-canvas" id='map'></div>
     <pre id='coordinates' class='coordinates'></pre>
@@ -98,7 +98,7 @@
         accessToken: mapboxgl.accessToken,
         localGeocoder: coordinatesGeocoder,
         zoom: 4,
-        placeholder: "lat:36,lng:10",
+        placeholder: "Saisir lat,lng",
         mapboxgl: mapboxgl
     }));
 </script>
