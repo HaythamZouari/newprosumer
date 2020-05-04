@@ -719,7 +719,37 @@ class ProjectController extends AbstractController
                             for($i=0;$i<count($dataSynW);$i++) {
                                 $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
                                 $date->setTimestamp($dataSynW[$i][0]);
-                                if (((int)$date->format('m')) > 5 && ((int)$date->format('m')) < 9) {
+
+                            if(((int)$date->format('w'))==0)
+                            $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                            elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==1){
+                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                            }
+                            elseif(((int)$date->format('d'))==14&&((int)$date->format('m'))==1){
+                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                            }
+                            elseif(((int)$date->format('d'))==20&&((int)$date->format('m'))==3){
+                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                            }
+                            elseif(((int)$date->format('d'))==9&&((int)$date->format('m'))==4){
+                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                            }
+                            elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==5){
+                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                            }    
+                            elseif(((int)$date->format('d'))==25&&((int)$date->format('m'))==7){
+                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                            }
+                            elseif(((int)$date->format('d'))==13&&((int)$date->format('m'))==8){
+                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                            }
+                            elseif(((int)$date->format('d'))==15&&((int)$date->format('m'))==10){
+                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                            }
+
+
+
+                                elseif (((int)$date->format('m')) > 5 && ((int)$date->format('m')) < 9) {
                                     if( (int)$date->format('H')>6&&(int)$date->format('H')<9 ||
                                         (int)$date->format('H')>13&&(int)$date->format('H')<19){
                                         $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['jour'];
@@ -758,7 +788,8 @@ class ProjectController extends AbstractController
 
                 
         }
-            else {     
+
+        else {     
                        
                 $dataAvgW=[];
                 $i =0;
@@ -896,7 +927,34 @@ class ProjectController extends AbstractController
                     for($i=0;$i<count($dataAvgW);$i++) {
                         $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
                         $date->setTimestamp($dataAvgW[$i][0]);
-                        if (((int)$date->format('m')) > 5 && ((int)$date->format('m')) < 9) {
+                        if(((int)$date->format('w'))==0){
+                        $dataAvgW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==1){
+                            $dataAvgW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==14&&((int)$date->format('m'))==1){
+                            $dataAvgW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==20&&((int)$date->format('m'))==3){
+                            $dataAvgW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==9&&((int)$date->format('m'))==4){
+                            $dataAvgW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==5){
+                            $dataAvgW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==25&&((int)$date->format('m'))==7){
+                            $dataAvgW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==13&&((int)$date->format('m'))==8){
+                            $dataAvgW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==15&&((int)$date->format('m'))==10){
+                            $dataAvgW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif (((int)$date->format('m')) > 5 && ((int)$date->format('m')) < 9) {
                             if( (int)$date->format('H')>6&&(int)$date->format('H')<9 ||
                                 (int)$date->format('H')>13&&(int)$date->format('H')<19){
                                 $dataAvgW[$i][1]*=$month[((int)$date->format('m'))]['jour'];
