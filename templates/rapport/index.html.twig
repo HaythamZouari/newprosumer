@@ -71,6 +71,16 @@
           * Correct `block` display not defined in IE 8/9.
           */
           /* line 34, scss/_0_normalize.scss */
+          /*style for sejda*/
+          .with-page-break {
+            page-break-before: always;
+            page-break-after: always;
+          }
+          .footer {
+            position: fixed;
+            bottom: 0;
+          }
+           /*style for sejda*/
           article,
           aside,
           details,
@@ -2644,6 +2654,7 @@
                 </div>
               
             </div>
+            <div class="with-page-break">Page 1</div>
             
       <div class="article-container">
 
@@ -2697,6 +2708,8 @@
                                 </ol>
                             </nav><!-- end #table-of-contents -->
 
+                            <div class="with-page-break">Page 2</div>
+
                             <div id="notes" class="group">
                                 <h2>Notes</h2>
                                 <a class="showhide"><i class="fa fa-angle-down"></i></a>
@@ -2709,7 +2722,7 @@
                                 </div>
                             </div><!-- end #notes -->
                           
-                            <div id="download" class="group">
+                            <div id="download" class="group --hide-from-pdf">
                                 <h2><i class="fa fa-download"></i> Télécharger</h2>
                                 <div class="download-formats">
                                 <a id="downloadPdfBtn" class="button">PDF</a>
