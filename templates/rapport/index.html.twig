@@ -75,14 +75,15 @@
           */
           /* line 34, scss/_0_normalize.scss */
           /*style for sejda*/
-          section {
-            page-break-before: always;
-            
-          }
-          .footer {
-            position: fixed;
-            bottom: 0;
-          }
+            .with-page-break {
+              page-break-before: always;
+              
+            }
+            .footer {
+              position: fixed;
+              bottom: 0;
+            }
+          
            /*style for sejda*/
           article,
           aside,
@@ -2658,7 +2659,7 @@
 
         
 
-                        <section id="front-matter" class="section group anchor">
+                        <section id="front-matter" class="section group anchor with-page-break">
 
                             <div class="report-overview group">
                                 
@@ -2753,7 +2754,7 @@
                     
      
                         <!-- Start:   SECTION 1 - INTRODUCTION -->
-                        <section id="introduction" class="section anchor group" style="page-break-before: always;">
+                        <section id="introduction" class="section anchor group with-page-break" >
                             <div class="section-content group">
                                     <h2><span class="number">1. </span>Introduction</h2>
                                     <p>Les modèles financiers pour les investissements d’autoconsommation prennent en compte diverses hypothèses techniques liées aux variables d’entrées tels que les revenus de la production de centrales photovoltaïques, les dépenses en capital (CAPEX) et les dépenses d'exploitation (OPEX).
@@ -2764,7 +2765,7 @@
 
                                   
                             
-                                <section class="anchor" id="methodologie">
+                                <section class="anchor with-page-break" id="methodologie">
                                     <h3><span class="number">1.1 </span>Méthodologie</h3>
                                         <p>Les modèles financiers PV sont utilisés par les développeurs de projets et les banques pour évaluer la rentabilité d'un projet PV. La tâche consiste à prévoir le flux de trésorerie actualisé aussi précisément que possible, afin d'évaluer si le projet représente une opportunité d'investissement intéressante.
                                         Un modèle financier PV typique aborde les sujets suivants:</p>
@@ -2780,7 +2781,7 @@
                                           
                                 </section><!-- end "#methodologie" -->
                             
-                                <section class="anchor" id="contexte-energetique">
+                                <section class="anchor with-page-break" id="contexte-energetique">
                                     <h3><span class="number">1.2 </span>Contexte énergétique</h3>
                                     
                                     <p>Etant donné l'évolution des prix du gaz naturel, les tarifs de vente de l'électricité ont fait l'objet de plusieurs augmentations. Ces ajustements sont sporadiques et dépendent de l'évolution des prix du pétrole, du taux de change de la monnaie nationale et des politiques des différents gouvernements au sujet de la subvention accordée par l'Etat allouée au secteur de l'énergie.</p>
@@ -2871,7 +2872,7 @@
 
                                 </section><!-- end #contexte-energetique -->
                             
-                                <section class="anchor" id="cadre-reglementaire">
+                                <section class="anchor with-page-break" id="cadre-reglementaire">
                                         <h3><span class="number">1.3 </span>Cadre réglementaire</h3>
                                         <h4><span class="number">1.3.1 </span>Loi n°2015-12</h4></br>
                                         <p>La loi n°2015-12 relative à la production d’électricité à partir des ENRs a été adoptée et promulguée le 11 Mai 2015. Cette loi a pour
@@ -2916,7 +2917,7 @@
                                                                             
                                 </section><!-- end #cadre-reglementaire -->
 
-                                <section class="anchor" id="processus-de-developpement">
+                                <section class="anchor with-page-break" id="processus-de-developpement">
                                         <h3><span class="number">1.4 </span>Processus de developpemnet</h3>
 
                                         <p>Toute collectivité locale et tout établissement public ou privé,
@@ -3167,7 +3168,7 @@
                             </div>
                         <!-- Start: Section 2 - Hypotheses -->
                         
-                        <section  class="section anchor group" id="hypothese" style="page-break-before: always;">
+                        <section  class="section anchor group with-page-break" id="hypothese">
                             <div class="section-content group">
                                 <h2><span class="number">2. </span>Hypothèses de la simulation</h2>
 
@@ -3306,8 +3307,7 @@
                             </div><!-- end .section-content -->
                         </section>
                         <!-- End: Section 2 - Hypotheses -->
-                        <div class="with-page-break">Page 3</div>
-                        <div class="footer">This is a footer</div>
+                        
 
                           <div class="section-context stickem --hide-from-pdf">
                                 <span class="section-context-label">En cours de lecture:</span>
@@ -3329,8 +3329,8 @@
 
                       
                         <!-- Start: Section 3  - recapitulatif-->
-                        <section  class="section anchor group" id="recap" style="page-break-before: always;">
-                            <div class="section-content group">
+                        <section  class="section anchor group with-page-break" id="recap" >
+                            <div class="section-content group with-page-break">
                                 <h2><span class="number">3. </span>Récapitulatif du projet</h2>
                                 <h4>Récapitulatif énergétique</h4>
                                   <div style="overflow-x:auto;">
@@ -3452,8 +3452,7 @@
                             </div><!-- end .section-content -->
                         </section>
                         <!-- End: Section 3  - recapitulatif-->
-                        <div class="with-page-break">Page 3</div>
-                        <div class="footer">This is a footer</div>
+                       
 
                         <div class="section-context stickem --hide-from-pdf">
                                 <span class="section-context-label">En cours de lecture:</span>
@@ -3476,8 +3475,8 @@
                       
 
                         <!-- Start: Section 4  - Sans centrale-->
-                        <section  class="section anchor group" id="sans-centrale" style="page-break-before: always;">
-                            <div class="section-content group">
+                        <section  class="section anchor group with-page-break" id="sans-centrale" >
+                            <div class="section-content group with-page-break">
                                 <h2><span class="number">4. </span>Analyse Energétique sans centrale photovoltaïque</h2>
 
                                         <p>Un des éléments majeurs qui conditionnent la
@@ -3619,8 +3618,8 @@
                     
                       
                           <!-- Start: Section 5  - Avec centrale-->
-                        <section  class="section anchor group" id="avec-centrale" style="page-break-before: always;;">
-                            <div class="section-content group">
+                        <section  class="section anchor group with-page-break" id="avec-centrale" style="page-break-before: always;;">
+                            <div class="section-content group with-page-break">
                                     <h2><span class="number">5. </span>Analyse Energétique avec centrale photovoltaïque</h2>
                                     <p>
                                         Les données sur les ressources solaires sont extrêmement importantes pour que le système PV
@@ -3768,8 +3767,8 @@
                       
 
                         <!-- Start: Section 6  - Finance-->
-                        <section  class="section anchor group" id="finance" style="page-break-before: always;">
-                            <div class="section-content group">
+                        <section  class="section anchor group with-page-break" id="finance" >
+                            <div class="section-content group with-page-break">
                                 <h2><span class="number">6. </span>Analyse financière</h2>
                                   
                             
