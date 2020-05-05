@@ -2754,7 +2754,7 @@
                                 <span class="quick-links-item next-section" style="display: none;"><a href="#">&nbsp;</a></span>
                             </div>
                     
-                      
+                <strong>      
                         <!-- Start:   SECTION 1 - INTRODUCTION -->
                         <section id="introduction" class="section anchor group">
                             <div class="section-content group">
@@ -4061,6 +4061,7 @@
                         </section>
                         <!-- End: Section 6  - Finance-->
                   </div>
+                </strong>
     </div>              
 </body>                             
                 
@@ -4077,11 +4078,15 @@
       document.getElementById('downloadPdfBtn')
         .addEventListener('click', function(e){
           SejdaJsApi.htmlToPdf({
-            filename: 'out.pdf',
+            filename: 'Rapport énergétique et financier.pdf',
             /* leave blank for one long page */
             pageSize: 'a4',
+            pageOrientation	: 'portrait',
+            scrollPage:'true',
+            delay: '3',
+            htmlCode:'<strong>HTML</strong>',
             publishableKey: 'api_public_245a56a45c4740c48bb0dc3cf8ce6357',
-            htmlCode: document.querySelector('body').innerHTML,
+            htmlCode: document.querySelector('html').innerHTML,
             /* url: window.location.href */
             always: function() {
               // PDF download should have started
