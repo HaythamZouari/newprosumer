@@ -40,7 +40,7 @@
           <script src="/build/js/vendor/html5shiv-printshiv.min.js"></script>
 
           <!-- Screen styles -->
-          <link rel="stylesheet" href="/build/css/screen.css" media="screen">
+          <link rel="stylesheet" href="/build/css/screen.css">
 
           <!-- Print styles 
           <link rel="stylesheet" href="/build/css/print.css" type="text/css" media="print" />-->
@@ -55,7 +55,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-              <style  type="text/css" media="print">
+              <style>
               /* 
 
           \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -75,15 +75,14 @@
           */
           /* line 34, scss/_0_normalize.scss */
           /*style for sejda*/
-            .with-page-break {
-              page-break-before: always;
-              
-            }
-            .footer {
-              position: fixed;
-              bottom: 0;
-            }
-          
+          .with-page-break {
+            page-break-before: always;
+            page-break-after: always;
+          }
+          .footer {
+            position: fixed;
+            bottom: 0;
+          }
            /*style for sejda*/
           article,
           aside,
@@ -2659,7 +2658,7 @@
 
         
 
-                        <section id="front-matter" class="section group anchor with-page-break">
+                        <section id="front-matter" class="section group anchor">
 
                             <div class="report-overview group">
                                 
@@ -2754,7 +2753,7 @@
                     
      
                         <!-- Start:   SECTION 1 - INTRODUCTION -->
-                        <section id="introduction" class="section anchor group with-page-break" >
+                        <section id="introduction" class="section anchor group">
                             <div class="section-content group">
                                     <h2><span class="number">1. </span>Introduction</h2>
                                     <p>Les modèles financiers pour les investissements d’autoconsommation prennent en compte diverses hypothèses techniques liées aux variables d’entrées tels que les revenus de la production de centrales photovoltaïques, les dépenses en capital (CAPEX) et les dépenses d'exploitation (OPEX).
@@ -2765,7 +2764,7 @@
 
                                   
                             
-                                <section class="anchor with-page-break" id="methodologie">
+                                <section class="anchor" id="methodologie">
                                     <h3><span class="number">1.1 </span>Méthodologie</h3>
                                         <p>Les modèles financiers PV sont utilisés par les développeurs de projets et les banques pour évaluer la rentabilité d'un projet PV. La tâche consiste à prévoir le flux de trésorerie actualisé aussi précisément que possible, afin d'évaluer si le projet représente une opportunité d'investissement intéressante.
                                         Un modèle financier PV typique aborde les sujets suivants:</p>
@@ -2781,7 +2780,7 @@
                                           
                                 </section><!-- end "#methodologie" -->
                             
-                                <section class="anchor with-page-break" id="contexte-energetique">
+                                <section class="anchor" id="contexte-energetique">
                                     <h3><span class="number">1.2 </span>Contexte énergétique</h3>
                                     
                                     <p>Etant donné l'évolution des prix du gaz naturel, les tarifs de vente de l'électricité ont fait l'objet de plusieurs augmentations. Ces ajustements sont sporadiques et dépendent de l'évolution des prix du pétrole, du taux de change de la monnaie nationale et des politiques des différents gouvernements au sujet de la subvention accordée par l'Etat allouée au secteur de l'énergie.</p>
@@ -2872,7 +2871,7 @@
 
                                 </section><!-- end #contexte-energetique -->
                             
-                                <section class="anchor with-page-break" id="cadre-reglementaire">
+                                <section class="anchor" id="cadre-reglementaire">
                                         <h3><span class="number">1.3 </span>Cadre réglementaire</h3>
                                         <h4><span class="number">1.3.1 </span>Loi n°2015-12</h4></br>
                                         <p>La loi n°2015-12 relative à la production d’électricité à partir des ENRs a été adoptée et promulguée le 11 Mai 2015. Cette loi a pour
@@ -2917,7 +2916,7 @@
                                                                             
                                 </section><!-- end #cadre-reglementaire -->
 
-                                <section class="anchor with-page-break" id="processus-de-developpement">
+                                <section class="anchor" id="processus-de-developpement">
                                         <h3><span class="number">1.4 </span>Processus de developpemnet</h3>
 
                                         <p>Toute collectivité locale et tout établissement public ou privé,
@@ -3168,7 +3167,7 @@
                             </div>
                         <!-- Start: Section 2 - Hypotheses -->
                         
-                        <section  class="section anchor group with-page-break" id="hypothese">
+                        <section  class="section anchor group" id="hypothese">
                             <div class="section-content group">
                                 <h2><span class="number">2. </span>Hypothèses de la simulation</h2>
 
@@ -3307,7 +3306,7 @@
                             </div><!-- end .section-content -->
                         </section>
                         <!-- End: Section 2 - Hypotheses -->
-                        
+
 
                           <div class="section-context stickem --hide-from-pdf">
                                 <span class="section-context-label">En cours de lecture:</span>
@@ -3326,11 +3325,11 @@
                                 <span class="quick-links-item back-to-top"><a href=" #front-matter"><i class="fa fa-arrow-up"></i><br />Retour au début</a></span>
                                 <span class="quick-links-item next-section" style="display: none;"><a href="#">&nbsp;</a></span>
                             </div>
-
+                    
                       
                         <!-- Start: Section 3  - recapitulatif-->
-                        <section  class="section anchor group with-page-break" id="recap" >
-                            <div class="section-content group with-page-break">
+                        <section  class="section anchor group" id="recap">
+                            <div class="section-content group">
                                 <h2><span class="number">3. </span>Récapitulatif du projet</h2>
                                 <h4>Récapitulatif énergétique</h4>
                                   <div style="overflow-x:auto;">
@@ -3452,7 +3451,7 @@
                             </div><!-- end .section-content -->
                         </section>
                         <!-- End: Section 3  - recapitulatif-->
-                       
+
 
                         <div class="section-context stickem --hide-from-pdf">
                                 <span class="section-context-label">En cours de lecture:</span>
@@ -3475,8 +3474,8 @@
                       
 
                         <!-- Start: Section 4  - Sans centrale-->
-                        <section  class="section anchor group with-page-break" id="sans-centrale" >
-                            <div class="section-content group with-page-break">
+                        <section  class="section anchor group" id="sans-centrale">
+                            <div class="section-content group">
                                 <h2><span class="number">4. </span>Analyse Energétique sans centrale photovoltaïque</h2>
 
                                         <p>Un des éléments majeurs qui conditionnent la
@@ -3618,8 +3617,8 @@
                     
                       
                           <!-- Start: Section 5  - Avec centrale-->
-                        <section  class="section anchor group with-page-break" id="avec-centrale" style="page-break-before: always;;">
-                            <div class="section-content group with-page-break">
+                        <section  class="section anchor group" id="avec-centrale">
+                            <div class="section-content group">
                                     <h2><span class="number">5. </span>Analyse Energétique avec centrale photovoltaïque</h2>
                                     <p>
                                         Les données sur les ressources solaires sont extrêmement importantes pour que le système PV
@@ -3767,8 +3766,8 @@
                       
 
                         <!-- Start: Section 6  - Finance-->
-                        <section  class="section anchor group with-page-break" id="finance" >
-                            <div class="section-content group with-page-break">
+                        <section  class="section anchor group" id="finance">
+                            <div class="section-content group">
                                 <h2><span class="number">6. </span>Analyse financière</h2>
                                   
                             
@@ -3837,7 +3836,144 @@
                                         <figcaption ><span class="caption-headline">Figure 10 Variation du DSCR sur la durée de remboursement du crédit</span></figcaption>
                                 </figure>
                             
-                               
+                                        
+                                          
+                                      
+                                
+                                    <!--h4>Tarif Uniforme</h4>
+                                    <div style="overflow-x:auto;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    Prix du kWh
+                                                </td>
+                                                <td>
+                                                    0.23DT
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Taxe municipale
+                                                </td>
+                                                <td>
+                                                    0.05DT
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Redevance de
+                                                    puissance
+                                                </td>
+                                                <td>
+                                                    5DT
+                                                </td>
+                                            </tr>
+                                            
+                                        </table>
+                                    </div>
+                                    <h4>Tarif achat Par poste horaire</h4>
+                                    <div style="overflow-x:auto;">
+                                        <table >
+                                          
+                                            
+                                                <tr>
+                                                    <td>
+                                                        Prix du kWh (jour)
+                                                    </td>
+                                                    <td>
+                                                        0.227DT
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Prix du kWh (Pointe été)                                                </td>
+                                                    <td>
+                                                        0.343DT
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Prix du kWh (Pointe soir)                                                </td>
+                                                    <td>
+                                                        0.309DT
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Prix du kWh (Nuit)
+                                                    </td>
+                                                    <td>
+                                                        0.179DT
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Taxe municipale
+                                                    </td>
+                                                    <td>
+                                                        0.05DT
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Redevance de
+                                                        puissance                                                </td>
+                                                    <td>
+                                                        11DT
+                                                    </td>
+                                                </tr>
+                                          
+                                        </table>
+                                  </div>
+                                    <h4>Tarif vente Par poste horaire</h4>
+                                    <div style="overflow-x:auto;">
+                                        <table>
+                                            
+                                            <tr>
+                                                <td>
+                                                    Prix du kWh (jour)
+                                                </td>
+                                                <td>
+                                                    0.115DT
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Prix du kWh (Pointe été)
+                                                </td>
+                                                <td>
+                                                    0.182DT
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Prix du kWh (Pointe soir)
+                                                </td>
+                                                <td>
+                                                    0.168DT
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Prix du kWh (Nuit)
+                                                </td>
+                                                <td>
+                                                    0.087DT
+                                                </td>
+                                            </tr>
+                                            
+                                        </table>
+                                  </div>
+                                    
+                                                <p> Le TRI du projet est  {{ finance.tri25 }} % </p>
+                                            
+                                            
+                                                <p>  Le VAN {{ finance.van }} </p-->
+                                          
+              
                             <h3 >Cash flow</h3>
                             <div style="overflow-x:auto;">
                                 <table id="cash_tab" >
@@ -3943,7 +4079,7 @@
             pageOrientation	: 'portrait',
             scrollPage:'true',
             delay: '3',
-            usePrintMedia: 'true',
+            htmlCode:'<strong>HTML</strong>',
             publishableKey: 'api_public_245a56a45c4740c48bb0dc3cf8ce6357',
             htmlCode: document.querySelector('html').innerHTML,
             /* url: window.location.href */
