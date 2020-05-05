@@ -2644,8 +2644,8 @@
     <!-- The report cover simply provides a visual introduction to the text. -->
     <div id="content">
     <!-- *** UPDATE: Update these cover elements. The background image is controlled in the "COVER" section of the file "_4_template.scss". *** -->
-          <div class="with-page-break">
-            <div class="report-cover group" >
+    
+            <div class="report-cover group --hide-from-pdf" >
             
                 <div class="cover-text">
                     <h1 class="cover-text-title">RAPPORT D'ETUDE ENERGETIQUE ET FINANCIERE</h1>
@@ -2655,18 +2655,15 @@
                 </div>
               
             </div>
-          </div>  
             
-      <div class="article-container">
+            
+      <div class="article-container ">
 
-        <div class="main group">
+        
 
-    <!-- FRONT-MATTER -->
-    <!-- This section contains information about what the report contains. It is intended as an introduction or quick summary of the report as a whole. -->
-                  <div class="with-page-break">
                     <section id="front-matter" class="section group anchor">
 
-                        <div class="report-overview group with-page-break">
+                        <div class="report-overview group">
                             
                             <div id="abstract" class="group">
                                 <h2>Abstract</h2>
@@ -2711,7 +2708,7 @@
 
                             
 
-                            <div id="notes" class="group">
+                            <div id="notes" class="group --hide-from-pdf">
                                 <h2>Notes</h2>
                                 <a class="showhide"><i class="fa fa-angle-down"></i></a>
                                 <div class="showhide-target">
@@ -2734,12 +2731,10 @@
                         </div><!-- end .report-overview -->
 
                     </section><!-- end #front-matter -->
-                  </div>
-    <!-- BODY-TEXT -->
-    <!-- The following sections contain the body content of the report.
-        Each section defines a major section or chapter of the report. -->
 
-                    <section class="body-matter group stickem-container"><!-- Only used for .section-context element -->
+   
+
+                    <section class="body-matter group stickem-container --hide-from-pdf"><!-- Only used for .section-context element -->
 
                       
 
@@ -2747,7 +2742,7 @@
               
                         
 
-                            <div class="section-context stickem">
+                            <div class="section-context stickem --hide-from-pdf">
                                 <span class="section-context-label">En cours de lecture:</span>
                                 <ul class="nav">
                                     <li>
@@ -2763,7 +2758,7 @@
                                 </ul>
                             </div>
 
-                            <div class="quick-links">
+                            <div class="quick-links --hide-from-pdf">
                                 <span class="quick-links-item back-to-top"><a href="#content"><i class="fa fa-arrow-up"></i><br />Retour au début</a></span>
                                 <span class="quick-links-item next-section" style="display: none;"><a href="#">&nbsp;</a></span>
                             </div>
@@ -3165,7 +3160,7 @@
                         <!-- End:   SECTION 1 - INTRODUCTION -->
                          
 
-                         <div class="section-context stickem">
+                         <div class="section-context stickem --hide-from-pdf">
                                 <span class="section-context-label">En cours de lecture:</span>
                                 <ul class="nav">
                                     <li>
@@ -3183,7 +3178,7 @@
                                 <span class="quick-links-item next-section" style="display: none;"><a href="#">&nbsp;</a></span>
                             </div>
                         <!-- Start: Section 2 - Hypotheses -->
-                      <div class="with-page-break">  
+                        
                         <section  class="section anchor group" id="hypothese">
                             <div class="section-content group">
                                 <h2><span class="number">2. </span>Hypothèses de la simulation</h2>
@@ -3323,9 +3318,9 @@
                             </div><!-- end .section-content -->
                         </section>
                         <!-- End: Section 2 - Hypotheses -->
-                      </div>
 
-                          <div class="section-context stickem">
+
+                          <div class="section-context stickem --hide-from-pdf">
                                 <span class="section-context-label">En cours de lecture:</span>
                                 <ul class="nav">
                                     <li>
@@ -3338,12 +3333,12 @@
                                 </ul>
                           </div>
 
-                            <div class="quick-links">
+                            <div class="quick-links --hide-from-pdf">
                                 <span class="quick-links-item back-to-top"><a href="#content"><i class="fa fa-arrow-up"></i><br />Retour au début</a></span>
                                 <span class="quick-links-item next-section" style="display: none;"><a href="#">&nbsp;</a></span>
                             </div>
                     
-                      <div class="with-page-break">
+                      
                         <!-- Start: Section 3  - recapitulatif-->
                         <section  class="section anchor group" id="recap">
                             <div class="section-content group">
@@ -3468,9 +3463,9 @@
                             </div><!-- end .section-content -->
                         </section>
                         <!-- End: Section 3  - recapitulatif-->
-                      </div>
 
-                        <div class="section-context stickem">
+
+                        <div class="section-context stickem" --hide-from-pdf>
                                 <span class="section-context-label">En cours de lecture:</span>
                                 <ul class="nav">
                                     <li>
@@ -3614,7 +3609,7 @@
                         </section>  
                         <!-- End: Section 4  - Sans centrale-->
 
-                            <div class="section-context stickem">
+                            <div class="section-context stickem --hide-from-pdf">
                                 <span class="section-context-label">En cours de lecture:</span>
                                 <ul class="nav">
                                     <li>
@@ -3627,7 +3622,7 @@
                                 </ul>
                             </div>
 
-                            <div class="quick-links">
+                            <div class="quick-links --hide-from-pdf">
                                 <span class="quick-links-item back-to-top"><a href="#content"><i class="fa fa-arrow-up"></i><br />Retour au début</a></span>
                                 <span class="quick-links-item next-section" style="display: none;"><a href="#">&nbsp;</a></span>
                             </div>
@@ -3763,7 +3758,7 @@
                         </section> 
                         <!-- End: Section 5  - Avec centrale-->
 
-                        <div class="section-context stickem">
+                        <div class="section-context stickem --hide-from-pdf">
                                 <span class="section-context-label">En cours de lecture:</span>
                                 <ul class="nav">
                                     <li>
@@ -3775,10 +3770,10 @@
                                 </ul>
                             </div>
 
-                            <div class="quick-links">
+                          <div class="quick-links" --hide-from-pdf>
                                 <span class="quick-links-item back-to-top"><a href="#content"><i class="fa fa-arrow-up"></i><br />Retour au début</a></span>
                                 <span class="quick-links-item next-section" style="display: none;"><a href="#">&nbsp;</a></span>
-                            </div>
+                          </div>
                     
                       
 
@@ -4074,7 +4069,7 @@
                             </div>
                         </section>
                         <!-- End: Section 6  - Finance-->
-                  </div>
+                 
                 
     </div>              
 </body>                             
