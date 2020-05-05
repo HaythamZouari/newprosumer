@@ -76,7 +76,7 @@ class ProjectController extends AbstractController
         $file = $request->files->get('file');
         $filePath =$fileUpload->upload($file,'consomation');
         $data=ExcelReader::createDataFromSpreadsheet('uploads/'.$filePath);
-        $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+        $date = new \DateTime(null );
         $dateDebexl=$data[0][0];
         $dateFinexl=$data[count($data)-1][0];
         $session->set('dateDebExl',$dateDebexl);
@@ -180,9 +180,9 @@ class ProjectController extends AbstractController
         
             $consomation =$project->getConsomation();
             $dateDeb= new \DateTime($request->get('dateDeb'));
-            $dateDebexel= new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+            $dateDebexel= new \DateTime(null );
             $dateDebexel->setTimestamp($session->get('dateDebExl'));
-            $dateFinexel= new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+            $dateFinexel= new \DateTime(null );
             $dateFinexel->setTimestamp($session->get('dateFinExl'));
             $dateFin= new \DateTime($request->get('dateDeb'));
             $dateFin->add(new \DateInterval('P1Y'));
@@ -611,7 +611,7 @@ class ProjectController extends AbstractController
                     }
 
                     for ($i=0;$i<count($dataSynW);$i++) {
-                        $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+                        $date = new \DateTime(null );
                         $date->setTimestamp($dataSynW[$i][0]);
                         
                         if((((int)$date->format('m'))>=((int)$dateconge_deb->format('m')))&&(((int)$date->format('m'))<=((int)$dateconge_fin->format('m')))){
@@ -645,8 +645,15 @@ class ProjectController extends AbstractController
                             elseif(((int)$date->format('d'))==15&&((int)$date->format('m'))==10){
                                 $dataSynW[$i][1]=$Phn;
                             }
-                        }    
+                            elseif(((int)$date->format('d'))==29&&((int)$date->format('m'))==2){
+                                unset($dataSynW[$i]);  
+                            }
+                        }  
+                    
                     }
+
+                    $dataSynW = array_values($dataSynW);
+                    
                     if($request->get('tarif')==0){
                     $monthp = $request->get('date');
                     $month=[];
@@ -655,7 +662,7 @@ class ProjectController extends AbstractController
 
                     }
                     foreach ($dataSynW as $item) {
-                        $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+                        $date = new \DateTime(null );
                         $date->setTimestamp($item[0]);
                         $month[((int)$date->format('m'))]+=$item[1];
                     }
@@ -671,11 +678,11 @@ class ProjectController extends AbstractController
 
                     $dataSynWtm=$dataSynW;
                     for ($i=0;$i<count($dataSynW);$i++) {
-                        $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+                        $date = new \DateTime(null );
                         $date->setTimestamp($dataSynW[$i][0]);
                         $months=(int)$date->format('m');
                         $day=(int)$date->format('d');
-                        $dataSynW[$i][1]*=$month[(int)((new \DateTime(null, new DateTimeZone('Africa/Tunis')))->setTimestamp($dataSynW[$i][0])->format('m'))];
+                        $dataSynW[$i][1]*=$month[(int)((new \DateTime(null ))->setTimestamp($dataSynW[$i][0])->format('m'))];
                     }
                     $month=[];
                         for($i=0;$i<13;$i++){
@@ -717,7 +724,7 @@ class ProjectController extends AbstractController
                                 }
                             }
                             for($i=0;$i<count($dataSynW);$i++) {
-                                $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+                                $date = new \DateTime(null );
                                 $date->setTimestamp($dataSynW[$i][0]);
 
                             if(((int)$date->format('w'))==0)
@@ -793,20 +800,17 @@ class ProjectController extends AbstractController
                        
                 $dataAvgW=[];
                 $i =0;
-            
-                
-                if(((int)$dateDeb->format('m') )>5 && ((int)$dateDeb->format('m'))<9) {
-                    $dataAvgW[] = [$dateDeb->getTimestamp(),$avgweek[0][((int)$dateDeb->format('w'))][((int)$dateDeb->format('H'))]];
-                }
-                else
-                    $dataAvgW[] = [$dateDeb->getTimestamp(),$avgweek[1][((int)$dateDeb->format('w'))][((int)$dateDeb->format('H'))]];
-                $period = CarbonPeriod::create($dateDeb->format('y-m-d'),'PT1H',$dateFin->format('y-m-d') , CarbonPeriod::EXCLUDE_START_DATE);
+                $j =0;
+
+                $period = CarbonPeriod::create($dateDeb->format('y-m-d'),'PT1H',$dateFin->format('y-m-d'), CarbonPeriod::EXCLUDE_START_DATE);
                 //creating a period to loop on it
                 foreach ($period as $key=>$date) {
-                    if((int)$date->format('U') >=(int)$dateDebexel->format('U')&&
-                        (int)$date->format('U') <=(int)$dateFinexel->format('U')){
+                   
+                   if((int)$date->format('U') >=(int)$dateDebexel->format('U')&&
+                        (int)$date->format('U') <=((int)$dateFinexel->format('U')-86400)){
                         $dataAvgW[] = [$date->getTimestamp(), $dataexl[$i][1]];
                         $i++;
+                        
 
                     }
                     else{
@@ -820,10 +824,10 @@ class ProjectController extends AbstractController
                     }
                 }
                 $dataAvgWtm=$dataAvgW;
-                array_pop($dataAvgW);
+               
 
                 for ($i=0;$i<count($dataAvgW);$i++) {
-                    $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+                    $date = new \DateTime(null );
                     $date->setTimestamp($dataAvgW[$i][0]);
                     if(((int)$date->format('d'))==1&&((int)$date->format('m'))==1){
                         $dataAvgW[$i][1]=$avgweek[1][0][((int)$date->format('H'))];
@@ -849,9 +853,13 @@ class ProjectController extends AbstractController
                     elseif(((int)$date->format('d'))==15&&((int)$date->format('m'))==10){
                         $dataAvgW[$i][1]=$avgweek[1][0][((int)$date->format('H'))];
                     }
+                    elseif(((int)$date->format('d'))==29&&((int)$date->format('m'))==2){
+                        unset($dataAvgW[$i]);  
+                    }
+                    
                 }
-                //delete a hole year
-               /* $dataAvgW[count($dataAvgW)-1][0]=$dataAvgW[count($dataAvgW)-1][0]-31536000;*/
+                $dataAvgW = array_values($dataAvgW);
+
                 if($request->get('tarif')==0){
                     $monthp = $request->get('date');
                     $month=[];
@@ -859,7 +867,7 @@ class ProjectController extends AbstractController
                         $month[$i]=0;
                     }
                     foreach ($dataAvgW as $item) {
-                        $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+                        $date = new \DateTime(null );
                         $date->setTimestamp($item[0]);
                         $month[((int)$date->format('m'))]+=$item[1];
                     }
@@ -874,11 +882,15 @@ class ProjectController extends AbstractController
                     }
                     $dataAvgWtm=$dataAvgW;
                     for ($i=0;$i<count($dataAvgW);$i++) {
-                        $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+                        $date = new \DateTime(null );
                         $date->setTimestamp($dataAvgW[$i][0]);
                         $months=(int)$date->format('m');
                         $day=(int)$date->format('d');
-                        $dataAvgW[$i][1]*=$month[(int)((new \DateTime(null, new DateTimeZone('Africa/Tunis')))->setTimestamp($dataAvgW[$i][0])->format('m'))];
+                        
+                        $dataAvgW[$i][1]*=$month[(int)((new \DateTime(null ))->setTimestamp($dataAvgW[$i][0])->format('m'))];
+
+                       
+                        
                     }
                     $month=[];
                     for($i=0;$i<13;$i++){
@@ -925,7 +937,7 @@ class ProjectController extends AbstractController
                         }
                     }
                     for($i=0;$i<count($dataAvgW);$i++) {
-                        $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+                        $date = new \DateTime(null );
                         $date->setTimestamp($dataAvgW[$i][0]);
                         if(((int)$date->format('w'))==0){
                         $dataAvgW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
@@ -997,7 +1009,7 @@ class ProjectController extends AbstractController
             $entityManager->persist($consomation);
             $entityManager->persist($project);
             $entityManager->flush();
-            return new JsonResponse(['virgdata'=>$dataAvgW,'data'=>$dataAvgWtm,'data2'=>$monthtmp,'period'=>$period]);
+            return new JsonResponse(['virgdata'=>$dataAvgW,'data'=>$dataAvgWtm,'data2'=>$monthtmp,'period'=>$period,'newdata'=>$dataAvgW]);
     }
         return $this->render('project/show.html.twig', [
             'project' => $project,

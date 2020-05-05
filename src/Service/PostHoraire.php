@@ -18,7 +18,7 @@ class PostHoraire
 
         }
         foreach ($data as $item) {
-            $date = new \DateTime(null, new DateTimeZone('Africa/Tunis'));
+            $date = new \DateTime(null);
             $date->setTimestamp($item[0]);
             if(((int)$date->format('w'))==0)
                 $month[((int)$date->format('m'))]['nuit']+=$item[1];

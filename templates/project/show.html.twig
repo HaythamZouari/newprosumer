@@ -76,7 +76,7 @@
                 dataType: 'json',
                 cache: false,
                 success: function (response) {
-                    for (let i = 0; i < response.data.length ; i++) {
+                    for (let i = 0; i < response.virgdata.length ; i++) {
                         dates = new Date(response.data[i][0] * 1000);
                         dates.setHours(dates.getHours() - 1);
                         response.virgdata[i][0] = dates;
@@ -85,7 +85,8 @@
                     console.log(response.data);
                     console.log(response.data2);
                     console.log(response.period);
-                    
+                    console.log("newdata");
+                    console.log(response.newdata);
                     
 
 
