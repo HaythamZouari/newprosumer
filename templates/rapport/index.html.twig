@@ -1,11 +1,16 @@
 
 
 {% block title %}
-<tilte>
+<tilte class="--hide-from-pdf">
     Rapport
 
 </title>
 {% endblock %}
+
+<head>
+
+<link rel="stylesheet" href="/build/css/print.css" type="text/css" media="print" />
+</head>
 
 {% block stylesheets %}
 <style>
@@ -50,7 +55,7 @@
           <!-- Screen styles -->
           <link rel="stylesheet" href="/build/css/screen.css" type="text/css" media="screen">
           <!-- Print styles -->
-          <link rel="stylesheet" href="/build/css/screen.css" type="text/css" media="print" />
+          <link rel="stylesheet" href="/build/css/print.css" type="text/css" media="print" />
 
           <!-- Print styles 
           <link rel="stylesheet" href="/build/css/print.css" type="text/css" media="print" />-->
