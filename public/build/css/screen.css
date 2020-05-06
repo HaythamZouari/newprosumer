@@ -1,21 +1,3 @@
-/* 
-
-\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-=======================================================================================
-NORMALIZE.CSS
-The styles below are the full normalize.css dropped into a .scss file.
-If upgrading normalize, replace everything below.
-=======================================================================================
-
-*/
-/* normalize.css v2.1.3 | MIT License | git.io/normalize */
-/* ==========================================================================
-   HTML5 display definitions
-   ========================================================================== */
-/**
- * Correct `block` display not defined in IE 8/9.
- */
-/* line 34, scss/_0_normalize.scss */
 article,
 aside,
 details,
@@ -30,7 +12,6 @@ section,
 summary {
   display: block;
 }
-
 /**
  * Correct `inline-block` display not defined in IE 8/9.
  */
@@ -40,7 +21,6 @@ canvas,
 video {
   display: inline-block;
 }
-
 /**
  * Prevent modern browsers from displaying `audio` without controls.
  * Remove excess height in iOS 5 devices.
@@ -50,7 +30,6 @@ audio:not([controls]) {
   display: none;
   height: 0;
 }
-
 /**
  * Address `[hidden]` styling not present in IE 8/9.
  * Hide the `template` element in IE, Safari, and Firefox < 22.
@@ -60,7 +39,6 @@ audio:not([controls]) {
 template {
   display: none;
 }
-
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -78,7 +56,6 @@ html {
   -webkit-text-size-adjust: 100%;
   /* 2 */
 }
-
 /**
  * Remove default margin.
  */
@@ -86,7 +63,6 @@ html {
 body {
   margin: 0;
 }
-
 /* ==========================================================================
    Links
    ========================================================================== */
@@ -97,7 +73,6 @@ body {
 a {
   background: transparent;
 }
-
 /**
  * Address `outline` inconsistency between Chrome and other browsers.
  */
@@ -105,7 +80,6 @@ a {
 a:focus {
   outline: thin dotted;
 }
-
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
  */
@@ -114,7 +88,6 @@ a:active,
 a:hover {
   outline: 0;
 }
-
 /* ==========================================================================
    Typography
    ========================================================================== */
@@ -127,7 +100,6 @@ h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
-
 /**
  * Address styling not present in IE 8/9, Safari 5, and Chrome.
  */
@@ -135,7 +107,6 @@ h1 {
 abbr[title] {
   border-bottom: 1px dotted;
 }
-
 /**
  * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
  */
@@ -144,7 +115,6 @@ b,
 strong {
   font-weight: bold;
 }
-
 /**
  * Address styling not present in Safari 5 and Chrome.
  */
@@ -152,7 +122,6 @@ strong {
 dfn {
   font-style: italic;
 }
-
 /**
  * Address differences between Firefox and other browsers.
  */
@@ -162,7 +131,6 @@ hr {
   box-sizing: content-box;
   height: 0;
 }
-
 /**
  * Address styling not present in IE 8/9.
  */
@@ -171,7 +139,6 @@ mark {
   background: #ff0;
   color: #000;
 }
-
 /**
  * Correct font family set oddly in Safari 5 and Chrome.
  */
@@ -183,7 +150,6 @@ samp {
   font-family: monospace, serif;
   font-size: 1em;
 }
-
 /**
  * Improve readability of pre-formatted text in all browsers.
  */
@@ -191,7 +157,6 @@ samp {
 pre {
   white-space: pre-wrap;
 }
-
 /**
  * Set consistent quote types.
  */
@@ -199,7 +164,6 @@ pre {
 q {
   quotes: "\201C" "\201D" "\2018" "\2019";
 }
-
 /**
  * Address inconsistent and variable font size in all browsers.
  */
@@ -207,7 +171,6 @@ q {
 small {
   font-size: 80%;
 }
-
 /**
  * Prevent `sub` and `sup` affecting `line-height` in all browsers.
  */
@@ -219,17 +182,14 @@ sup {
   position: relative;
   vertical-align: baseline;
 }
-
 /* line 227, scss/_0_normalize.scss */
 sup {
   top: -0.5em;
 }
-
 /* line 231, scss/_0_normalize.scss */
 sub {
   bottom: -0.25em;
 }
-
 /* ==========================================================================
    Embedded content
    ========================================================================== */
@@ -240,7 +200,6 @@ sub {
 img {
   border: 0;
 }
-
 /**
  * Correct overflow displayed oddly in IE 9.
  */
@@ -248,7 +207,6 @@ img {
 svg:not(:root) {
   overflow: hidden;
 }
-
 /* ==========================================================================
    Figures
    ========================================================================== */
@@ -259,7 +217,6 @@ svg:not(:root) {
 figure {
   margin: 0;
 }
-
 /* ==========================================================================
    Forms
    ========================================================================== */
@@ -272,7 +229,6 @@ fieldset {
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
 }
-
 /**
  * 1. Correct `color` not being inherited in IE 8/9.
  * 2. Remove padding so people aren't caught out if they zero out fieldsets.
@@ -284,7 +240,6 @@ legend {
   padding: 0;
   /* 2 */
 }
-
 /**
  * 1. Correct font family not being inherited in all browsers.
  * 2. Correct font size not being inherited in all browsers.
@@ -302,7 +257,6 @@ textarea {
   margin: 0;
   /* 3 */
 }
-
 /**
  * Address Firefox 4+ setting `line-height` on `input` using `!important` in
  * the UA stylesheet.
@@ -312,7 +266,6 @@ button,
 input {
   line-height: normal;
 }
-
 /**
  * Address inconsistent `text-transform` inheritance for `button` and `select`.
  * All other form control elements do not inherit `text-transform` values.
@@ -324,7 +277,6 @@ button,
 select {
   text-transform: none;
 }
-
 /**
  * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
  *    and `video` controls.
@@ -342,7 +294,6 @@ input[type="submit"] {
   cursor: pointer;
   /* 3 */
 }
-
 /**
  * Re-set default cursor for disabled elements.
  */
@@ -351,7 +302,6 @@ button[disabled],
 html input[disabled] {
   cursor: default;
 }
-
 /**
  * 1. Address box sizing set to `content-box` in IE 8/9/10.
  * 2. Remove excess padding in IE 8/9/10.
@@ -364,7 +314,6 @@ input[type="radio"] {
   padding: 0;
   /* 2 */
 }
-
 /**
  * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
  * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
@@ -379,7 +328,6 @@ input[type="search"] {
   /* 2 */
   box-sizing: content-box;
 }
-
 /**
  * Remove inner padding and search cancel button in Safari 5 and Chrome
  * on OS X.
@@ -389,7 +337,6 @@ input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
-
 /**
  * Remove inner padding and border in Firefox 4+.
  */
@@ -399,7 +346,6 @@ input::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
-
 /**
  * 1. Remove default vertical scrollbar in IE 8/9.
  * 2. Improve readability and alignment in all browsers.
@@ -411,7 +357,6 @@ textarea {
   vertical-align: top;
   /* 2 */
 }
-
 /* ==========================================================================
    Tables
    ========================================================================== */
@@ -423,9 +368,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
 /* 
-
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 =======================================================================================
 SASS VARIABLES
@@ -434,27 +377,22 @@ you should first customize these styles. They will provide you with considerable
 visual distinction. If you need customize it beyond these variables, edit _theme.scss
 with your overrides.
 =======================================================================================
-
 */
 /* 
-
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 =======================================================================================
 SASS MIXINS
 These mixins are used throughout the template. If you are customing this template, you
 shouldn't need to edit this file. 
 =======================================================================================
-
 */
 /* 
-
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 =======================================================================================
 BASE TYPOGRAPHIC STYLES
 These styles establish the base typography rythmns after normalize.css
 has standardized display.
 ======================================================================================= 
-
 */
 /* line 15, scss/_3_base.scss */
 html {
@@ -466,7 +404,6 @@ html {
     font-size: 18px;
   }
 }
-
 /* line 23, scss/_3_base.scss */
 body {
   color: #555555;
@@ -475,7 +412,6 @@ body {
   line-height: 1.5;
   background-color: white;
 }
-
 /* line 31, scss/_3_base.scss */
 a {
   color: #db0012;
@@ -493,7 +429,6 @@ a:hover, a:visited:hover {
   transition: all 0.25s ease;
   color: #8e0057;
 }
-
 /* line 46, scss/_3_base.scss */
 h1, h2, h3, h4, h5 {
   font-family: "news-gothic-std", sans-serif;
@@ -501,52 +436,44 @@ h1, h2, h3, h4, h5 {
   font-style: normal;
   margin: 1.5rem 0 1.5rem;
 }
-
 /* line 53, scss/_3_base.scss */
 h1 {
   font-size: 2.441rem;
   line-height: 1;
   margin: 1em 0 1rem;
 }
-
 /* line 59, scss/_3_base.scss */
 h2 {
   font-size: 1.953rem;
   line-height: 1.2;
 }
-
 /* line 64, scss/_3_base.scss */
 h3 {
   font-size: 1.563rem;
   line-height: 1.3;
 }
-
 /* line 69, scss/_3_base.scss */
 h4 {
   font-size: 1.25rem;
   line-height: 1.3;
 }
-
 /* line 74, scss/_3_base.scss */
 h5 {
   font-size: 1rem;
   font-weight: bold;
   margin: 1em 0 1rem;
 }
-
 /* line 80, scss/_3_base.scss */
 ul, ol {
   margin: 0;
   padding: 0;
 }
-
 /* line 85, scss/_3_base.scss */
 .block-margins, p, code, ul, ol {
   margin: 0;
   padding: 0;
   padding-bottom: 1.5rem;
 }
-
 /* line 95, scss/_3_base.scss */
 figure {
   padding-bottom: .5rem;
@@ -556,12 +483,10 @@ figure figcaption {
   margin: 0;
   padding: 0;
 }
-
 /* line 104, scss/_3_base.scss */
 ul {
   margin-left: 1.825em;
 }
-
 /* line 109, scss/_3_base.scss */
 ol {
   padding-left: 0em;
@@ -581,7 +506,6 @@ ol li {
 ol li li, ol li li li {
   padding-bottom: 0;
 }
-
 /* line 129, scss/_3_base.scss */
 ol.nested-numbers {
   margin-left: 0;
@@ -597,7 +521,6 @@ ol.nested-numbers li:before {
   counter-increment: item;
   padding-right: .5em;
 }
-
 /* line 143, scss/_3_base.scss */
 blockquote {
   font-size: 110%;
@@ -605,76 +528,62 @@ blockquote {
   margin: 0;
   margin-bottom: 1.75rem;
 }
-
 /* line 150, scss/_3_base.scss */
 dt {
   font-weight: 700;
 }
-
 /* line 153, scss/_3_base.scss */
 dd {
   margin: 0;
 }
-
 /* line 157, scss/_3_base.scss */
 address {
   font-style: normal;
 }
-
 /* line 161, scss/_3_base.scss */
 .text-left, table, table caption {
   text-align: left !important;
 }
-
 /* line 165, scss/_3_base.scss */
 .text-center {
   text-align: center !important;
 }
-
 /* line 169, scss/_3_base.scss */
 .text-right {
   text-align: right !important;
 }
-
 /* line 173, scss/_3_base.scss */
 .quiet {
   color: #a2a2a2;
 }
-
 /* line 177, scss/_3_base.scss */
 .small {
   font-size: .75em;
 }
-
 /* line 181, scss/_3_base.scss */
 .loud {
   color: #3b3b3b;
 }
-
 /* line 185, scss/_3_base.scss */
 strong {
   font-weight: 700;
 }
-
 /* line 189, scss/_3_base.scss */
 em {
   font-style: italic;
 }
-
 /* line 193, scss/_3_base.scss */
 .fixed, code {
   font-family: "Courier", monospace;
   font-size: 15px;
   line-height: 1.6;
 }
-
 /* line 199, scss/_3_base.scss */
 code {
   background-color: #ffe21e;
   padding: 1.25rem;
   display: block;
 }
-
 /* line 205, scss/_3_base.scss */
 table {
   border: 1px solid #ffe21e;
@@ -692,14 +601,12 @@ table td {
   border: 1px solid #ffe21e;
   padding: .25em .5em;
 }
-
 #cash_tab3 {
   font-size: 90%;
   padding: 2px 0;
   border: 0px solid #ddd;
   
 }
-
 #cash_tab3 td {
   font-size: 90%;
   padding: 0px 10px;
@@ -710,14 +617,12 @@ table td {
   border-right: 0;
   
 }
-
 #cash_tab {
   font-size: 90%;
   padding: 2px 0;
   border: 0px solid #ddd;
   
 }
-
 #cash_tab td {
   font-size: 90%;
   padding: 0px 10px;
@@ -728,14 +633,12 @@ table td {
   border-right: 0;
   
 }
-
 #cash_tab2 {
   font-size: 90%; 
   padding: 2px 0;
   border: 0px solid #ddd;
   
 }
-
 #cash_tab2 td {
   font-size: 90%;
   padding: 0px 10px;
@@ -746,14 +649,10 @@ table td {
   border-right: 0;
   
 }
-
-
-
 /* line 222, scss/_3_base.scss */
 table caption {
   padding: .25em 0;
 }
-
 /* line 228, scss/_3_base.scss */
 a.button-chicklet {
   padding: .375em .5em;
@@ -777,13 +676,10 @@ a.button-chicklet:hover, a.button-chicklet:visited:hover {
   -o-transition: all 0.25s ease;
   transition: all 0.25s ease;
 }
-
 /* 
-
 =======================================================================================
 BASE STRUCTURAL STYLES
 =======================================================================================
-
 */
 /* Paul Irish - http://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
 /* line 258, scss/_3_base.scss */
@@ -792,27 +688,22 @@ BASE STRUCTURAL STYLES
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
 /* line 265, scss/_3_base.scss */
 .group:after {
   content: "";
   display: table;
   clear: both;
 }
-
 /* line 269, scss/_3_base.scss */
 nav ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-
 /*
-
 =======================================================================================
 UTILITIES
 ======================================================================================= 
-
 */
 /* line 289, scss/_3_base.scss */
 .bp-indicator {
@@ -824,23 +715,19 @@ UTILITIES
   right: 0;
   z-index: 5555;
 }
-
 /* line 298, scss/_3_base.scss */
 .bp-item {
   padding: .5rem 1rem;
 }
-
 /* line 302, scss/_3_base.scss */
 .bp-small-1, .bp-small-2, .bp-medium, .bp-medium-1, .bp-medium-2, .bp-large, .bp-large-1, .bp-large-2, .bp-large-3 {
   display: none;
 }
-
 @media only screen and (min-width: 27em) {
   /* line 307, scss/_3_base.scss */
   .bp-small {
     display: none;
   }
-
   /* line 308, scss/_3_base.scss */
   .bp-small-1 {
     display: inline;
@@ -851,7 +738,6 @@ UTILITIES
   .bp-small-1 {
     display: none;
   }
-
   /* line 313, scss/_3_base.scss */
   .bp-small-2 {
     display: inline;
@@ -862,7 +748,6 @@ UTILITIES
   .bp-small-2 {
     display: none;
   }
-
   /* line 318, scss/_3_base.scss */
   .bp-medium {
     display: inline;
@@ -873,7 +758,6 @@ UTILITIES
   .bp-medium {
     display: none;
   }
-
   /* line 323, scss/_3_base.scss */
   .bp-medium-1 {
     display: inline;
@@ -884,7 +768,6 @@ UTILITIES
   .bp-medium-1 {
     display: none;
   }
-
   /* line 328, scss/_3_base.scss */
   .bp-medium-2 {
     display: inline;
@@ -895,7 +778,6 @@ UTILITIES
   .bp-medium-2 {
     display: none;
   }
-
   /* line 333, scss/_3_base.scss */
   .bp-large {
     display: inline;
@@ -906,7 +788,6 @@ UTILITIES
   .bp-large {
     display: none;
   }
-
   /* line 338, scss/_3_base.scss */
   .bp-large-1 {
     display: inline;
@@ -917,7 +798,6 @@ UTILITIES
   .bp-large-1 {
     display: none;
   }
-
   /* line 343, scss/_3_base.scss */
   .bp-large-2 {
     display: inline;
@@ -928,14 +808,12 @@ UTILITIES
   .bp-large-2 {
     display: none;
   }
-
   /* line 348, scss/_3_base.scss */
   .bp-large-3 {
     display: inline;
   }
 }
 /* 
-
 \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 =======================================================================================
 TEMPLATE STYLES
@@ -944,7 +822,6 @@ mobile-first plus two main breakpoints and two "tweakpoints" between each. if yo
 customizing this template, first update _variables.scss. If you need further 
 customization, create override styles in _theme.css file.
 =======================================================================================
-
 */
 @media only screen and (min-width: 35em) {
   /* line 20, scss/_4_template.scss */
@@ -960,7 +837,6 @@ customization, create override styles in _theme.css file.
     line-height: 1;
   }
 }
-
 @media only screen and (min-width: 35em) {
   /* line 33, scss/_4_template.scss */
   h2 {
@@ -975,7 +851,6 @@ customization, create override styles in _theme.css file.
     line-height: 1.2;
   }
 }
-
 /* line 52, scss/_4_template.scss */
 a.button {
   float: left;
@@ -994,12 +869,10 @@ a.button:hover {
   color: #fff;
   background-color: #8e0057;
 }
-
 /* line 71, scss/_4_template.scss */
 .fa-square {
   font-size: .8em;
 }
-
 /* line 79, scss/_4_template.scss */
 .global-header {
   display: block;
@@ -1074,7 +947,6 @@ a.button:hover {
     display: inline;
   }
 }
-
 /* line 155, scss/_4_template.scss */
 .report-cover {
   position: absolute;
@@ -1217,7 +1089,6 @@ a.button:hover {
     bottom: .75em;
   }
 }
-
 /* line 277, scss/_4_template.scss */
 .article-container {
   position: absolute;
@@ -1229,13 +1100,11 @@ a.button:hover {
     top: 100%;
   }
 }
-
 /* line 292, scss/_4_template.scss */
 section#front-matter.anchor:before {
   margin-top: -60px;
   height: 60px;
 }
-
 /* line 297, scss/_4_template.scss */
 #front-matter {
   padding: 0;
@@ -1485,7 +1354,6 @@ section#front-matter.anchor:before {
     margin-left: 0;
   }
 }
-
 /* line 541, scss/_4_template.scss */
 .showhide {
   margin-right: 0;
@@ -1502,7 +1370,6 @@ section#front-matter.anchor:before {
     display: none;
   }
 }
-
 /* line 555, scss/_4_template.scss */
 .showhide-target {
   display: none;
@@ -1514,7 +1381,6 @@ section#front-matter.anchor:before {
     display: inline;
   }
 }
-
 /* line 567, scss/_4_template.scss */
 section.anchor:before {
   display: block;
@@ -1523,7 +1389,6 @@ section.anchor:before {
   height: 90px;
   visibility: hidden;
 }
-
 /* line 575, scss/_4_template.scss */
 p.anchor:before {
   display: block;
@@ -1532,7 +1397,6 @@ p.anchor:before {
   height: 200px;
   visibility: hidden;
 }
-
 /* line 583, scss/_4_template.scss */
 a.anchor:before {
   display: inline-block;
@@ -1541,7 +1405,6 @@ a.anchor:before {
   height: 180px;
   visibility: hidden;
 }
-
 /* line 592, scss/_4_template.scss */
 .permalink {
   display: block;
@@ -1570,7 +1433,6 @@ a.anchor:before {
   top: .1em;
   padding-right: .1em;
 }
-
 /* line 623, scss/_4_template.scss */
 .stickem-container {
   position: relative;
@@ -1616,26 +1478,22 @@ a.anchor:before {
   display: block;
   text-shadow: 0 0 9px white;
 }
-
 /* line 666, scss/_4_template.scss */
 .stickem {
   visibility: hidden;
 }
-
 /* line 670, scss/_4_template.scss */
 .stickit {
   visibility: visible;
   position: fixed;
   top: 60px;
 }
-
 /* line 676, scss/_4_template.scss */
 .stickit-end {
   bottom: 0px;
   position: absolute;
   right: 0;
 }
-
 /* line 682, scss/_4_template.scss */
 ul.nav {
   margin: 0;
@@ -1660,18 +1518,15 @@ ul.nav > li.active {
 ul.nav > li.active-current a {
   font-weight: 700;
 }
-
 /* line 711, scss/_4_template.scss */
 .body-matter h1 {
   display: none;
 }
-
 /* line 715, scss/_4_template.scss */
 .section {
   padding: 2rem 0 2rem 0;
   border-top: 1px solid #ffe21e;
 }
-
 /* line 722, scss/_4_template.scss */
 .section-content h1, .section-content h2, .section-content h3, .section-content h4, .section-content h5, .section-content h6, .section-content p, .section-content code, .section-content figcaption, .section-content .img-column img, .section-content .img-column chart, .section-content .permalink, .section-content ol, .section-content ul {
   padding-right: 1.25rem;
@@ -1746,8 +1601,6 @@ ul.nav > li.active-current a {
 .section-content .img-column img {
   width: 100%;
 }
-
-
 /* line 801, scss/_4_template.scss */
 .section-content .img-full img {
   width: 100%;
@@ -1926,7 +1779,6 @@ ul.nav > li.active-current a {
     width: 75%;
     padding: 0 1.25rem 0 0;
   }
-
   .section-content .img-column chart {
     float: left;
     width: 75%;
@@ -1995,7 +1847,6 @@ ul.nav > li.active-current a {
     width: 66.666%;
     padding: 00;
   }
-
   .section-content .img-column chart {
     float: left;
     width: 66.666%;
@@ -2028,7 +1879,6 @@ ul.nav > li.active-current a {
     width: 62%;
     padding: 00;
   }
-
   .section-content .img-column chart {
     float: left;
     width: 62%;
@@ -2061,7 +1911,6 @@ ul.nav > li.active-current a {
     width: 57%;
     padding: 00;
   }
-
   .section-content .img-column chart {
     float: left;
     width: 57%;
@@ -2078,7 +1927,6 @@ ul.nav > li.active-current a {
     width: 42.857%;
   }
 }
-
 /* line 1125, scss/_4_template.scss */
 .appendix {
   font-size: .8em;
@@ -2086,12 +1934,10 @@ ul.nav > li.active-current a {
   position: relative;
   z-index: 1;
 }
-
 /* line 1138, scss/_4_template.scss */
 .appendices h1 {
   display: none;
 }
-
 /* line 1142, scss/_4_template.scss */
 .footnote-link {
   font-size: 80%;
@@ -2106,12 +1952,10 @@ ul.nav > li.active-current a {
   padding-left: .25em;
   color: #db0012;
 }
-
 /* line 1156, scss/_4_template.scss */
 .appendix .footnote-link {
   font-size: 100%;
 }
-
 /* line 1160, scss/_4_template.scss */
 .footnotes .section-content p {
   margin-left: 3rem;
@@ -2131,20 +1975,17 @@ ul.nav > li.active-current a {
 .footnotes .section-content p i {
   text-indent: 0;
 }
-
 /* line 1181, scss/_4_template.scss */
 .footnotes :target .footnote-back-link {
   font-size: 80%;
   font-style: normal;
 }
-
 /* line 1187, scss/_4_template.scss */
 .footnotes-target {
   font-size: 125%;
   font-weight: 700;
   font-style: italic;
 }
-
 /* line 1193, scss/_4_template.scss */
 .footnotes p:target {
   margin-left: 0rem;
@@ -2154,81 +1995,68 @@ ul.nav > li.active-current a {
 .footnotes p:target i {
   text-indent: 0;
 }
-
 /* line 1203, scss/_4_template.scss */
 .footnotes :target {
   -webkit-animation: footnote-fade 2s 1;
   -moz-animation: target-fade 2s 1;
 }
-
 @-webkit-keyframes footnote-fade {
   /* line 1209, scss/_4_template.scss */
   0% {
     color: #db0012;
   }
-
   /* line 1212, scss/_4_template.scss */
   100% {
     color: #555555;
   }
 }
-
 @-moz-keyframes footnote-fade {
   /* line 1218, scss/_4_template.scss */
   0% {
     color: #db0012;
   }
-
   /* line 1221, scss/_4_template.scss */
   100% {
     color: #555555;
   }
 }
-
 /* line 1226, scss/_4_template.scss */
 .footnote-link a:target {
   -webkit-animation: footnote-link-fade 1s 1;
   -moz-animation: target-fade 1s 1;
 }
-
 @-webkit-keyframes footnote-link-fade {
   /* line 1232, scss/_4_template.scss */
   0% {
     background-color: #db0012;
     color: #8e0057;
   }
-
   /* line 1236, scss/_4_template.scss */
   100% {
     background-color: white;
     color: #db0012;
   }
 }
-
 @-moz-keyframes footnote-link-fade {
   /* line 1243, scss/_4_template.scss */
   0% {
     background-color: #db0012;
   }
-
   /* line 1246, scss/_4_template.scss */
   100% {
     background-color: white;
   }
 }
-
 /* line 1253, scss/_4_template.scss */
 .footnotes p.anchor:before {
   display: inline;
   content: "";
 }
-
 /* line 1259, scss/_4_template.scss */
 .footnotes p.anchor:target:before {
   display: block;
   content: " ";
 }
-
 /*
  * It enables animation on FF and Opera
  * But, it seems my Opera doesn't support
@@ -2239,13 +2067,11 @@ ul.nav > li.active-current a {
   -o-animation: footnote-fade 2s 1;
   animation: footnote-fade 2s 1;
 }
-
 /* line 1276, scss/_4_template.scss */
 .footnote-link a:target {
   -o-animation: footnote-link-fade 1s 1;
   animation: footnote-link-fade 1s 1;
 }
-
 /* line 1285, scss/_4_template.scss */
 .page-footer {
   background-color: #ffe21e;
@@ -2256,7 +2082,6 @@ ul.nav > li.active-current a {
   z-index: 10;
   position: relative;
 }
-
 /* line 1298, scss/_4_template.scss */
 .quick-links {
   position: fixed;
@@ -2295,75 +2120,62 @@ ul.nav > li.active-current a {
     padding-left: 1.25rem;
   }
 }
-
 /* line 1334, scss/_4_template.scss */
 .quick-links-item {
   display: block;
 }
-
 /* line 1347, scss/_4_template.scss */
 .well {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   display: none;
   margin: 1em;
 }
-
 /* line 1352, scss/_4_template.scss */
 pre.prettyprint {
   padding: 9px 14px;
 }
-
 /* line 1355, scss/_4_template.scss */
 .fulltable {
   max-width: 100%;
   overflow: auto;
 }
-
 /* line 1359, scss/_4_template.scss */
 .container {
   padding-left: 0;
   padding-right: 0;
 }
-
 /* line 1363, scss/_4_template.scss */
 .lineheight {
   line-height: 3em;
 }
-
 /* line 1366, scss/_4_template.scss */
 .pagetop {
   background: url(http://subtlepatterns.com/patterns/congruent_outline.png) #333333;
   background-attachment: fixed;
   color: #fff;
 }
-
 /* line 1371, scss/_4_template.scss */
 .page-header {
   border-bottom: none;
 }
-
 /* line 1374, scss/_4_template.scss */
 .initialism {
   font-weight: bold;
   letter-spacing: 1px;
   font-size: 12px;
 }
-
 /* line 1384, scss/_4_template.scss */
 #my_popup h1 {
   display: none;
 }
-
 /* line 1388, scss/_4_template.scss */
 .popup_content {
   color: white;
 }
-
 /* line 1392, scss/_4_template.scss */
 .popup_wrapper {
   background-color: #2b2b2b;
 }
-
 /* line 1396, scss/_4_template.scss */
 .my_popup-close-button {
   background-color: white;
@@ -2392,7 +2204,6 @@ pre.prettyprint {
   margin: 0;
   display: block;
 }
-
 /* line 1424, scss/_4_template.scss */
 .my_popup_close-return {
   font-size: .64rem;
@@ -2406,7 +2217,6 @@ pre.prettyprint {
     padding-bottom: 1rem;
   }
 }
-
 /* line 1435, scss/_4_template.scss */
 #my_popup {
   width: 100%;

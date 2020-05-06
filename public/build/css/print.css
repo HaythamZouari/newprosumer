@@ -27,9 +27,9 @@ If upgrading normalize, replace everything below.
  */
 /* line 34, scss/_0_normalize.scss */
 
-.page {
+section {
   page-break-before: always;
-  page-break-after: always;
+  
 }
 
 
@@ -46,6 +46,7 @@ nav,
 section,
 summary {
   display: block;
+  
 }
 
 /**
