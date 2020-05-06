@@ -13,7 +13,7 @@
 {% block header %}
 
 
-  <header class="global-header group --hide-from-pdf">
+  <head class="global-header group --hide-from-pdf">
                 <span class="header-page-logo"><a href={{ path("dashboard") }}><img src="/build/img/brand/blue.png" alt="logo"></a></span>
                 <span class="header-page-sections"><a href="#front-matter" class="my_popup_open"><i class="fa fa-bars"></i><span class="label"> Sections</span></a></span>
                 <span class="header-page-download"><a href="#front-matter" class="my_popup_open"><i class="fa fa-download"></i><span class="label"> Télécharger</span></a></span>
@@ -41,6 +41,8 @@
 
           <!-- Screen styles -->
           <link rel="stylesheet" href="/build/css/screen.css">
+          <!-- Print styles -->
+          <link rel="stylesheet" href="/build/css/print.css" type="text/css" media="print" />
 
           <!-- Print styles 
           <link rel="stylesheet" href="/build/css/print.css" type="text/css" media="print" />-->
@@ -51,7 +53,7 @@
           <!-- Typekit is used for fonts - https://typekit.com/fonts - If you are using a different font service, add it here. -->
           <script type="text/javascript" src="//use.typekit.net/ptd6qqr.js"></script>
           <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  </header>
+  </head>
 {% endblock %}
 
 {% block stylesheets %}
@@ -4181,7 +4183,7 @@
             pageOrientation	: 'portrait',
             scrollPage:'true',
             delay: '3',
-           
+            usePrintMedia: 'true',
             publishableKey: 'api_public_245a56a45c4740c48bb0dc3cf8ce6357',
             htmlCode: document.querySelector('html').innerHTML,
             /* url: window.location.href */
