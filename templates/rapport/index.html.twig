@@ -4125,6 +4125,23 @@
             <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 
 <script>
+  (function() {
+    let pageCounter = 1;
+    const pageNumElems = document.getElementsByClassName('js-page-number');
+    Array.from(pageNumElems).forEach((elem) => {
+      elem.innerHTML = pageCounter;
+      pageCounter++;
+    });
+
+    const totalPagesCount = document.querySelectorAll('.page').length;
+    const pageTotals = document.getElementsByClassName('js-pages-total');
+    Array.from(pageTotals).forEach((elem) => {
+      elem.innerHTML = totalPagesCount;
+    });
+  })()
+</script>
+
+<script>
           $(document).ready(function() {
               $('.article-container').stickem();
           });
