@@ -139,7 +139,7 @@ a:hover {
  */
 /* line 130, scss/_0_normalize.scss */
 h1 {
-  font-size: 2em;
+  font-size: 10em;
   margin: 0.67em 0;
 }
 
@@ -468,7 +468,7 @@ html {
 
 /* line 19, scss/print.scss */
 body {
-  background: #fff;
+  background: rgb(36, 14, 238);
 }
 
 /* line 23, scss/print.scss */
@@ -477,13 +477,14 @@ body {
   font-family: "news-gothic-std", sans-serif;
   font-weight: 400;
   line-height: 1.5;
-  background-color: #fff;
+  background-color: rgb(13, 17, 241);
 }
 
 /* line 31, scss/print.scss */
 p {
   padding-right: 10px;
   padding-left: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* line 36, scss/print.scss */
