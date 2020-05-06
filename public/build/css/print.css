@@ -26,6 +26,13 @@ If upgrading normalize, replace everything below.
  * Correct `block` display not defined in IE 8/9.
  */
 /* line 34, scss/_0_normalize.scss */
+
+.page {
+  page-break-before: always;
+  page-break-after: always;
+}
+
+
 article,
 aside,
 details,
