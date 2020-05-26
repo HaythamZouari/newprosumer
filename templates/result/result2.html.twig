@@ -3,6 +3,12 @@
         <div class="row align-content-center">
             <div class="col-xl-3 col-lg-6">
             </div>
+            <div class="form-group">
+                    <div style="display: inline-block"> <label for="exampleFormControlSelect1" >Site</label></div>
+                    <div style="display: inline-block"> <select class="form-control" id="SiteSelector"> </select></div>
+                    
+                   
+                </div>
             <div class="col-xl-3 col-lg-6">
                 <div class="card card-stats mb-4 mb-xl-0">
                     <button  class="btn btn-lg" type="button" data-toggle="modal" data-target="#charts" >Graphiques</button>
@@ -37,21 +43,29 @@
                             {% endif %}
                             <td>kWc</td>
                         </tr>
+                        <tr id="productible">
+                            <td>Productible :</td>
+                        </tr>
+                        <tr id="t_cd">
+                            <td>Taux de l’énergie cédée :</td>
+                        </tr>
                         <tr id="prod25">
                             <td>Production PV 25 ans</td>
                         </tr>
+                        
+                        <tr id="consommationS">
+                            <td>Consommation du site</td>
+                        </tr>
+                        <tr id="auto_consommationS">
+                        <td>Economies d'énergie du site</td>
+                        </tr>
+                        <tr id="importerS">
+                            <td>Energie importée de la STEG</td>
+                        </tr>
                         <tr id="t_autoc">
-                            <td>Taux d’autoconsommation</td>
+                            <td>Taux d’autoconsommation du site</td>
                         </tr>
-                        <tr id="t_couv">
-                            <td>Taux de couverture :</td>
-                        </tr>
-                        <tr id="t_cd">
-                            <td>Taux de l’énergie cédée :</td>
-                        </tr>
-                        <tr id="productible">
-                            <td>Productible :</td>
-                        </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -204,9 +218,9 @@
     <script src={{ asset('build/js/transpose.js')}}></script>
     <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
     <script>
-        let btn=0;
+       let btn=0;
         let consomation_heatmap1=[];
-         let production_heatmap1=[];
+        let production_heatmap1=[];
         let auto_consomer_heatmap1=[];
         let cedee_heatmap1=[];
         let importer_heatmap1=[];
@@ -235,27 +249,41 @@
         let PH_auto_consome=[];
         let PH_cedee=[];
         let PH_importer=[];
-        PH_consomation[0]=0;
-        PH_consomation[1]=0;
-        PH_consomation[2]=0;
-        PH_consomation[3]=0;
+        let PH_auto_consomeTmp=[];
+        let PH_importerTmp=[];
+        let PH_consomationTmp=[];
+        let consomation_tmp=[];
+        let production_tmp=[];
+        let cedee_tmp=[];
+        let importe_tmp=[];
+        let auto_consome_tmp=[];
+        let year =0;
+        let consomationTot=[];
+        let consomationTotTmp=[];
+        let auto_consomeTotTmp=[];
+        let importerTotTmp=[];
+        let auto_consomeTot=[];
+        let importerTot=[];
+        let consomation_heatmap1Tot=[];
+        let importer_heatmap1Tot=[];
+        let auto_consomer_heatmap1Tot=[];
+      
+            let auto_consommationS =[];
+                        let consommationS =[];
+                        let importerS =[];
+                        let t_auto =[];
         PH_production[0]=0;
         PH_production[1]=0;
         PH_production[2]=0;
         PH_production[3]=0;
-        PH_auto_consome[0]=0;
-        PH_auto_consome[1]=0;
-        PH_auto_consome[2]=0;
-        PH_auto_consome[3]=0;
+        
         PH_cedee[0]=0;
         PH_cedee[1]=0;
         PH_cedee[2]=0;
         PH_cedee[3]=0;
-        PH_importer[0]=0;
-        PH_importer[1]=0;
-        PH_importer[2]=0;
-        PH_importer[3]=0;
         let presence_data=0;
+
+        
         $("#consomer").on('click',function () {
             btn=1;
         });
@@ -272,19 +300,35 @@
             btn=5;
         });
         $("#tableaus").on('click',function () {
-            for (let i = 0; i < consomation[0].length ; i++) {
+            $('#datatable').empty();
+             j=$("#SiteSelector").val();
+            for (let i = 0; i < consomationTot[0].length ; i++) {
                 $('#datatable').append("<tr><td>" +production[0][i]+"</td>"+
-                    "<td>"+round(consomation[1][i],3)+"</td>"+
+                    "<td>"+round(consomationTot[j][i],3)+"</td>"+
                     "<td>"+round(production[1][i],3)+"</td>"+
-                    "<td>"+round(auto_consome[1][i],3)+"</td>"+
+                    "<td>"+round(auto_consomeTot[j][i],3)+"</td>"+
                     "<td>"+round(cedee[1][i],3)+"</td>"+
-                    "<td>"+round(importer[1][i],3)+"</td>"+
+                    "<td>"+round(importerTot[j][i],3)+"</td>"+
                     +"</tr>"
-
                 );
-
             }
         });
+
+        $('#SiteSelector').change(function() {
+           $('#auto_consommationS').empty();
+           $('#consommationS').empty();
+           $('#importerS').empty();
+           $('#t_autoc').empty();
+            j=$("#SiteSelector").val();
+
+                       
+           $('#auto_consommationS').append("<td>Economies d'énergie du site</td><td>"+round(auto_consommationS[j],0)+"</td><td>kWh</td>");
+            $('#consommationS').append("<td>Consommation du site</td><td>"+round(consommationS[j],0)+"</td><td>kWh</td>");
+            $('#importerS').append(" <td>Energie importée de la STEG</td><td>"+round(importerS[j],0)+"</td><td>kWh</td>");
+            $('#t_autoc').append(" <td>Taux d’autoconsommation du site</td><td>"+round(t_auto[j]*100,2)+"</td><td>%</td>");
+        });    
+        
+
         let trace1 = {};
         let trace2 = {};
         let trace3 = {};
@@ -292,16 +336,25 @@
         let trace5 = {};
         let data=[];
         let layout={};
+
+        console.log("consomation");
+        console.log(consomation);
+        console.log("consomationTot");
+        console.log(consomationTot);
+        console.log(consomationTot.length);
+         
+
+    $('#graphiques').on('click',function () {
+       j=$("#SiteSelector").val();
+    });
+
+
         $('#time_series').on('click',function () {
+
+             j=$("#SiteSelector").val();
+            
             data=[];
-            trace1 = {
-                type: "scatter",
-                mode: "lines",
-                name: 'Consommation',
-                x: consomation[0],
-                y: consomation[1],
-                line: {color: '#17BECF'}
-            };
+           
             data.push(trace1);
             trace2 = {
                 type: "scatter",
@@ -312,66 +365,40 @@
                 line: {color: '#FFC300'}
             };
             data.push(trace2);
-
-            trace3= {
-                type: "scatter",
-                mode: "lines",
-                name: 'Auto consommation',
-                x: auto_consome[0],
-                y: auto_consome[1],
-                line: {color: '#C70039'}
-            };
-            data.push(trace3);
+            
+          
             trace4 = {
                 type: "scatter",
                 mode: "lines",
                 name: 'Energie cedee',
-                x: cedee[0],
+                x: production[0],
                 y: cedee[1],
                 line: {color: '#900C3F'}
             };
-
             data.push(trace4) ;
-            trace5 = {
-                type: "scatter",
-                mode: "lines",
-                name: 'Importée',
-                x: importer[0],
-                y: importer[1],
-                line: {color: '#DAF7A6'}
-            };
-            data.push(trace5);
+           
             layout = {
                 title: 'Time series',
                 xaxis: {
                     autorange: true,
-                    range: [consomation[0][1], consomation[0][consomation[0].length-1]],
-                    rangeselector: {buttons: [
-                            {
-                                count: 1,
-                                label: '1h',
-                                step: 'hour',
-                                stepmode: 'backward'
-                            },
-                            {
-                                count: 6,
-                                label: '6m',
-                                step: 'month',
-                                stepmode: 'backward'
-                            },
-                            {step: 'all'}
-                        ]},
-                    rangeslider: {range: [consomation[0][1], consomation[0][consomation[0].length-1]]},
+                    range: [production[0][0], production[0][production[0].length-1]],
+                    rangeslider: {range: [production[0][0], production[0][consomation[0].length-1]]},
                     type: 'date'
                 },
             };
             Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
+            k=j+1;
+            Plotly.addTraces('chart_consomtation', {name: 'consommation'.concat(k),x:production[0],y: consomationTot[j]});
+            Plotly.addTraces('chart_consomtation', {name: 'Auto consommation'.concat(k),x:production[0],y: auto_consomeTot[j]});
+            Plotly.addTraces('chart_consomtation', {name: 'Importée'.concat(k),x:production[0],y: importerTot[j]});
+
+        
         });
         $('#histograme').on('click',function () {
-
+             j=$("#SiteSelector").val();
             if (btn===1){
                 trace1 = {
-                    x: consomation[1],
+                    x: consomationTot[j],
                     name: 'consommation',
                     autobinx: true,
                     histnorm: "count",
@@ -395,7 +422,6 @@
                     yaxis: {title: "Fréquence"}
                 };
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
-
             }
             else
             if (btn===2){
@@ -424,11 +450,10 @@
                     yaxis: {title: "Fréquence"}
                 };
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
-
             }
             if (btn===3){
                 trace1 = {
-                    x: auto_consome[1],
+                    x: auto_consomeTot[j],
                     name: 'Auto consomer',
                     autobinx: true,
                     histnorm: "count",
@@ -452,8 +477,6 @@
                     yaxis: {title: "Fréquence"}
                 };
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
-
-
             }
             if (btn===4){
                 trace1 = {
@@ -481,12 +504,11 @@
                     yaxis: {title: "Fréquence"}
                 };
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
-
             }
             if (btn===5){
                 trace1 = {
-                    x: importer[1],
-                    name: 'Auto consomer',
+                    x: importerTot[j],
+                    name: 'Importée',
                     autobinx: true,
                     histnorm: "count",
                     marker: {
@@ -509,18 +531,21 @@
                     yaxis: {title: "Fréquence"}
                 };
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
-
             }
-
         });
+
         $('#heatmap').on('click',function () {
+             j=$("#SiteSelector").val();
             if (btn===1){
                 data = [{
-                    z:consomation_heatmap1,
+                    z:consomation_heatmap1Tot[j],
                     colorscale: 'Electric',
                     type: 'heatmap'
                 }];
-                Plotly.newPlot('chart_consomtation', data,{responsive:true});
+                layout={
+                    xaxis: {autorange: 'reversed'}
+                };
+                Plotly.newPlot('chart_consomtation', data,layout,{responsive:true});
             }
             if (btn===2){
                 data = [{
@@ -528,19 +553,15 @@
                     colorscale: 'Electric',
                     type: 'heatmap'
                 }];
-
                 Plotly.newPlot('chart_consomtation', data, {yflip:true}, {responsive:true},);
-
             }
             if (btn===3){
                 data = [{
-                    z:auto_consomer_heatmap,
+                    z:auto_consomer_heatmap1Tot[j],
                     colorscale: 'Electric',
                     type: 'heatmap'
                 }];
-
                 Plotly.newPlot('chart_consomtation', data, {yflip:true}, {responsive:true},);
-
             }
             if (btn===4){
                 data = [{
@@ -548,25 +569,22 @@
                     colorscale: 'Electric',
                     type: 'heatmap'
                 }];
-
                 Plotly.newPlot('chart_consomtation', data, {yflip:true}, {responsive:true},);
-
             }
             if (btn===5){
                 data = [{
-                    z:importer_heatmap,
+                    z:importer_heatmap1Tot[j],
                     colorscale: 'Electric',
                     type: 'heatmap'
                 }];
-
                 Plotly.newPlot('chart_consomtation', data, {yflip:true}, {responsive:true},);
-
             }
         });
         $('#donutsChart').on('click',function () {
+             j=$("#SiteSelector").val();
             if (btn===1){
                 data = [{
-                    values: PH_consomation,
+                    values: Object.values(PH_consomation[j]),
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
                     name: 'Consommation',
@@ -574,7 +592,6 @@
                     hole: .4,
                     type: 'pie'
                 }];
-
                 layout = {
                     title: 'Consommation',
                     showlegend: false,
@@ -585,12 +602,10 @@
                             },
                             showarrow: false,
                             text: 'CM',
-
                         }
                     ]
                 };
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
-
             }
             if (btn===2){
                 data = [{
@@ -602,7 +617,6 @@
                     hole: .4,
                     type: 'pie'
                 }];
-
                 layout = {
                     title: 'Production',
                     showlegend: false,
@@ -613,17 +627,14 @@
                             },
                             showarrow: false,
                             text: 'CM',
-
                         }
                     ]
                 };
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
-
-
             }
             if (btn===3){
                 data = [{
-                    values: PH_auto_consome,
+                    values: Object.values(PH_auto_consome[j]),
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
                     name: 'Consommation',
@@ -631,9 +642,8 @@
                     hole: .4,
                     type: 'pie'
                 }];
-
                 layout = {
-                    title: 'Auto-consomée',
+                    title: 'Auto-consommée',
                     showlegend: false,
                     annotations: [
                         {
@@ -642,13 +652,10 @@
                             },
                             showarrow: false,
                             text: 'CM',
-
                         }
                     ]
                 };
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
-
-
             }
             if (btn===4){
                 data = [{
@@ -660,7 +667,6 @@
                     hole: .4,
                     type: 'pie'
                 }];
-
                 layout = {
                     title: 'Cedee',
                     showlegend: false,
@@ -671,17 +677,14 @@
                             },
                             showarrow: false,
                             text: 'CM',
-
                         }
                     ]
                 };
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
-
-
             }
             if (btn===5){
                 data = [{
-                    values: PH_importer,
+                    values: Object.values(PH_importer[j]),
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
                     name: 'Consommation',
@@ -689,7 +692,6 @@
                     hole: .4,
                     type: 'pie'
                 }];
-
                 layout = {
                     title: 'Importée',
                     showlegend: false,
@@ -700,109 +702,161 @@
                             },
                             showarrow: false,
                             text: 'CM',
-
                         }
                     ]
                 };
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
-
-
             }
         });
-
         function res (url) {
             if (presence_data===0){
                 presence_data=1;
                 $.ajax({
-                    url: "{{ path('project_results',{ 'id':project.id }) }}",
+                   url: "{{ path('project_results',{ 'id':project.id }) }}",
                     type : 'POST',
                     data : data,
                     dataType: 'json',
                     cache: false,
                     success: function (response) {
-                        let consomation_tmp=[];
-                        let production_tmp=[];
-                        let cedee_tmp=[];
-                        let importe_tmp=[];
-                        let auto_consome_tmp=[];
-                        let year =0;
-                        for (let i = 0; i < response.consomation.length ; i++) {
-                            dates = new Date(response.production[i][0] * 1000);
-                            year = dates.getFullYear();
-                            consomation[0][i] = dates;
-                            consomation[1][i] = response.consomation[i][1];
-                            dates = new Date(response.production[i][0] * 1000);
-                            dates.setFullYear(year);
-                            production[0][i] = dates;
-                            production[1][i] = response.production[i][1];
-                            dates = new Date(response.auto_consomer[i][0] * 1000);
-                            dates.setFullYear(year);
-                            auto_consome[0][i]=dates;
-                            auto_consome[1][i]=response.auto_consomer[i][1];
-                            dates = new Date(response.cedee[i][0] * 1000);
-                            dates.setFullYear(year);
-                            cedee[0][i]=dates;
-                            cedee[1][i]=response.cedee[i][1];
-                            dates = new Date(response.importer[i][0] * 1000);
-                            dates.setFullYear(year);
-                            importer[0][i]=dates;
-                            importer[1][i]=response.importer[i][1];
-                            if(i>0 && (i%24)===0){
-                                consomation_heatmap1.push(consomation_tmp);
-                                production_heatmap1.push(production_tmp);
-                                cedee_heatmap1.push(cedee_tmp);
-                                importer_heatmap1.push(importe_tmp);
-                                auto_consomer_heatmap1.push(auto_consome_tmp);
-                                consomation_tmp=[];
+            
+                        for (let j = 0; j < response.consomation.length; j++) {
+
+                                consomationTotTmp=[];
+                                auto_consomeTotTmp=[];
+                                importerTotTmp=[];
+
+                            for (let i = 0; i < response.consomation[0].length ; i++) {
+                                    dates = new Date(response.consomation[0][i][0] * 1000);
+                                    year = dates.getFullYear();
+                                
+                                    consomationTotTmp[i]=response.consomation[j][i][1];
+                                    auto_consomeTotTmp[i]=response.auto_consomer[j][i][1];
+                                    importerTotTmp[i]=response.importer[j][i][1];
+                        
+                            
+                                production[0][i] = dates;
+                                production[1][i] = response.production[i][1];
+                            
+                            
+                            
+                                cedee[0][i]=dates;
+                                cedee[1][i]=response.cedee[response.cedee.length-1][i][1];
+                            };
+                                
+                                consomationTot.push(consomationTotTmp);
+                                auto_consomeTot.push(auto_consomeTotTmp);
+                                importerTot.push(importerTotTmp);
+                        
+                        };
+
+
+                        PH_consomation=response.PH_consomationannuel;
+                            PH_auto_consome=response.PH_auto_consomerannuel;
+                            PH_importer=response.PH_importerannuel;
+                    
+                           
+                         
+                            consomation_tmp=[];
+                            production_tmp=[];
+                            cedee_tmp=[];
+                            importe_tmp=[];
+                            auto_consome_tmp=[];
+
+                            consomation_heatmap1=[];
+                            importer_heatmap1=[];
+                            auto_consomer_heatmap1=[];
+                            production_heatmap1=[];
+                            cedee_heatmap1=[];
+                        for (let j = 0; j < response.consomation.length ; j++) {
+
+                            
+                            consomation_heatmap=[];
+                            importer_heatmap=[];
+                            auto_consomer_heatmap=[];
+
+                             consomation_heatmap1=[];
+                                production_heatmap1=[];
+                                cedee_heatmap1=[];
+                                importer_heatmap1=[];
+                                auto_consomer_heatmap1=[];
+
+                           consomation_tmp=[];
                                 production_tmp=[];
                                 cedee_tmp=[];
                                 importe_tmp=[];
                                 auto_consome_tmp=[];
-                                consomation_tmp.push(response.consomation[i][1]);
-                                production_tmp.push(response.production[i][1]);
-                                cedee_tmp.push(response.cedee[i][1]);
-                                auto_consome_tmp.push(response.auto_consomer[i][1]);
-                                importe_tmp.push(response.importer[i][1]);
 
-                            }
-                            else{
-                                consomation_tmp.push(response.consomation[i][1]);
-                                production_tmp.push(response.production[i][1]);
-                                cedee_tmp.push(response.cedee[i][1]);
-                                auto_consome_tmp.push(response.auto_consomer[i][1]);
-                                importe_tmp.push(response.importer[i][1]);
-                            }
-                        }
-                        consomation_heatmap=new transpose(consomation_heatmap1);
-                        production_heatmap=new transpose(production_heatmap1);
-                        cedee_heatmap=new transpose(cedee_heatmap1);
-                        importer_heatmap=new transpose(importer_heatmap1);
-                        auto_consomer_heatmap=new transpose(auto_consomer_heatmap1);
+                            for (let i = 0; i < response.consomation[0].length ; i++) {
+                                
 
+                                if(i>0 && (i%24)===0){
 
-                        for (let j = 1; j < response.PH_cedee.length ; j++) {
-                            PH_consomation[0]+=response.PH_consomation[j]['jour'];
-                            PH_consomation[3]+=response.PH_consomation[j]['nuit'];
-                            PH_consomation[1]+=response.PH_consomation[j]['ete'];
-                            PH_consomation[2]+=response.PH_consomation[j]['soir'];
-                            PH_production[0]+=response.PH_production[j]['jour'];
-                            PH_production[3]+=response.PH_production[j]['nuit'];
-                            PH_production[1]+=response.PH_production[j]['ete'];
-                            PH_production[2]+=response.PH_production[j]['soir'];
-                            PH_auto_consome[0]+=response.PH_auto_consomer[j]['jour'];
-                            PH_auto_consome[3]+=response.PH_auto_consomer[j]['nuit'];
-                            PH_auto_consome[1]+=response.PH_auto_consomer[j]['ete'];
-                            PH_auto_consome[2]+=response.PH_auto_consomer[j]['soir'];
-                            PH_cedee[0]+=response.PH_cedee[j]['jour'];
-                            PH_cedee[3]+=response.PH_cedee[j]['nuit'];
-                            PH_cedee[1]+=response.PH_cedee[j]['ete'];
-                            PH_cedee[2]+=response.PH_cedee[j]['soir'];
-                            PH_importer[0]+=response.PH_importer[j]['jour'];
-                            PH_importer[3]+=response.PH_importer[j]['nuit'];
-                            PH_importer[1]+=response.PH_importer[j]['ete'];
-                            PH_importer[2]+=response.PH_importer[j]['soir'];
-                        }
-                        consomation[0].sort(function(a,b) {
+                                    consomation_heatmap1.push(consomation_tmp);
+                                    production_heatmap1.push(production_tmp);
+                                    cedee_heatmap1.push(cedee_tmp);
+                                    importer_heatmap1.push(importe_tmp);
+                                    auto_consomer_heatmap1.push(auto_consome_tmp);
+
+                                    consomation_tmp=[];
+                                    production_tmp=[];
+                                    cedee_tmp=[];
+                                    importe_tmp=[];
+                                    auto_consome_tmp=[];
+                                    consomation_tmp.push(response.consomation[j][i][1]);
+                                    production_tmp.push(response.production[i][1]);
+                                    cedee_tmp.push(response.cedee[response.consomation.length-1][i][1]);
+                                    auto_consome_tmp.push(response.auto_consomer[j][i][1]);
+                                    importe_tmp.push(response.importer[j][i][1]);
+                                    
+
+                                    
+                                    
+
+                                    
+                            
+                                }
+                                else{
+                                    consomation_tmp.push(response.consomation[j][i][1]);
+                                    production_tmp.push(response.production[i][1]);
+                                    cedee_tmp.push(response.cedee[response.consomation.length-1][i][1]);
+                                    auto_consome_tmp.push(response.auto_consomer[j][i][1]);
+                                    importe_tmp.push(response.importer[j][i][1]);
+
+                                    
+                                }
+
+                            };
+                            
+                                consomation_heatmap=new transpose(consomation_heatmap1);
+                                production_heatmap=new transpose(production_heatmap1);
+                                cedee_heatmap=new transpose(cedee_heatmap1);
+                                importer_heatmap=new transpose(importer_heatmap1);
+                                auto_consomer_heatmap=new transpose(auto_consomer_heatmap1);
+
+                                consomation_heatmap1Tot.push(consomation_heatmap);
+                                importer_heatmap1Tot.push(importer_heatmap);
+                                auto_consomer_heatmap1Tot.push(auto_consomer_heatmap);
+
+                        };
+                        
+                        
+
+                         for (let j = 0; j < response.consomation.length ; j++) {
+                        auto_consommationS[j]=response.auto_consommationS[j];
+                        consommationS[j]=response.consommationS[j];
+                        importerS[j]=response.importerS[j];
+                        t_auto[j]=response.t_auto[j];
+                         };
+                    
+                       
+                           
+
+                        
+                        
+
+                        /*
+
+                        consomationTot[0].sort(function(a,b) {
                             return new Date(a.start).getTime() - new Date(b.start).getTime()
                         });
                         production[0].sort(function(a,b) {
@@ -816,34 +870,60 @@
                         });
                         auto_consome[0].sort(function(a,b) {
                             return new Date(a.start).getTime() - new Date(b.start).getTime()
-                        });
+                        });*/
+                        console.log(response.consomation);
+                        console.log(consomation);
                         console.log("consomation");
-                        console.log(consomation_heatmap);
+                        console.log(consomation_heatmap1Tot);
+                        console.log("production");
+                        console.log(production_heatmap);
+                        console.log("cedee");
+                        console.log(cedee_heatmap);
+                        console.log('autoconsomation');
+                        console.log(auto_consomer_heatmap1Tot);
+                        console.log("importe");
+                        console.log(importer_heatmap1Tot);
                         console.log("production");
                         console.log(production);
-                        console.log("cedee");
-                        console.log(cedee);
-                        console.log('autoconsomation');
-                        console.log(auto_consome);
-                        console.log("importe");
-                        console.log(importer);
+                        console.log(consomationTot[0]);
+                        console.log(consomationTot);
+                        console.log(production[1]);
+                        console.log("PH_consomation");
+                        
+                        console.log(PH_consomation);
+                        console.log(PH_auto_consome);
+                        console.log(response.PH_auto_consomerS);
+                        console.log(t_auto[1]);
+
+
+                        $('#auto_consommationS').append(" <td>"+round(response.auto_consommationS[0],0)+"</td><td>kWh</td>");
+                        $('#consommationS').append(" <td>"+round(response.consommationS[0],0)+"</td><td>kWh</td>");
+                        $('#importerS').append(" <td>"+round(response.importerS[0],0)+"</td><td>kWh</td>");
                         $('#prod25').append(" <td>"+round(response.prod25,0)+"</td><td>kWh</td>");
                         $('#lcoe').append("<td>"+round(response.lcoe,3)+"</td><td>DT</td>");
-                        $('#t_autoc').append("<td>"+round(response.t_auto*100,2)+"</td><td>%</td>");
-                        $('#t_couv').append("<td>"+round(response.t_couverture*100,2)+"</td><td>%</td>");
+                        $('#t_autoc').append("<td>"+round(response.t_auto[0]*100,2)+"</td><td>%</td>");
+                        /*$('#t_couv').append("<td>"+round(response.t_couverture*100,2)+"</td><td>%</td>");*/
                         $('#productible').append("<td>"+round(response.productible,0)+"</td><td>kWh/kWc</td>");
                         $('#t_cd').append("<td>"+round(response.t_cedee*100,2)+"</td><td>%</td>");
-                        $('#f_r').append("<td>"+round(response.f_reg,0)+"</td><td></td>");
+                        $('#f_r').append("<td>"+round(response.f_reg,0)+"</td><td>DT</td>");
                         $('#coutproj').append("<td>"+round(response.coutproj,0)+"</td><td>DT</td>");
-                         $('#capexres').append("<td>"+round(response.capex,0)+"</td><td></td>");
-                        $('#tricapres').append("<td>"+round(response.tricap,3)+"</td><td>%</td>");
-                        $('#trires').append("<td>"+round(response.tri25,0)+"</td><td>%</td>");
-                        $('#subvres').append("<td>"+round(response.subv)+"</td><td>%</td>");
-                        $('#omres').append("<td>"+round((response.opex)*(response.capex),0)+"</td><td>%</td>");
-                        $('#annuiteres').append("<td>"+round(response.annuite[5],0)+"</td><td>%</td>");
+                        $('#capexres').append("<td>"+round(response.capex,3)+"</td><td>DT</td>");
+                        $('#tricapres').append("<td>"+round(response.tricap,2)+"</td><td>%</td>");
+                        $('#trires').append("<td>"+round(response.tri25,2)+"</td><td>%</td>");
+                        $('#subvres').append("<td>"+((round(response.subv,0)*round(response.capex,0))/100)+"</td><td>DT</td>");
+                        $('#omres').append("<td>"+round(response.opex[0],0)+"</td><td>DT</td>");
+                        $('#annuiteres').append("<td>"+round(response.annuite[5],0)+"</td><td>DT</td>");
                         $('#vanres').append("<td>"+round(response.van,0)+"</td><td>DT</td>");
-                        $('#puissanceres').append("<td>"+round(response.peak,2)+"</td><td>kWh</td>");
-                    }
+                        $('#puissanceres').append("<td>"+round(response.peak,2)+"</td><td>kWc</td>");
+
+                        
+
+                        
+                         for (let j = 0; j < consomationTot.length ; j++) {
+                                $('#SiteSelector').append("<option value="+j+">"+"Site"+j+"</option>"
+                                );
+                            };
+                    }       
                 });
 
             }

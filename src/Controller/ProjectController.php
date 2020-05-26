@@ -73,6 +73,7 @@ class ProjectController extends AbstractController
      */
     public function excelupload(Project $project,Request $request,FileUpload $fileUpload,Session $session){
         // get the file from the request object
+        
         $file = $request->files->get('file');
         $filePath =$fileUpload->upload($file,'consomation');
         $data=ExcelReader::createDataFromSpreadsheet('uploads/'.$filePath);
@@ -179,6 +180,11 @@ class ProjectController extends AbstractController
     if ($request->isXmlHttpRequest()){
         
             $consomation =$project->getConsomation();
+            $allDateDeb =$project->getConsomation()->getallDateDeb();
+            $allDateFin =$project->getConsomation()->getallDateFin();
+            $allDataAvgW =$project->getConsomation()->getallConsomationAnnuel();
+            $allTarif =$project->getConsomation()->getTabTarif();
+
             $dateDeb= new \DateTime($request->get('dateDeb'));
             $dateDebexel= new \DateTime(null );
             $dateDebexel->setTimestamp($session->get('dateDebExl'));
@@ -202,6 +208,7 @@ class ProjectController extends AbstractController
             $samediCheck=$request->get('samediCheck');
             $dateconge_deb= new \DateTime($request->get('dateconge_deb'));
             $dateconge_fin= new \DateTime($request->get('dateconge_fin'));
+            $number= $request->get('number');
             
             
         if (empty($avgweek[0][0][0])){
@@ -228,7 +235,7 @@ class ProjectController extends AbstractController
             }
 
             if ($activite=='Abattoir'){
-                $Phd=119;$Phf=120;$Phm=494;$Phad=360;$Pham=372;$Phn=63;
+                $Phd=1;$Phf=1;$Phm=1;$Phad=1;$Pham=1;$Phn=1;
                  }
             elseif ($activite=='Agroalimentaire'){
                 $Phd=134;$Phf=104;$Phm=175;$Phad=209;$Pham=195;$Phn=50;
@@ -999,9 +1006,21 @@ class ProjectController extends AbstractController
            
        
         }
+        
+        
+            
+            $allDateDeb[$number]=$dateDeb;
+            $allDateFin[$number]=$dateFin;
+            $allDataAvgW[$number]=$dataAvgW;
+            $allTarif[$number]=$request->get('tarif');
+
+            $consomation->setallDateDeb($allDateDeb);    
             $consomation->setDateDeb($dateDeb);
+            $consomation->setallDateFin($allDateFin);
             $consomation->setDateFin($dateFin);
+            $consomation->setallConsomationAnnuel($allDataAvgW);
             $consomation->setConsomationAnnuel($dataAvgW);
+            $consomation->setTabTarif($allTarif);
             $consomation->setTypeTarif($request->get('tarif'));
             $consomation->setProject($project);
             $project->setConsomation($consomation);
@@ -1009,7 +1028,7 @@ class ProjectController extends AbstractController
             $entityManager->persist($consomation);
             $entityManager->persist($project);
             $entityManager->flush();
-            return new JsonResponse(['virgdata'=>$dataAvgW,'data'=>$dataAvgWtm,'data2'=>$monthtmp,'period'=>$period,'newdata'=>$dataAvgW]);
+            return new JsonResponse(['virgdata'=>$dataAvgW,'data'=>$dataAvgWtm,'data2'=>$monthtmp,'period'=>$period,'newdata'=>$dataAvgW,'alldata'=>$allDataAvgW,'nbre'=>count($allDateDeb),]);
     }
         return $this->render('project/show.html.twig', [
             'project' => $project,

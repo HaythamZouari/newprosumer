@@ -41,6 +41,9 @@ services:
     App\Mailer\Mailer:
         arguments:
             $mailFrom: '%email_from%'
+    App\Service\Horaireannuel\:
+        resource: '../src/Service/Horaireannuel.php'
+        tags: ['Horaireannuel']
     App\Service\PostHoraire\:
         resource: '../src/Service/PostHoraire.php'
         tags: ['PostHoraire']

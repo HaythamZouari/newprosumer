@@ -40,7 +40,7 @@
                     <input type="checkbox"   name="credit" id="credit">
                     <label class="form-control-label required">Credit   </label>
                     <input type="checkbox"  name="transport_energie" id="transport_energie">
-                    <label class="form-control-label required">Transport de  l'energie</label>
+                    <label class="form-control-label required">Transport de  l'energie du site 0</label>
                 </div>
                 <div id="credits_div" style="display: none">
                     <div class="form-group">
@@ -106,7 +106,24 @@
             dataType: 'json',
             cache: false,
             success: function (response) {
+                console.log('finance');
                 console.log(response.arr);
+                console.log(response.con);
+                console.log(response.pro);
+                console.log(response.aut);
+                console.log(response.ced);
+                console.log(response.imp);
+                console.log(response.tot);
+                console.log(response.all);
+                console.log(response.somme);
+                console.log('cash');
+                console.log(response.dep);
+                console.log(response.depense);
+                console.log(response.gain);
+                console.log(response.cash_flow);
+
+
+
                 
 
                 $('#tabs-icons-text-4-tab').css("pointer-events"," visible");
@@ -116,9 +133,12 @@
                 $('#tabs-icons-text-3').toggle();
                 $('#tabs-icons-text-4-tab').addClass('active');
                 $('#tabs-icons-text-3-tab').removeClass('active');
+                
                 res();
             }
+            
         });
+       
         return false;
         {% endif %}
     }
@@ -130,6 +150,7 @@
                 $('#tabs-icons-text-2').toggle();
                 $('#tabs-icons-text-2-tab').addClass('active');
                 $('#tabs-icons-text-3-tab').removeClass('active');
+
 
     }
 

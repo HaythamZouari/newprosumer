@@ -9,11 +9,11 @@ use App\Entity\Project;
 //0=>jour|1=>soir|2=>nuit|3=>ete
 class FinanceService
 {
-    public static function gainEnergieTransporterUnif(float $tarif, Project $project){
+    public static function gainEnergieTransporterUnif(float $tarif, Project $project, array $Autoconsomme){
         $total_auto_consome=0;
         $result=[];
-        foreach ($project->getAutoConsomer() as $autoconsomer) {
-            $total_auto_consome+=$autoconsomer[1];
+        for ($i=0;$i<8760;$i++) {
+            $total_auto_consome+=$Autoconsomme[$i][1];
         }
         for ($i=0;$i<30;$i++){
             $result[$i] = ($total_auto_consome*
@@ -24,8 +24,8 @@ class FinanceService
         return $result;
 
     }
-    public static function gainEnergieTransporterHoraire(array $tarif ,Project $project){
-        $auto_consomer_postHor_temp=PostHoraire::PostHoraire($project->getAutoConsomer());
+    public static function gainEnergieTransporterHoraire(array $tarif ,Project $project,array $Autoconsomme){
+        $auto_consomer_postHor_temp=PostHoraire::PostHoraire($Autoconsomme);
         $result=[];
         $auto_consomer_postHor[0]=0;
         $auto_consomer_postHor[1]=0;
@@ -50,8 +50,11 @@ class FinanceService
         return $result;
 
     }
+    
     public static function gainEnergieCedee(array $tarif,Project $project){
-        $cedee_postH_tmp=PostHoraire::PostHoraire($project->getCedee());
+        $allcedee=$project->getCedee();
+        $lastit=count($project->getConsomation()->getallConsomationAnnuel())-1;
+        $cedee_postH_tmp=PostHoraire::PostHoraire($allcedee[$lastit]);
         $cedee_postH[0]=0;
         $cedee_postH[1]=0;
         $cedee_postH[2]=0;
@@ -106,7 +109,8 @@ class FinanceService
     }
     //if
     public static function factureRegularisation(array $gain_cedee,Project $project){
-        $cedee=$project->getCedee();
+        $lastit=count($project->getConsomation()->getallConsomationAnnuel())-1;
+        $cedee=$project->getCedee()[$lastit];
         if ($project->getPvgis()!=null)
             $prod=$project->getPvgis()->getResult();
         if ($project->getNinja()!=null)
@@ -116,7 +120,7 @@ class FinanceService
 
         $cedee_total=0;
         $prod_total=0;
-        $cedee=$project->getCedee();
+        
         for($i=0;$i<count($cedee);$i++){
             $cedee_total+=$cedee[$i][1];
             $prod_total+=$prod[$i][1];
@@ -140,10 +144,10 @@ class FinanceService
         }
         return $result;
     }
-    public static function facteurTransport(Project $project){
+    public static function facteurTransport(Project $project, array $Autoconsomme){
         $total_auto_consome=0;
         $result=[];
-        foreach ($project->getAutoConsomer() as $autoconsomer) {
+        foreach ($Autoconsomme as $autoconsomer) {
             $total_auto_consome+=$autoconsomer[1];
         }
         for ($i=0;$i<30;$i++){

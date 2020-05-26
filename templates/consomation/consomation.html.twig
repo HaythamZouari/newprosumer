@@ -6,7 +6,13 @@
         <div class="card-body px-lg-5 py-lg-5">
             <form class="consomation" id="consomationForm" action="{{ path('project_show',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
                 <div>
-                                        
+                    <div>
+                        <div style="display: inline-block"><button type="button" onclick="incrementValue()" value="Increment Value" class="btn-secondary btn" >Nouveau Site</button><br></div>
+
+                       <div style="display: inline-block"> <label class="form-control-label required" for="number" >Site</label></div>
+                        
+                        <div style="display: inline-block"><input type="number"  class="form-control" name="number" id="number" value="0" readonly="readonly" />  </div>
+                    </div>               
                     <div class="nav-wrapper">
                         <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                                 
@@ -557,8 +563,13 @@
                             </table>
                         </div>
                     </div>
-                    <div class="text-center">
-                        <button type="button" name="continue" id="continue" onclick="consomationSubmit()"  class="btn-secondary btn">Continuer</button>
+                   
+                    <div class="text-center" >
+                        
+                        
+                        <button type="button" name="continue" id="continue" onclick="consomationSubmit()"  class="btn-secondary btn" >Valider Site</button>
+                        <button type="button" name="continuer" id="continuer" onclick="valider()"  class="btn-secondary btn" >Continuer</button>
+                         
                     </div>
                 </div>
             </form>
@@ -589,6 +600,19 @@
 <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+    function incrementValue()
+    {
+        var value = parseInt(document.getElementById('number').value, 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        document.getElementById('number').value = value;
+        document.getElementById('dateDeb').readOnly=true;
+        Plotly.deleteTraces('plot', 0);
+        Dropzone.forElement('#exlreader').removeAllFiles(true);
+    }
+
+
+
  let courbe=[];
         courbe[0]=[];
         courbe[1]=[];
@@ -783,7 +807,6 @@ var mSlider2 = new rSlider({
     });
 });
              
-var slider=mySlider1.getValue();
- console.log (slider[0]);     
+
          
 </script>

@@ -49,31 +49,38 @@ class ProjectListner implements EventSubscriberInterface
         ];
     }
     public function onProjectEvent(ProjectEvent $event){
+        
         $project=$event->getProject();
         $production=[];
         $auto_consomer=[];
         $cedee=[];
         $importer=[];
-        $consomation=$project->getConsomation()->getConsomationAnnuel();
+        $consomation=$project->getConsomation()->getallConsomationAnnuel();
         if($project->getPvgis() != null)
-            $production=$project->getPvgis()->getResult() ;
-        else if($project->getNinja() != null)
-            $production=$project->getNinja()->getResult() ;    
-        else if($project->getCsvProd() != null)
-            $production=$project->getCsvProd()->getResult();
+            $production[0]=$project->getPvgis()->getResult() ;
+        if($project->getCsvProd() != null)
+            $production[0]=$project->getCsvProd()->getResult();
+        if ($project->getCsvProd() != null)
+            $production[0]=$project->getCsvProd()->getResult();
             
-        for ($i=0;$i<count($production);$i++){
-            if($consomation[$i][1]<$production[$i][1]){
-                $auto_consomer[$i]=[$production[$i][0],$consomation[$i][1]];
-                $cedee[$i]=[$production[$i][0],($production[$i][1]-$auto_consomer[$i][1])];
-                $importer[$i]=[$production[$i][0],($consomation[$i][1]-$auto_consomer[$i][1])];
+
+    for ($j=0;$j<count($consomation);$j++){        
+        for ($i=0;$i<count($consomation[0]);$i++){
+            if($consomation[$j][$i][1]<$production[$j][$i][1]){
+                $auto_consomer[$j][$i]=[$consomation[0][$i][0],$consomation[$j][$i][1]];
+                $cedee[$j][$i]=[$consomation[0][$i][0],($production[$j][$i][1]-$auto_consomer[$j][$i][1])];
+                $importer[$j][$i]=[$consomation[0][$i][0],($consomation[$j][$i][1]-$auto_consomer[$j][$i][1])];
             }
             else
-                $auto_consomer[$i]=[$production[$i][0],$production[$i][1]];
-            $cedee[$i]=[$production[$i][0],($production[$i][1]-$auto_consomer[$i][1])];
-            $importer[$i]=[$production[$i][0],($consomation[$i][1]-$auto_consomer[$i][1])];
-
+            $auto_consomer[$j][$i]=[$consomation[0][$i][0],$production[$j][$i][1]];
+            $cedee[$j][$i]=[$consomation[0][$i][0],($production[$j][$i][1]-$auto_consomer[$j][$i][1])];
+            $importer[$j][$i]=[$consomation[0][$i][0],($consomation[$j][$i][1]-$auto_consomer[$j][$i][1])];
+            
         }
+        $production[$j+1]=$cedee[$j];
+    }
+
+
         $project->setAutoConsomer($auto_consomer);
         $project->setCedee($cedee);
         $project->setImporte($importer);

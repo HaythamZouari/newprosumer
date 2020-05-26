@@ -226,7 +226,16 @@ class ProductionController extends AbstractController
             ProjectEvent::NAME,
             $projectEvent
         );
-        return new JsonResponse(['period'=>$period,'data'=>$data,'array'=>$array,'data2'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data) ]);
+        $consommation=$project->getConsomation()->getallConsomationAnnuel();
+        $production=$project->getPvgis()->getResult();
+        $auto=$project->getAutoConsomer();
+        $cedee=$project->getCedee();
+        $importee=$project->getImporte();
+        return new JsonResponse(['period'=>$period,'data'=>$data,'array'=>$array,'data2'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data),'con'=>$consommation,
+        'pro'=>$production,
+        'aut'=>$auto,
+        'ced'=>$cedee,
+        'imp'=>$importee, ]);
     }
     /**
      * @Route("/ninja/{id}", name="ninja")
@@ -329,6 +338,8 @@ class ProductionController extends AbstractController
             ProjectEvent::NAME,
             $projectEvent
         );
+
+        
         return new JsonResponse(['data'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$result),'da'=>$csv]);
     }
 }

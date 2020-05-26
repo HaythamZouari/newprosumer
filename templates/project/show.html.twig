@@ -56,11 +56,12 @@
             </div>
         </div>
     </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script>
-
+    
 
         // init,configure dropzone
         function consomationSubmit() {
@@ -87,16 +88,13 @@
                     console.log(response.period);
                     console.log("newdata");
                     console.log(response.newdata);
+                    console.log(response.alldata);
+                    console.log(response.nbre);
                     
+                   
 
 
-                    $('#tabs-icons-text-2-tab').css("pointer-events"," visible");
-                    $('#tabs-icons-text-1-tab').css("pointer-events"," none");
-                    $('#tabs-icons-text-2-tab').addClass('active');
-                    $('#tabs-icons-text-1-tab').removeClass('active');
-
-                        $('#tabs-icons-text-2').toggle();
-                        $('#tabs-icons-text-1').toggle();
+                   
                 }
             });
             /*
@@ -106,6 +104,16 @@
              */
             return false;
         }
+
+        function valider(){
+             $('#tabs-icons-text-2-tab').css("pointer-events"," visible");
+            $('#tabs-icons-text-1-tab').css("pointer-events"," none");
+            $('#tabs-icons-text-2-tab').addClass('active');
+            $('#tabs-icons-text-1-tab').removeClass('active');
+
+            $('#tabs-icons-text-2').toggle();
+            $('#tabs-icons-text-1').toggle();
+        };
     </script>
 {% endblock %}
  {% block stylesheets %}

@@ -213,6 +213,7 @@
             background-color: #ffe21e;
             padding: 1.25rem;
             display: block;
+            
             }
             /* line 205, scss/_3_base.scss */
             table {
@@ -1053,11 +1054,13 @@ x
                                                 <td >{{ puissance_centrale|number_format(2, '.', ' ') }}</td>
                                                 <td>kWc</td>
                                             </tr>
+                                            {% for i in range(0, ((cm_annual|length)-1)) %}
                                             <tr>
-                                              <td>Consommation annuelle</td>
-                                                <td>{{ cm_annual |number_format(0, '.', ' ')}}</td>
+                                              <td>Consommation annuelle Site {{i}}</td>
+                                                <td>{{ cm_annual[i] |number_format(0, '.', ' ')}}</td>
                                                 <td>kWh</td>
                                             </tr>
+                                            {% endfor %}
                                             <tr>
                                                 <td>Transport de l’énergie</td>
                                                 {% if finance.TransportEng == true %}
@@ -1218,16 +1221,14 @@ x
                                                 <td>{{ prod25ans|number_format(0, '.', ' ') }}</td>
                                                 <td>kWh</td>
                                             </tr>
+                                            {% for i in range(0, ((T_autoC|length)-1)) %}
                                             <tr>
-                                                <td>Taux d’autoconsommation</td>
-                                                <td>{{ (T_autoC * 100)|number_format(2, '.', ' ')}}</td>
+                                                <td>Taux d’autoconsommation site {{i}} </td>
+                                                <td>{{ (T_autoC[i] * 100)|number_format(2, '.', ' ')}}</td>
                                                 <td>%</td>
                                             </tr>
-                                            <tr>
-                                                <td>Taux de couverture :</td>
-                                                <td>{{ (T_couverture * 100) |number_format(2, '.', ' ')}}</td>
-                                                <td>%</td>
-                                            </tr>
+                                            {% endfor %}
+                                            
                                             <tr>
                                                 <td>Taux de l’énergie cédée :</td>
                                                 <td>{{ (T_cedee  * 100)|number_format(2, '.', ' ')}}</td>
@@ -1383,24 +1384,30 @@ x
                         
                                               <table>
                                             
-                                              <tr>
-                                                  <td>Consommation annuelle (kWh)
-                                                  </td>
-                                                  <td>{{ cm_annual|number_format(0, '.', ' ') }}</td>
-                                              </tr>
+                                              {% for i in range(0, ((cm_annual|length)-1)) %}
+                                                <tr>
+                                                <td>Consommation annuelle Site {{i}}</td>
+                                                    <td>{{ cm_annual[i] |number_format(0, '.', ' ')}}</td>
+                                                    <td>kWh</td>
+                                                </tr>
+                                            {% endfor %}
                                               <tr>
                                                   <td>Tarif Souscrit</td>
                                                   <td>{{ typeTarif }}</td>
                                               </tr>
+                                              {% for i in range(0, ((cm_annual|length)-1)) %}
                                               <tr>
-                                                  <td>Facture annuelle (DT)</td>
-                                                  <td>{{ facture_annuel|number_format(0, '.', ' ') }}</td>
+                                                  <td>Facture annuelle Site  {{i}} </td>
+                                                  <td>{{ facture_annuel[i]|number_format(0, '.', ' ') }}</td>
+                                                  <td>DT</td>
                                               </tr>
-                                            
+                                             {% endfor %}
                                           </table>
                                       </div>
-<p style="page-break-before: always;display:block;"></p>                                      
-                                    <h4>Tableau 1 Répartition de la consommation mensuelle</h4>
+                                  
+                                {% for j in range(0, ((cmmonth|length)-1)) %}
+                                <p style="page-break-before: always;display:block;"></p>    
+                                    <h4>Tableau  Répartition de la consommation mensuelle Site {{j}}</h4>
                                     <div style="overflow-x:auto;">
                                           <table>
                                               
@@ -1421,7 +1428,7 @@ x
                                               </th>
                                               <tbody>
                                                   {% set i = 0 %}
-                                                  {% for month in cmmonth %}
+                                                  {% for month in cmmonth[j] %}
                                                       {% if i != 0 %}
                                                           <tr>
                                                               <td>{{ i }}</td>
@@ -1436,38 +1443,33 @@ x
                                             
                                               
                                           </table>
-                                      </div>    
-  <p style="page-break-before: always;display:block;"></p>                                       
+                                
+                                            <p style="page-break-before: always;display:block;"></p>                                       
                                           <figure class="img-container img-full group">
-                                              <chart id="rp_cm"></chart> 
+                                              <chart id="rp_cm{{j}}"></chart> 
                                               <figcaption ><span class="caption-headline">Répartition de la consommation</span> Ce graphique présente la répartition de la consommation électrique annuelle selon les postes horaires. Dans cette répartition on considére le changement de postes horaires en été et en hiver comme décrit dans l'introduction. Cette répartition se base sur la courbe de charge de la consommation électrique soit synthétisée à partir de l'outil de création de courbe de charge ou à partir de la courbe de charge fournie par la STEG. </figcaption>
                                           </figure>
                                         
                                   
                                           <figure class="img-container img-full group">
-                                                  <chart id="vh_cm"></chart> 
+                                                  <chart id="vh_cm{{j}}"></chart> 
                                                   <figcaption ><span class="caption-headline">Variation horaire de la consommation</span> Le graphique ci-dessous présente une partie de la consommation (puissance en fonction du temps) du site étudié avec un pas horaire en se basant sur les données de la courbe de charge.</figcaption>
                                           </figure>
                                           
     <p style="page-break-before: always;display:block;"></p>                                      
                                           <figure class="img-container img-full group">
-                                                  <chart id="hm_cm"></chart> 
+                                                  <chart id="hm_cm{{j}}"></chart> 
                                                   <figcaption ><span class="caption-headline">Histogramme de la consommation</span> Cet histogramme décrit les fréquences des puissances appelés annuellement avec des pas horaires.</figcaption>
                                           </figure>
-                                          
-                                      
-                                      
-                                      
-                                  
-                                
+                                         
                                           <figure class="img-container img-full group">
-                                              <chart id="heat_cm"></chart> 
-                                              <figcaption ><span class="caption-headline"></span>Le plot carpet présente en abscisse les jours de l’an et en ordonné les heures de la journée.
+                                              <chart id="heat_cm{{j}}"></chart> 
+                                              <figcaption ><span class="caption-headline">Heatmap de la consommation</span>Le plot carpet présente en abscisse les jours de l’an et en ordonné les heures de la journée.
                                                   Les variations de couleurs du noir au rouge traduisent les variations
                                                   des puissances appelés du plus faible au plus fort.</figcaption>
                                           </figure>
                                       
-                                  
+                                  {% endfor %}
                               </div>
                           </section>  
                      
@@ -1535,20 +1537,27 @@ x
                                             <th>
                                               TOTAL
                                             </th>
-                                            
-                                            <tr id="t_charge">
+                                        {% for j in range(0, ((cmmonth|length)-1)) %}   
+                                            <tr id="t_charge{{j}}">
                                                 <td>
-                                                    TOTALE CHARGE
+                                                    TOTALE CONSOMMATION {{j}}
                                                 </td>
                                             </tr>
+                                            
+                                            <tr id="t_transportee{{j}}">
+                                                <td>
+                                                    TOTALE TRANSPORTEE {{j}}
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr id="t_imp{{j}}">
+                                                <td>
+                                                    TOTALE IMPORTEE {{j}}</td>
+                                            </tr>
+                                         {% endfor %}    
                                             <tr id="t_prod">
                                                 <td>
                                                     TOTALE PRODUITE
-                                                </td>
-                                            </tr>
-                                            <tr id="t_transportee">
-                                                <td>
-                                                    TOTALE TRANSPORTEE
                                                 </td>
                                             </tr>
                                             <tr id="t_cedee">
@@ -1556,19 +1565,16 @@ x
                                                     TOTALE CEDEE
                                                 </td>
                                             </tr>
-                                            <tr id="t_imp">
-                                                <td>
-                                                    TOTALE IMPORTEE </td>
-                                            </tr>
                                           
                                         </table>
                                     </div>   
- <p style="page-break-before: always;display:block;"></p>                                           
+ <p style="page-break-before: always;display:block;"></p> 
+ {% for j in range(0, ((cmmonth|length)-1)) %}                                             
                                     <figure class="img-container img-full group">
-                                        <chart id="auto_cm_imp"></chart> 
+                                        <chart id="auto_cm_imp{{j}}"></chart> 
                                         <figcaption ><span class="caption-headline"></span>Ce graphique indique la répartition de la consommation aprés l'installation de la centrale photovoltaique entre énergie autoproduite et énergie importée du réseau"</figcaption>
                                     </figure>
-                          
+     {% endfor %}                        
                                     <figure class="img-container img-full group">
                                         <chart id="rp_pd"></chart> 
                                         <figcaption ><span class="caption-headline"></span>Répartition de l'énergie produite</figcaption>
@@ -1585,6 +1591,7 @@ x
                                         <chart id="timeseries_pd_cm"></chart> 
                                         <figcaption ><span class="caption-headline"></span>Superposition de la courbe de production et la courbe de consommation</figcaption>
                                     </figure>
+                                    {% for j in range(0, ((cmmonth|length)-1)) %}
  <p style="page-break-before: always;display:block;"></p>                                                              
                                     <h4>Tableau 3 Consommation mensuelle après la centrale photovoltaïque</h4>
                                     <div style="overflow-x:auto;">
@@ -1608,15 +1615,15 @@ x
                                                 Toltal (kWh)                                       
                                             </th>    
                                             </thead>
-                                          <tbody id="tableau_rp_m">
+                                          <tbody id="tableau_rp_m{{j}}">
                                             </tbody>
                                         </table>
                                     </div>
                                     <figure class="img-container img-full group">
-                                        <chart id="rp_m_cm"></chart> 
+                                        <chart id="rp_m_cm{{j}}"></chart> 
                                         <figcaption ><span class="caption-headline"></span>Répartition mensuelle de l'énergie consommée</figcaption>
                                     </figure>
-                
+                {% endfor %}   
                                     
                             </div>
                         </section> 
@@ -1708,7 +1715,13 @@ x
                                                         <td>DT</td>
                                                     </tr>
                                                   </table>
-                                                </div>   
+                                                </div> 
+                                                          
+                                            <figure class="img-container img-full group">
+                                        <chart id="chat_cashflow1"></chart> 
+                                        <figcaption ><span class="caption-headline">Figure 10 Variation du DSCR sur la durée de remboursement du crédit</span></figcaption>
+                                </figure>
+                              
                                                   
                                             <figure class="img-container img-full group">
                                         <chart id="chat_cashflow"></chart> 
@@ -1749,7 +1762,7 @@ x
                                         <td scope="col">Gain energie transportee(DT)</td>
                                         <td scope="col">Gain energie cedee(Dt)</td>
                                         <td scope="col">Gain par ans (DT)</td>
-                                        <td scope="col">Facture transpot (DT)</td>
+                                        <td scope="col">Facture transport (DT)</td>
                                         <td scope="col">O&M  (DT)</td>
                                         <td scope="col">Annuite (DT)</td>
                                         <td scope="col">Facture de regularisation (DT)</td>
@@ -1774,7 +1787,7 @@ x
                                         <td scope="col">Gain energie transportee(DT)</td>
                                         <td scope="col">Gain energie cedee(Dt)</td>
                                         <td scope="col">Gain par ans (DT)</td>
-                                        <td scope="col">Facture transpot (DT)</td>
+                                        <td scope="col">Facture transport (DT)</td>
                                         <td scope="col">O&M  (DT)</td>
                                         <td scope="col">Annuite (DT)</td>
                                         <td scope="col">Facture de regularisation (DT)</td>
@@ -1812,6 +1825,7 @@ x
 {% block javascripts %}
 
  <script src='/build/js/transpose.js'></script>
+ 
         <script src='/build/js/plugins/jquery/dist/jquery.min.js'></script>
               <script src='/build/js/plotly-latest.min.js'></script>
                 
@@ -1888,10 +1902,8 @@ x
     </script>
           
             <script src='/build/js/transpose.js'></script>
-        <script src='/build/js/plugins/jquery/dist/jquery.min.js'></script>
-              <script src='/build/js/plotly-latest.min.js'></script>
-                
-
+            <script src='/build/js/plugins/jquery/dist/jquery.min.js'></script>
+            <script src='/build/js/plotly-latest.min.js'></script>
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
             <script>window.jQuery || document.write('<script src="/build/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
             <script src="/build/js/plugins.js"></script>
@@ -1901,166 +1913,57 @@ x
             <script src="/build/js/vendor/jquery.stickem.js"></script>
             <script src="/build/js/vendor/scrollspy.js"></script>
             <script src="/build/js/app.js"></script>
-              <script src="/build/js/vendor/scroll.handler.js"></script>
-            
+            <script src="/build/js/vendor/scroll.handler.js"></script>
             <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-          <script>
-                years = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
-                nuit=[31, 32, 32, 38, 40, 42, 48, 61, 76, 76, 85, 85, 93, 100, 115, 115, 115, 122, 167, 188]
-                jour=[49, 50, 50, 52, 59, 61, 66, 78, 96, 96, 110, 110, 123, 132, 152, 152, 152, 161, 215, 240]
-                soir=[70, 72, 72, 77, 80, 90, 94, 108, 121, 121, 132, 132, 148, 152]
-                pointe=[92, 93, 93, 98, 102, 108, 111, 131, 152, 152, 168, 168, 188, 198]
-                psoir=[219, 219, 219, 227, 291, 329]
-                pmatin=[239, 239, 239, 250, 323, 366]
-
-                var trace11 = {
-                x: years,
-                y: nuit,
-                mode: 'lines',
-                name: 'Nuit'
-                };
-
-                var trace21 = {
-                x: years,
-                y: jour,
-                mode: 'lines',
-                name: 'Jour'
-                };
-
-                var trace31 = {
-                x: years,
-                y: soir,
-                mode: 'lines',
-                name: 'Soir'
-                };
-
-                var trace41 = {
-                x: years,
-                y: pointe,
-                mode: 'lines',
-                name: 'Pointe'
-                };
-
-                var trace51 = {
-                x: [2014, 2015, 2016, 2017, 2018, 2019],
-                y: psoir,
-                mode: 'lines',
-                name: 'P Soir'
-                };
-
-                var trace61 = {
-                x: [2014, 2015, 2016, 2017, 2018, 2019],
-                y: pmatin,
-                mode: 'lines',
-                name: 'P M été'
-                };
-
+            <script src='/build/js/datagraphplotly.js'></script>
+        
+        <script>
                 
-
-                var data11 = [ trace11, trace21, trace31, trace41, trace51, trace61 ];
-
-                var layout11 = {
-                title:'Evolution des tarifs hors taxes de l électricité en MT (STEG) Régime à postes horaires',
-                font: {
-                        
-                        size: 9
-                    },
-                
-                };
-
-                var config = {responsive: true}
-
-                Plotly.newPlot('tarif-horaire', data11, layout11, config);
-
-
-                tarif=[64, 64, 65, 69, 73, 79, 84, 97, 115, 115, 125, 125, 137, 143, 167, 167, 167, 176, 212, 251]
-                
-
-                var trace101 = {
-                x: years,
-                y: tarif,
-                mode: 'lines',
-                name: 'Tarif'
-                };
-
-                var data101 = [ trace101];
-
-                var layout101 = {
-                title:'Evolution des tarifs hors taxes de l électricité en MT (STEG) Régime Uniforme',
-                font: {
-                        
-                        size: 9
-                    },
-                
-                };
-
-                var config = {responsive: true}
-
-                Plotly.newPlot('tarif-uniforme', data101, layout101, config);
-
-
-                var data102 = [{
-                values: [20, 29, 21, 12 ,6 ,12],
-                labels: ['inf. 20kW ', '20-50kW ', '50-100kW', '100-150kW', '150-200kW','sup. 200kW'],
-                type: 'pie'
-                }];
-
-                var layout102 = {
-                title:'-'
-                };
-
-                var config = {responsive: true}
-
-
-                Plotly.newPlot('rep-puissance', data102, layout102,config);
-
-
+            let consomationTot=[];
+            let consomationTotTmp=[];
+            let auto_consomeTotTmp=[];
+            let importerTotTmp=[];
+            let auto_consomeTot=[];
+            let importerTot=[];
+            let consomation_heatmap1Tot=[];
+            let importer_heatmap1Tot=[];
+            let auto_consomer_heatmap1Tot=[];
             let consomation_heatmap1=[];
             let _heatmap=[];
             let production_heatmap=[];
             let auto_consomer_heatmap=[];
             let cedee_heatmap=[];
             let importer_heatmap=[];
-            let consomation=[];
-            consomation[0]=[];
-            consomation[1]=[];
+            
             let production=[];
             production[0]=[];
             production[1]=[];
-            let auto_consome=[];
-            auto_consome[0]=[];
-            auto_consome[1]=[];
+           
             let cedee=[];
             cedee[0]=[];
             cedee[1]=[];
-            let importer=[];
-            importer[0]=[];
-            importer[1]=[];
+           
+           
             let PH_consomation=[];
             let PH_production=[];
             let PH_auto_consome=[];
             let PH_cedee=[];
             let PH_importer=[];
-            PH_consomation[0]=0;
-            PH_consomation[1]=0;
-            PH_consomation[2]=0;
-            PH_consomation[3]=0;
+            
+
+            
+           
             PH_production[0]=0;
             PH_production[1]=0;
             PH_production[2]=0;
             PH_production[3]=0;
-            PH_auto_consome[0]=0;
-            PH_auto_consome[1]=0;
-            PH_auto_consome[2]=0;
-            PH_auto_consome[3]=0;
+           
             PH_cedee[0]=0;
             PH_cedee[1]=0;
             PH_cedee[2]=0;
             PH_cedee[3]=0;
-            PH_importer[0]=0;
-            PH_importer[1]=0;
-            PH_importer[2]=0;
-            PH_importer[3]=0;
+
+           
             let presence_data=0;
             let trace1 = {};
             let trace2 = {};
@@ -2085,9 +1988,9 @@ x
             let llcr=[];
             let cfadstmp=[];
             let llcrtmp=[];
-            for (let i = 0; i < 12; i++) {
-                month_cm_t[i]=0;
-            }
+ 
+
+            
             const reducer = (accumulator, currentValue) => accumulator + currentValue;
             $(function () {
                 $.ajax({
@@ -2107,95 +2010,207 @@ x
                         let importe_tmp = [];
                         let auto_consome_tmp = [];
                         let year = 0;
-                        for (let i = 0; i < response.consomation.length; i++) {
-                            dates = new Date(response.production[i][0] * 1000);
-                            dates.setHours(dates.getHours() - 1);
-                            year = dates.getFullYear();
-                            consomation[0][i] = dates;
-                            consomation[1][i] = response.consomation[i][1];
-                            month_cm_t[dates.getMonth()]+=response.consomation[i][1];
-                            production[0][i] = dates;
-                            production[1][i] = response.production[i][1];
-                            dates = new Date(response.auto_consomer[i][0] * 1000);
-                            auto_consome[0][i] = dates;
-                            auto_consome[1][i] = response.auto_consomer[i][1];
-                            cedee[0][i] = dates;
-                            cedee[1][i] = response.cedee[i][1];
-                            importer[0][i] = dates;
-                            importer[1][i] = response.importer[i][1];
-                            if (i > 0 && (i % 24) === 0) {
-                                consomation_heatmap1.push(consomation_tmp);
-                                production_heatmap.push(production_tmp);
-                                cedee_heatmap.push(cedee_tmp);
-                                importer_heatmap.push(importe_tmp);
-                                auto_consomer_heatmap.push(auto_consome_tmp);
-                                consomation_tmp = [];
-                                production_tmp = [];
-                                cedee_tmp = [];
-                                importe_tmp = [];
-                                auto_consome_tmp = [];
-                                consomation_tmp.push(response.consomation[i][1]);
-                                production_tmp.push(response.production[i][1]);
-                                cedee_tmp.push(response.cedee[i][1]);
-                                auto_consome_tmp.push(response.auto_consomer[i][1]);
-                                importe_tmp.push(response.importer[i][0]);
-                            } else {
-                                consomation_tmp.push(response.consomation[i][1]);
-                                production_tmp.push(response.production[i][1]);
-                                cedee_tmp.push(response.cedee[i][1]);
-                                auto_consome_tmp.push(response.auto_consomer[i][1]);
-                                importe_tmp.push(response.importer[i][0]);
-                            }
-                        }
-                            /*transposer heatmap de la consommation*/
-                      
-                        consomation_heatmap=new transpose(consomation_heatmap1);
+                         for (let j = 0; j < response.consomation.length; j++) {
+
+                                consomationTotTmp=[];
+                                auto_consomeTotTmp=[];
+                                importerTotTmp=[];
+                                
+
+
+                            for (let i = 0; i < response.consomation[0].length ; i++) {
+                                    dates = new Date(response.consomation[0][i][0] * 1000);
+                                    year = dates.getFullYear();
+                                
+                                    consomationTotTmp[i]=response.consomation[j][i][1];
+                                    auto_consomeTotTmp[i]=response.auto_consomer[j][i][1];
+                                    importerTotTmp[i]=response.importer[j][i][1];
                         
-                        console.log(consomation);
-                        console.log(consomation_heatmap);
-                        console.log(consomation_tmp);
-                        for (let j = 1; j < response.PH_cedee.length; j++) {
-                            PH_consomation[0] += response.PH_consomation[j]['jour'];
-                            PH_consomation[3] += response.PH_consomation[j]['nuit'];
-                            PH_consomation[1] += response.PH_consomation[j]['ete'];
-                            PH_consomation[2] += response.PH_consomation[j]['soir'];
-                            PH_production[0] += response.PH_production[j]['jour'];
-                            PH_production[3] += response.PH_production[j]['nuit'];
-                            PH_production[1] += response.PH_production[j]['ete'];
-                            PH_production[2] += response.PH_production[j]['soir'];
-                            PH_auto_consome[0] += response.PH_auto_consomer[j]['jour'];
-                            PH_auto_consome[3] += response.PH_auto_consomer[j]['nuit'];
-                            PH_auto_consome[1] += response.PH_auto_consomer[j]['ete'];
-                            PH_auto_consome[2] += response.PH_auto_consomer[j]['soir'];
-                            PH_cedee[0] += response.PH_cedee[j]['jour'];
-                            PH_cedee[3] += response.PH_cedee[j]['nuit'];
-                            PH_cedee[1] += response.PH_cedee[j]['ete'];
-                            PH_cedee[2] += response.PH_cedee[j]['soir'];
-                            PH_importer[0] += response.PH_importer[j]['jour'];
-                            PH_importer[3] += response.PH_importer[j]['nuit'];
-                            PH_importer[1] += response.PH_importer[j]['ete'];
-                            PH_importer[2] += response.PH_importer[j]['soir'];
-                        }
+                            
+                                production[0][i] = dates;
+                                production[1][i] = response.production[i][1];
+                            
+                            
+                            
+                                cedee[0][i]=dates;
+                                cedee[1][i]=response.cedee[response.cedee.length-1][i][1];
+                            };
+                                
+                                consomationTot.push(consomationTotTmp);
+                                auto_consomeTot.push(auto_consomeTotTmp);
+                                importerTot.push(importerTotTmp);
+                        
+                        };
+
+                            console.log('auto_consomeTot');
+                            console.log(auto_consomeTot);
+                            console.log('cedee');
+                            console.log(response.cedee);
+                            
+
+                          consomation_tmp=[];
+                            production_tmp=[];
+                            cedee_tmp=[];
+                            importe_tmp=[];
+                            auto_consome_tmp=[];
+
+                            consomation_heatmap1=[];
+                            importer_heatmap1=[];
+                            auto_consomer_heatmap1=[];
+                            production_heatmap1=[];
+                            cedee_heatmap1=[];
+                        for (let j = 0; j < response.consomation.length ; j++) {
+
+                            
+                            consomation_heatmap=[];
+                            importer_heatmap=[];
+                            auto_consomer_heatmap=[];
+
+                             consomation_heatmap1=[];
+                                production_heatmap1=[];
+                                cedee_heatmap1=[];
+                                importer_heatmap1=[];
+                                auto_consomer_heatmap1=[];
+
+                           consomation_tmp=[];
+                                production_tmp=[];
+                                cedee_tmp=[];
+                                importe_tmp=[];
+                                auto_consome_tmp=[];
+
+                            for (let i = 0; i < response.consomation[0].length ; i++) {
+                                
+
+                                if(i>0 && (i%24)===0){
+
+                                    consomation_heatmap1.push(consomation_tmp);
+                                    production_heatmap1.push(production_tmp);
+                                    cedee_heatmap1.push(cedee_tmp);
+                                    importer_heatmap1.push(importe_tmp);
+                                    auto_consomer_heatmap1.push(auto_consome_tmp);
+
+                                    consomation_tmp=[];
+                                    production_tmp=[];
+                                    cedee_tmp=[];
+                                    importe_tmp=[];
+                                    auto_consome_tmp=[];
+                                    consomation_tmp.push(response.consomation[j][i][1]);
+                                    production_tmp.push(response.production[i][1]);
+                                    cedee_tmp.push(response.cedee[response.consomation.length-1][i][1]);
+                                    auto_consome_tmp.push(response.auto_consomer[j][i][1]);
+                                    importe_tmp.push(response.importer[j][i][1]);
+                               
+                                }
+                                else{
+                                    consomation_tmp.push(response.consomation[j][i][1]);
+                                    production_tmp.push(response.production[i][1]);
+                                    cedee_tmp.push(response.cedee[response.consomation.length-1][i][1]);
+                                    auto_consome_tmp.push(response.auto_consomer[j][i][1]);
+                                    importe_tmp.push(response.importer[j][i][1]);
+
+                                    
+                                }
+
+                            };
+                            
+                                consomation_heatmap=new transpose(consomation_heatmap1);
+                                production_heatmap=new transpose(production_heatmap1);
+                                cedee_heatmap=new transpose(cedee_heatmap1);
+                                importer_heatmap=new transpose(importer_heatmap1);
+                                auto_consomer_heatmap=new transpose(auto_consomer_heatmap1);
+
+                                consomation_heatmap1Tot.push(consomation_heatmap);
+                                importer_heatmap1Tot.push(importer_heatmap);
+                                auto_consomer_heatmap1Tot.push(auto_consomer_heatmap);
+
+                        };   
+                           
+                            
+                            PH_consomation=response.PH_consomationannuel;
+                            PH_auto_consome=response.PH_auto_consomerannuel;
+                            PH_importer=response.PH_importerannuel;
+
+
+
+                         for (let k = 1; k < 13 ; k++) {
+                                
+                                PH_production[0]+=response.PH_production[k]['jour'];
+                                PH_production[3]+=response.PH_production[k]['nuit'];
+                                PH_production[1]+=response.PH_production[k]['ete'];
+                                PH_production[2]+=response.PH_production[k]['soir'];
+                               
+                                PH_cedee[0]+=response.PH_cedee[k]['jour'];
+                                PH_cedee[3]+=response.PH_cedee[k]['nuit'];
+                                PH_cedee[1]+=response.PH_cedee[k]['ete'];
+                                PH_cedee[2]+=response.PH_cedee[k]['soir'];
+                               
+                                
+                            };
+                        
+                        console.log("PH");
+                         console.log(response.PH_consomation);
+                          console.log(response.PH_auto_consomer);
+                           console.log(response.PH_importer);
+                        console.log(response.auto_consomer);
+                        console.log(response.consomation);
+                        console.log(PH_consomation);
+                        console.log(PH_auto_consome);
+                        console.log(PH_importer);
+                        console.log(PH_production);
+                        console.log(PH_cedee);
+                        console.log("resPH");
+                       
+                        console.log(response.PH_auto_consomer);
 
                         for (let i = 0; i <4 ; i++) {
                             PH_cedee_ps[i]=(PH_cedee[i]/PH_production[i])*100;
-                            PH_autoconsomer_ps[i]=(PH_auto_consome[i]/PH_production[i])*100;
-                            PH_imp_ps[i]=(PH_importer[i]/PH_consomation[i])*100;
-                            PH_autoconsomer_ps2[i]=(PH_auto_consome[i]/PH_consomation[i])*100;
-
-
-
-                        }
-                        for (let i = 0; i < 12; i++) {
-                            month_auto[i]=response.month_auto[i+1];
-                            month_imp[i]=response.monthimp_unif[i+1];
-                            month_auto[i]/=month_cm_t[i];
-                            month_imp[i]/=month_cm_t[i];
-                            month_auto[i]*=100;
-                            month_imp[i]*=100;
-
                         }
 
+                         for (let j = 0; j < response.consomation.length; j++) { 
+                        
+                            PH_imp_ps[j]=[];
+                            PH_autoconsomer_ps2[j]=[];
+                            month_auto[j]=[];
+                            month_imp[j]=[];
+                            month_cm_t[j]=[];
+                         }
+                        
+                        for (let j = 0; j < response.consomation.length; j++) { 
+                               
+                            for (let i = 0; i <4 ; i++) {
+                                 PH_imp_ps[j][i]=( Object.values(PH_importer[j])[i]/ Object.values(PH_consomation[j])[i])*100;
+                                 PH_autoconsomer_ps2[j][i]=( Object.values(PH_auto_consome[j])[i]/PH_production[i])*100;
+                            }
+                               
+                            for (let i = 0; i < 12; i++) {
+                                month_cm_t[j][i]=response.PH_consomation[j][i+1]['jour']+response.PH_consomation[j][i+1]['nuit']+response.PH_consomation[j][i+1]['ete']+response.PH_consomation[j][i+1]['soir'];
+                                month_auto[j][i]=response.PH_auto_consomer[j][i+1]['jour']+response.PH_auto_consomer[j][i+1]['nuit']+response.PH_auto_consomer[j][i+1]['ete']+response.PH_auto_consomer[j][i+1]['soir'];
+                                month_imp[j][i]=response.PH_importer[j][i+1]['jour']+response.PH_importer[j][i+1]['nuit']+response.PH_importer[j][i+1]['ete']+response.PH_importer[j][i+1]['soir'];
+                                
+
+                            }
+                        }
+                        
+                      for (let j = 0; j < response.consomation.length; j++) { 
+                             for (let i = 0; i < 12; i++) {
+                                month_auto[j][i]/=month_cm_t[j][i];
+                                month_imp[j][i]/=month_cm_t[j][i];
+                             }
+                        }
+
+                        console.log( "ps");
+                        
+                        console.log( PH_cedee_ps);
+                        console.log( PH_imp_ps);
+                        console.log( PH_autoconsomer_ps2);
+                        console.log( "month");
+                        console.log(PH_cedee_ps);
+                        console.log( month_auto);
+                        console.log( month_cm_t);
+                      
+                          
+
+                          
 
                         let dataMonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
                         for (let i = 0; i <response.maturiter+response.delee ; i++) {
@@ -2210,26 +2225,283 @@ x
                             cashflow[i]=response.cashflow[i];
                             cashflow_cum[i]=response.cashflow_cum[i];
                         }
-                      
+                     for (let j = 0; j < response.consomation.length; j++) {  
                         for (let i = 1; i <13 ; i++) {
-                            $('#tableau_rp_m').append(
+                            $('#tableau_rp_m'.concat(j)).append(
                                 '<tr>' +
                                     '<td>'+dataMonth[i-1]+'</td>'+
-                                    '<td>'+round(response.monthimp[i]['jour'],0)+'</td>'+
-                                    '<td>'+round(response.monthimp[i]['ete'],0)+'</td>'+
-                                    '<td>'+round(response.monthimp[i]['soir'],0)+'</td>'+
-                                    '<td>'+round(response.monthimp[i]['nuit'],0)+'</td>'+
-                                    '<td>'+round((response.monthimp[i]['jour'])+(response.monthimp[i]['ete'])+(response.monthimp[i]['soir'])+(response.monthimp[i]['nuit']),0)+'</td>'+
+                                    '<td>'+round(response.PH_importer[j][i]['jour'],0)+'</td>'+
+                                    '<td>'+round(response.PH_importer[j][i]['ete'],0)+'</td>'+
+                                    '<td>'+round(response.PH_importer[j][i]['soir'],0)+'</td>'+
+                                    '<td>'+round(response.PH_importer[j][i]['nuit'],0)+'</td>'+
+                                    '<td>'+round((response.PH_importer[j][i]['jour'])+(response.PH_importer[j][i]['ete'])+(response.PH_importer[j][i]['soir'])+(response.PH_importer[j][i]['nuit']),0)+'</td>'+
 
                                 '</tr>'
                             );
                         }
+                     }    
                         //***********************PH consomer********************
                         for (let j = 0; j < response.maturiter+response.delee ; j++) {
                             cfadstmp[j]=response.cfads[j];
                         }
+                   
+                        /////////////*cashtab start*///////
+                         
+                             for(let i=0;i<response.delee;i++){
+                                $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
+                                    "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
+                                    "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
+                                    "<td>"+round(response.gain_ans[i],0)+"</td>"+
+                                    "<td>"+round(response.Facture_transport[i],0)+"</td>"+
+                                    "<td>"+round(response.opex[i],0)+"</td>"+
+                                    "<td>"+round(response.annuite[i],0)+"</td>"+
+                                    "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
+                                    "<td>"+round(response.cashflow[i],0)+"</td>"+
+                                    "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
+                                    "<td>"+round(response.cfads[i],0)+"</td>"+
+                                    "<td>"+round(response.dsacr[i],2)+"</td>"+
+                                    "<td>"+round(response.llcr[i],2)+"</td>"
+                                    +"</tr>"
+                                );
+                            }
+
+                            for(let i=response.delee;i<response.maturiter+response.delee;i++){
+                                
+                                $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
+                                "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
+                                    "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
+                                    "<td>"+round(response.gain_ans[i],0)+"</td>"+
+                                    "<td>"+round(response.Facture_transport[i],0)+"</td>"+
+                                    "<td>"+round(response.opex[i],0)+"</td>"+
+                                    "<td>"+round(response.annuite[i],0)+"</td>"+
+                                    "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
+                                    "<td>"+round(response.cashflow[i],0)+"</td>"+
+                                    "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
+                                    "<td>"+round(response.cfads[i],0)+"</td>"+
+                                    "<td>"+round(response.dsacr[i],2)+"</td>"+
+                                    "<td>"+round(response.llcr[i],2)+"</td>"
+                                    +"</tr>"
+
+                                );
+
+                            }
+                            for(let i=response.maturiter+response.delee;i<11;i++){
+                                $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
+                                    "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
+                                    "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
+                                    "<td>"+round(response.gain_ans[i],0)+"</td>"+
+                                    "<td>"+round(response.Facture_transport[i],0)+"</td>"+
+                                    "<td>"+round(response.opex[i],0)+"</td>"+
+                                    "<td></td>"+
+                                    "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
+                                    "<td>"+round(response.cashflow[i],0)+"</td>"+
+                                    "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
+                                    "<td>"+round(response.cfads[i],0)+"</td>"+
+                                    "<td></td>"+
+                                    "<td></td>"+
+
+                                    +"</tr>"
+
+                                );
+
+                            }
+
+                            for(let i=11;i<20;i++){
+                                $('#result_finance2').append("<tr><td>" +(i+1)+"</td>"+
+                                    "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
+                                    "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
+                                    "<td>"+round(response.gain_ans[i],0)+"</td>"+
+                                    "<td>"+round(response.Facture_transport[i],0)+"</td>"+
+                                    "<td>"+round(response.opex[i],0)+"</td>"+
+                                    "<td></td>"+
+                                    "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
+                                    "<td>"+round(response.cashflow[i],0)+"</td>"+
+                                    "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
+                                    "<td>"+round(response.cfads[i],0)+"</td>"+
+                                    "<td></td>"+
+                                    "<td></td>"+
+
+                                    +"</tr>"
+
+                                );
+
+                            }
+
+                            for(let i=20;i<30;i++){
+                                $('#result_finance3').append("<tr><td>" +(i+1)+"</td>"+
+                                    "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
+                                    "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
+                                    "<td>"+round(response.gain_ans[i],0)+"</td>"+
+                                    "<td>"+round(response.Facture_transport[i],0)+"</td>"+
+                                    "<td>"+round(response.opex[i],0)+"</td>"+
+                                    "<td></td>"+
+                                    "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
+                                    "<td>"+round(response.cashflow[i],0)+"</td>"+
+                                    "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
+                                    "<td>"+round(response.cfads[i],0)+"</td>"+
+                                    "<td></td>"+
+                                    "<td></td>"+
+
+                                    +"</tr>"
+
+                                );
+
+                            }
+
+                            $('#cash_tab').each(function() {
+                                var $this = $(this);
+                                var newrows = [];
+                                $this.find("tr").each(function(){
+                                    var i = 0;
+                                    $(this).find("td").each(function(){
+                                        i++;
+                                        if(newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
+                                        newrows[i].append($(this));
+                                    });
+                                });
+                                $this.find("tr").remove();
+                                $.each(newrows, function(){
+                                    $this.append(this);
+                                    });
+                            });
+
+                            $('#cash_tab2').each(function() {
+                                var $this = $(this);
+                                var newrows = [];
+                                $this.find("tr").each(function(){
+                                    var i = 0;
+                                    $(this).find("td").each(function(){
+                                        i++;
+                                        if(newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
+                                        newrows[i].append($(this));
+                                    });
+                                });
+                                $this.find("tr").remove();
+                                $.each(newrows, function(){
+                                    $this.append(this);
+                                    });
+                            });
+                            
+                            $('#cash_tab3').each(function() {
+                                var $this = $(this);
+                                var newrows = [];
+                                $this.find("tr").each(function(){
+                                    var i = 0;
+                                    $(this).find("td").each(function(){
+                                        i++;
+                                        if(newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
+                                        newrows[i].append($(this));
+                                    });
+                                });
+                                $this.find("tr").remove();
+                                $.each(newrows, function(){
+                                    $this.append(this);
+                                    });
+                            });
+
+                            
+                             
+
+                        for (let j = 0; j < response.consomation.length; j++) {  
+                            var table = document.getElementById("cash_tab");
+                            var row = table.insertRow(j+2);
+                            var cell2 = row.insertCell(0);
+                            cell2.innerHTML = "Economies site"+j;
+                            for(let i=0;i<11;i++){
+                            
+                            var cell1 = row.insertCell(i+1);
+
+                            
+                            cell1.innerHTML =  round(response.g_E_transporterSite[j][i],0);
+                            }
+                        }
+
+                        for (let j = 0; j < response.consomation.length; j++) {  
+                            var table = document.getElementById("cash_tab2");
+                            var row = table.insertRow(j+2);
+                            var cell2 = row.insertCell(0);
+                            cell2.innerHTML = "Economies site"+j;
+                            for(let i=11;i<20;i++){
+                            
+                            var cell1 = row.insertCell(i-10);
+
+                            
+                            cell1.innerHTML =  round(response.g_E_transporterSite[j][i],0);
+                            }
+                        }
+
+                        for (let j = 0; j < response.consomation.length; j++) {  
+                            var table = document.getElementById("cash_tab3");
+                            var row = table.insertRow(j+2);
+                            var cell2 = row.insertCell(0);
+                            cell2.innerHTML = "Economies site"+j;
+                            for(let i=20;i<30;i++){
+                            
+                            var cell1 = row.insertCell(i-19);
+
+                            
+                            cell1.innerHTML =  round(response.g_E_transporterSite[j][i],0);
+                            }
+                        }
+
+                        /////////////*cashtab end*///////
+
+                        
+                                    
+                            data=[];
+                         
+                        trace2 = {
+                            y: response.gain_E_cedee,
+                            name: 'Ventes',
+                            type: 'bar'
+                           
+                        };
+
+                         trace3 = {
+                            y: response.Facture_transport.map(function(num) { return -num; }),
+                            name: 'Facture de transport',
+                            type: 'bar'
+                           
+                        };
+
+                         trace4 = {
+                            y: response.annuite.map(function(num) { return -num; }),
+                            name: 'Annuité',
+                            type: 'bar'
+                           
+                        };
+
+                        trace5 = {
+                            y: response.facture_regrularisation.map(function(num) { return -num; }),
+                            name: 'Régularisation',
+                            type: 'bar'
+                           
+                        };
+
+                        
+
+                        data = [trace2,trace3,trace4,trace5];
+
+                        layout = { barmode: 'relative',xaxis: {range: [0, 25]},
+                                    
+                                        };
+
+                        Plotly.newPlot('chat_cashflow1', data, layout,{responsive: true});
+                        for (let j=0; j<response.g_E_transporterSite.length;j++){
+                           Plotly.addTraces('chat_cashflow1', {name: 'Economies sur facture'.concat(j),type: 'bar',y: response.g_E_transporterSite[j]});
+                        };
+                    }
+                });
+
+            });
+           
+            setTimeout(function() {     
+        //*******************plotly start***********************************************//
+           
+                   
+                   for (let j = 0; j < PH_consomation.length; j++) {     
                         data = [{
-                            values: PH_consomation,
+                            values: Object.values(PH_consomation[j]),
                             labels: ['jour','pointe ete','soir','nuit'],
                             domain: {column: 0},
                             name: 'Consommation',
@@ -2239,20 +2511,23 @@ x
                         }];
 
                         layout = {
-                            title: 'Consommation',
-                            showlegend: false,
+                            title: ' Repartition de la Consommation site'.concat(j),
+                            showlegend: true,
                             annotations: [
                                 {
                                     font: {
                                         size: 14
                                     },
                                     showarrow: false,
-                                    text: ' ',
+                                   
 
                                 }
                             ]
                         };
-                        Plotly.newPlot('rp_cm', data, layout, {responsive: true});
+                        Plotly.newPlot('rp_cm'.concat(j), data, layout, {responsive: true});
+
+                    
+                    
                         //*********************************************************
                         data = [];
                         layout = {};
@@ -2261,16 +2536,16 @@ x
                             type: "scatter",
                             mode: "lines",
                             name: 'Consommation',
-                            x: consomation[0],
-                            y: consomation[1],
+                            x: production[0],
+                            y: consomationTot[j],
                             line: {color: '#17BECF'}
                         };
                         data.push(trace1);
                         layout = {
-                            title: 'Time series',
+                            title: 'Valeurs horaires de la consommation site'.concat(j),
                             xaxis: {
                                 autorange: true,
-                                range: [consomation[0][0], consomation[0][consomation[0].length - 1]],
+                                range: [production[0][0], production[0][production[0].length - 1]],
                                 rangeselector: {
                                     buttons: [
                                         {
@@ -2288,17 +2563,17 @@ x
                                         {step: 'all'}
                                     ]
                                 },
-                                rangeslider: {range: [consomation[0][0], consomation[0][consomation[0].length - 1]]},
+                                rangeslider: {range: [production[0][0], production[0][production[0].length - 1]]},
                                 type: 'date'
                             },
                         };
-                        Plotly.newPlot('vh_cm', data, layout, {responsive: true});
+                        Plotly.newPlot('vh_cm'.concat(j), data, layout, {responsive: true});
                         //*********************************************************
                         data = [];
                         layout = {};
                         //*********************Consomation Histogram**************
                         trace1 = {
-                            x: consomation[1],
+                            x: consomationTot[j],
                             name: 'consommation',
                             autobinx: true,
                             histnorm: "count",
@@ -2317,58 +2592,76 @@ x
                             bargap: 0.05,
                             bargroupgap: 0.2,
                             barmode: "overlay",
-                            title: "Consommation",
-                            xaxis: {title: "puissance"},
-                            yaxis: {title: " "}
+                            title: "Histogramme de la consommation du site".concat(j),
+                            xaxis: {title: "Puissance"},
+                            yaxis: {title: "Fréquence"}
                         };
-                        Plotly.newPlot('hm_cm', data, layout, {responsive: true});
+                        Plotly.newPlot('hm_cm'.concat(j), data, layout, {responsive: true});
                         //*********************************************************
                         data = [];
                         layout = {};
                         //*********************Consomation Heatmap**************
+                       
                         data = [{
-                            z: consomation_heatmap,
+                            z: consomation_heatmap1Tot[j],
                             colorscale: 'Electric',
                             type: 'heatmap'
                         }];
-                        Plotly.newPlot('heat_cm', data, {yflip: true}, {responsive: true},);
+                        Plotly.newPlot('heat_cm'.concat(j), data, {yflip: true}, {responsive: true},);
+                   }    
                         //***********************tableau Répartition des différents paramètres par poste horaire
-                        for (let i = 0; i < PH_consomation.length; i++) {
-                            $('#t_charge').append(
-                                "<td>" + round(PH_consomation[i], 0) + "</td>"
+                    
+                    for (let j = 0; j < PH_consomation.length; j++) {     
+                        
+                        for (let i = 0; i < 4; i++) {
+                            $('#t_charge'.concat(j)).append(
+                                "<td>" + round(Object.values(PH_consomation[j])[i], 0) + "</td>"
                             );
-                            $('#t_transportee').append(
-                                "<td>" + round(PH_auto_consome[i], 0) + "</td>"
+                            $('#t_transportee'.concat(j)).append(
+                                "<td>" + round(Object.values(PH_auto_consome[j])[i], 0) + "</td>"
                             );
 
-                            $('#t_prod').append(
-                                "<td>" + round(PH_production[i], 0) + "</td>"
-                            );
-                            $('#t_cedee').append(
-                                "<td>" + round(PH_cedee[i], 0) + "</td>"
-                            );
-                            $('#t_imp').append(
-                                "<td>" + round(PH_importer[i], 0) + "</td>"
+                           
+                            
+                            $('#t_imp'.concat(j)).append(
+                                "<td>" + round(Object.values(PH_importer[j])[i], 0) + "</td>"
                             );
                         }
-                        $('#t_charge').append(
-                            "<td>" + round(PH_consomation.reduce(reducer), 0) + "</td>"
+                    
+                        $('#t_charge'.concat(j)).append(
+                            "<td>" + round(Object.values(PH_consomation[j]).reduce(reducer), 0) + "</td>"
                         );
-                        $('#t_transportee').append(
-                            "<td>" + round(PH_auto_consome.reduce(reducer), 0) + "</td>"
+                        $('#t_transportee'.concat(j)).append(
+                            "<td>" + round(Object.values(PH_auto_consome[j]).reduce(reducer), 0) + "</td>"
                         );
-                        $('#t_prod').append(
-                            "<td>" + round(PH_production.reduce(reducer), 0) + "</td>"
+                        $('#t_imp'.concat(j)).append(
+                            "<td>" + round(Object.values(PH_importer[j]).reduce(reducer), 0) + "</td>"
                         );
-                        $('#t_cedee').append(
-                            "<td>" + round(PH_cedee.reduce(reducer), 0) + "</td>"
-                        );
-                        $('#t_imp').append(
-                            "<td>" + round(PH_importer.reduce(reducer), 0) + "</td>"
-                        );
+                        
+                    }
+                    
+                        for (let i = 0; i <4 ; i++) {
+
+                                $('#t_prod').append(
+                                    "<td>" + round(PH_production[i], 0) + "</td>"
+                                );
+                                $('#t_cedee').append(
+                                    "<td>" + round(PH_cedee[i], 0) + "</td>"
+                                );
+
+                            };   
+
+                            $('#t_prod').append(
+                                "<td>" + round(PH_production.reduce(reducer), 0) + "</td>"
+                            );
+                            $('#t_cedee').append(
+                                "<td>" + round(PH_cedee.reduce(reducer), 0) + "</td>"
+                            );
+                      
+                   for (let j = 0; j < PH_consomation.length; j++) {     
                         //************************************************************************
                         data = [{
-                            values: [PH_auto_consome.reduce(reducer),PH_importer.reduce(reducer)],
+                            values: [Object.values(PH_auto_consome[j]).reduce(reducer),Object.values(PH_importer[j]).reduce(reducer)],
                             labels: ['Auto-consommee', 'importee'],
                             domain: {column: 0},
                             name: 'Auto-consommee , E-importee',
@@ -2391,118 +2684,53 @@ x
                                 }
                             ]
                         };
-                        Plotly.newPlot('auto_cm_imp', data, layout, {responsive: true});
+                        Plotly.newPlot('auto_cm_imp'.concat(j), data, layout, {responsive: true});
+                   }
                         //**************************************repartion energy produite**********************
+                        
                         trace1 = {
                             x: ['Jour','Ete','Soir','Nuit'],
-                            y: PH_autoconsomer_ps,
-                            name: 'Production',
-                            type: 'bar'
-                        };
-
-                        trace2 = {
-                            x: ['Jour','Ete','Soir','Nuit'],
                             y: PH_cedee_ps,
-                            name: 'Auto-consommee',
+                            name: 'Cedée',
                             type: 'bar'
                         };
 
-                        data = [trace1, trace2];
+                        data = [trace1];
 
                         layout = {barmode: 'stack'};
 
                         Plotly.newPlot('rp_pd', data, layout,{responsive: true});
-
+                        for (let j=0; j<PH_autoconsomer_ps2.length;j++){
+                        Plotly.addTraces('rp_pd', {name: 'Auto-consommee'.concat(j),type: 'bar',x:['Jour','Ete','Soir','Nuit'],y: PH_autoconsomer_ps2[j]});
+                        }
                         //***********************prod/consomer********************
-                        data = [{
-                            values: [cedee[1].reduce(reducer)/production[1].reduce(reducer),auto_consome[1].reduce(reducer)/production[1].reduce(reducer)],
-                            labels: ['cedee','auto-consommee'],
-                            domain: {column: 0},
-                            hoverinfo: 'label+percent+name',
-                            hole: .4,
-                            type: 'pie'
-                        }];
+                    console.log('PH_cedee');
+                    console.log(PH_cedee);
+                    console.log(PH_cedee.reduce(reducer));
+                     console.log(PH_production.reduce(reducer));
+                     console.log((PH_cedee.reduce(reducer)/PH_production.reduce(reducer))*100);
+                    trace1={
+                        x: ['Production'],
+                        y: [(PH_cedee.reduce(reducer)/PH_production.reduce(reducer))*100],
+                        name: 'Cedée',
+                        type: 'bar'
+                    };
+                    layout = {barmode: 'stack'};
+                    data = [trace1];
+                   
+                    Plotly.newPlot('pd_cm', data, layout, {responsive: true});
 
-                        layout = {
-                            showlegend: true,
-                            annotations: [
-                                {
-                                    font: {
-                                        size: 14
-                                    },
-                                    showarrow: false,
-                                    text: ' ',
-
-                                }
-                            ]
+                    for (let j=0; j<PH_autoconsomer_ps2.length;j++){
+                           Plotly.addTraces('pd_cm', {name: 'Auto-consommee'.concat(j),type: 'bar',x: ['Production'],y: [((Object.values(PH_auto_consome[j])).reduce(reducer)/PH_production.reduce(reducer))*100]});
                         };
-                        Plotly.newPlot('pd_cm', data, layout, {responsive: true});
+
                         //*********************************************************
-                        data = [];
-                        layout = {};
-                        //**************************************repartion energy produite (trensporter importer**********************
-                        /*
-                        trace1 = {
-                            x: ['Jour','Ete','Soir','Nuit'],
-                            y: PH_autoconsomer_ps2,
-                            name: 'Transporter',
-                            type: 'bar'
-                        };
-
-                        trace2 = {
-                            x: ['Jour','Ete','Soir','Nuit'],
-                            y: PH_imp_ps,
-                            name: 'Importer',
-                            type: 'bar'
-                        };
-
-                        data = [trace1, trace2];
-
-                        layout = {barmode: 'stack'};
-
-                        Plotly.newPlot('tp_imp', data, layout,{responsive: true});
-                        */
-                        //***********************cedee/importer********************
-                        /*
-                        data = [{
-                            values: [cedee[1].reduce(reducer),auto_consome[1].reduce(reducer)],
-                            labels: ['Cedee','Transporter'],
-                            domain: {column: 0},
-                            name: 'Cons',
-                            hoverinfo: 'label+percent+name',
-                            hole: .4,
-                            type: 'pie'
-                        }];
-
-                        layout = {
-                            title: 'Cons',
-                            showlegend: false,
-                            annotations: [
-                                {
-                                    font: {
-                                        size: 14
-                                    },
-                                    showarrow: false,
-                                    text: ' ',
-
-                                }
-                            ]
-                        };
-                        Plotly.newPlot('cedee_imp', data, layout, {responsive: true});
-                        //*********************************************************
-
-                        */
+                       
+                        
                         data=[];
+                       
+                        
                         trace1 = {
-                            type: "scatter",
-                            mode: "lines",
-                            name: 'Consommation',
-                            x: consomation[0],
-                            y: consomation[1],
-                            line: {color: '#17BECF'}
-                        };
-                        data.push(trace1);
-                        trace2 = {
                             type: "scatter",
                             mode: "lines",
                             name: 'Production',
@@ -2510,13 +2738,13 @@ x
                             y: production[1],
                             line: {color: '#FFC300'}
                         };
-                        data.push(trace2);
+                        data.push(trace1);
 
                         layout = {
-                            title: 'Time series',
+                            title: 'Supérposition de la consommation et la production',
                             xaxis: {
                                 autorange: true,
-                                range: [consomation[0][0], consomation[0][consomation[0].length-1]],
+                                range: [production[0][0], production[0][production[0].length-1]],
                                 rangeselector: {buttons: [
                                         {
                                             count: 1,
@@ -2532,25 +2760,30 @@ x
                                         },
                                         {step: 'all'}
                                     ]},
-                                rangeslider: {range: [consomation[0][0], consomation[0][consomation[0].length-1]]},
+                                rangeslider: {range: [production[0][0], production[0][production[0].length-1]]},
                                 type: 'date'
                             },
                         };
                         Plotly.newPlot('timeseries_pd_cm', data, layout,{responsive: true});
+                        for (let j=0; j<PH_autoconsomer_ps2.length;j++){
+                        Plotly.addTraces('timeseries_pd_cm', {name: 'consommation'.concat(j),x:production[0],y: consomationTot[j]});
+                        };
+
                         //********************************************************************
+                    for (let j=0; j<PH_autoconsomer_ps2.length;j++){
                         data=[];
                         layout={};
 
                         trace1 = {
                             x: ["January","February","March","April","May","June","July","August","September","October","November","December"],
-                            y: month_auto,
+                            y: month_auto[j],
                             name: 'Transportee',
                             type: 'bar'
                         };
 
                         trace2 = {
                             x: ["January","February","March","April","May","June","July","August","September","October","November","December"],
-                            y: month_imp,
+                            y: month_imp[j],
                             name: 'Importee',
                             type: 'bar'
                         };
@@ -2559,13 +2792,16 @@ x
 
                         layout = {barmode: 'stack'};
 
-                        Plotly.newPlot('rp_m_cm', data, layout,{responsive: true});
+                        Plotly.newPlot('rp_m_cm'.concat(j), data, layout,{responsive: true});
+
+                    }
                         //***********************************************************************
 
                         trace1 = {
                             y: cashflow,
                             name: 'Cash Flow',
                             type: 'bar'
+                           
                         };
 
                         trace2 = {
@@ -2573,15 +2809,28 @@ x
                             mode: "lines",
                             name: 'Cash Flow Cumles',
                             y: cashflow_cum,
+                             yaxis: 'y2',
+                            
 
                             line: {color: '#17BECF'}
                         };
 
                         data = [trace1, trace2];
 
-                        layout = {barmode: 'stack'};
+                        layout = {barmode: 'relative',
+                                    xaxis: {range: [0, 25]},
+                        
+                                    yaxis2: {
+                                            overlaying: 'y',
+                                            side: 'right'
+                                        },
+                                        };
 
                         Plotly.newPlot('chat_cashflow', data, layout,{responsive: true});
+
+
+                        
+
                         //*********************************************************
 
                         trace1 = {
@@ -2616,170 +2865,9 @@ x
                         };
 
                         Plotly.newPlot('final_chart', data, layout,{responsive: true});
-                        console.log(cfads);
-                        //***********************************finance****************************************
-                        console.log(response.facture_regrularisation[0]);
-                        for(let i=0;i<response.delee;i++){
-                            
-                            
-
-                            $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
-                                "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
-                                "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
-                                "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                "<td>"+round(response.Facture_transport[i],0)+"</td>"+
-                                "<td>"+round(response.opex[i],0)+"</td>"+
-                                "<td>"+round(response.annuite[i],0)+"</td>"+
-                                "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
-                                "<td>"+round(response.cashflow[i],0)+"</td>"+
-                                "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                "<td>"+round(response.cfads[i],0)+"</td>"+
-                                "<td>"+round(response.dsacr[i],2)+"</td>"+
-                                "<td>"+round(response.llcr[i],2)+"</td>"
-                                +"</tr>"
-                            );
-                        }
-
-                        for(let i=response.delee;i<response.maturiter+response.delee;i++){
-                            
-                            $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
-                              "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
-                                "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
-                                "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                "<td>"+round(response.Facture_transport[i],0)+"</td>"+
-                                "<td>"+round(response.opex[i],0)+"</td>"+
-                                "<td>"+round(response.annuite[i],0)+"</td>"+
-                                "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
-                                "<td>"+round(response.cashflow[i],0)+"</td>"+
-                                "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                "<td>"+round(response.cfads[i],0)+"</td>"+
-                                "<td>"+round(response.dsacr[i],2)+"</td>"+
-                                "<td>"+round(response.llcr[i],2)+"</td>"
-                                +"</tr>"
-
-                            );
-
-                        }
-                        for(let i=response.maturiter+response.delee;i<11;i++){
-                            $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
-                                "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
-                                "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
-                                "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                "<td>"+round(response.Facture_transport[i],0)+"</td>"+
-                                "<td>"+round(response.opex[i],0)+"</td>"+
-                                "<td></td>"+
-                                "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
-                                "<td>"+round(response.cashflow[i],0)+"</td>"+
-                                "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                "<td>"+round(response.cfads[i],0)+"</td>"+
-                                "<td></td>"+
-                                "<td></td>"+
-
-                                +"</tr>"
-
-                            );
-
-                        }
-
-
-                        for(let i=11;i<20;i++){
-                            $('#result_finance2').append("<tr><td>" +(i+1)+"</td>"+
-                                "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
-                                "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
-                                "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                "<td>"+round(response.Facture_transport[i],0)+"</td>"+
-                                "<td>"+round(response.opex[i],0)+"</td>"+
-                                "<td></td>"+
-                                "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
-                                "<td>"+round(response.cashflow[i],0)+"</td>"+
-                                "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                "<td>"+round(response.cfads[i],0)+"</td>"+
-                                "<td></td>"+
-                                "<td></td>"+
-
-                                +"</tr>"
-
-                            );
-
-                        }
-
-                        for(let i=20;i<30;i++){
-                            $('#result_finance3').append("<tr><td>" +(i+1)+"</td>"+
-                                "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
-                                "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
-                                "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                "<td>"+round(response.Facture_transport[i],0)+"</td>"+
-                                "<td>"+round(response.opex[i],0)+"</td>"+
-                                "<td></td>"+
-                                "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
-                                "<td>"+round(response.cashflow[i],0)+"</td>"+
-                                "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                "<td>"+round(response.cfads[i],0)+"</td>"+
-                                "<td></td>"+
-                                "<td></td>"+
-
-                                +"</tr>"
-
-                            );
-
-                        }
-
-                        $('#cash_tab').each(function() {
-                        var $this = $(this);
-                        var newrows = [];
-                        $this.find("tr").each(function(){
-                            var i = 0;
-                            $(this).find("td").each(function(){
-                                i++;
-                                if(newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
-                                newrows[i].append($(this));
-                            });
-                        });
-                        $this.find("tr").remove();
-                        $.each(newrows, function(){
-                            $this.append(this);
-                            });
-                        });
-
-                        $('#cash_tab2').each(function() {
-                        var $this = $(this);
-                        var newrows = [];
-                        $this.find("tr").each(function(){
-                            var i = 0;
-                            $(this).find("td").each(function(){
-                                i++;
-                                if(newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
-                                newrows[i].append($(this));
-                            });
-                        });
-                        $this.find("tr").remove();
-                        $.each(newrows, function(){
-                            $this.append(this);
-                            });
-                        });
                         
-                        $('#cash_tab3').each(function() {
-                        var $this = $(this);
-                        var newrows = [];
-                        $this.find("tr").each(function(){
-                            var i = 0;
-                            $(this).find("td").each(function(){
-                                i++;
-                                if(newrows[i] === undefined) { newrows[i] = $("<tr></tr>"); }
-                                newrows[i].append($(this));
-                            });
-                        });
-                        $this.find("tr").remove();
-                        $.each(newrows, function(){
-                            $this.append(this);
-                            });
-                        });
-                    }
-                });
-
-            });
-
-     
+        }, 7000);
+            //*******************plotly end***********************************************//
 
                 
                 

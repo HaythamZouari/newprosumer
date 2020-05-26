@@ -17,6 +17,31 @@ class Consomation
     private $id;
 
     /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+
+    private $allDateDeb= [];
+
+     /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+
+    private $allDateFin= [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+
+    private $allConsomation_annuel= [];
+
+    
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+
+    private $allTarif= [];
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
 
@@ -72,6 +97,60 @@ class Consomation
     {
         return $this->id;
     }
+
+    public function getallDateDeb(): ?array
+    {
+        return $this->allDateDeb;
+    }
+
+    public function setallDateDeb(array $allDateDeb): self
+    {
+        $this->allDateDeb = $allDateDeb;
+
+        return $this;
+    }
+
+
+    public function getallDateFin(): ?array
+    {
+        return $this->allDateFin;
+    }
+
+    public function setallDateFin(array $allDateFin): self
+    {
+        $this->allDateFin = $allDateFin;
+
+        return $this;
+    }
+
+    public function getallConsomationAnnuel(): ?array
+    {
+        return $this->allConsomation_annuel;
+    }
+
+    public function setallConsomationAnnuel(array $allConsomation_annuel): self
+    {
+        $this->allConsomation_annuel = $allConsomation_annuel;
+
+        return $this;
+    }
+  
+
+
+
+    public function getTabTarif(): ?array
+    {
+        return $this->allTarif;
+    }
+
+    public function setTabTarif(array $allTarif): self
+    {
+        $this->allTarif = $allTarif;
+
+        return $this;
+    }
+
+
 
     public function getDateDeb(): ?\DateTimeInterface
     {

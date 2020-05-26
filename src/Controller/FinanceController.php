@@ -36,9 +36,11 @@ class FinanceController extends AbstractController
 
             if (($request->get('transport_energie'))==null){
                 $finance->setTransportEng(false);
+                $t=1;
             }
             else{
                 $finance->setTransportEng(true);
+                $t=0;
             }
             $finance->setProject($project);
             $finance->setDegradation((float)$request->get('degradation'));
@@ -52,13 +54,54 @@ class FinanceController extends AbstractController
             $finance->setTarifUni(0.256);
             $finance->setTarifTransport(0.007);
             $finance->setTauxActualisation((float)$request->get('taux_actualisation'));
-            if($request->get('transport_energie') ==0){
-                $g_E_transporter =FinanceService::gainEnergieTransporterUnif($finance->getTarifUni(),$project);
+            $allautoconsomme=$project->getAutoConsomer();
+            
+            for ($i=0;$i<count($allautoconsomme[0]);$i++){ 
+            $tottransporte[$i][0]=0;
+            $tottransporte[$i][1]=0;
+            }
+
+            for ($i=0;$i<count($allautoconsomme[0]);$i++){ 
+                for ($j=$t;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+
+                    $tottransporte[$i][1]+=$allautoconsomme[$j][$i][1];
+                    $tottransporte[$i][0]= $allautoconsomme[0][$i][0];
+                }
+              
+            }   
+
+            for ($i=0;$i<count($allautoconsomme[0]);$i++){ 
+                $totautoconsomme[$i][0]=0;
+                $totautoconsomme[$i][1]=0;
+                }
+    
+                for ($i=0;$i<count($allautoconsomme[0]);$i++){ 
+                    for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+    
+                    $totautoconsomme[$i][1]+=$allautoconsomme[$j][$i][1];
+                    $totautoconsomme[$i][0]= $allautoconsomme[0][$i][0];
+                    }
+                  
+            }   
+           
+
+            if($project->getConsomation()->getTypeTarif()==0){
+                    $g_E_transporter =FinanceService::gainEnergieTransporterUnif($finance->getTarifUni(),$project,$totautoconsomme);
+               
             }
 
             else  {
-                $g_E_transporter =FinanceService::gainEnergieTransporterHoraire($finance->getTarifHoraire(),$project);
+                
+                $g_E_transporter =FinanceService::gainEnergieTransporterHoraire($finance->getTarifHoraire(),$project,$totautoconsomme);
+                
             }  
+
+
+
+          
+
+            
+
             $g_E_cedee=FinanceService::gainEnergieCedee($finance->getTarifHoraire(),$project);
             $gain=[];
             $cash_flow=[];
@@ -71,7 +114,7 @@ class FinanceController extends AbstractController
             $frais_exp=FinanceService::fraisExploitation($project);
             $opex=FinanceService::opex($project);
             if ($finance->getTransportEng() ==true){
-                $f_transporter=FinanceService::facteurTransport($project);
+                $f_transporter=FinanceService::facteurTransport($project,$totautoconsomme);
             }
             else{
                 for($i=0;$i<30;$i++){
@@ -108,7 +151,13 @@ class FinanceController extends AbstractController
             for($i=1;$i<count($cash_flow);$i++){
                 $cash_flow_cumule[$i]=$cash_flow_cumule[$i-1]+$cash_flow[$i];
             }
+            $consommation=$project->getConsomation()->getallConsomationAnnuel();
+            $production=$project->getPvgis()->getResult();
+            $auto=$project->getAutoConsomer();
+            $cedee=$project->getCedee();
+            $importee=$project->getImporte();
             
+
             $finance->setAnnuite($annuite);
             $finance->setfactransport($f_transporter);
             $finance->setDepense($dep);
@@ -132,8 +181,22 @@ class FinanceController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
                 //for($i=0;$i<$)
                 return new JsonResponse([
+                    'con'=>$consommation,
+                    'pro'=>$production,
+                    'aut'=>$auto,
+                    'ced'=>$cedee,
+                    'imp'=>$importee,
+                    'arr'=>$CFADS,
+                    'tot'=>$totautoconsomme,
+                    'all'=>$allautoconsomme,
+                    'dep'=>$dep,
+                    'depense'=>$depense,
+                    'gain'=>$gain,
+                    'cash_flow'=>$cash_flow,
+                   
 
-                    'arr'=>$CFADS
+
+
                     ]);
         }
     }
