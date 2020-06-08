@@ -613,14 +613,12 @@
 
 
 
- let courbe=[];
-        courbe[0]=[];
-        courbe[1]=[];
+ 
     Dropzone.autoDiscover = false;
     var dropzone_default = new Dropzone("#exlreader", {
         url: '{{ path('excelupload',{'id':project.id}) }}' ,
         dictDefaultMessage: "Importer votre fichier",
-        maxFiles: 20,
+        maxFiles: 1,
         dictMaxFilesExceeded: 'Only 20 file can be uploaded',
         maxFilesize: 20,  // in Mb
         acceptedFiles: ".xls,.xlsb,.xlsm,.xlsx,.xltm,.xlw,",
@@ -640,6 +638,9 @@
                 }
 
              */
+        let courbe=[];
+        courbe[0]=[];
+        courbe[1]=[];
              
         let dates = [];
         for (let i = 0; i < response.info.length ; i++) {
@@ -685,10 +686,12 @@
                     type: 'date'
                 },
             };
-            Plotly.newPlot('plot', data10, layout10,{responsive: true});        
+            Plotly.newPlot('plot', data10, layout10,{responsive: true});  
+                  console.log('data');
                 console.log(response.data);
                 console.log(response.factor); 
                 console.log(response.somme);
+                console.log('info');
                 console.log(response.info);  
                 console.log(dates);  
                 console.log(response.tt); 

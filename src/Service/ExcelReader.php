@@ -60,7 +60,10 @@ class ExcelReader
     {
         $worksheetit=0;
         $spreadsheet = ExcelReader::readFile($filename);
+        unset($data);
+        unset($data1);
         $data =[];
+        $data1=[];
         $numsheet = $spreadsheet->getSheetCount();
 
         if($numsheet===2){ /*si le nombre de feuilles du fichier eexcel est egal à 2 */

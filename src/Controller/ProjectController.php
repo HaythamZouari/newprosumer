@@ -73,7 +73,7 @@ class ProjectController extends AbstractController
      */
     public function excelupload(Project $project,Request $request,FileUpload $fileUpload,Session $session){
         // get the file from the request object
-        
+        $data=[];
         $file = $request->files->get('file');
         $filePath =$fileUpload->upload($file,'consomation');
         $data=ExcelReader::createDataFromSpreadsheet('uploads/'.$filePath);
@@ -82,6 +82,8 @@ class ProjectController extends AbstractController
         $dateFinexl=$data[count($data)-1][0];
         $session->set('dateDebExl',$dateDebexl);
         $session->set('dateFinExl',$dateFinexl);
+       
+
         $factor[2][7]=[24];
         $tarifUni[2][7]=[24];
         $tariftmp=[];
@@ -91,8 +93,10 @@ class ProjectController extends AbstractController
                 $factor[1][$i][$j]=0;
                 $tarifUni[0][$i][$j]=0;
                 $tarifUni[1][$i][$j]=0;
+                
             }
         }
+        
         foreach ($data as $datum) {
            $date->setTimestamp($datum[0]);
            //if the month is between 6,7,8 it's avrg summr week
@@ -159,7 +163,7 @@ class ProjectController extends AbstractController
         $entityManager=$this->getDoctrine()->getManager();
         $entityManager->persist($project);
         $entityManager->flush();
-        $session->set('avgweek',$tarifUni);
+        /*$session->set('avgweek',$tarifUni);*/
         $session->set('data',$data);
         return new JsonResponse(['data'=>$project->getConsomation()->getAvgweek(),
         'factor'=>$factor,

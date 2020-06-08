@@ -98,7 +98,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link " href="">
+                                    <a class="nav-link " href="{{ path('contact') }}">
                                         <i class="ni ni-single-02 text-yellow"></i>
                                         <span class="font-weight-bold text-gray">
                                             Contactez nous
@@ -207,7 +207,12 @@
             </div>
             <div class="col-xl-10 mb-2 mb-sm-2">
                 <img src="{{ asset('build/img/brand/Image8.png') }}" class="img-fluid" alt="Responsive image">
+
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/s_nA91FUxG0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                
             </div>
+            
+
         </div>
     </div>
     {% endblock %}
@@ -217,23 +222,21 @@
             <div class="row align-items-center justify-content-xl-between">
                 <div class="col-xl-6">
                     <div class="copyright text-center text-xl-left text-muted">
-                        &copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+                        &copy; 2020 <a href="https://www.energytoolkit.tn" class="font-weight-bold ml-1" target="_blank">Energy Toolkit</a>
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <ul class="nav nav-footer justify-content-center justify-content-xl-end">
                         <li class="nav-item">
-                            <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+                            <a href="https://www.prosumers.tn" class="nav-link" target="_blank">Prosumers</a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+                            <a href="https://www.prosumers.tn" class="nav-link" target="_blank">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+                            <a href="https://www.prosumers.tn" class="nav-link" target="_blank">Blog</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -242,16 +245,7 @@
     </div>
 </div>
         {% block javascripts %}
-            <!-- Global site tag (gtag.js) - Google Analytics -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153153853-1"></script>
-            <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-
-                gtag('config', 'UA-153141382-1');
-            </script>
-            {{ encore_entry_script_tags('app') }}
+           
 
             <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
             <script src={{ asset('build/js/plugins/chart.js/dist/Chart.min.js') }}></script>

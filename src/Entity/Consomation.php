@@ -255,8 +255,8 @@ class Consomation
     {
         for ($i =0 ; $i<7;$i++){
             for($j =0;$j<=23;$j++){
-                $this->avgweek[0][$i][$j]+=$avgweek[0][$i][$j];
-                $this->avgweek[1][$i][$j]+=$avgweek[1][$i][$j];
+                $this->avgweek[0][$i][$j]=$avgweek[0][$i][$j];
+                $this->avgweek[1][$i][$j]=$avgweek[1][$i][$j];
 
             }
         }

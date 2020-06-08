@@ -1572,24 +1572,24 @@ x
  {% for j in range(0, ((cmmonth|length)-1)) %}                                             
                                     <figure class="img-container img-full group">
                                         <chart id="auto_cm_imp{{j}}"></chart> 
-                                        <figcaption ><span class="caption-headline"></span>Ce graphique indique la répartition de la consommation aprés l'installation de la centrale photovoltaique entre énergie autoproduite et énergie importée du réseau"</figcaption>
+                                        <figcaption ><span class="caption-headline">Répartition de la consommation du site {{j}}  </span>Ce graphique indique la répartition de la consommation aprés l'installation de la centrale photovoltaique entre énergie autoproduite et énergie importée du réseau"</figcaption>
                                     </figure>
      {% endfor %}                        
                                     <figure class="img-container img-full group">
                                         <chart id="rp_pd"></chart> 
-                                        <figcaption ><span class="caption-headline"></span>Répartition de l'énergie produite</figcaption>
+                                        <figcaption ><span class="caption-headline">Répartition de l'énergie produite par poste horaire</span></figcaption>
                                     </figure>
 <p style="page-break-before: always;display:block;"></p>                                            
                                         
                                     <figure class="img-container img-full group">
                                         <chart id="pd_cm"></chart> 
-                                        <figcaption ><span class="caption-headline"></span>Répartition de l'énergie produite</figcaption>
+                                        <figcaption ><span class="caption-headline">Répartition de l'énergie produite Totale</span></figcaption>
                                     </figure>
-                                    <p>Le graphique suivant affiche une superposition de la consommation avec la production sur une partie de l’année avec des pas horaires.</p>
+                                    <p></p>
                                        
                                     <figure class="img-container img-full group">
                                         <chart id="timeseries_pd_cm"></chart> 
-                                        <figcaption ><span class="caption-headline"></span>Superposition de la courbe de production et la courbe de consommation</figcaption>
+                                        <figcaption ><span class="caption-headline">Superposition de la courbe de production et la courbe de consommation</span>Ce graphique affiche une superposition de la consommation avec la production sur toute l’année avec un pas d'une heure</figcaption>
                                     </figure>
                                     {% for j in range(0, ((cmmonth|length)-1)) %}
  <p style="page-break-before: always;display:block;"></p>                                                              
@@ -1621,7 +1621,7 @@ x
                                     </div>
                                     <figure class="img-container img-full group">
                                         <chart id="rp_m_cm{{j}}"></chart> 
-                                        <figcaption ><span class="caption-headline"></span>Répartition mensuelle de l'énergie consommée</figcaption>
+                                        <figcaption ><span class="caption-headline">Répartition mensuelle de l'énergie consommée</span></figcaption>
                                     </figure>
                 {% endfor %}   
                                     
@@ -1719,13 +1719,13 @@ x
                                                           
                                             <figure class="img-container img-full group">
                                         <chart id="chat_cashflow1"></chart> 
-                                        <figcaption ><span class="caption-headline">Figure 10 Variation du DSCR sur la durée de remboursement du crédit</span></figcaption>
+                                        <figcaption ><span class="caption-headline">Répartition des gains et dépenses sur la durée de vie du projet</span></figcaption>
                                 </figure>
                               
                                                   
                                             <figure class="img-container img-full group">
                                         <chart id="chat_cashflow"></chart> 
-                                        <figcaption ><span class="caption-headline">Figure 10 Variation du DSCR sur la durée de remboursement du crédit</span></figcaption>
+                                        <figcaption ><span class="caption-headline">Cash flow et cash flow cumulés sur la durée de vie du projet</span></figcaption>
                                 </figure>
                             
  <p style="page-break-after: always"></p>                                       
@@ -1806,7 +1806,7 @@ x
 
                             <figure class="img-container img-full group">
                                 <chart id="final_chart"></chart> 
-                                <figcaption ><span class="caption-headline">Figure 10 Variation du DSCR sur la durée de remboursement du crédit</span> </figcaption>
+                                <figcaption ><span class="caption-headline">Variation du DSCR sur la durée de remboursement du crédit</span> </figcaption>
                             </figure>
                             
                             </div>
