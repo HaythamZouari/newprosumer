@@ -22,6 +22,19 @@ class ProjectRepository extends ServiceEntityRepository
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */
+    
+  /*  public function findProjects(User $user){
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p.name
+            FROM App\Entity\Project p
+                        WHERE p.user_id > :user_id'
+        )->setParameter('user_id', $user->getId());
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
     /*
     public function findByExampleField($value)
     {

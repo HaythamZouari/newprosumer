@@ -880,7 +880,7 @@
                         $('#consommationS').append(" <td>"+Math.round(response.consommationS[0],0)+"</td><td>kWh</td>");
                         $('#importerS').append(" <td>"+Math.round(response.importerS[0],0)+"</td><td>kWh</td>");
                         $('#prod25').append(" <td>"+Math.round(response.prod25,0)+"</td><td>kWh</td>");
-                        $('#lcoe').append("<td>"+Math.round(response.lcoe,3)+"</td><td>DT</td>");
+                        $('#lcoe').append("<td>"+(Math.round(response.lcoe*1000)/1000)+"</td><td>DT</td>");
                         $('#t_autoc').append("<td>"+Math.round(response.t_auto[0]*100,2)+"</td><td>%</td>");
                         /*$('#t_couv').append("<td>"+Math.round(response.t_couverture*100,2)+"</td><td>%</td>");*/
                         $('#productible').append("<td>"+Math.round(response.productible,0)+"</td><td>kWh/kWc</td>");
