@@ -152,7 +152,15 @@ class FinanceController extends AbstractController
                 $cash_flow_cumule[$i]=$cash_flow_cumule[$i-1]+$cash_flow[$i];
             }
             $consommation=$project->getConsomation()->getallConsomationAnnuel();
-            $production=$project->getPvgis()->getResult();
+            if($project->getCsvProd()!=null){
+                $production=$project->getCsvProd()->getResult();
+            }
+            if($project->getPvgis()!=null)
+                $production=$project->getPvgis()->getResult();
+            if($project->getNinja()!=null)
+                $production=$project->getNinja()->getResult();
+           
+
             $auto=$project->getAutoConsomer();
             $cedee=$project->getCedee();
             $importee=$project->getImporte();

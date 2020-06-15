@@ -14,6 +14,7 @@
     </div>
 </div>
 <script>
+    
     Dropzone.autoDiscover = false;
     var dropzone_default = new Dropzone("#csvreader", {
         url: '{{ path('readcsv',{'id': project.id}) }}' ,
@@ -44,8 +45,11 @@
                 $('#tabs-icons-text-3').toggle();
                 $('#tabs-icons-text-3-tab').addClass('active');
                 $('#tabs-icons-text-2-tab').removeClass('active');
+                console.log(response.da);
             });
         }
 
     });
+
+
 </script>

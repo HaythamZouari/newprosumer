@@ -34,7 +34,7 @@ class ProductionController extends AbstractController
         $pvgis->setLoss((float)$request->get('loss'));
         $pvgis->setMountingType((int)$request->get('trackingtype'));
         $pvgis->setPeakPower(((float)$request->get('peakpower'))+((float)$request->get('peakpower2'))+((float)$request->get('peakpower3')));
-        $pvgis->setPvTech($request->get('technologies'));
+        $pvgis->setPvTech('crystSi');
         $pvgis->setSlop((float)$request->get('angle'));
         $httpClient = HttpClient::create();
         $response = $httpClient->request('GET',
@@ -43,7 +43,7 @@ class ProductionController extends AbstractController
             '&lon='.$request->get('lon').
             '&raddadtabase'.$request->get('raddadtabase').
             '&peakpower='.$request->get('peakpower').
-            '&pvtechchoice='.$request->get('technologies').
+            '&pvtechchoice=crystSi'.
             '&loss='.$request->get('loss').
             '&angle='.$request->get('angle').
             '&aspect='.$request->get('aspect').
@@ -85,7 +85,7 @@ class ProductionController extends AbstractController
                 '&lon='.$request->get('lon').
                 '&raddadtabase'.$request->get('raddadtabase').
                 '&peakpower='.$request->get('peakpower2').
-                '&pvtechchoice='.$request->get('technologies').
+                '&pvtechchoice=crystSi'.
                 '&loss='.$request->get('loss2').
                 '&angle='.$request->get('angle2').
                 '&aspect='.$request->get('aspect2').
@@ -134,7 +134,7 @@ class ProductionController extends AbstractController
                 '&lon='.$request->get('lon').
                 '&raddadtabase'.$request->get('raddadtabase').
                 '&peakpower='.$request->get('peakpower2').
-                '&pvtechchoice='.$request->get('technologies').
+                '&pvtechchoice=crystSi'.
                 '&loss='.$request->get('loss2').
                 '&angle='.$request->get('angle2').
                 '&aspect='.$request->get('aspect2').
@@ -152,7 +152,7 @@ class ProductionController extends AbstractController
                 '&lon='.$request->get('lon').
                 '&raddadtabase'.$request->get('raddadtabase').
                 '&peakpower='.$request->get('peakpower3').
-                '&pvtechchoice='.$request->get('technologies').
+                '&pvtechchoice=crystSi'.
                 '&loss='.$request->get('loss3').
                 '&angle='.$request->get('angle3').
                 '&aspect='.$request->get('aspect3').
