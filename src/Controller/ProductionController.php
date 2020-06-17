@@ -208,7 +208,6 @@ class ProductionController extends AbstractController
                 substr($string,4,2).
                 '/'.substr($string,6,2).
                 ' '.(int)((substr($string,9,2))+1).':00'),(float)($array[$i][1]/1000)];
-
         }
         */
 
