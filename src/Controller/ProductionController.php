@@ -308,7 +308,7 @@ class ProductionController extends AbstractController
      * @Route("/readcsv/{id}",name="readcsv")
      */
     public function readcsv(EventDispatcherInterface $eventDispatcher,Request $request,FileUpload $fileUpload,Project $project){
-        /*$csvreader = new CsvProd();
+        $csvreader = new CsvProd();
         $result=[];
 
         $file = $request->files->get('file');
@@ -339,6 +339,6 @@ class ProductionController extends AbstractController
         );
 
         
-        return new JsonResponse(['data'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$result),'da'=>$csv]);*/
+        return new JsonResponse(['data'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$result),'da'=>$csv]);
     }
 }
