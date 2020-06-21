@@ -7,7 +7,7 @@
             <form class="consomation" id="consomationForm" action="{{ path('project_show',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
                 <div>
                     <div>
-                        <div style="display: inline-block"><button type="button" onclick="incrementValue()" value="Increment Value" class="btn-secondary btn" >Nouveau Site</button><br></div>
+                        <div style="display: inline-block"><button type="button" onclick="incrementValue()" id='increment' value="Increment Value"  disabled="disabled" class="btn-secondary btn" >Nouveau Site</button><br></div>
 
                        <div style="display: inline-block"> <label class="form-control-label required" for="number" >Site</label></div>
                         
@@ -98,8 +98,10 @@
                                     <label class="form-control-label control-label required" for="exlimg">Courbe de charge (XLSX)</label>
                                     <div class="form-control-file" id="exlimg">
                                     <div class="dropzone" id="exlreader"></div>
+                                    <div class="alert alert-success" id="success" role="alert" style="display:none">
+                                                <strong>Courbe de charge importée</strong> </div>
                                     <pre id="plot"></pre>
-                                    </div>
+                                    
                                 </div>
                             </div>
                             </div>
@@ -568,7 +570,7 @@
                         
                         
                         <button type="button" name="continue" id="continue" onclick="consomationSubmit()"  class="btn-secondary btn" >Valider Site</button>
-                        <button type="button" name="continuer" id="continuer" onclick="valider()"  class="btn-secondary btn" >Continuer</button>
+                        <button type="button" name="continuer" id="continuer" onclick="valider()"  class="btn-secondary btn" disabled='disabled' >Continuer</button>
                          
                     </div>
                 </div>
@@ -607,10 +609,14 @@
         value++;
         document.getElementById('number').value = value;
         document.getElementById('dateDeb').readOnly=true;
-        Plotly.deleteTraces('plot', 0);
+       
         Dropzone.forElement('#exlreader').removeAllFiles(true);
+        document.getElementById('increment').setAttribute('disabled','disabled');
+        document.getElementById('continue').removeAttribute('disabled');
+        document.getElementById('continuer').setAttribute('disabled','disabled');
     }
 
+    
 
 
  
@@ -632,6 +638,7 @@
                 formData.append("tarif", $('[name=tarif]'));
             });
             this.on("success", function (file, response) {
+                
             /*    for (let i = 0; i < response.data.length ; i++) {
                     dates =new Date(response.data[i][0]*1000);
                     response.data[i][0]=dates;

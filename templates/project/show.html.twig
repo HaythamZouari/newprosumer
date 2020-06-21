@@ -91,12 +91,17 @@
                     console.log(response.alldata);
                     console.log(response.nbre);
                     
-                   
+                   document.getElementById('continue').setAttribute('disabled','disabled');
+                   document.getElementById('increment').removeAttribute('disabled');
+                   document.getElementById('continuer').removeAttribute('disabled');
+            
 
 
                    
                 }
             });
+            
+            
             /*
             $.get( url ,data,function (dat) {
                console.log(dat);
