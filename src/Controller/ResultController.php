@@ -168,6 +168,7 @@ class ResultController extends AbstractController
                 $a_cm_annuel[$j]+= $project->getAutoConsomer()[$j][$i][1];
                 
             }
+           
             $taux_auto[$j]=(float)($a_cm_annuel[$j]/$cm_annuel[$j]);
             $imp_annuel[$j]=(float)($cm_annuel[$j]-$a_cm_annuel[$j]);
         }    

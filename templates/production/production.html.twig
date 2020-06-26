@@ -6,7 +6,7 @@
         <div class="row text-center">
             <div class="col-xl-4 col-lg-6">
                 <div class="card card-stats mb-4 mb-xl-0">
-                    <button  class="btn btn-lg" type="button"  onclick="ninjabtn()">Ninja API</button>
+                    <button  class="btn btn-lg" type="button" disabled="disabled"  onclick="ninjabtn()">Ninja API</button>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-6">
@@ -38,6 +38,10 @@
                     {{ include('production/csvreader.html.twig') }}
                 </div>
             </div>
+            <div class="alert alert-success" id="successprod" role="alert" style="display:none">
+                                                <strong>Production Validée</strong> </div>
+                                    <div class="alert alert-danger" id="errorprod" role="alert" style="display:none">
+                                                <strong>Production non Valide</strong> </div>
               <button type="button" onclick="retourpvgis()" class="btn-secondary btn"style="width:100%">Retour</button>
         </div>
     </div>

@@ -6,6 +6,7 @@
         <div class="card-body px-lg-5 py-lg-5">
             <form class="consomation" id="consomationForm" action="{{ path('project_show',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
                 <div>
+                
                     <div>
                         <div style="display: inline-block"><button type="button" onclick="incrementValue()" id='increment' value="Increment Value"  disabled="disabled" class="btn-secondary btn" >Nouveau Site</button><br></div>
 
@@ -31,7 +32,7 @@
                                    <div>
                                         <div style="display: inline-block"><label class="form-control-label" >Domaine d'activité</label></div>
                                         <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state" id="activite" name="activite">
-                                            <option>Abattoir</option>
+                                            
                                             <option>Agroalimentaire</option>
                                             <option>Bureautique</option>
                                             <option>Extraction</option>
@@ -45,6 +46,7 @@
                                             <option>Plastique</option>
                                             <option>Poulailler</option>
                                             <option>Textile</option>
+                                            <option>Abattoir</option>
                                             <option>Pharmaceutique</option>
 
                                             </select>
@@ -98,8 +100,11 @@
                                     <label class="form-control-label control-label required" for="exlimg">Courbe de charge (XLSX)</label>
                                     <div class="form-control-file" id="exlimg">
                                     <div class="dropzone" id="exlreader"></div>
+                                    <button type="button" onclick="load()" id='reload'  style="display:none" class="btn-secondary btn" >Ressayer une autre courbe</button>
                                     <div class="alert alert-success" id="success" role="alert" style="display:none">
                                                 <strong>Courbe de charge importée</strong> </div>
+                                    <div class="alert alert-danger" id="error" role="alert" style="display:none">
+                                                <strong>Courbe de charge non conforme</strong> </div>
                                     <pre id="plot"></pre>
                                     
                                 </div>
@@ -136,7 +141,7 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number"  value="0"  step="1" min="0" class="form-control" name="date[1]">
+                                        <input type="number"  value="1"  step="1" min="0" class="form-control" name="date[1]">
                                     </td>
                                 </tr>
                                 <tr>
@@ -275,7 +280,7 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][1]">
+                                        <input type="number" step="1"  value="1" min="0" class="form-control" name="datehoraire[jour][1]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
@@ -283,12 +288,12 @@
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][1]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][1]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][1]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][1]">
                                         </div>
                                     </th>
                                 </tr>
@@ -299,7 +304,7 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][2]">
+                                        <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[jour][2]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
@@ -308,12 +313,12 @@
 
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][2]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][2]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][2]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][2]">
                                         </div>
                                     </th>
                                 </tr>
@@ -324,7 +329,7 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][3]">
+                                        <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[jour][3]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
@@ -332,12 +337,12 @@
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][3]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][3]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][3]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][3]">
                                         </div>
                                     </th>
                                 </tr>
@@ -348,7 +353,7 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][4]">
+                                        <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[jour][4]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
@@ -356,12 +361,12 @@
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][4]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][4]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][4]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][4]">
                                         </div>
                                     </th>
                                 </tr>
@@ -372,7 +377,7 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][5]">
+                                        <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[jour][5]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
@@ -380,12 +385,12 @@
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][5]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][5]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][5]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][5]">
                                         </div>
                                     </th>
                                 </tr>
@@ -396,21 +401,21 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][6]">
+                                        <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[jour][6]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[ete][6]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[ete][6]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][6]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][6]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][6]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][6]">
                                         </div>
                                     </th>
                                 </tr>
@@ -421,21 +426,21 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][7]">
+                                        <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[jour][7]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[ete][7]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[ete][7]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][7]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][7]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][7]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][7]">
                                         </div>
                                     </th>
                                 </tr>
@@ -446,21 +451,21 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][8]">
+                                        <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[jour][8]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[ete][8]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[ete][8]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][8]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][8]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][8]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][8]">
                                         </div>
                                     </th>
                                 </tr>
@@ -471,7 +476,7 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][9]">
+                                        <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[jour][9]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
@@ -479,12 +484,12 @@
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][9]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][9]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][9]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][9]">
                                         </div>
                                     </th>
                                 </tr>
@@ -495,7 +500,7 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][10]">
+                                        <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[jour][10]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
@@ -503,12 +508,12 @@
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][10]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][10]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][10]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][10]">
                                         </div>
                                     </th>
                                 </tr>
@@ -519,7 +524,7 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][11]">
+                                        <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[jour][11]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
@@ -527,12 +532,12 @@
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][11]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][11]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][11]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][11]">
                                         </div>
                                     </th>
                                 </tr>
@@ -543,7 +548,7 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[jour][12]">
+                                        <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[jour][12]">
                                     </td>
                                     <th scope="row">
                                         <div class="media align-items-center">
@@ -551,12 +556,12 @@
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[soir][12]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[soir][12]">
                                         </div>
                                     </th>
                                     <th scope="row">
                                         <div class="media align-items-center">
-                                            <input type="number" step="0.001"  value="0" min="0" class="form-control" name="datehoraire[nuit][12]">
+                                            <input type="number" step="1"  value="0" min="0" class="form-control" name="datehoraire[nuit][12]">
                                         </div>
                                     </th>
                                 </tr>
@@ -567,8 +572,13 @@
                     </div>
                    
                     <div class="text-center" >
+                         <div class="alert alert-success" id="successconso" role="alert" style="display:none">
+                                                <strong>Consommation Validée</strong> </div>
+                                    <div class="alert alert-danger" id="errorconso" role="alert" style="display:none">
+                                                <strong>Consommation non Valide</strong> </div>
                         
-                        
+                         
+
                         <button type="button" name="continue" id="continue" onclick="consomationSubmit()"  class="btn-secondary btn" >Valider Site</button>
                         <button type="button" name="continuer" id="continuer" onclick="valider()"  class="btn-secondary btn" disabled='disabled' >Continuer</button>
                          
@@ -602,6 +612,7 @@
 <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+       
     function incrementValue()
     {
         var value = parseInt(document.getElementById('number').value, 10);
@@ -614,7 +625,16 @@
         document.getElementById('increment').setAttribute('disabled','disabled');
         document.getElementById('continue').removeAttribute('disabled');
         document.getElementById('continuer').setAttribute('disabled','disabled');
+         $('#success').hide();
     }
+
+    function load(){
+        Dropzone.forElement('#exlreader').removeAllFiles(true);
+        $('#error').hide();
+        $('#reload').hide();
+
+    }
+
 
     
 
@@ -633,11 +653,18 @@
             this.on("maxfilesexceeded", function (file) {
                 this.removeFile(file);
             });
+             this.on("error", function (file) {
+                 $('#error').show();
+                  $('#reload').show();
+
+            });
+            
             this.on("sending", function (file, xhr, formData) {
                 // send additional data with the file as POST data if needed.
                 formData.append("tarif", $('[name=tarif]'));
             });
             this.on("success", function (file, response) {
+                $('#success').show();
                 
             /*    for (let i = 0; i < response.data.length ; i++) {
                     dates =new Date(response.data[i][0]*1000);

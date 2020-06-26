@@ -92,15 +92,15 @@
                     console.log(response.newdata);
                     console.log(response.alldata);
                     console.log(response.nbre);
-                    
+                   $('#successconso').show();
+
                    document.getElementById('continue').setAttribute('disabled','disabled');
                    document.getElementById('increment').removeAttribute('disabled');
-                   document.getElementById('continuer').removeAttribute('disabled');
-            
-
-
-                   
-                }
+                   document.getElementById('continuer').removeAttribute('disabled');                  
+                },
+                 error: function (response) {
+                 $('#errorconso').show();
+                 }
             });
             
             
@@ -131,5 +131,7 @@
     width: 1000px;
   }
 }
+
+
 </style>
  {% endblock %}

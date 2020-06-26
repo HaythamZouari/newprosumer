@@ -31,6 +31,10 @@
                formData.append('csvpuiss',$('#csvpuiss').val());
                 // send additional data with the file as POST data if needed.
             });
+            this.on("error", function (file) {
+                 $('#errorprod').show();
+                 
+            });
             this.on("success", function (file, response) {
                 for (let i = 0; i < response.data.length ; i++) {
                     dates =new Date(response.data[i][0]*1000);
@@ -44,6 +48,7 @@
                 $('#tabs-icons-text-3-tab').addClass('active');
                 $('#tabs-icons-text-2-tab').removeClass('active');
                 console.log(response.da);
+                $('#successprod').show();
             });
         }
     });

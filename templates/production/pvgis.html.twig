@@ -201,6 +201,7 @@
                       console.log(response.aut);
                        console.log(response.ced);
                         console.log(response.imp);
+                     $('#successprod').show();
 
                    
                     
@@ -211,6 +212,10 @@
                     $('#tabs-icons-text-3').toggle();
                     $('#tabs-icons-text-3-tab').addClass('active');
                     $('#tabs-icons-text-2-tab').removeClass('active');
+                },
+                error: function (response) {
+                    $('#errorprod').show();
+
                 }
             });
             /*

@@ -4,7 +4,7 @@
             <div class="form-group">
                 <label class="form-control-label required" for="raddatabase">Base de données irradiance</label>
                 <select name="raddatabase" class="form-control" id="raddatabase">
-                    <option value="merra2">MERRA-2 (global)</option>
+                    
                     <option value="sarah">CM-SAF SARAH</option>
                 </select>
             </div>
@@ -66,6 +66,11 @@
                     $('#tabs-icons-text-3').toggle();
                     $('#tabs-icons-text-3-tab').addClass('active');
                     $('#tabs-icons-text-2-tab').removeClass('active');
+                    $('#successprod').show();
+                },
+                error: function (response) {
+                    $('#errorprod').show();
+
                 }
             });
             /*

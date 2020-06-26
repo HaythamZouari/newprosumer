@@ -249,13 +249,13 @@ class ProductionController extends AbstractController
         $ninja->setLoss((float)$request->get('loss'));
         $ninja->setTracking((int)$request->get('tracking'));
         $ninja->setCapacity((float)$request->get('capacity'));
-        $ninja->setRaddatabase($request->get('raddatabase'));
+        $ninja->setRaddatabase('sarah');
         $ninja->setTilt((float)$request->get('tilt'));
-        $httpClient = HttpClient::create(['auth_bearer'=>'4171ff415c2962940501acb99ba088c98e6f6134']);
+        $httpClient = HttpClient::create(['auth_bearer'=>'540a78d893c082fcdeda47f1b318dbc4c1ef7922']);
         $response = $httpClient->request('GET',
             'https://www.renewables.ninja/api/data/pv?lat='.$request->get('lat').
             '&lon='.$request->get('lon').
-            '&date_from=2019-01-01&date_to=2019-12-31'.
+            '&date_from=2015-01-01&date_to=2015-12-31'.
             '&dataset='.$request->get('raddatabase').
             '&capacity='.$request->get('capacity').
             '&system_loss='.($request->get('loss')/100).
