@@ -3,67 +3,128 @@
         <div class="card-body px-lg-5 py-lg-5">
         <div class="card-body px-lg-5 py-lg-5">
             <form id="financeForm"  action="{{ path('finance',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
-                <div class="form-group">
-                    <label class="form-control-label required" for="capex">Capex (DT)</label>
-                    <input type="number" name="capex" id="capex" min="0" class="form-control">
+                <div class="form-group ">
+                
+                    <label class="form-control-label required" for="capex">Coùt d'investissement Hors Taxes (DT)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le coùt d'inestissement du projet en Hors Taxes">
+                            ?
+                        </button>  
+                    <div class="row">
+                        <div class="col">  
+                            <input type="number" name="capex" id="capex" value="100000" min="0" class="form-control">
+                        </div>DT
+                        <div class="col">  
+                            <input type="number"  id="capexpu" value="2500" min="0" class="form-control">
+                        </div>/kWc
+                    </div>
+
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label required" for="subvention">Subvention (%)</label>
-                    <input type="number" name="subvention" max="100" id="subvention" min="0" class="form-control">
+
+                    <label class="form-control-label required" for="subvention">Subvention </label>
+                <div class="row">
+                    <div class="col">                 
+                    <select class="form-control" id="typesub">
+                        <option value=0>Sans subvention</option>
+                        <option value=1>Subvention FTE</option>
+                        <option value=2>Subvention Développement régional premier groupe</option>
+                        <option value=3>Subvention Développement régional deuxiéme groupe</option>
+                    </select>
+                    </div>
+                    <div class="col"> 
+                        <input type="number" name="subvention" value="0" max="100" id="subvention" min="0" class="form-control">
+                    </div>%
+                    <div class="col">     
+                        <input type="number"  value="0" max="100" id="subventionDT" min="0" class="form-control">
+                    </div>DT
+                 </div>      
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label required" for="opex">O&M (%)</label>
-                    <input type="number" name="opex" id="opex" max="100" min="0" class="form-control">
+                <div class="row">
+                    <div class="col">   
+                        <div class="form-group">
+                            <label class="form-control-label required" for="opex">Coùt d'opération et de maintenance (%)</label>
+                            <input type="number" name="opex" id="opex" value="1" max="100" min="0" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-group">
+                            <label class="form-control-label required" for="replinv">Cout de remplacement des onduleurs (DT)</label>
+                            <input type="number" name="replinv" id="replinv" max="100" min="0" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col">      
+                        <div class="form-group">
+                            <label class="form-control-label required" for="duree_proj">Durée de vie du projet (ans)</label>
+                            <input type="number" name="duree_proj" value="25" id=" " min="0" class="form-control">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label required" for="duree_proj">Duree du projet (ans)</label>
-                    <input type="number" name="duree_proj" id=" " min="0" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label required" for="aug_tarif_v">Taux d'augmentation du tarif de vente (%)</label>
-                    <input type="number" name="aug_tarif_v" id="aug_tarif_v"  max="100" min="0" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label required" for="aug_tarif_a">Taux d'augmentation du tarif d'achat (%) </label>
-                    <input type="number" name="aug_tarif_a" id="aug_tarif_a" min="0"  max="100" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label required" for="taux_actualisation">Taux d'actualisation (%)</label>
-                    <input type="number" name="taux_actualisation" id="taux_actualisation" min="0"  max="100" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label required" for="">Degradation (%)</label>
-                    <input type="number" name="degradation" id="degradation" min="0" class="form-control">
-                </div>
+                <div class="row">
+                    <div class="col">          
+                        <div class="form-group">
+                            <label class="form-control-label required" for="aug_tarif_v">Taux d'augmentation du tarif de vente (%)</label>
+                            <input type="number" name="aug_tarif_v" id="aug_tarif_v" value="5"  max="100" min="0" class="form-control">
+                        </div>
+                    </div>
+                     <div class="col">      
+                        <div class="form-group">
+                            <label class="form-control-label required" for="aug_tarif_a">Taux d'augmentation du tarif d'achat (%) </label>
+                            <input type="number" name="aug_tarif_a" id="aug_tarif_a" value="7" min="0"  max="100" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col">     
+                        <div class="form-group">
+                            <label class="form-control-label required" for="taux_actualisation">Taux d'actualisation (%)</label>
+                            <input type="number" name="taux_actualisation" value ="8" id="taux_actualisation" min="0"  max="100" class="form-control">
+                        </div>
+                    </div>
+                </div>        
+               
 
                 <div class="form-group">
-                    <input type="checkbox"   name="credit" id="credit">
-                    <label class="form-control-label required">Credit   </label>
-                    <input type="checkbox"  name="transport_energie" id="transport_energie">
-                    <label class="form-control-label required">Transport de  l'energie du site 0</label>
-                </div>
+                   
+                    <input type="checkbox" class="custom-control-input"  name="credit" id="credit">
+                    <label class="custom-control-label" for="credit" >Crédit   </label>
+                </div>    
+                   
                 <div id="credits_div" style="display: none">
-                    <div class="form-group">
-                        <label class="form-control-label required" for="dette">Montant de la dette (DT)</label>
-                        <input type="number" name="dette" id="dette" min="0" class="form-control">
-                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label required" for="dette">Montant de la dette (DT)</label>
+                                <input type="number" name="dette" id="dette" min="0" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
 
-                    <div class="form-group">
-                        <label class="form-control-label required" for="interet">Taux d'interet (%)</label>
-                        <input type="number" name="interet" id="interet" min="0"  max="100" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label required" for="delai_grace">Delai de grace (ans)</label>
-                        <input type="number" name="delai_grace" id="delai_grace" min="0" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label required" for="maturite_proj">Duree de remboursement [aprés délai de grace] (ans)</label>
-                        <input type="number" name="maturite_proj" id="maturite_proj" min="0" class="form-control">
+                            <div class="form-group">
+                                <label class="form-control-label required" for="interet">Taux d'interet (%)</label>
+                                <input type="number" name="interet" id="interet" min="0"  max="100" class="form-control">
+                            </div>
+                        </div>
+                    </div>    
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label required" for="delai_grace">Délai de gràce (ans)</label>
+                                <input type="number" name="delai_grace" id="delai_grace" min="0" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label required" for="maturite_proj">Durée de remboursement [aprés délai de grace] (ans)</label>
+                                <input type="number" name="maturite_proj" id="maturite_proj" min="0" class="form-control">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="text-center">
-                     <button type="button"  id="finance"  onclick="financeretour()" class="btn-secondary btn">Retour</button>
-                    <button type="button"  id="finance"  onclick="financeSubmit()" class="btn-secondary btn">Continuer</button>
+                <div class="alert alert-success" id="successfin" role="alert" style="display:none">
+                                                <strong>Finance Validée</strong> </div>
+                                    <div class="alert alert-danger" id="errorfin" role="alert" style="display:none">
+                                                <strong>Finance non Valide</strong> </div>
+                     <button type="button"  id="financeretour()"  onclick="financeretour()" class="btn-secondary btn">Retour</button>
+                    <button type="button"  id="finance"  onclick="financeSubmit()" class="btn-secondary btn"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingfin" style="display:none"></span>Valider</button>
+                    <button type="button"  id="financeavancer" disabled="disabled" onclick="finavance()" class="btn-secondary btn">Continuer</button>
                 </div>
             </form>
         </div>
@@ -72,6 +133,119 @@
 </div>
 <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
 <script>
+
+var power=0;
+
+
+$("#typesub").change(function() {
+    if ($( "#typesub" ).val()==0){
+    $( "#subvention" ).val(0);
+    $( "#subventionDT" ).val(0);
+    }
+    else
+    if ($( "#typesub" ).val()==1){
+        if ((($( "#capex" ).val())*0.2)<=200000){
+            $( "#subvention" ).val(20);
+            $( "#subventionDT" ).val(($( "#capex" ).val())*0.2);
+        }
+        else{
+         $( "#subvention" ).val(20000000/($( "#capex" ).val()));
+            $( "#subventionDT" ).val(200000);
+        }
+    }
+     else
+    if ($( "#typesub" ).val()==2){
+        if ((($( "#capex" ).val())*0.15)<=1500000){
+            $( "#subvention" ).val(15);
+            $( "#subventionDT" ).val(($( "#capex" ).val())*0.15);
+        }
+        else{
+         $( "#subvention" ).val(150000000/($( "#capex" ).val()));
+            $( "#subventionDT" ).val(1500000);
+        }
+    }
+     else
+    if ($( "#typesub" ).val()==3){
+        if ((($( "#capex" ).val())*0.3)<=3000000){
+            $( "#subvention" ).val(30);
+            $( "#subventionDT" ).val(($( "#capex" ).val())*0.3);
+        }
+        else{
+         $( "#subvention" ).val(300000000/($( "#capex" ).val()));
+            $( "#subventionDT" ).val(3000000);
+        }
+    }
+});   
+
+
+$("#capex").change(function() {
+    if (($( "#peakpower" ).val())!=0){
+        power=parseInt($( "#peakpower" ).val())+parseInt($( "#peakpower2" ).val())+parseInt($( "#peakpower3" ).val());
+    }
+    else
+    if(($( "#capacity" ).val())!=0){
+        power=$( "#capacity" ).val();
+    }
+    else
+    if(($( "#csvpuiss" ).val())!=0){
+        power=$( "#csvpuiss" ).val();
+    }
+    $( "#capexpu" ).val(($( "#capex" ).val())/power);
+    if ($( "#typesub" ).val()==0){
+    $( "#subvention" ).val(0);
+    $( "#subventionDT" ).val(0);
+    }
+    else
+    if ($( "#typesub" ).val()==1){
+        if ((($( "#capex" ).val())*0.2)<=200000){
+            $( "#subvention" ).val(20);
+            $( "#subventionDT" ).val(($( "#capex" ).val())*0.2);
+        }
+        else{
+         $( "#subvention" ).val(20000000/($( "#capex" ).val()));
+            $( "#subventionDT" ).val(200000);
+        }
+    }
+     else
+    if ($( "#typesub" ).val()==2){
+        if ((($( "#capex" ).val())*0.15)<=1500000){
+            $( "#subvention" ).val(15);
+            $( "#subventionDT" ).val(($( "#capex" ).val())*0.15);
+        }
+        else{
+         $( "#subvention" ).val(150000000/($( "#capex" ).val()));
+            $( "#subventionDT" ).val(1500000);
+        }
+    }
+     else
+    if ($( "#typesub" ).val()==3){
+        if ((($( "#capex" ).val())*0.3)<=3000000){
+            $( "#subvention" ).val(30);
+            $( "#subventionDT" ).val(($( "#capex" ).val())*0.3);
+        }
+        else{
+         $( "#subvention" ).val(300000000/($( "#capex" ).val()));
+            $( "#subventionDT" ).val(300000000);
+        }
+    }
+});   
+$("#capexpu").change(function() {
+    if (($( "#peakpower" ).val())!=0){
+        power=parseInt($( "#peakpower" ).val())+parseInt($( "#peakpower2" ).val())+parseInt($( "#peakpower3" ).val());
+    }
+    else
+    if(($( "#capacity" ).val())!=0){
+        power=$( "#capacity" ).val();
+    }
+    else
+    if(($( "#csvpuiss" ).val())!=0){
+        power=$( "#csvpuiss" ).val();
+    }
+        $( "#capex" ).val(($( "#capexpu" ).val())*power);
+    });
+
+    console.log("power");
+    console.log(power);
 
     let cashflowIn=0;
     var capex=0;
@@ -92,11 +266,14 @@
     $('#credit').on('change',function () {
        $('#credits_div').toggle();
     });
+    
+
     function financeSubmit() {
 
         {% if not app.user %}
         window.location.replace('{{ path('security_login') }}');
         {% else %}
+         $('#loadingfin').show();
         var data = $('#financeForm').serialize();
         var url = $('#financeForm').attr('action');
         $.ajax({
@@ -106,41 +283,34 @@
             dataType: 'json',
             cache: false,
             success: function (response) {
-                console.log('finance');
-                console.log(response.arr);
-                console.log(response.con);
-                console.log(response.pro);
-                console.log(response.aut);
-                console.log(response.ced);
-                console.log(response.imp);
-                console.log(response.tot);
-                console.log(response.all);
-                console.log(response.somme);
-                console.log('cash');
-                console.log(response.dep);
-                console.log(response.depense);
-                console.log(response.gain);
-                console.log(response.cash_flow);
-
-
-
                 
-
-                $('#tabs-icons-text-4-tab').css("pointer-events"," visible");
-                $('#tabs-icons-text-5-tab').css("pointer-events"," visible");
-                $('#tabs-icons-text-3-tab').css("pointer-events"," none");
-                $('#tabs-icons-text-4').toggle();
-                $('#tabs-icons-text-3').toggle();
-                $('#tabs-icons-text-4-tab').addClass('active');
-                $('#tabs-icons-text-3-tab').removeClass('active');
-                
-                res();
+                    res();
+                $('#successfin').show();
+                 $('#loadingfin').hide();
+                 $('#errorfin').hide();
+                 document.getElementById('financeavancer').removeAttribute('disabled');
+            },
+            error: function (response) {
+                 $('#errorfin').show();
+                 $('#successfin').hide();
             }
-            
         });
        
         return false;
         {% endif %}
+    }
+    function finavance(){
+
+                $('#tabs-icons-text-4-tab').css("pointer-events"," visible");
+                $('#tabs-icons-text-5-tab').css("pointer-events"," visible");
+                $('#tabs-icons-text-3-tab').css("pointer-events"," none");
+                
+                $('#tabs-icons-text-3').toggle();
+                $('#tabs-icons-text-4').toggle();
+                $('#tabs-icons-text-4-tab').addClass('active');
+                $('#tabs-icons-text-3-tab').removeClass('active');
+                
+
     }
     function financeretour(){
                 

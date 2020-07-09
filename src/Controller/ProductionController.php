@@ -35,6 +35,7 @@ class ProductionController extends AbstractController
         $pvgis->setMountingType((int)$request->get('trackingtype'));
         $pvgis->setPeakPower(((float)$request->get('peakpower'))+((float)$request->get('peakpower2'))+((float)$request->get('peakpower3')));
         $pvgis->setPvTech('crystSi');
+        $pvgis->setDegradation((float)$request->get('degradation'));
         $pvgis->setSlop((float)$request->get('angle'));
         $httpClient = HttpClient::create();
         $response = $httpClient->request('GET',
@@ -251,12 +252,13 @@ class ProductionController extends AbstractController
         $ninja->setCapacity((float)$request->get('capacity'));
         $ninja->setRaddatabase('sarah');
         $ninja->setTilt((float)$request->get('tilt'));
+        $ninja->setDegradation((float)$request->get('degradation'));
         $httpClient = HttpClient::create(['auth_bearer'=>'540a78d893c082fcdeda47f1b318dbc4c1ef7922']);
         $response = $httpClient->request('GET',
             'https://www.renewables.ninja/api/data/pv?lat='.$request->get('lat').
             '&lon='.$request->get('lon').
             '&date_from=2015-01-01&date_to=2015-12-31'.
-            '&dataset='.$request->get('raddatabase').
+            '&dataset=sarah'.
             '&capacity='.$request->get('capacity').
             '&system_loss='.($request->get('loss')/100).
             '&tracking='.$request->get(('tracking')).
@@ -326,6 +328,8 @@ class ProductionController extends AbstractController
         //$csvreader->setResult($result);
         $csvreader->setPuissence(((float)$request->get('csvpuiss')));
         $csvreader->setProject($project);
+        $csvreader->setDegradation((float)$request->get('degradation'));
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($csvreader);
         $entityManager->flush();

@@ -57,6 +57,12 @@ class Pvgis
     private $loss;
 
     /**
+     * @ORM\Column(type="float")
+     */
+    private $degradation;
+
+
+    /**
      * @ORM\Column(type="array")
      */
     private $result = [];
@@ -166,6 +172,19 @@ class Pvgis
 
         return $this;
     }
+
+    public function getDegradation(): ?float
+    {
+        return $this->degradation;
+    }
+
+    public function setDegradation(float $degradation): self
+    {
+        $this->degradation = $degradation;
+
+        return $this;
+    }
+
 
 
     public function __toString()

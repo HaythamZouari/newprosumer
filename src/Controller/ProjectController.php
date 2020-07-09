@@ -817,8 +817,7 @@ class ProjectController extends AbstractController
                 //creating a period to loop on it
                 foreach ($period as $key=>$date) {
                    
-                   if((int)$date->format('U') >=(int)$dateDebexel->format('U')&&
-                        (int)$date->format('U') <=((int)$dateFinexel->format('U')-86400)){
+                   if($date->getTimestamp()>=$dataexl[$i][0]-1000&&$date->getTimestamp()<=$dataexl[$i][0]+1000&&$i<(count($dataexl)-1)){
                         $dataAvgW[] = [$date->getTimestamp(), $dataexl[$i][1]];
                         $i++;
                         
@@ -1010,6 +1009,15 @@ class ProjectController extends AbstractController
            
        
         }
+
+        if (($request->get('transport_energie'))==null){
+            $consomation->setTransportEng(false);
+            
+        }
+        else{
+            $consomation->setTransportEng(true);
+            
+        }
         
         
             
@@ -1032,7 +1040,7 @@ class ProjectController extends AbstractController
             $entityManager->persist($consomation);
             $entityManager->persist($project);
             $entityManager->flush();
-            return new JsonResponse(['virgdata'=>$dataAvgW,'data'=>$dataAvgWtm,'data2'=>$monthtmp,'period'=>$period,'newdata'=>$dataAvgW,'alldata'=>$allDataAvgW,'nbre'=>count($allDateDeb),]);
+            return new JsonResponse(['virgdata'=>$dataAvgW,'data'=>$dataAvgWtm,'data2'=>$monthtmp,'dataexl'=>round($dataexl[0][0]),'period'=>$date->getTimestamp(),'newdata'=>$dataAvgW,'alldata'=>$allDataAvgW,'nbre'=>count($allDateDeb),]);
     }
         return $this->render('project/show.html.twig', [
             'project' => $project,

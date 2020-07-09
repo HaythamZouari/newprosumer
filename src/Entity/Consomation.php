@@ -42,6 +42,12 @@ class Consomation
     private $allTarif= [];
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $transportEng;
+
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
 
@@ -149,6 +155,20 @@ class Consomation
 
         return $this;
     }
+
+
+    public function getTransportEng(): ?bool
+    {
+        return $this->transportEng;
+    }
+
+    public function setTransportEng(bool $transportEng): self
+    {
+        $this->transportEng = $transportEng;
+
+        return $this;
+    }
+
 
 
 

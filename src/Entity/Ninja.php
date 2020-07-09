@@ -57,6 +57,11 @@ class Ninja
      */
     private $loss;
 
+     /**
+     * @ORM\Column(type="float")
+     */
+    private $degradation;
+
     /**
      * @ORM\Column(type="array")
      */
@@ -168,6 +173,19 @@ class Ninja
         return $this;
     }
 
+    public function getDegradation(): ?float
+    {
+        return $this->degradation;
+    }
+
+    public function setDegradation(float $degradation): self
+    {
+        $this->degradation = $degradation;
+
+        return $this;
+    }
+
+
 
     public function __toString()
     {
@@ -184,6 +202,7 @@ class Ninja
 
         return $this;
     }
+
 
     public function getProject(): ?Project
     {

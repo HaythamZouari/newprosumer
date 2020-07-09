@@ -34,16 +34,18 @@ class FinanceController extends AbstractController
 
             }
 
-            if (($request->get('transport_energie'))==null){
-                $finance->setTransportEng(false);
+            if (($project->getConsomation()->getTransportEng())==false){
+                
                 $t=1;
             }
             else{
-                $finance->setTransportEng(true);
+               
                 $t=0;
             }
+
+
             $finance->setProject($project);
-            $finance->setDegradation((float)$request->get('degradation'));
+            
             $finance->setCapex((float)$request->get('capex'));
             $finance->setAugTarifAchat((float)$request->get('aug_tarif_a'));
             $finance->setAugTarifVende((float)$request->get('aug_tarif_v'));
@@ -113,15 +115,9 @@ class FinanceController extends AbstractController
             $f_regularisation=FinanceService::factureRegularisation($g_E_cedee,$project);
             $frais_exp=FinanceService::fraisExploitation($project);
             $opex=FinanceService::opex($project);
-            if ($finance->getTransportEng() ==true){
+            
                 $f_transporter=FinanceService::facteurTransport($project,$totautoconsomme);
-            }
-            else{
-                for($i=0;$i<30;$i++){
-                    $f_transporter[$i]=0;
-                }
-            }
-
+           
             for ($i=0;$i<30;$i++) {
                 $gain[]=$g_E_cedee[$i]+$g_E_transporter[$i];
             }
@@ -160,7 +156,7 @@ class FinanceController extends AbstractController
             if($project->getNinja()!=null)
                 $production=$project->getNinja()->getResult();
            
-
+            
             $auto=$project->getAutoConsomer();
             $cedee=$project->getCedee();
             $importee=$project->getImporte();
@@ -201,7 +197,7 @@ class FinanceController extends AbstractController
                     'depense'=>$depense,
                     'gain'=>$gain,
                     'cash_flow'=>$cash_flow,
-                   
+                    
 
 
 

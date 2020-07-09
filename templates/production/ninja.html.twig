@@ -1,39 +1,54 @@
 <form class="production" id="productionForm" action="{{ path('ninja',{'id':project.id}) }}"  enctype="multipart/form-data">
     <div class="row">
         <div class="col">
-            <div class="form-group">
+            <!--div class="form-group">
                 <label class="form-control-label required" for="raddatabase">Base de données irradiance</label>
                 <select name="raddatabase" class="form-control" id="raddatabase">
                     
                     <option value="sarah">CM-SAF SARAH</option>
                 </select>
+            </div-->
+            <div class="form-group">
+                <label class="form-control-label required" for="capacity">Puissance (kWc)</label> <button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir la puissance de la centrale que vous voulez simuler">
+                            ?
+                        </button>  
+                <input type="number" class="form-control"  name="capacity" id="capacity" value="0" min="0" >
             </div>
             <div class="form-group">
-                <label class="form-control-label required" for="capacity">Puissance (kW)</label>
-                <input type="number" class="form-control"  name="capacity" id="capacity" value="1" min="0" >
+                <label class="form-control-label required" for="loss" >Pertes [%]</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir Définir le taux de perte à la sortie du champ photovoltaique">
+                            ?
+                        </button>  
+                <input type="number" class="form-control" step="0.1" min="0" value=10  max="100" name="loss" id="loss">
             </div>
             <div class="form-group">
-                <label class="form-control-label required" for="loss" >Pertes [%]</label>
-                <input type="number" class="form-control" step="0.01" min="0" value=0.01  max="1" name="loss" id="loss">
-            </div>
-            <div class="form-group">
-                <label class="form-control-label required" for="tracking">Fixation</label>
+                <label class="form-control-label required" for="tracking">Fixation des modules PV</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le mode d'implantation de la centrale photovoltaique">
+                            ?
+                        </button>  
                 <select name="tracking" class="form-control" id="tracking">
                     <option value=0>Fixe</option>
-                    <option value=1>1-axis (azimuth)</option>
-                    <option value=2>2-axis (tilt & azimuth)</option>
+                    <option value=1>Suiveur E/O</option>
+                    <option value=2>Suiveur Double Axes</option>
                 </select>
             </div>
             <div class="form-group">
-                <label class="form-control-label required" for="tilt" >Inclianison [°]</label>
-                <input type="number" class="form-control" step="0.01" min="0" value=0  name="tilt" id="tilt">
+                <label class="form-control-label required" for="tilt" >Inclinaison [°]</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'inlinaison des modules photovoltaiques">
+                            ?
+                        </button>  
+                <input type="number" class="form-control" step="0.01" min="0" value=30  name="tilt" id="tilt">
             </div>
             <div class="form-group">
-                <label class="form-control-label required" for="loss" >Azimuth [°]</label>
-                <input type="number" class="form-control" step="0.01" min="0" value=0  name="azimuth" id="loss">
+                <label class="form-control-label required" for="loss" >Azimuth [°]</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'orientation des modules photovoltaiques">
+                            ?
+                        </button>  
+                <input type="number" class="form-control" step="1" min="0" value=0  name="azimuth" id="loss">
             </div>
+            <div class="form-group">
+                    <label class="form-control-label required" for="">Dégradation des performances des modules PV (%)</label>
+                    <input type="number" name="degradation" id="degradation" value="0.5" min="0" class="form-control">
+                </div>
+            
             <div class="text-center">
-                <button type="button" onclick="productionSubmit()" class="btn-secondary btn">Continuer</button>
+                <button type="button" onclick="productionSubmit()" class="btn-secondary btn"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingninja" style="display:none"></span>Valider</button>
             </div>
         </div>
     </div>
@@ -44,6 +59,7 @@
             {% if not app.user %}
             window.location.replace('{{ path('security_login') }}')
             {% endif %};
+             $('#loadingninja').show();
             var data = $('#productionForm').serialize();
             var url = $('#productionForm').attr('action');
             data='&'+data+'&lon='+$('#lon').val()+'&lat='+$('#lat').val();
@@ -56,20 +72,19 @@
                 cache: false,
                 dataType: 'json',
                 success: function (response) {
+                    console.log("data");
                     console.log(response.data);
                     console.log(response.values);
                     console.log(response.elec);
-                    console.log(response.dat);
-                     $('#tabs-icons-text-3-tab').css("pointer-events"," visible");
-                    $('#tabs-icons-text-2-tab').css("pointer-events"," none")
-                    $('#tabs-icons-text-2').toggle();
-                    $('#tabs-icons-text-3').toggle();
-                    $('#tabs-icons-text-3-tab').addClass('active');
-                    $('#tabs-icons-text-2-tab').removeClass('active');
+                    document.getElementById('prodavancer').removeAttribute('disabled');    
                     $('#successprod').show();
+                     $('#loadingninja').hide();
+                      $('#errorprod').hide();
                 },
                 error: function (response) {
                     $('#errorprod').show();
+                     $('#loadingninja').hide();
+                      $('#successprod').hide();
 
                 }
             });

@@ -10,6 +10,16 @@ use App\Entity\Project;
 class FinanceService
 {
     public static function gainEnergieTransporterUnif(float $tarif, Project $project, array $Autoconsomme){
+        
+        if($project->getCsvProd()!=null){
+            $degradation=$project->getCsvProd()->getDegradation();
+        }
+        if($project->getPvgis()!=null)
+            $degradation=$project->getPvgis()->getDegradation();
+        if($project->getNinja()!=null)
+            $degradation=$project->getNinja()->getDegradation();
+
+
         $total_auto_consome=0;
         $result=[];
         for ($i=0;$i<8760;$i++) {
@@ -17,7 +27,7 @@ class FinanceService
         }
         for ($i=0;$i<30;$i++){
             $result[$i] = ($total_auto_consome*
-                pow((1-(float)($project->getFinance()->getDegradation()/100)),$i)*
+                pow((1-(float)($degradation/100)),$i)*
                 $tarif*
                 pow((1+(float)($project->getFinance()->getAugTarifAchat()/100)),$i));
         }
@@ -25,6 +35,18 @@ class FinanceService
 
     }
     public static function gainEnergieTransporterHoraire(array $tarif ,Project $project,array $Autoconsomme){
+
+
+        
+        if($project->getCsvProd()!=null){
+            $degradation=$project->getCsvProd()->getDegradation();
+        }
+        if($project->getPvgis()!=null)
+            $degradation=$project->getPvgis()->getDegradation();
+        if($project->getNinja()!=null)
+            $degradation=$project->getNinja()->getDegradation();
+
+
         $auto_consomer_postHor_temp=PostHoraire::PostHoraire($Autoconsomme);
         $result=[];
         $auto_consomer_postHor[0]=0;
@@ -42,7 +64,7 @@ class FinanceService
             $result[$j]=0;
             for ($i= 0 ;$i<4;$i++){
                 $result[$j]+= ($auto_consomer_postHor[$i]*
-                    pow((1-($project->getFinance()->getDegradation()/100)),$i)*
+                    pow((1-($degradation/100)),$i)*
                     $tarif['achat'][$i]*
                     pow((1+($project->getFinance()->getAugTarifAchat()/100)),$i));
             }
@@ -52,6 +74,18 @@ class FinanceService
     }
     
     public static function gainEnergieCedee(array $tarif,Project $project){
+
+        
+        if($project->getCsvProd()!=null){
+            $degradation=$project->getCsvProd()->getDegradation();
+        }
+        if($project->getPvgis()!=null)
+            $degradation=$project->getPvgis()->getDegradation();
+        if($project->getNinja()!=null)
+            $degradation=$project->getNinja()->getDegradation();
+
+
+            
         $allcedee=$project->getCedee();
         $lastit=count($project->getConsomation()->getallConsomationAnnuel())-1;
         $cedee_postH_tmp=PostHoraire::PostHoraire($allcedee[$lastit]);
@@ -70,7 +104,7 @@ class FinanceService
             $result[$j]=0;
             for ($i = 0; $i < 4; $i++) {
                 $result[$j] += ($cedee_postH[$i] *
-                    pow((1 -( $project->getFinance()->getDegradation()/100)), $j) *
+                    pow((1 -($degradation/100)), $j) *
                     $tarif['vende'][$i] *
                     pow((1 + ($project->getFinance()->getAugTarifVende()/100)), $j));
             }
@@ -145,13 +179,25 @@ class FinanceService
         return $result;
     }
     public static function facteurTransport(Project $project, array $Autoconsomme){
+
+        
+        if($project->getCsvProd()!=null){
+            $degradation=$project->getCsvProd()->getDegradation();
+        }
+        if($project->getPvgis()!=null)
+            $degradation=$project->getPvgis()->getDegradation();
+        if($project->getNinja()!=null)
+            $degradation=$project->getNinja()->getDegradation();
+
+
+
         $total_auto_consome=0;
         $result=[];
         foreach ($Autoconsomme as $autoconsomer) {
             $total_auto_consome+=$autoconsomer[1];
         }
         for ($i=0;$i<30;$i++){
-            $result[$i] = ($total_auto_consome*pow((1-($project->getFinance()->getDegradation()/100)),$i)*
+            $result[$i] = ($total_auto_consome*pow((1-($degradation/100)),$i)*
                 $project->getFinance()->getTarifTransport()
             );
         }

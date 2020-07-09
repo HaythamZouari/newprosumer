@@ -1,12 +1,16 @@
-<style>
-    #map { position:absolute; top:0; bottom:0; width:100%; }
-</style>
+
 <div class="card bg-secondary">
+
     <div class="card-header bg-transparent pb-5" >
+     <button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Choisir la base de données à partir de laquelle importer le donnés de production">
+                            ?
+                        </button>  
+    <div class="container">
+    
         <div class="row text-center">
             <div class="col-xl-4 col-lg-6">
                 <div class="card card-stats mb-4 mb-xl-0">
-                    <button  class="btn btn-lg" type="button" disabled="disabled"  onclick="ninjabtn()">Ninja API</button>
+                    <button  class="btn btn-lg" type="button"   onclick="ninjabtn()">Ninja API</button>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-6">
@@ -18,10 +22,14 @@
                 <div class="card card-stats mb-4 mb-xl-0">
                     <button  class="btn btn-lg" type="button"  onclick="csvbtn()">PVsyst</button>
                 </div>
+                
             </div>
-        </div>
+            
+            
+        </div> 
+
         <div class="row">
-            <div class="col-xl-8 col-lg-8">
+            <div class="col-xl-8">
               
                    {{include('project/map.html.twig') }}
               
@@ -38,12 +46,23 @@
                     {{ include('production/csvreader.html.twig') }}
                 </div>
             </div>
-            <div class="alert alert-success" id="successprod" role="alert" style="display:none">
-                                                <strong>Production Validée</strong> </div>
-                                    <div class="alert alert-danger" id="errorprod" role="alert" style="display:none">
-                                                <strong>Production non Valide</strong> </div>
-              <button type="button" onclick="retourpvgis()" class="btn-secondary btn"style="width:100%">Retour</button>
+            
+           
+            
         </div>
+        
+        </div>
+         <div class="text-center">
+                <div class="alert alert-success" id="successprod" role="alert" style="display:none">
+                                                    <strong>Production Validée</strong> 
+                </div>
+                <div class="alert alert-danger" id="errorprod" role="alert" style="display:none">
+                                                        <strong>Production non Valide</strong> 
+                    </div>
+                <button type="button" onclick="retourpvgis()" class="btn-secondary btn">Retour</button>
+                <button type="button" onclick="prodavancer()" id="prodavancer" disabled="disabled" class="btn-secondary btn">Continuer</button>
+            </div>
+        
     </div>
   
 </div>
@@ -89,5 +108,15 @@
                     $('#tabs-icons-text-1-tab').addClass('active');
                     $('#tabs-icons-text-2-tab').removeClass('active');
    };
+
+   function prodavancer(){
+       
+                    $('#tabs-icons-text-3-tab').css("pointer-events"," visible");
+                    $('#tabs-icons-text-2-tab').css("pointer-events"," none")
+                    $('#tabs-icons-text-2').toggle();
+                    $('#tabs-icons-text-3').toggle();
+                    $('#tabs-icons-text-3-tab').addClass('active');
+                    $('#tabs-icons-text-2-tab').removeClass('active');
+   }
     </script>
 {% endblock %}

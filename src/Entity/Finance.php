@@ -86,10 +86,7 @@ class Finance
      */
     private $tarifHoraire = [];
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $degradation;
+    
 
     /**
      * @ORM\Column(type="float")
@@ -137,11 +134,7 @@ class Finance
      */
     private $annuite;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $transportEng;
-
+   
     /**
      * @ORM\Column(type="float")
      */
@@ -377,17 +370,7 @@ class Finance
         return $this;
     }
 
-    public function getDegradation(): ?float
-    {
-        return $this->degradation;
-    }
-
-    public function setDegradation(float $degradation): self
-    {
-        $this->degradation = $degradation;
-
-        return $this;
-    }
+    
 
     public function getOpex(): ?float
     {
@@ -506,18 +489,7 @@ class Finance
         return $this;
     }
 
-    public function getTransportEng(): ?bool
-    {
-        return $this->transportEng;
-    }
-
-    public function setTransportEng(bool $transportEng): self
-    {
-        $this->transportEng = $transportEng;
-
-        return $this;
-    }
-
+   
     public function getDepense(): ?float
     {
         return $this->depense;

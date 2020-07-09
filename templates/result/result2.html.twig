@@ -91,10 +91,8 @@
                             <td>{{ ((project.finance.opex)*(project.finance.capex))/100 |number_format(0, '.', ' ')}}</td>
                             <td>DT</td>
                         </tr>
-                        <tr>
-                            <td>Annuite </td>
-                            <td>{{ project.finance.annuite[5]|number_format(0, '.', ' ') }}</td>
-                            <td>DT</td>
+                        <tr id="annuiteres">
+                            <td>Annuite :</td>
                         </tr>
                         <tr  id="f_r">
                             <td>Facture de regularisation :</td>
@@ -185,7 +183,7 @@
                                     <div class="col-xl-1  mb-12 mb-xl-12">
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-primary btn-block dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="lescourb">
-                                                Type de diagrame
+                                                Type de diagramme
                                             </button>
                                             <div class="dropdown-menu col-xl-12" aria-labelledby="lescourb">
                                                 <button type="button"  class="dropdown-item" id="time_series">Time series</button>

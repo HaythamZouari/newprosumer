@@ -80,11 +80,19 @@ class ResultController extends AbstractController
                     }
                     $ps_centrale=$project->getNinja()->getCapacity();    
                 }
+
+                if($project->getCsvProd()!=null){
+                    $degradation=$project->getCsvProd()->getDegradation();
+                }
+                if($project->getPvgis()!=null)
+                    $degradation=$project->getPvgis()->getDegradation();
+                if($project->getNinja()!=null)
+                    $degradation=$project->getNinja()->getDegradation();
     
     
     
                 for ($i=0;$i<25;$i++){
-                    $prod25ans+=(float)($prd_annuel-($prd_annuel*((pow($project->getFinance()->getDegradation(),$i))/100)));
+                    $prod25ans+=(float)($prd_annuel-($prd_annuel*((pow( $degradation,$i))/100)));
                 }
     
     
@@ -178,7 +186,7 @@ class ResultController extends AbstractController
 
         }
             $f_reg=$project->getFinance()->getFRegularisation()[0];
-            if(!$project->getFinance()->getTransportEng()){
+            if(!$project->getConsomation()->getTransportEng()){
                 for($i=0;$i<(count($project->getFinance()->getfactransport()));$i++){
                    $f_transport[]=0;
                 }
@@ -267,7 +275,7 @@ class ResultController extends AbstractController
                 'Facture_transport'=>$f_transport,
                 'opex'=>FinanceService::opex($project),
                 'facture_regrularisation'=>$project->getFinance()->getFRegularisation() ,
-                'transpE'=>$project->getFinance()->getTransportEng(),
+                'transpE'=>$project->getConsomation()->getTransportEng(),
                 'llcr'=>$project->getFinance()->getLlcr(),
                 'cashFlowIn'=>$project->getFinance()->getCashflowIn(),
                 'maturiter'=>$project->getFinance()->getMaturiteProj(),
@@ -280,6 +288,7 @@ class ResultController extends AbstractController
                 'tricap'=>$project->getFinance()->getTricapitaux(),
                 'tri25'=>$project->getFinance()->getTri25(),
                 'van'=>$project->getFinance()->getVan()
+                
 
                 ]);
         }

@@ -28,6 +28,11 @@ class CsvProd
      */
     private $puissence;
 
+     /**
+     * @ORM\Column(type="float")
+     */
+    private $degradation;
+
     /**
      * @ORM\Column(type="array")
      */
@@ -71,6 +76,18 @@ class CsvProd
     public function setPuissence(float $puissence): self
     {
         $this->puissence = $puissence;
+
+        return $this;
+    }
+
+    public function getDegradation(): ?float
+    {
+        return $this->degradation;
+    }
+
+    public function setDegradation(float $degradation): self
+    {
+        $this->degradation = $degradation;
 
         return $this;
     }

@@ -7,37 +7,51 @@
                     <label class="form-control-label required">Sous-Champ 1</label>
                 </div>        
                 <div class="form-group">
-                    <label class="form-control-label required">Type d'integration:</label>
+                    <label class="form-control-label required">Fixation des modules PV:</label> <button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir la méthode d'implantation des modules PV">
+                            ?
+                        </button>  
                 </div>
+                
+                 <select name="trackingtype" class="form-control" id="tracking">
+                    <option value=0>Fixe</option>
+                    <option value=5>Suiveur N/S</option>
+                    <option value=3>Suiveur E/O</option>
+                    <option value=2>Suiveur double axes</option>
+                </select>
                 <div class="form-group">
-                    <label class="form-control-label required">Fixe</label>
-                    <input style="margin-right: 5px" type="radio" checked="checked" name="trackingtype"  value="0" onclick="fixe()">
-                    <label class="form-control-label required">Axe Vertical</label>
-                    <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=3 onclick="vAx()">
-                    <label style="margin-right: 5px" class="form-control-label required">Axe Incline</label>
-                    <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=5 onclick="iAx()">
-                    <label style="margin-right: 5px" class="form-control-label required">Double Axe</label>
-                    <input style="margin-right: 5px" type="radio"  name="trackingtype"  value=2 onclick="dAx()">
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label required" for="angle" >Inclinaison [°]</label>
+                    <label class="form-control-label required" for="angle" >Inclinaison des modules [°]</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'angle que fait la structure des modules PV par rapport à l'horizontale [0;90]">
+                            ?
+                        </button>  
                     <input type="number" step="0.01" class="form-control" min="0" max="90" name="angle" id="angle" value="0">
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label required" for="aspect" >Azimuth [°]</label>
-                    <input type="number" class="form-control" step="0.01" min="-180" max="180" value="0" name="aspect" id="aspect">
+                    <label class="form-control-label required" for="aspect" >Azimuth [°]</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'angle que fait la structure des modules PV par rapport au plein sud [-180;+180]">
+                            ?
+                        </button>  
+                    <input type="number" class="form-control" step="1" min="-180" max="180" value="0" name="aspect" id="aspect">
                 </div>
                 <input name="technologies" id="pvtechchoice"  value="crystSi" type="hidden">
                 <div class="form-group">
-                    <label class="form-control-label required" for="peakpower" >Puissance crete[kWc]</label>
-                    <input type="number" class="form-control" step="0.01" min="1" value=1  name="peakpower" id="peakpower">
+                    <label class="form-control-label required" for="peakpower" >Puissance crête[kWc]</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir La puissance de la centrale à simuler">
+                            ?
+                        </button>  
+                    <input type="number" class="form-control" step="0.1" min="1" value="0" name="peakpower" id="peakpower">
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label required" for="loss" >Pertes [%]</label>
-                    <input type="number" class="form-control" step="0.01" min="0" value=14  name="loss" id="loss">
+                    <label class="form-control-label required" for="loss" >Pertes [%]</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le taux de pertes entre la sortie du champ PV et le PDL ( poste de livraison) ">
+                            ?
+                        </button>  
+                    <input type="number" class="form-control" step="0.1" min="0" max="80" value=14  name="loss" id="loss">
                 </div>
+                 <div class="form-group">
+                    <label class="form-control-label required" for="">Dégradation des performances des modules PV (%)</label>
+                    <input type="number" name="degradation" id="degradation" value="0.5" min="0" class="form-control">
+                </div>
+                
                 <div class="text-center">
-                    <button type="button" onclick="add_sous_champ2()" class="btn-secondary btn">Ajouter sous-champ</button>    
+                    <button type="button" onclick="add_sous_champ2()" class="btn-secondary btn">Ajouter sous-champ</button><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Ajouter un autre champ PV avec une Fixation différente ou une inclinaison et azimut différents">
+                            ?
+                        </button>      
                 </div><br>
             </div>   
             <div id="sschamp2">
@@ -68,7 +82,7 @@
                 <input name="technologies" id="pvtechchoice"  value="crystSi" type="hidden">
                 <div class="form-group">
                     <label class="form-control-label required" for="peakpower2" >Puissance crete[kWc]</label>
-                    <input type="number" class="form-control" step="0.01" min="1" value=0  name="peakpower2" id="peakpower2">
+                    <input type="number" class="form-control" step="1" min="0" value="0" name="peakpower2" id="peakpower2">
                 </div>
                 <div class="form-group">
                     <label class="form-control-label required" for="loss2" >Pertes [%]</label>
@@ -97,21 +111,22 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label required" for="angle3" >Inclinaison [°]</label>
-                    <input type="number" step="0.01" class="form-control" min="0" max="90" name="angle3" id="angle3" value="0">
+                    <input type="number" step="1" class="form-control" min="0" max="90" name="angle3" id="angle3" value="0">
                 </div>
                 <div class="form-group">
                     <label class="form-control-label required" for="aspect3" >Azimuth [°]</label>
-                    <input type="number" class="form-control" step="0.01" min="-180" max="180" value="0" name="aspect3" id="aspect3">
+                    <input type="number" class="form-control" step="1" min="-180" max="180" value="0" name="aspect3" id="aspect3">
                 </div>
                 <input name="technologies" id="pvtechchoice"  value="crystSi" type="hidden">
                 <div class="form-group">
                     <label class="form-control-label required" for="peakpower3" >Puissance crete[kWc]</label>
-                    <input type="number" class="form-control" step="0.01" min="1" value=0 name="peakpower3" id="peakpower3">
+                    <input type="number" class="form-control" step="1" min="0" value="0" name="peakpower3" id="peakpower3">
                 </div>
                 <div class="form-group">
                     <label class="form-control-label required" for="loss3" >Pertes [%]</label>
-                    <input type="number" class="form-control" step="0.01" min="0" value=14  name="loss3" id="loss3">
+                    <input type="number" class="form-control" step="0.1" min="0" value=14  name="loss3" id="loss3">
                 </div>
+                
                 
             </div>
            
@@ -121,12 +136,15 @@
        
     </div>
      <div class="text-center">
-             <button type="button" onclick="pvgisSubmit()" class="btn-secondary btn">Continuer</button>
+             <button type="button" onclick="pvgisSubmit()" class="btn-secondary btn"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadinggis" style="display:none"></span>Valider</button>
     </div>
     
 </form>
 
 <script>
+        $(function () {
+        $('[data-toggle="popover"]').popover()
+        })
 
     function add_sous_champ2(){
             $('#sschamp2').show('active');
@@ -168,6 +186,7 @@
         {% if not app.user %}
         window.location.replace('{{ path('security_login') }}');
         {% else %}
+         $('#loadinggis').show();
             var data = $('#pvgisForm').serialize();
             var url = $('#pvgisForm').attr('action');
             console.log(data);
@@ -202,19 +221,17 @@
                        console.log(response.ced);
                         console.log(response.imp);
                      $('#successprod').show();
-
+                      $('#loadinggis').hide();
+                      $('#errorprod').hide();
+                    document.getElementById('prodavancer').removeAttribute('disabled');
                    
                     
 
-                    $('#tabs-icons-text-3-tab').css("pointer-events"," visible");
-                    $('#tabs-icons-text-2-tab').css("pointer-events"," none")
-                    $('#tabs-icons-text-2').toggle();
-                    $('#tabs-icons-text-3').toggle();
-                    $('#tabs-icons-text-3-tab').addClass('active');
-                    $('#tabs-icons-text-2-tab').removeClass('active');
                 },
                 error: function (response) {
                     $('#errorprod').show();
+                     $('#loadinggis').hide();
+                      $('#successprod').hide();
 
                 }
             });

@@ -23,6 +23,16 @@ class RapportController extends AbstractController
         else {
             $TarifSouscrit="Uniforme";
         }
+
+        if($project->getCsvProd()!=null){
+            $degradation=$project->getCsvProd()->getDegradation();
+        }
+        if($project->getPvgis()!=null)
+            $degradation=$project->getPvgis()->getDegradation();
+        if($project->getNinja()!=null)
+            $degradation=$project->getNinja()->getDegradation();
+
+
         $incl=0;
         $cm_annuel=[];
         $a_cm_annuel=[];
@@ -66,7 +76,7 @@ class RapportController extends AbstractController
             $ps_centrale=$project->getCsvProd()->getPuissence();
         }
         for ($i=0;$i<25;$i++){
-            $prod25ans+=(float)($prd_annuel-($prd_annuel*((pow($project->getFinance()->getDegradation(),$i))/100)));
+            $prod25ans+=(float)($prd_annuel-($prd_annuel*((pow( $degradation,$i))/100)));
         }
         $productible=$prd_annuel/$ps_centrale;
         $gain_cedeetot=0;
@@ -127,8 +137,9 @@ class RapportController extends AbstractController
             'project'=>$project,
             'cm_annual'=>$cm_annuel,
             'finance'=>$project->getFinance(),
+            'consomation'=>$project->getConsomation(),
             'T_autoC'=>$taux_auto,
-            
+            'degradation'=>$degradation,
             'T_cedee'=>(float)($cedee_annuel/$prd_annuel),
             'typeTarif'=>$TarifSouscrit,
             'coutproj'=>($project->getFinance()->getDepense()+$project->getFinance()->getCapex()-$project->getFinance()->getCredit()-$project->getFinance()->getSubvention()),

@@ -164,7 +164,7 @@
                                         <div class="col-xl-1  mb-12 mb-xl-12">
                                             <div class="dropdown">
                                                 <button type="button" class="btn btn-primary btn-block dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="lescourb">
-                                                    Type de diagrame
+                                                    Type de diagramme
                                                 </button>
                                                 <div class="dropdown-menu col-xl-12" aria-labelledby="lescourb">
                                                     <button type="button"  class="dropdown-item" id="time_series">Time series</button>
@@ -689,8 +689,7 @@
         });
     
         function res (url) {
-            if (presence_data===0){
-                presence_data=1;
+           
                 $.ajax({
                     url: "{{ path('project_results',{ 'id':project.id }) }}",
                     type : 'POST',
@@ -875,26 +874,47 @@
                         console.log(response.PH_auto_consomerS);
                         console.log(t_auto[1]);
 
+                        $('#auto_consommationS').empty();
+                        $('#consommationS').empty();
+                        $('#importerS').empty();
+                        $('#prod25').empty();
+                        $('#lcoe').empty();
+                        $('#t_autoc').empty();
+                        
+                        $('#productible').empty();
+                        $('#t_cd').empty();
+                        $('#f_r').empty();
+                        $('#coutproj').empty();
+                        $('#capexres').empty();
+                        $('#tricapres').empty();
+                        $('#trires').empty();
+                        $('#subvres').empty();
+                        $('#omres').empty();
+                        $('#annuiteres').empty();
+                        $('#vanres').empty();
+                        $('#puissanceres').empty();
 
-                        $('#auto_consommationS').append(" <td>"+Math.round(response.auto_consommationS[0],0)+"</td><td>kWh</td>");
-                        $('#consommationS').append(" <td>"+Math.round(response.consommationS[0],0)+"</td><td>kWh</td>");
-                        $('#importerS').append(" <td>"+Math.round(response.importerS[0],0)+"</td><td>kWh</td>");
-                        $('#prod25').append(" <td>"+Math.round(response.prod25,0)+"</td><td>kWh</td>");
-                        $('#lcoe').append("<td>"+(Math.round(response.lcoe*1000)/1000)+"</td><td>DT</td>");
-                        $('#t_autoc').append("<td>"+Math.round(response.t_auto[0]*100,2)+"</td><td>%</td>");
+
+
+                        $('#auto_consommationS').append("<td>Economies d'énergie du site </td><td>"+Math.round(response.auto_consommationS[0],0)+"</td><td>kWh</td>");
+                        $('#consommationS').append("<td>Consommation du site</td><td>"+Math.round(response.consommationS[0],0)+"</td><td>kWh</td>");
+                        $('#importerS').append("<td>Energie importée de la STEG</td><td>"+Math.round(response.importerS[0],0)+"</td><td>kWh</td>");
+                        $('#prod25').append("<td>Production PV 25 ans</td><td>"+Math.round(response.prod25,0)+"</td><td>kWh</td>");
+                        $('#lcoe').append("<td>LCOE sur 25 ans</td><td>"+(Math.round(response.lcoe*1000)/1000)+"</td><td>DT</td>");
+                        $('#t_autoc').append("<td> Taux d’autoconsommation du site</td><td>"+Math.round(response.t_auto[0]*100,2)+"</td><td>%</td>");
                         /*$('#t_couv').append("<td>"+Math.round(response.t_couverture*100,2)+"</td><td>%</td>");*/
-                        $('#productible').append("<td>"+Math.round(response.productible,0)+"</td><td>kWh/kWc</td>");
-                        $('#t_cd').append("<td>"+Math.round(response.t_cedee*100,2)+"</td><td>%</td>");
-                        $('#f_r').append("<td>"+Math.round(response.f_reg,0)+"</td><td>DT</td>");
-                        $('#coutproj').append("<td>"+Math.round(response.coutproj,0)+"</td><td>DT</td>");
-                        $('#capexres').append("<td>"+Math.round(response.capex,3)+"</td><td>DT</td>");
-                        $('#tricapres').append("<td>"+Math.round(response.tricap,2)+"</td><td>%</td>");
-                        $('#trires').append("<td>"+Math.round(response.tri25,2)+"</td><td>%</td>");
-                        $('#subvres').append("<td>"+((Math.round(response.subv,0)*Math.round(response.capex,0))/100)+"</td><td>DT</td>");
-                        $('#omres').append("<td>"+Math.round(response.opex[0],0)+"</td><td>DT</td>");
-                        $('#annuiteres').append("<td>"+Math.round(response.annuite[5],0)+"</td><td>DT</td>");
-                        $('#vanres').append("<td>"+Math.round(response.van,0)+"</td><td>DT</td>");
-                        $('#puissanceres').append("<td>"+Math.round(response.peak,2)+"</td><td>kWc</td>");
+                        $('#productible').append("<td>Productible</td><td>"+Math.round(response.productible,0)+"</td><td>kWh/kWc</td>");
+                        $('#t_cd').append("<td>Taux de l’énergie cédée</td><td>"+Math.round(response.t_cedee*100,2)+"</td><td>%</td>");
+                        $('#f_r').append("<td>Facture de regularisation </td><td>"+Math.round(response.f_reg,0)+"</td><td>DT</td>");
+                        $('#coutproj').append("<td>Cout du projet sur 25 ans</td><td>"+Math.round(response.coutproj,0)+"</td><td>DT</td>");
+                        $('#capexres').append("<td>CAPEX</td><td>"+Math.round(response.capex,3)+"</td><td>DT</td>");
+                        $('#tricapres').append("<td>TRI sur les capitaux propres</td><td>"+Math.round(response.tricap,2)+"</td><td>%</td>");
+                        $('#trires').append("<td> TRI du projet  </td><td>"+Math.round(response.tri25,2)+"</td><td>%</td>");
+                        $('#subvres').append("<td>Subvention</td><td>"+((Math.round(response.subv,0)*Math.round(response.capex,0))/100)+"</td><td>DT</td>");
+                        $('#omres').append("<td>O&M</td><td>"+Math.round(response.opex[0],0)+"</td><td>DT</td>");
+                        $('#annuiteres').append("<td>Annuité</td><td>"+Math.round(response.annuite[5],0)+"</td><td>DT</td>");
+                        $('#vanres').append("<td> VAN sur 25 ans  </td><td>"+Math.round(response.van,0)+"</td><td>DT</td>");
+                        $('#puissanceres').append("<td> Puissance  </td><td>"+Math.round(response.peak,2)+"</td><td>kWc</td>");
 
                         
 
@@ -906,7 +926,7 @@
                     }       
                        
                 });
-            }
+            
         };
 
         
