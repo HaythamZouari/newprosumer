@@ -118,8 +118,9 @@ class FinanceService
             $result[$i]=0;
            $result[$i]+= ($project->getFinance()->getCapex()*
                ($project->getFinance()->getOpex()/100)*
-               pow((1+($project->getFinance()->getTauxActualisation()/100)),$i));
+               pow((1+($project->getFinance()->getTauxActualisation()/100)),$i)); 
         }
+       
         return $result;
     }
     public static function Anuite(int $maturite,int $delee,Project $project){
@@ -225,13 +226,15 @@ class FinanceService
         }
         return $result;
     }
-    public static function opex(Project $project){
+    public static function opex(Project $project, int $replinv){
         $result=[];
         for($i=0;$i<30;$i++){
             $result[]= ($project->getFinance()->getCapex()*
                 (float)($project->getFinance()->getOpex()/100)*
                 pow((1+(float)($project->getFinance()->getTauxActualisation()*0.01)),$i));
         }
+
+        $result[15]=$result[15]+(int)($replinv);
         return $result;
     }
     public static function LLCR(Project $project, array $annuite,array $cfads){

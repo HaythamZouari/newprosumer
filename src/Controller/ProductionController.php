@@ -213,7 +213,7 @@ class ProductionController extends AbstractController
         */
 
         $logger->info('testt',$data);
-        $pvgis->setResult(Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data));
+        $pvgis->setResult(Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data,$project->getConsomation()->getConsomationAnnuel()));
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($pvgis);
         $project->setCsvProd(null);
@@ -231,7 +231,7 @@ class ProductionController extends AbstractController
         $auto=$project->getAutoConsomer();
         $cedee=$project->getCedee();
         $importee=$project->getImporte();
-        return new JsonResponse(['period'=>$period,'data'=>$data,'array'=>$array,'data2'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data),'con'=>$consommation,
+        return new JsonResponse(['period'=>$period,'data'=>$data,'array'=>$array,'data2'=>$array,'con'=>$consommation,
         'pro'=>$production,
         'aut'=>$auto,
         'ced'=>$cedee,

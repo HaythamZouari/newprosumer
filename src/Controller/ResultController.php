@@ -186,17 +186,12 @@ class ResultController extends AbstractController
 
         }
             $f_reg=$project->getFinance()->getFRegularisation()[0];
-            if(!$project->getConsomation()->getTransportEng()){
-                for($i=0;$i<(count($project->getFinance()->getfactransport()));$i++){
-                   $f_transport[]=0;
-                }
-            }
-            else {
+           
                 for($i=0;$i<(count($project->getFinance()->getGainTransporter()));$i++){
                     $f_transport[]=$project->getFinance()->getfactransport()[$i];
                 }
 
-            }
+            
             for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){   
                 $PH_consomation[$j]=[];
                 $PH_auto_consomer[$j]=[];
@@ -259,6 +254,8 @@ class ResultController extends AbstractController
                 'PH_consomationannuel'=>$PH_consomationannuel,
                 'PH_auto_consomerannuel'=>$PH_auto_consomerannuel,
                 'PH_importerannuel'=>$PH_importerannuel,
+                'PH_cedeeannuel'=>Horaireannuel::Horaireannuel($project->getCedee()[count($project->getConsomation()->getallConsomationAnnuel())-1]),
+                'PH_productionannuel'=>Horaireannuel::Horaireannuel($prodvalue),
                 /*'monthimp_unif'=>$monthimp_uniform,
                 'month_auto'=>$month_auto,*/
                 'dureeProj'=>$project->getFinance()->getDureeProj(),
@@ -273,7 +270,7 @@ class ResultController extends AbstractController
                 'gain_E_cedee'=>$project->getFinance()->getGainCedee(),
                 'gain_ans'=>$project->getFinance()->getGainAns(),
                 'Facture_transport'=>$f_transport,
-                'opex'=>FinanceService::opex($project),
+                'opex'=>FinanceService::opex($project,$project->getFinance()->getReplinv()),
                 'facture_regrularisation'=>$project->getFinance()->getFRegularisation() ,
                 'transpE'=>$project->getConsomation()->getTransportEng(),
                 'llcr'=>$project->getFinance()->getLlcr(),

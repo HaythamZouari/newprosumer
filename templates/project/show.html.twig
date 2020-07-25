@@ -38,18 +38,18 @@
                         </div>
                         </div>
 
-                        <div class="card" id="tabs-icons-text-2" style="display: none" >
+                        <div class="card" id="tabs-icons-text-2"  >
                             <div class="card-body">
                                 {{ include('production/production.html.twig') }}
                             </div>
                         </div>
-                        <div class="card" id="tabs-icons-text-3" style="display: none">
+                        <div class="card" id="tabs-icons-text-3" >
                             <div class="card-body">
                                 {{ include('finance/index.html.twig') }}
                             </div>
                         </div>
                          </div>
-                        <div class="card" id="tabs-icons-text-4" style="display: none">
+                        <div class="card" id="tabs-icons-text-4" >
                             <div class="card-body">
                                 {{ include('result/result.html.twig') }}
                             </div>
@@ -132,6 +132,7 @@
 
             $('#tabs-icons-text-2').toggle();
             $('#tabs-icons-text-1').toggle();
+             map.resize();
         };
     </script>
 {% endblock %}

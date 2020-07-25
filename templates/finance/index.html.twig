@@ -1,16 +1,16 @@
 <div class="card bg-secondary">
     <div class="card-header bg-transparent pb-5" >
+    <button type="button" id="help" class="btn btn-primary"onclick="help()">Aide</button>
         <div class="card-body px-lg-5 py-lg-5">
         <div class="card-body px-lg-5 py-lg-5">
             <form id="financeForm"  action="{{ path('finance',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
                 <div class="form-group ">
                 
-                    <label class="form-control-label required" for="capex">Coùt d'investissement Hors Taxes (DT)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le coùt d'inestissement du projet en Hors Taxes">
-                            ?
-                        </button>  
+                    <label class="form-control-label required" for="capex">Coùt d'investissement Hors Taxes (DT)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le coùt d'investissement du projet en Hors Taxes">?</button>  
                     <div class="row">
-                        <div class="col">  
+                        <div class="col" >  
                             <input type="number" name="capex" id="capex" value="100000" min="0" class="form-control">
+                            <div class="invalid-feedback" id="capexvalid">Ce coùt est trés élevé</div>
                         </div>DT
                         <div class="col">  
                             <input type="number"  id="capexpu" value="2500" min="0" class="form-control">
@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group">
 
-                    <label class="form-control-label required" for="subvention">Subvention </label>
+                    <label class="form-control-label required" for="subvention">Subvention </label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le type de la subvention qui sera allouée au projet">?</button>
                 <div class="row">
                     <div class="col">                 
                     <select class="form-control" id="typesub">
@@ -41,40 +41,46 @@
                 <div class="row">
                     <div class="col">   
                         <div class="form-group">
-                            <label class="form-control-label required" for="opex">Coùt d'opération et de maintenance (%)</label>
+                            <label class="form-control-label required" for="opex">Coùt d'opération et de maintenance (%)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le poucentage du coùt d'investissement qui sera alloué anuellement aux opérations et la maintenance (1% du coùt d'investiement pour un systéme fixe">?</button>
                             <input type="number" name="opex" id="opex" value="1" max="100" min="0" class="form-control">
+                            <div class="invalid-feedback" id="opexvalid">Ce taux est élevé</div>
                         </div>
                     </div>
                     <div class="col">   
                         <div class="form-group">
-                            <label class="form-control-label required" for="replinv">Cout de remplacement des onduleurs (DT)</label>
+                            <label class="form-control-label required" for="replinv">Coùt de remplacement des onduleurs (DT)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le coùt de remplacement des onduleurs aprés 15 ans (100DT par kWc selon des références ) ">?</button>
                             <input type="number" name="replinv" id="replinv" max="100" min="0" class="form-control">
+                            <div class="invalid-feedback" id="replinvvalid">Ce coùt est élevé</div>
                         </div>
                     </div>
                     <div class="col">      
                         <div class="form-group">
-                            <label class="form-control-label required" for="duree_proj">Durée de vie du projet (ans)</label>
+                            <label class="form-control-label required" for="duree_proj">Durée de vie du projet (ans)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir la durée de vie du projet (25 ans pour les centrales PV)">?</button>
                             <input type="number" name="duree_proj" value="25" id=" " min="0" class="form-control">
+                            <div class="invalid-feedback" id="duree_projvalid">Cette durée est longue</div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">          
                         <div class="form-group">
-                            <label class="form-control-label required" for="aug_tarif_v">Taux d'augmentation du tarif de vente (%)</label>
+                            <label class="form-control-label required" for="aug_tarif_v">Taux d'augmentation du tarif de vente de l'excédant (%)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le taux annuel de l'augmentation des tarif d'achat de l'excédant de la part de la STEG">?</button>
                             <input type="number" name="aug_tarif_v" id="aug_tarif_v" value="5"  max="100" min="0" class="form-control">
+                            <div class="invalid-feedback" id="aug_tarif_vvalid">Ce taux est excessif</div>
                         </div>
                     </div>
                      <div class="col">      
                         <div class="form-group">
-                            <label class="form-control-label required" for="aug_tarif_a">Taux d'augmentation du tarif d'achat (%) </label>
+                            <label class="form-control-label required" for="aug_tarif_a">Taux d'augmentation du tarif d'achat de la STEG (%) </label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le Taux annuel d'augmentation des tarifs d'achat de l'électricité fournie par la STEG">?</button>
                             <input type="number" name="aug_tarif_a" id="aug_tarif_a" value="7" min="0"  max="100" class="form-control">
+                            <div class="invalid-feedback" id="aug_tarif_avalid">Ce taux est excessif</div>
                         </div>
                     </div>
                     <div class="col">     
                         <div class="form-group">
-                            <label class="form-control-label required" for="taux_actualisation">Taux d'actualisation (%)</label>
+                            <label class="form-control-label required" for="taux_actualisation">Taux d'actualisation annuel (%)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le taux d'actualisation pour les analyses des Cash flows">?</button>
                             <input type="number" name="taux_actualisation" value ="8" id="taux_actualisation" min="0"  max="100" class="form-control">
+                            <div class="invalid-feedback" id="taux_actualisationvalid">Ce taux est excessif</div>
                         </div>
                     </div>
                 </div>        
@@ -83,36 +89,41 @@
                 <div class="form-group">
                    
                     <input type="checkbox" class="custom-control-input"  name="credit" id="credit">
-                    <label class="custom-control-label" for="credit" >Crédit   </label>
+                    <label class="custom-control-label" for="credit" >Crédit   </label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir s'il y'aura recours à un crédit pour le financement du projet">?</button>
                 </div>    
                    
                 <div id="credits_div" style="display: none">
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label class="form-control-label required" for="dette">Montant de la dette (DT)</label>
+                                <label class="form-control-label required" for="dette">Montant de la dette (DT)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le montant total de  la dette">?</button>
                                 <input type="number" name="dette" id="dette" min="0" class="form-control">
+                                <div class="invalid-feedback" id="dettevalid">Ce montant de la dette est élevé</div>
                             </div>
                         </div>
                         <div class="col">
 
                             <div class="form-group">
-                                <label class="form-control-label required" for="interet">Taux d'interet (%)</label>
-                                <input type="number" name="interet" id="interet" min="0"  max="100" class="form-control">
+                                <label class="form-control-label required" for="interet">Taux d'interet (%)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le taux d'intérét appliqué par la banque pour le calcul des annuités">?</button>
+                                <input type="number" name="interet" value="11" id="interet" min="0"  max="100" class="form-control">
+                                <div class="invalid-feedback" id="interetvalid">Ce taux est excessif</div>
+                                
                             </div>
                         </div>
                     </div>    
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label class="form-control-label required" for="delai_grace">Délai de gràce (ans)</label>
-                                <input type="number" name="delai_grace" id="delai_grace" min="0" class="form-control">
+                                <label class="form-control-label required" for="delai_grace">Délai de gràce (ans)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le nombre d'années de gràce s'il y en a sinon 0">?</button>
+                                <input type="number" name="delai_grace"  value="0" id="delai_grace" min="0" class="form-control">
+                                <div class="invalid-feedback" id="delai_gracevalid">Ce délai est long</div>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label class="form-control-label required" for="maturite_proj">Durée de remboursement [aprés délai de grace] (ans)</label>
-                                <input type="number" name="maturite_proj" id="maturite_proj" min="0" class="form-control">
+                                <label class="form-control-label required" for="maturite_proj">Durée de remboursement [aprés délai de gràce] (ans)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir la durée de rempboursement de la dette aprés la période de gràce">?</button>
+                                <input type="number" name="maturite_proj" value="7" id="maturite_proj" min="0" class="form-control">
+                                <div class="invalid-feedback" id="maturite_projvalid">Cette durée est longue</div>
                             </div>
                         </div>
                     </div>
@@ -134,10 +145,116 @@
 <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
 <script>
 
-var power=0;
+$("#opex").change(function() {
+   if ($( "#opex" ).val()>5){
+       $("#opexvalid").show();
+   }
+   else{
+         $("#opexvalid").hide();
 
+    }
+});
+
+$("#replinv").change(function() {
+    if (($( "#peakpower" ).val())!=0){
+        power=parseInt($( "#peakpower" ).val())+parseInt($( "#peakpower2" ).val())+parseInt($( "#peakpower3" ).val());
+    }
+    else
+    if(($( "#capacity" ).val())!=0){
+        power=$( "#capacity" ).val();
+    }
+    else
+    if(($( "#csvpuiss" ).val())!=0){
+        power=$( "#csvpuiss" ).val();
+    }
+   if ($( "#replinv" ).val()>200*power){
+       $("#replinvvalid").show();
+   }
+   else{
+         $("#replinvvalid").hide();
+
+    }
+});
+
+$("#duree_proj").change(function() {
+   if ($( "#duree_proj" ).val()>40){
+       $("#duree_projvalid").show();
+   }
+   else{
+         $("#duree_projvalid").hide();
+
+    }
+});
+
+$("#aug_tarif_v").change(function() {
+   if ($( "#aug_tarif_v" ).val()>15){
+       $("#aug_tarif_vvalid").show();
+   }
+   else{
+         $("#aug_tarif_vvalid").hide();
+
+    }
+});
+
+$("#aug_tarif_a").change(function() {
+   if ($( "#aug_tarif_a" ).val()>15){
+       $("#aug_tarif_avalid").show();
+   }
+   else{
+         $("#aug_tarif_avalid").hide();
+
+    }
+});
+
+
+
+$("#taux_actualisation").change(function() {
+   if ($( "#taux_actualisation" ).val()>15){
+       $("#taux_actualisationvalid").show();
+   }
+   else{
+         $("#taux_actualisationvalid").hide();
+
+    }
+});
+
+
+
+
+$("#interet").change(function() {
+   if ($( "#interet" ).val()>20){
+       $("#interetvalid").show();
+   }
+   else{
+         $("#interetvalid").hide();
+
+    }
+});
+
+$("#delai_grace").change(function() {
+   if ($( "#delai_grace" ).val()>5){
+       $("#delai_gracevalid").show();
+   }
+   else{
+         $("#delai_gracevalid").hide();
+
+    }
+});
+
+
+
+$("#maturite_proj").change(function() {
+   if ($( "#maturite_proj" ).val()>20){
+       $("#maturite_projvalid").show();
+   }
+   else{
+         $("#maturite_projvalid").hide();
+
+    }
+});
 
 $("#typesub").change(function() {
+    $( "#replinv" ).val((100*power));
     if ($( "#typesub" ).val()==0){
     $( "#subvention" ).val(0);
     $( "#subventionDT" ).val(0);
@@ -176,9 +293,20 @@ $("#typesub").change(function() {
         }
     }
 });   
+$("#dette").change(function() {
+    if ($("#dette").val()>(0.9*$("#capex").val())){
+    $("#dettevalid").show();
 
+    }
+    else{
+         $("#dettevalid").hide();
 
+    }
+});
 $("#capex").change(function() {
+
+    
+    
     if (($( "#peakpower" ).val())!=0){
         power=parseInt($( "#peakpower" ).val())+parseInt($( "#peakpower2" ).val())+parseInt($( "#peakpower3" ).val());
     }
@@ -190,6 +318,18 @@ $("#capex").change(function() {
     if(($( "#csvpuiss" ).val())!=0){
         power=$( "#csvpuiss" ).val();
     }
+    if ($( "#capex" ).val()>3500*power){
+           $( "#capexvalid" ).show();
+        }
+    else  {
+        $( "#capexvalid" ).hide();
+    }  
+
+   
+     $( "#dette" ).val(0.7*($( "#capex" ).val()));
+
+
+    $( "#replinv" ).val((100*power));
     $( "#capexpu" ).val(($( "#capex" ).val())/power);
     if ($( "#typesub" ).val()==0){
     $( "#subvention" ).val(0);
@@ -230,6 +370,7 @@ $("#capex").change(function() {
     }
 });   
 $("#capexpu").change(function() {
+    
     if (($( "#peakpower" ).val())!=0){
         power=parseInt($( "#peakpower" ).val())+parseInt($( "#peakpower2" ).val())+parseInt($( "#peakpower3" ).val());
     }
@@ -241,11 +382,13 @@ $("#capexpu").change(function() {
     if(($( "#csvpuiss" ).val())!=0){
         power=$( "#csvpuiss" ).val();
     }
+    $( "#replinv" ).val((100*power));
         $( "#capex" ).val(($( "#capexpu" ).val())*power);
     });
 
-    console.log("power");
-    console.log(power);
+    
+
+
 
     let cashflowIn=0;
     var capex=0;
@@ -265,6 +408,7 @@ $("#capexpu").change(function() {
     let j;
     $('#credit').on('change',function () {
        $('#credits_div').toggle();
+      
     });
     
 
@@ -273,6 +417,7 @@ $("#capexpu").change(function() {
         {% if not app.user %}
         window.location.replace('{{ path('security_login') }}');
         {% else %}
+        
          $('#loadingfin').show();
         var data = $('#financeForm').serialize();
         var url = $('#financeForm').attr('action');

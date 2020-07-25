@@ -97,6 +97,7 @@ class Consomation
 
             }
         }
+        $this->transportEng=false;
     }
 
     public function getId(): ?int

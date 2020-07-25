@@ -217,19 +217,19 @@
             }
             /* line 205, scss/_3_base.scss */
             table {
-            border: 1px solid #ffe21e;
+            border: 1px solid #ddd;
             font-size: 92%;
             margin-bottom: 2rem;
             }
             /* line 211, scss/_3_base.scss */
             table th {
-            background-color: #ffe951;
-            border: 1px solid #ffe21e;
+            background-color: #ddd;
+            border: 1px solid #ddd;
             padding: .25em .5em;
             }
             /* line 217, scss/_3_base.scss */
             table td {
-            border: 1px solid #ffe21e;
+            border: 1px solid #ddd;
             padding: .25em .5em;
             }
             #cash_tab3 {
@@ -502,7 +502,7 @@
      
         
             <div class="report-cover group" >
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Seguidor2ejes.jpg/1200px-Seguidor2ejes.jpg" class="--show-in-pdf" style="display:none;width:100%;height:100%">
+                <img src="https://live.staticflickr.com/4441/36569087120_62331548e3_b.jpg" class="--show-in-pdf" style="display:none;width:100%;height:100%">
                     <div class="cover-text">
                         <h1 class="cover-text-title --show-in-pdf" style="display:none" >RAPPORT D'ETUDE ENERGETIQUE ET FINANCIERE</h1>
                         <p class="cover-text-subtitle --show-in-pdf" style="display:none">POUR LE PROJET D'AUTOCONSOMMATION RACCORDE AU RESEAU HTA DE PUISSANCE {{ puissance_centrale }}kWc DE {{ project.adress  }}</p>
@@ -739,8 +739,8 @@
                                     </p>
 
                                 </section><!-- end #contexte-energetique -->
- <p style="page-break-before: always;display:block;"></p>                              
-                                <section class="anchor" id="cadre-reglementaire">
+                            
+                                <!--section class="anchor" id="cadre-reglementaire">
                                         <h3><span class="number">1.3 </span>Cadre réglementaire</h3>
                                         <h4><span class="number">1.3.1 </span>Loi n°2015-12</h4></br>
                                         <p>La loi n°2015-12 relative à la production d’électricité à partir des ENRs a été adoptée et promulguée le 11 Mai 2015. Cette loi a pour
@@ -808,6 +808,7 @@
                                         </li>
                                         <li>Les projets sur site déporté, avec transport d’électricité sur le
                                         réseau.</li></ul></p>
+                        <div id="sanstransport">            
 
                                         <h4><span class="number">1.4.1 </span>Les projets sur site, sans transport d’électricité sur le réseau.</h4>
 
@@ -830,7 +831,7 @@
                                         peuvent être allégées, voir même non
                                         nécessaires dans le cas où le site de consommation disposerait déjà des infrastructures de 
                                         raccordement suffisantes au réseau MT/HT.</p>
-<p style="page-break-before: always;display:block;"></p>                                           
+                                            <p style="page-break-before: always;display:block;"></p>                                           
                                         <p>Enfin, certaines procédures listées dans la présente partie sont fournies à titre informatif 
                                         et leur application doit être évaluée au cas par
                                         cas par le porteur projet, en fonction du type de projet (éolien, PV sur toiture, PV sur sol)
@@ -905,7 +906,9 @@
                                         </tr> 
                                         </table>  
                                     </div>
-<p style="page-break-before: always;display:block;"></p>
+                                            <p style="page-break-before: always;display:block;"></p>
+                        </div>                    
+                        <div id="avectransport">        
                                         <h4><span class="number">1.4.2 </span>Les projets sur site déporté, avec transport d’électricité sur le réseau </h4>
                                         <p>La seconde configuration possible pour un projet d’autoconsommation est un projet avec
                                         transport d’électricité sur le réseau.
@@ -915,14 +918,14 @@
                                         et cela n’est pas forcément possible sur le
                                         lieu de consommation. L’électricité est alors transportée sur le réseau.
                                         Les particularités de cette configuration par rapport au cas sans transport sur le réseau sont :
-                                        • Il est nécessaire d’identifier un site pour accueillir les installations de production 
+                                        <p>• Il est nécessaire d’identifier un site pour accueillir les installations de production 
                                         d’électricité à partir d’énergie renouvelable, ce qui
-                                        engendre des procédures et précautions spécifiques. 
-                                        • Les travaux et études nécessaires au raccordement de l’installation au réseau, pour la revente 
+                                        engendre des procédures et précautions spécifiques. </p>
+                                       <p> • Les travaux et études nécessaires au raccordement de l’installation au réseau, pour la revente 
                                         des excédents à la STEG ainsi que le
                                         transport vers le site de consommation, sont potentiellement plus importantes, tout particulièrement
-                                        si le site déporté n’est pas déjà ou suffisamment raccordé au réseau.
-                                        Plusieurs procédures sont toutefois similaires au cas d’autoconsommation sans transport comme les 
+                                        si le site déporté n’est pas déjà ou suffisamment raccordé au réseau.</p>
+                                        <p> Plusieurs procédures sont toutefois similaires au cas d’autoconsommation sans transport comme les 
                                         procédures liées aux Autorisations,
                                         au Financement et au Raccordement. 
                                         </p>
@@ -963,7 +966,7 @@
 
                                         <table>
                                         <tr>
-<p style="page-break-before: always;display:block;"></p>                                        
+                                        <p style="page-break-before: always;display:block;"></p>                                        
                                             <th>III. Autorisations</th>
                                         </tr> 
                                         <tr>
@@ -981,7 +984,7 @@
 
                                         <table>
                                         <tr>
-x                                    
+                                   
                                             <th>IV. Financement & Incitations</th>
                                         </tr> 
                                         <tr>
@@ -1012,15 +1015,16 @@ x
                                             </td>
                                         </tr> 
                                         </table>
-                                    </div>    
+                                    </div> 
+                        </div>
                                 </section><!-- end #processus-de-developpement -->
-
+                        
                             </div><!-- end .section-content -->
                         </section>
                      
                         
                         <!-- End:   SECTION 1 - INTRODUCTION -->
-<p style="page-break-before: always;display:block;"></p>
+                        <p style="page-break-before: always;display:block;"></p>
                          <!-- Start: Section 2 - Hypotheses -->
                       
                         <section  class="section anchor group" id="hypothese">
@@ -1062,7 +1066,7 @@ x
                                             </tr>
                                             {% endfor %}
                                             <tr>
-                                                <td>Transport de l’énergie</td>
+                                                <td>Transport de l’énergie du premier site</td>
                                                 {% if consomation.TransportEng == true %}
                                                 <td>Oui</td>
                                                 {% else %}
@@ -1095,20 +1099,21 @@ x
                                                     <td>°</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Inclinaison</td>
+                                                    <td>Inclinaison des modules</td>
                                                     <td>{{ incl }}</td>
                                                     <td>°</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Taux des pertes</td>
-                                                    <td>{{ loss }}</td>
-                                                    <td>°</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Azimut</td>
+                                                 <tr>
+                                                    <td>Orientations des modules</td>
                                                     <td>{{ azim }}</td>
                                                     <td>°</td>
                                                 </tr>
+                                                <tr>
+                                                    <td>Taux des pertes à la sortie du champ PV</td>
+                                                    <td>{{ loss }}</td>
+                                                    <td>°</td>
+                                                </tr>
+                                               
                                             </table>
                                         </div>
                                         {% endif %}
@@ -1118,34 +1123,36 @@ x
                                         <table>
                                         
                                             <tr>
-                                                <td>Capex</td>
+                                                <td>Coùt d'investissement</td>
                                                 <td >{{ finance.capex |number_format(0, '.', ' ')}}</td>
                                                 <td>DT</td>
                                             </tr>
-                                            <tr>
-                                                <td>Montant de la dette</td>
+                                           
+                                            <tr class= 'annuite'>
+                                                <td>Montant du crédit</td>
                                                 <td>{{ finance.MontantDette |number_format(0, '.', ' ')}}</td>
                                                 <td>DT</td>
                                             </tr>
-                                            <tr>
-                                                <td>Taux d'interet</td>
+                                            <tr class= 'annuite'>
+                                                <td >Taux d'intêret</td>
                                                 <td>{{ finance.TauxInteret }}</td>
                                                 <td>%</td>
                                             </tr>
-                                            <tr>
-                                                <td>Periode de grace</td>
+                                            <tr class= 'annuite'>
+                                                <td>Période de gràce</td>
                                                 <td>{{ finance.DelaiGrace }}</td>
                                                 <td>Ans</td>
                                             </tr>
-                                            <tr>
-                                                <td>Duree de remboursement </td>
+                                            <tr class= 'annuite'>
+                                                <td>Durée de remboursement </td>
                                                 <td>{{ finance.MaturiteProj }}</td>
                                                 <td>Ans</td>
                                             </tr>
+                                            
                                             <tr>
                                                 <td>Subvention</td>
-                                                <td>{{ finance.Subvention |number_format(0, '.', ' ')}}</td>
-                                                <td>%</td>
+                                                <td>{{ finance.Subvention * finance.capex / 100}}</td>
+                                                <td>DT</td>
                                             </tr>
                                             <tr>
                                                 <td>Tarif souscrit</td>
@@ -1153,7 +1160,7 @@ x
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td>Duree du projet</td>
+                                                <td>Durée de vie du projet</td>
                                                 <td>{{ finance.DureeProj }}</td>
                                                 <td>Ans</td>
                                             </tr>
@@ -1216,29 +1223,37 @@ x
                                                 <td >{{ puissance_centrale }}</td>
                                                 <td>kWc</td>
                                             </tr>
+
+                                             <tr>
+                                                <td>Energie produite la premiére année :</td>
+                                                <td>{{ (productible * puissance_centrale)|number_format(0, '.', ' ') }}</td>
+                                                <td>kWh/kWc</td>
+                                            </tr>
+
                                             <tr>
-                                                <td>Production PV 25 ans</td>
+                                                <td>Productible à la premiére année :</td>
+                                                <td>{{ productible|number_format(0, '.', ' ') }}</td>
+                                                <td>kWh/kWc</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Energie produite sur 25 ans</td>
                                                 <td>{{ prod25ans|number_format(0, '.', ' ') }}</td>
                                                 <td>kWh</td>
                                             </tr>
                                             {% for i in range(0, ((T_autoC|length)-1)) %}
                                             <tr>
-                                                <td>Taux d’autoconsommation site {{i}} </td>
+                                                <td>Taux de couverture des besoins du site {{i}} </td>
                                                 <td>{{ (T_autoC[i] * 100)|number_format(2, '.', ' ')}}</td>
                                                 <td>%</td>
                                             </tr>
                                             {% endfor %}
                                             
                                             <tr>
-                                                <td>Taux de l’énergie cédée :</td>
+                                                <td>Taux de l’énergie produite en excédant :</td>
                                                 <td>{{ (T_cedee  * 100)|number_format(2, '.', ' ')}}</td>
                                                 <td>%</td>
                                             </tr>
-                                            <tr>
-                                                <td>Productible :</td>
-                                                <td>{{ productible|number_format(0, '.', ' ') }}</td>
-                                                <td>kWh/kWc</td>
-                                            </tr>
+                                            
                                             
                                         </table>
                                   </div>
@@ -1248,23 +1263,23 @@ x
                                             
                                             
                                             <tr>
-                                                <td>CAPEX</td>
-                                                <td >{{ finance.capex }}</td>
+                                                <td>Coùt d'investissement</td>
+                                                <td >{{ finance.capex|number_format(0, '.', ' ') }}</td>
                                                 <td>DT</td>
                                             </tr>
                                             <tr>
                                                 <td>Subvention</td>
-                                                <td>{{ finance.subvention |number_format(0, '.', ' ')}}</td>
-                                                <td>%</td>
+                                                <td>{{ (finance.Subvention * finance.capex / 100)|number_format(0, '.', ' ')}}</td>
+                                                <td>DT</td>
                                             </tr>
                                             <tr>
-                                                <td>O&M </td>
-                                                <td>{{ finance.opex }}</td>
-                                                <td>%</td>
+                                                <td>Coùt annuel des opérations et maintenance </td>
+                                                <td>{{ (finance.opex * finance.capex / 100)|number_format(0, '.', ' ')}}</td>
+                                                <td>DT</td>
                                             </tr>
                                             
-                                            <tr>
-                                                <td>Facture de regularisation :</td>
+                                            <tr class='regul'>
+                                                <td>Facture de régularisation :</td>
                                                 {% if f_r ==0 %}
                                                 <td>{{ f_r }}</td>
                                                 {% else %}
@@ -1273,7 +1288,7 @@ x
                                                 <td>DT</td>
                                             </tr>
                                             <tr>
-                                                <td>Cout du projet sur 25 ans :</td>
+                                                <td>Coùt du projet sur 25 ans :</td>
                                                 <td>{{ coutproj|number_format(0, '.', ' ') }}</td>
                                                 <td>DT</td>
                                             </tr>
@@ -1292,10 +1307,15 @@ x
                                                 <td>{{ finance.Tricapitaux|number_format(2, '.', ' ') }}</td>
                                                 <td>%</td>
                                             </tr>
-                                            <tr>
+                                            <tr class='annuite'>
                                                 <td>TRI du projet :</td>
                                                 <td>{{ finance.tri25|number_format(2, '.', ' ') }}</td>
                                                 <td>%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Temps de retour sur investissement</td>
+                                                <td id='pbperiod'>
+                                                <td>DT</td>
                                             </tr>
                                           
                                             
@@ -1386,7 +1406,7 @@ x
                                             
                                               {% for i in range(0, ((cm_annual|length)-1)) %}
                                                 <tr>
-                                                <td>Consommation annuelle Site {{i}}</td>
+                                                <td>Consommation annuelle brute du Site {{i}}</td>
                                                     <td>{{ cm_annual[i] |number_format(0, '.', ' ')}}</td>
                                                     <td>kWh</td>
                                                 </tr>
@@ -1397,7 +1417,7 @@ x
                                               </tr>
                                               {% for i in range(0, ((cm_annual|length)-1)) %}
                                               <tr>
-                                                  <td>Facture annuelle Site  {{i}} </td>
+                                                  <td>Facture annuelle du Site  {{i}} </td>
                                                   <td>{{ facture_annuel[i]|number_format(0, '.', ' ') }}</td>
                                                   <td>DT</td>
                                               </tr>
@@ -1412,7 +1432,7 @@ x
                                           <table>
                                               
                                               <th>
-                                                  Consommation
+                                                 Mois/Consommation
                                               </th>
                                               <th>
                                                   Jour
@@ -1425,6 +1445,9 @@ x
                                               </th>
                                               <th>
                                                   Nuit
+                                              </th>
+                                              <th>
+                                                  Total
                                               </th>
                                               <tbody>
                                                   {% set i = 0 %}
@@ -1447,13 +1470,13 @@ x
                                             <p style="page-break-before: always;display:block;"></p>                                       
                                           <figure class="img-container img-full group">
                                               <chart id="rp_cm{{j}}"></chart> 
-                                              <figcaption ><span class="caption-headline">Répartition de la consommation</span> Ce graphique présente la répartition de la consommation électrique annuelle selon les postes horaires. Dans cette répartition on considére le changement de postes horaires en été et en hiver comme décrit dans l'introduction. Cette répartition se base sur la courbe de charge de la consommation électrique soit synthétisée à partir de l'outil de création de courbe de charge ou à partir de la courbe de charge fournie par la STEG. </figcaption>
+                                              <figcaption ><span class="caption-headline">Répartition de la consommation brute par postes horaires</span> Ce graphique présente la répartition de la consommation électrique annuelle selon les postes horaires. Dans cette répartition on considére le changement de postes horaires en été et en hiver comme décrit dans l'introduction. Cette répartition se base sur la courbe de charge de la consommation électrique soit synthétisée à partir de l'outil de création de courbe de charge ou à partir de la courbe de charge fournie par la STEG. </figcaption>
                                           </figure>
                                         
                                   
                                           <figure class="img-container img-full group">
                                                   <chart id="vh_cm{{j}}"></chart> 
-                                                  <figcaption ><span class="caption-headline">Variation horaire de la consommation</span> Le graphique ci-dessous présente une partie de la consommation (puissance en fonction du temps) du site étudié avec un pas horaire en se basant sur les données de la courbe de charge.</figcaption>
+                                                  <figcaption ><span class="caption-headline">Courbe de charge de la consommation avec des pas horaires</span> Le graphique ci-dessous présente les variations de  la consommation (puissance en fonction du temps) du site étudié avec un pas horaire en se basant sur les données de la courbe de charge.</figcaption>
                                           </figure>
                                           
     <p style="page-break-before: always;display:block;"></p>                                      
@@ -1464,9 +1487,7 @@ x
                                          
                                           <figure class="img-container img-full group">
                                               <chart id="heat_cm{{j}}"></chart> 
-                                              <figcaption ><span class="caption-headline">Heatmap de la consommation</span>Le plot carpet présente en abscisse les jours de l’an et en ordonné les heures de la journée.
-                                                  Les variations de couleurs du noir au rouge traduisent les variations
-                                                  des puissances appelés du plus faible au plus fort.</figcaption>
+                                              <figcaption ><span class="caption-headline">Heatmap de la consommation</span>Le Heatmap permet de visualiser rapidement l’évolution des données sur une journée. Chaque colonne représente une journée, l’activité du matin se situe en haut de la carte, et celle du soir en bas. La colorisation évolue en passant du noir (consommation faible) au rouge (consommation forte) avec un dégradé.</figcaption>
                                           </figure>
                                       
                                   {% endfor %}
@@ -1520,7 +1541,7 @@ x
                                         <table>
                                           
                                             <th>
-                                                Bilan(KWH)
+                                                Bilan(kWH)
                                             </th>
                                             <th>
                                                 Jour
@@ -1535,34 +1556,34 @@ x
                                                 Nuit
                                             </th>
                                             <th>
-                                              TOTAL
+                                              Total
                                             </th>
                                         {% for j in range(0, ((cmmonth|length)-1)) %}   
                                             <tr id="t_charge{{j}}">
                                                 <td>
-                                                    TOTALE CONSOMMATION {{j}}
+                                                    Consommation brute du Site {{j}}
                                                 </td>
                                             </tr>
                                             
                                             <tr id="t_transportee{{j}}">
                                                 <td>
-                                                    TOTALE TRANSPORTEE {{j}}
+                                                    Electricité solaire autoconsommée au Site {{j}}
                                                 </td>
                                             </tr>
                                             
                                             <tr id="t_imp{{j}}">
                                                 <td>
-                                                    TOTALE IMPORTEE {{j}}</td>
+                                                    Electrcité achetée de la STEG par le Site {{j}}</td>
                                             </tr>
                                          {% endfor %}    
                                             <tr id="t_prod">
                                                 <td>
-                                                    TOTALE PRODUITE
+                                                    Production électrique totale
                                                 </td>
                                             </tr>
                                             <tr id="t_cedee">
                                                 <td>
-                                                    TOTALE CEDEE
+                                                    Production électrique de la centrale vendue à la STEG
                                                 </td>
                                             </tr>
                                           
@@ -1581,11 +1602,7 @@ x
                                     </figure>
 <p style="page-break-before: always;display:block;"></p>                                            
                                         
-                                    <figure class="img-container img-full group">
-                                        <chart id="pd_cm"></chart> 
-                                        <figcaption ><span class="caption-headline">Répartition de l'énergie produite Totale</span></figcaption>
-                                    </figure>
-                                    <p></p>
+                                   
                                        
                                     <figure class="img-container img-full group">
                                         <chart id="timeseries_pd_cm"></chart> 
@@ -1612,7 +1629,7 @@ x
                                                 Nuit (kWh)                                        
                                             </th>
                                             <th>
-                                                Toltal (kWh)                                       
+                                                Total (kWh)                                       
                                             </th>    
                                             </thead>
                                           <tbody id="tableau_rp_m{{j}}">
@@ -1661,34 +1678,33 @@ x
                                                 <table >
                                                     
                                                     <tr>
-                                                        <td>Capex</td>
-                                                        <td >{{ finance.capex |number_format(3, '.', ' ')}}</td>
+                                                        <td>Coùt d'investissement</td>
+                                                        <td >{{ finance.capex|number_format(0, '.', ' ')}}</td>
                                                         <td>DT</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Subvention</td>
-                                                        <td>{{ finance.subvention |number_format(3, '.', ' ')}}</td>
+                                                        <td>{{ (finance.Subvention * finance.capex / 100)|number_format(0, '.', ' ')}}</td>
                                                         <td>DT</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>O&M</td>
-                                                        <td>{{ finance.opex /100 * finance.capex }}</td>
+                                                        <td>Coùt d'exploitation et maintenance</td>
+                                                        <td>{{ (finance.opex /100 * finance.capex)|number_format(0, '.', ' ')}}</td>
                                                         <td>DT</td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>Annuite</td>
-                                                        <td>{{ finance.annuite|number_format(3, '.', ' ') }}</td>
-                                                        <td></td>
+                                                    <tr class='annuite'>
+                                                        <td >Annuité</td>
+                                                        <td>{% if finance.annuite is empty %}{{0}}{% else %}{{ finance.annuite[5]|number_format(0, '.', ' ') }}{% endif %}</td>
+                                                        <td>DT</td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>Facture de regularisation</td>
+                                                    <tr class='regul'>
+                                                        <td >Facture de régularisation</td>
                                                         <td>{{ finance.fregularisation[0]|number_format(3, '.', ' ') }}</td>
                                                         <td>DT</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Gains par autoconsommation 1ére
-                                                            année</td>
-                                                        <td>{{ finance.GainTransporter[0] |number_format(3, '.', ' ')}}</td>
+                                                        <td>Gains par autoconsommation la  1ére année</td>
+                                                        <td>{{ finance.GainTransporter[0]|number_format(0, '.', ' ')}}</td>
                                                         <td>DT</td>
                                                     </tr>
                                                   
@@ -1699,9 +1715,14 @@ x
                                         
                                                 <table>
                                                     
+                                                    <tr class='annuite'>
+                                                        <td>TRI du projet</td>
+                                                        <td >{{ finance.tri25|number_format(3, '.', ' ')}}</td>
+                                                        <td>%</td>
+                                                    </tr>
                                                     <tr>
-                                                        <td>TRI</td>
-                                                        <td >{{ finance.tri25  |number_format(3, '.', ' ')}}</td>
+                                                        <td>TRI des Capitaux propres</td>
+                                                        <td >{{ finance.Tricapitaux|number_format(3, '.', ' ')}}</td>
                                                         <td>%</td>
                                                     </tr>
                                                     <tr>
@@ -1712,6 +1733,12 @@ x
                                                     <tr>
                                                         <td>LCOE</td>
                                                         <td>{{ lcoe|number_format(3, '.', ' ') }}</td>
+                                                        <td>DT</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Temps de retour sur investissement</td>
+                                                        <td id='pbperiod'>
+                                                        
                                                         <td>DT</td>
                                                     </tr>
                                                   </table>
@@ -1734,19 +1761,19 @@ x
                                 <table id="cash_tab" >
                                   
                                     <tr>
-                                        <td scope="col">Annee</td>
-                                        <td scope="col">Gain energie transportee(DT)</td>
-                                        <td scope="col">Gain energie cedee(Dt)</td>
+                                        <td scope="col">Année</td>
+                                        <td scope="col">Gain par autoconsommation(DT)</td>
+                                        <td scope="col">Gain de l'éxcédant vendu à la STEG(DT)</td>
                                         <td scope="col">Gain par ans (DT)</td>
                                         <td scope="col">Facture transport (DT)</td>
-                                        <td scope="col">O&M  (DT)</td>
-                                        <td scope="col">Annuite (DT)</td>
-                                        <td scope="col">Facture de regularisation (DT)</td>
+                                        <td scope="col">Coùt d'opération et maintenance(DT)</td>
+                                        <td scope="col" class= 'annuite'>Annuité (DT)</td>
+                                        <td scope="col" class= 'regul'>Facture de régularisation (DT)</td>
                                         <td scope="col">Cash flows (DT)</td>
-                                        <td scope="col">Cash Flows cumules (DT)</td>
-                                        <td scope="col">CFADS (DT)</td>
-                                        <td scope="col">DSCR</td>
-                                        <td scope="col">LLCR</td>
+                                        <td scope="col">Cash Flows cumulés (DT)</td>
+                                        <td scope="col" class='annuite'>CFADS (DT)</td>
+                                        <td scope="col" class='annuite'>DSCR</td>
+                                        <td scope="col" class='annuite'>LLCR</td>
                                     </tr>
                                     
                                     <tbody id="result_finance">
@@ -1758,19 +1785,19 @@ x
                                 <table id="cash_tab2" >
                                   
                                     <tr>
-                                        <td scope="col">Annee</td>
-                                        <td scope="col">Gain energie transportee(DT)</td>
-                                        <td scope="col">Gain energie cedee(Dt)</td>
+                                        <td scope="col">Année</td>
+                                        <td scope="col">Gain par autoconsommation(DT)</td>
+                                        <td scope="col">Gain de l'éxcédant vendu à la STEG(DT)</td>
                                         <td scope="col">Gain par ans (DT)</td>
                                         <td scope="col">Facture transport (DT)</td>
-                                        <td scope="col">O&M  (DT)</td>
-                                        <td scope="col">Annuite (DT)</td>
-                                        <td scope="col">Facture de regularisation (DT)</td>
+                                        <td scope="col">Coùt d'opération et maintenance(DT)</td>
+                                        <td scope="col" class='annuite'>Annuité (DT)</td>
+                                        <td scope="col" class= 'regul'>Facture de régularisation (DT)</td>
                                         <td scope="col">Cash flows (DT)</td>
-                                        <td scope="col">Cash Flows cumules (DT)</td>
-                                        <td scope="col">CFADS (DT)</td>
-                                        <td scope="col">DSCR</td>
-                                        <td scope="col">LLCR</td>
+                                        <td scope="col">Cash Flows cumulés (DT)</td>
+                                        <td scope="col"class='annuite'>CFADS (DT)</td>
+                                        <td scope="col" class='annuite'>DSCR</td>
+                                        <td scope="col" class='annuite'>LLCR</td>
                                     </tr>
                                     
                                     <tbody id="result_finance2">
@@ -1783,19 +1810,19 @@ x
                                 <table id="cash_tab3" >
                                   
                                     <tr>
-                                        <td scope="col">Annee</td>
-                                        <td scope="col">Gain energie transportee(DT)</td>
-                                        <td scope="col">Gain energie cedee(Dt)</td>
+                                        <td scope="col">Année</td>
+                                        <td scope="col">Gain par autoconsommation Total(DT)</td>
+                                        <td scope="col">Gain de l'éxcédant vendu à la STEG(DT)</td>
                                         <td scope="col">Gain par ans (DT)</td>
                                         <td scope="col">Facture transport (DT)</td>
-                                        <td scope="col">O&M  (DT)</td>
-                                        <td scope="col">Annuite (DT)</td>
-                                        <td scope="col">Facture de regularisation (DT)</td>
+                                        <td scope="col">Coùt d'opération et maintenance(DT)</td>
+                                        <td scope="col" class='annuite'>Annuité (DT)</td>
+                                        <td scope="col" class='regul'>Facture de régularisation (DT)</td>
                                         <td scope="col">Cash flows (DT)</td>
-                                        <td scope="col">Cash Flows cumules (DT)</td>
-                                        <td scope="col">CFADS (DT)</td>
-                                        <td scope="col">DSCR</td>
-                                        <td scope="col">LLCR</td>
+                                        <td scope="col">Cash Flows cumulés (DT)</td>
+                                        <td scope="col" class='annuite'>CFADS (DT)</td>
+                                        <td scope="col" class='annuite'>DSCR</td>
+                                        <td scope="col" class='annuite'>LLCR</td>
                                     </tr>
                                     
                                     <tbody id="result_finance3">
@@ -1803,12 +1830,12 @@ x
                                 </table>
                             </div>       
                                 
-
-                            <figure class="img-container img-full group">
+                        <div class= 'annuite'>
+                            <figure class=" img-container img-full group">
                                 <chart id="final_chart"></chart> 
                                 <figcaption ><span class="caption-headline">Variation du DSCR sur la durée de remboursement du crédit</span> </figcaption>
                             </figure>
-                            
+                        </div>    
                             </div>
                         </section>
                      
@@ -1842,36 +1869,22 @@ x
               <script src="/build/js/vendor/scroll.handler.js"></script>
             
             <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+            <script src="https://www.sejda.com/js/sejda-js-api.min.js"></script>
 
-            <script>
-  (function() {
-    let pageCounter = 1;
-    const pageNumElems = document.getElementsByClassName('js-page-number');
-    Array.from(pageNumElems).forEach((elem) => {
-      elem.innerHTML = pageCounter;
-      pageCounter++;
-    });
 
-    const totalPagesCount = document.querySelectorAll('.page').length;
-    const pageTotals = document.getElementsByClassName('js-pages-total');
-    Array.from(pageTotals).forEach((elem) => {
-      elem.innerHTML = totalPagesCount;
-    });
-  })()
-</script>
+            
 
-<script>
-          $(document).ready(function() {
-              $('.article-container').stickem();
-          });
-          $(window).bind("load", function() {
-          var sticky = $('.article-container').stickem();
-              sticky.destroy();
-          $('.article-container').stickem();
-          });
-</script>
+    <script>
+            $(document).ready(function() {
+                $('.article-container').stickem();
+            });
+            $(window).bind("load", function() {
+            var sticky = $('.article-container').stickem();
+                sticky.destroy();
+            $('.article-container').stickem();
+            });
+    </script>
 
-    <script src="https://www.sejda.com/js/sejda-js-api.min.js"></script>
 
     <script>
 
@@ -2000,6 +2013,15 @@ x
                     dataType: 'json',
                     cache: false,
                     success: function (response) {
+                        if (response.transpE=0){
+
+                            $('#avectransport').hide();
+                        }
+                        else{
+                             $('#sanstransport').hide();
+
+                        }
+
                         for (let i = 0; i < response.maturiter+response.delee; i++) {
                             annuite[i]=response.annuite[i];
                             cfads[i]=response.cfads[i];
@@ -2129,6 +2151,8 @@ x
                             PH_consomation=response.PH_consomationannuel;
                             PH_auto_consome=response.PH_auto_consomerannuel;
                             PH_importer=response.PH_importerannuel;
+                            PH_productionannuel=response.PH_productionannuel;
+                            PH_cedeeannuel=response.PH_cedeeannuel;
 
 
 
@@ -2148,7 +2172,7 @@ x
                             };
                         
                         console.log("PH");
-                         console.log(response.PH_consomation);
+                         console.log(response.PH_consomationannuel);
                           console.log(response.PH_auto_consomer);
                            console.log(response.PH_importer);
                         console.log(response.auto_consomer);
@@ -2156,8 +2180,13 @@ x
                         console.log(PH_consomation);
                         console.log(PH_auto_consome);
                         console.log(PH_importer);
+                        console.log("prod");
                         console.log(PH_production);
+                        console.log(PH_productionannuel);
+                        console.log("cedee");
                         console.log(PH_cedee);
+                        console.log(PH_cedeeannuel);
+                        
                         console.log("resPH");
                        
                         console.log(response.PH_auto_consomer);
@@ -2181,6 +2210,8 @@ x
                                  PH_imp_ps[j][i]=( Object.values(PH_importer[j])[i]/ Object.values(PH_consomation[j])[i])*100;
                                  PH_autoconsomer_ps2[j][i]=( Object.values(PH_auto_consome[j])[i]/PH_production[i])*100;
                             }
+
+
                                
                             for (let i = 0; i < 12; i++) {
                                 month_cm_t[j][i]=response.PH_consomation[j][i+1]['jour']+response.PH_consomation[j][i+1]['nuit']+response.PH_consomation[j][i+1]['ete']+response.PH_consomation[j][i+1]['soir'];
@@ -2225,6 +2256,28 @@ x
                             cashflow[i]=response.cashflow[i];
                             cashflow_cum[i]=response.cashflow_cum[i];
                         }
+
+                        cashflow.unshift(response.cashFlowIn);
+                        cashflow_cum.unshift(response.cashFlowIn);
+                        
+                            l=0;
+                            
+                            while (response.cashflow_cum[l]<0){
+                            l++;
+                            }
+
+                       
+
+                        pbperiod=l+((response.cashflow_cum[l-1])*(-1)/cashflow[l])
+
+                        console.log('payback');
+                        console.log(pbperiod);
+                        console.log(response.cashflow_cum[l]);
+                        console.log(cashflow[l]);
+                        $('#pbperiod').append(round(pbperiod,2)+'</td>');
+                        
+
+
                      for (let j = 0; j < response.consomation.length; j++) {  
                         for (let i = 1; i <13 ; i++) {
                             $('#tableau_rp_m'.concat(j)).append(
@@ -2246,21 +2299,37 @@ x
                         }
                    
                         /////////////*cashtab start*///////
+                             $('#result_finance').append("<tr><td>" + 0 +"</td>"+
+                                    "<td></td>"+
+                                    "<td></td>"+
+                                    "<td></td>"+
+                                    "<td></td>"+
+                                    "<td></td>"+
+                                    "<td></td>"+
+                                    "<td></td>"+
+                                    "<td>"+round(response.cashFlowIn,0)+"</td>"+
+                                    "<td></td>"+
+                                    "<td class='annuite'></td>"+
+                                    "<td></td class='annuite'>"+
+                                    "<td></td class='annuite'>"
+                                    +"</tr>"
+                                );
                          
                              for(let i=0;i<response.delee;i++){
+                                 
                                 $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
                                     "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
                                     "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
                                     "<td>"+round(response.gain_ans[i],0)+"</td>"+
                                     "<td>"+round(response.Facture_transport[i],0)+"</td>"+
                                     "<td>"+round(response.opex[i],0)+"</td>"+
-                                    "<td>"+round(response.annuite[i],0)+"</td>"+
-                                    "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
+                                    "<td class='annuite'>"+round(response.annuite[i],0)+"</td>"+
+                                    "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
                                     "<td>"+round(response.cashflow[i],0)+"</td>"+
                                     "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                    "<td>"+round(response.cfads[i],0)+"</td>"+
-                                    "<td>"+round(response.dsacr[i],2)+"</td>"+
-                                    "<td>"+round(response.llcr[i],2)+"</td>"
+                                    "<td class='annuite'>"+round(response.cfads[i],0)+"</td>"+
+                                    "<td class='annuite'>"+round(response.dsacr[i],2)+"</td>"+
+                                    "<td class='annuite'>"+round(response.llcr[i],2)+"</td>"
                                     +"</tr>"
                                 );
                             }
@@ -2273,19 +2342,19 @@ x
                                     "<td>"+round(response.gain_ans[i],0)+"</td>"+
                                     "<td>"+round(response.Facture_transport[i],0)+"</td>"+
                                     "<td>"+round(response.opex[i],0)+"</td>"+
-                                    "<td>"+round(response.annuite[i],0)+"</td>"+
-                                    "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
+                                    "<td class=annuite'>"+round(response.annuite[i],0)+"</td>"+
+                                    "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
                                     "<td>"+round(response.cashflow[i],0)+"</td>"+
                                     "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                    "<td>"+round(response.cfads[i],0)+"</td>"+
-                                    "<td>"+round(response.dsacr[i],2)+"</td>"+
-                                    "<td>"+round(response.llcr[i],2)+"</td>"
+                                    "<td class='annuite'>"+round(response.cfads[i],0)+"</td>"+
+                                    "<td class='annuite'>"+round(response.dsacr[i],2)+"</td>"+
+                                    "<td class='annuite'>"+round(response.llcr[i],2)+"</td>"
                                     +"</tr>"
 
                                 );
 
                             }
-                            for(let i=response.maturiter+response.delee;i<11;i++){
+                            for(let i=response.maturiter+response.delee;i<10;i++){
                                 $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
                                     "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
                                     "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
@@ -2293,12 +2362,12 @@ x
                                     "<td>"+round(response.Facture_transport[i],0)+"</td>"+
                                     "<td>"+round(response.opex[i],0)+"</td>"+
                                     "<td></td>"+
-                                    "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
+                                    "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
                                     "<td>"+round(response.cashflow[i],0)+"</td>"+
                                     "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                    "<td>"+round(response.cfads[i],0)+"</td>"+
-                                    "<td></td>"+
-                                    "<td></td>"+
+                                    "<td class='annuite'>"+round(response.cfads[i],0)+"</td>"+
+                                    "<td class='annuite'></td>"+
+                                    "<td class='annuite'></td>"+
 
                                     +"</tr>"
 
@@ -2306,7 +2375,7 @@ x
 
                             }
 
-                            for(let i=11;i<20;i++){
+                            for(let i=10;i<20;i++){
                                 $('#result_finance2').append("<tr><td>" +(i+1)+"</td>"+
                                     "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
                                     "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
@@ -2314,12 +2383,12 @@ x
                                     "<td>"+round(response.Facture_transport[i],0)+"</td>"+
                                     "<td>"+round(response.opex[i],0)+"</td>"+
                                     "<td></td>"+
-                                    "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
+                                    "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
                                     "<td>"+round(response.cashflow[i],0)+"</td>"+
                                     "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                    "<td>"+round(response.cfads[i],0)+"</td>"+
-                                    "<td></td>"+
-                                    "<td></td>"+
+                                    "<td class='annuite'>"+round(response.cfads[i],0)+"</td>"+
+                                    "<td class='annuite'></td>"+
+                                    "<td class='annuite'></td>"+
 
                                     +"</tr>"
 
@@ -2335,12 +2404,12 @@ x
                                     "<td>"+round(response.Facture_transport[i],0)+"</td>"+
                                     "<td>"+round(response.opex[i],0)+"</td>"+
                                     "<td></td>"+
-                                    "<td>"+round(response.facture_regrularisation[i],0)+"</td>"+
+                                    "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
                                     "<td>"+round(response.cashflow[i],0)+"</td>"+
                                     "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                    "<td>"+round(response.cfads[i],0)+"</td>"+
-                                    "<td></td>"+
-                                    "<td></td>"+
+                                    "<td class='annuite'>"+round(response.cfads[i],0)+"</td>"+
+                                    "<td class='annuite'></td>"+
+                                    "<td class='annuite'></td>"+
 
                                     +"</tr>"
 
@@ -2404,11 +2473,12 @@ x
 
                         for (let j = 0; j < response.consomation.length; j++) {  
                             var table = document.getElementById("cash_tab");
-                            var row = table.insertRow(j+2);
+                            var row = table.insertRow(j+1);
                             var cell2 = row.insertCell(0);
-                            cell2.innerHTML = "Economies site"+j;
+                            cell2.innerHTML = "Gain par autoconsommation au site"+j;
+                             response.g_E_transporterSite[j].unshift(0);
                             for(let i=0;i<11;i++){
-                            
+                           
                             var cell1 = row.insertCell(i+1);
 
                             
@@ -2418,10 +2488,11 @@ x
 
                         for (let j = 0; j < response.consomation.length; j++) {  
                             var table = document.getElementById("cash_tab2");
-                            var row = table.insertRow(j+2);
+                            var row = table.insertRow(j+1);
                             var cell2 = row.insertCell(0);
-                            cell2.innerHTML = "Economies site"+j;
-                            for(let i=11;i<20;i++){
+                            cell2.innerHTML = "Gain par autoconsommation au site"+j;
+                            
+                            for(let i=11;i<21;i++){
                             
                             var cell1 = row.insertCell(i-10);
 
@@ -2432,21 +2503,29 @@ x
 
                         for (let j = 0; j < response.consomation.length; j++) {  
                             var table = document.getElementById("cash_tab3");
-                            var row = table.insertRow(j+2);
+                            var row = table.insertRow(j+1);
                             var cell2 = row.insertCell(0);
-                            cell2.innerHTML = "Economies site"+j;
-                            for(let i=20;i<30;i++){
+                            cell2.innerHTML = "Gain par autoconsommation au site"+j;
+                            for(let i=21;i<31;i++){
                             
-                            var cell1 = row.insertCell(i-19);
+                            var cell1 = row.insertCell(i-20);
 
                             
                             cell1.innerHTML =  round(response.g_E_transporterSite[j][i],0);
                             }
                         }
 
+                        var equity = [(response.cashFlowIn*(-1)), 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
                         /////////////*cashtab end*///////
 
+                        response.gain_E_cedee.unshift(0);
+                        response.Facture_transport.unshift(0);
+                        response.annuite.unshift(0);
+                        response.facture_regrularisation.unshift(0);
+                        response.opex.unshift(0);
                         
+
                                     
                             data=[];
                          
@@ -2473,27 +2552,62 @@ x
 
                         trace5 = {
                             y: response.facture_regrularisation.map(function(num) { return -num; }),
-                            name: 'Régularisation',
+                            name: 'Facture de Régularisation',
+                            type: 'bar'
+                           
+                        };
+                        trace6 = {
+                            y: response.opex.map(function(num) { return -num; }),
+                            name: 'Coùt O&M',
+                            type: 'bar'
+                           
+                        };
+                         trace7 = {
+                            y: equity.map(function(num) { return -num; }),
+                            name: 'Fonds propres',
                             type: 'bar'
                            
                         };
 
+
                         
 
-                        data = [trace2,trace3,trace4,trace5];
+                        data = [trace2,trace3,trace4,trace5,trace6,trace7];
 
                         layout = { barmode: 'relative',xaxis: {range: [0, 25]},
                                     
                                         };
 
+                                     
+
                         Plotly.newPlot('chat_cashflow1', data, layout,{responsive: true});
                         for (let j=0; j<response.g_E_transporterSite.length;j++){
-                           Plotly.addTraces('chat_cashflow1', {name: 'Economies sur facture'.concat(j),type: 'bar',y: response.g_E_transporterSite[j]});
+                          /*  response.g_E_transporterSite[j].unshift(0);*/
+                           Plotly.addTraces('chat_cashflow1', {name: 'Gains au site'.concat(j),type: 'bar',y: response.g_E_transporterSite[j]});
+                           
                         };
+
+                        console.log('annuite');
+                        console.log(response.annuite);
+
+                         if (response.facture_regrularisation[1]==0){
+
+                            Plotly.deleteTraces(chat_cashflow1, 3);
+                            $( ".regul" ).hide();
+                        }   
+
+                         if (response.annuite.length==1){
+
+                            Plotly.deleteTraces(chat_cashflow1, 2);
+                            $( ".annuite" ).hide();
+                        }   
+           
+           
                     }
                 });
 
             });
+
            
             setTimeout(function() {     
         //*******************plotly start***********************************************//
@@ -2643,10 +2757,10 @@ x
                         for (let i = 0; i <4 ; i++) {
 
                                 $('#t_prod').append(
-                                    "<td>" + round(PH_production[i], 0) + "</td>"
+                                    "<td>" + round(Object.values(PH_productionannuel)[i], 0) + "</td>"
                                 );
                                 $('#t_cedee').append(
-                                    "<td>" + round(PH_cedee[i], 0) + "</td>"
+                                    "<td>" + round(Object.values(PH_cedeeannuel)[i], 0) + "</td>"
                                 );
 
                             };   
@@ -2672,24 +2786,15 @@ x
 
                         layout = {
                             title: 'Auto-consommee , E-importee',
-                            showlegend: false,
-                            annotations: [
-                                {
-                                    font: {
-                                        size: 14
-                                    },
-                                    showarrow: false,
-                                    text: ' ',
-
-                                }
-                            ]
+                            
                         };
                         Plotly.newPlot('auto_cm_imp'.concat(j), data, layout, {responsive: true});
                    }
                         //**************************************repartion energy produite**********************
-                        
+                        PH_cedee_ps.push((PH_cedee.reduce(reducer)/PH_production.reduce(reducer))*100);
+
                         trace1 = {
-                            x: ['Jour','Ete','Soir','Nuit'],
+                            x: ['Jour','Ete','Soir','Nuit','Total'],
                             y: PH_cedee_ps,
                             name: 'Cedée',
                             type: 'bar'
@@ -2701,10 +2806,11 @@ x
 
                         Plotly.newPlot('rp_pd', data, layout,{responsive: true});
                         for (let j=0; j<PH_autoconsomer_ps2.length;j++){
-                        Plotly.addTraces('rp_pd', {name: 'Auto-consommee'.concat(j),type: 'bar',x:['Jour','Ete','Soir','Nuit'],y: PH_autoconsomer_ps2[j]});
+                             PH_autoconsomer_ps2[j].push(((Object.values(PH_auto_consome[j])).reduce(reducer)/PH_production.reduce(reducer))*100);
+                        Plotly.addTraces('rp_pd', {name: 'Auto-consommee'.concat(j),type: 'bar',x:['Jour','Ete','Soir','Nuit','Total'],y: PH_autoconsomer_ps2[j]});
                         }
                         //***********************prod/consomer********************
-                    console.log('PH_cedee');
+                   /* console.log('PH_cedee');
                     console.log(PH_cedee);
                     console.log(PH_cedee.reduce(reducer));
                      console.log(PH_production.reduce(reducer));
@@ -2723,6 +2829,7 @@ x
                     for (let j=0; j<PH_autoconsomer_ps2.length;j++){
                            Plotly.addTraces('pd_cm', {name: 'Auto-consommee'.concat(j),type: 'bar',x: ['Production'],y: [((Object.values(PH_auto_consome[j])).reduce(reducer)/PH_production.reduce(reducer))*100]});
                         };
+                        */
 
                         //*********************************************************
                        

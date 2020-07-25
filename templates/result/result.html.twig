@@ -28,83 +28,88 @@
     <div class="col-xl-12 mb-4 mb-xl-0 align-content-center" >
         <div class="card">
             <div class="card-body">
-                <h4 class="text-primary">Récapitulatif énergétique</h4>
+            <div class="row">
+                <div class="col">
+                <h3 class="font-weight-bold text-center ">Récapitulatif énergétique annuel</h3>
                 <div class="table">
-                    <table class="table align-items-center table-bordered ">
+                    <table class="table align-items-center table-striped ">
                         <thead class="thead-light">
                         </thead>
                         <tbody>
                         <tr id="puissanceres">
-                            <td>Puissance</td>
+                            <td class="font-weight-bold  ">Puissance:</td>
                         </tr>
                         <tr id="productible">
-                            <td>Productible :</td>
+                            <td class="font-weight-bold  ">Productible :</td>
                         </tr>
                         <tr id="t_cd">
-                            <td>Taux de l’énergie cédée :</td>
+                            <td class="font-weight-bold  ">Taux de l’énergie cédée :</td>
                         </tr>
                         <tr id="prod25">
-                            <td>Production PV 25 ans</td>
+                            <td class="font-weight-bold  ">Production PV 25 ans</td>
                         </tr>
                         
                         <tr id="consommationS">
-                            <td>Consommation du site</td>
+                            <td class="font-weight-bold  ">Consommation du site</td>
                         </tr>
                         <tr id="auto_consommationS">
-                        <td>Economies d'énergie du site</td>
+                        <td class="font-weight-bold  ">Economies d'énergie du site</td>
                         </tr>
                         <tr id="importerS">
-                            <td>Energie importée de la STEG</td>
+                            <td class="font-weight-bold  ">Energie importée de la STEG</td>
                         </tr>
                         <tr id="t_autoc">
-                            <td>Taux d’autoconsommation du site</td>
+                            <td class="font-weight-bold  ">Taux d’autoconsommation du site</td>
                         </tr>
 
                         </tbody>
                     </table>
                 </div>
-                <h4 class="text-primary">Récapitulatif financier</h4>
+                </div>
+                <div class="col">
+                <h3 class="font-weight-bold text-center ">Récapitulatif financier annuel</h3>
                 <div class="table">
-                    <table class="table align-items-center table-bordered ">
+                    <table class="table align-items-center table-striped ">
                         <thead class="thead-light">
                         </thead>
                         <tbody>
                         <tr id="capexres">
-                            <td>CAPEX</td>
+                            <td class="font-weight-bold  ">CAPEX:</td>
                         </tr>
                         <tr id="subvres">
-                            <td>Subvention</td>
+                            <td class="font-weight-bold  ">Subvention:</td>
                         </tr>
                         <tr id="omres">
-                            <td>O&M </td>
+                            <td class="font-weight-bold  ">O&M:</td>
                         </tr>
                         <tr id="annuiteres">
-                            <td>Annuite :</td>
+                            <td class="font-weight-bold  ">Annuite :</td>
                         </tr>
                         <tr  id="f_r">
-                            <td>Facture de regularisation :</td>
+                            <td class="font-weight-bold  ">Facture de regularisation :</td>
                         </tr>
                         <tr id="coutproj">
-                            <td>Cout du projet sur 25 ans :</td>
+                            <td class="font-weight-bold  ">Cout du projet sur 25 ans :</td>
                         </tr>
                         <tr id="vanres">
-                            <td>VAN sur 25 ans :</td>
+                            <td class="font-weight-bold  ">VAN sur 25 ans :</td>
                         </tr>
                         <tr  id="lcoe">
-                            <td>LCOE sur 25 ans :</td>
+                            <td class="font-weight-bold  ">LCOE sur 25 ans :</td>
                         </tr>
                         <tr id="tricapres">
-                            <td>TRI sur les capitaux propres :</td>
+                            <td class="font-weight-bold  ">TRI sur les capitaux propres :</td>
                         </tr>
                         <tr id="trires">
-                            <td>TRI du projet :</td>
+                            <td class="font-weight-bold  ">TRI du projet :</td>
                         </tr>
                         <tr>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <br>
+                 </div>   
+                </div>
             </div>
 
         </div>
@@ -301,10 +306,10 @@
             j=$("#SiteSelector").val();
 
                        
-           $('#auto_consommationS').append("<td>Economies d'énergie du site</td><td>"+Math.round(auto_consommationS[j],0)+"</td><td>kWh</td>");
-            $('#consommationS').append("<td>Consommation du site</td><td>"+Math.round(consommationS[j],0)+"</td><td>kWh</td>");
-            $('#importerS').append(" <td>Energie importée de la STEG</td><td>"+Math.round(importerS[j],0)+"</td><td>kWh</td>");
-            $('#t_autoc').append(" <td>Taux d’autoconsommation du site</td><td>"+Math.round(t_auto[j]*100,2)+"</td><td>%</td>");
+           $('#auto_consommationS').append("<td class="+"font-weight-bold"+">Economies d'énergie du site</td><td>"+Math.round(auto_consommationS[j],0)+"</td><td>kWh</td>");
+            $('#consommationS').append("<td class="+"font-weight-bold"+">Consommation du site</td><td>"+Math.round(consommationS[j],0)+"</td><td>kWh</td>");
+            $('#importerS').append(" <td class="+"font-weight-bold"+">Energie importée de la STEG</td><td>"+Math.round(importerS[j],0)+"</td><td>kWh</td>");
+            $('#t_autoc').append(" <td class="+"font-weight-bold"+">Taux d’autoconsommation du site</td><td>"+Math.round(t_auto[j]*100,2)+"</td><td>%</td>");
         });    
         
 
@@ -873,6 +878,9 @@
                         console.log(PH_auto_consome);
                         console.log(response.PH_auto_consomerS);
                         console.log(t_auto[1]);
+                        console.log("date");
+                        console.log(response.date);
+                         console.log(response.dumpdate);
 
                         $('#auto_consommationS').empty();
                         $('#consommationS').empty();
@@ -896,25 +904,36 @@
 
 
 
-                        $('#auto_consommationS').append("<td>Economies d'énergie du site </td><td>"+Math.round(response.auto_consommationS[0],0)+"</td><td>kWh</td>");
-                        $('#consommationS').append("<td>Consommation du site</td><td>"+Math.round(response.consommationS[0],0)+"</td><td>kWh</td>");
-                        $('#importerS').append("<td>Energie importée de la STEG</td><td>"+Math.round(response.importerS[0],0)+"</td><td>kWh</td>");
-                        $('#prod25').append("<td>Production PV 25 ans</td><td>"+Math.round(response.prod25,0)+"</td><td>kWh</td>");
-                        $('#lcoe').append("<td>LCOE sur 25 ans</td><td>"+(Math.round(response.lcoe*1000)/1000)+"</td><td>DT</td>");
-                        $('#t_autoc').append("<td> Taux d’autoconsommation du site</td><td>"+Math.round(response.t_auto[0]*100,2)+"</td><td>%</td>");
+                        $('#auto_consommationS').append("<td class="+"font-weight-bold"+">Economies d'énergie du site </td><td>"+Math.round(response.auto_consommationS[0],0)+"</td><td>kWh</td>");
+                        $('#consommationS').append("<td class="+"font-weight-bold"+">Consommation du site</td><td>"+Math.round(response.consommationS[0],0)+"</td><td>kWh</td>");
+                        $('#importerS').append("<td class="+"font-weight-bold"+">Energie achetée de la STEG</td><td>"+Math.round(response.importerS[0],0)+"</td><td>kWh</td>");
+                        $('#prod25').append("<td class="+"font-weight-bold"+">Production PV sur 25 ans</td><td>"+Math.round(response.prod25,0)+"</td><td>kWh</td>");
+                        $('#lcoe').append("<td class="+"font-weight-bold"+">LCOE sur 25 ans</td><td>"+(Math.round(response.lcoe*1000)/1000)+"</td><td>DT</td>");
+                        $('#t_autoc').append("<td class="+"font-weight-bold"+"> Taux de couverture de la consommation</td><td>"+Math.round(response.t_auto[0]*100,2)+"</td><td>%</td>");
                         /*$('#t_couv').append("<td>"+Math.round(response.t_couverture*100,2)+"</td><td>%</td>");*/
-                        $('#productible').append("<td>Productible</td><td>"+Math.round(response.productible,0)+"</td><td>kWh/kWc</td>");
-                        $('#t_cd').append("<td>Taux de l’énergie cédée</td><td>"+Math.round(response.t_cedee*100,2)+"</td><td>%</td>");
-                        $('#f_r').append("<td>Facture de regularisation </td><td>"+Math.round(response.f_reg,0)+"</td><td>DT</td>");
-                        $('#coutproj').append("<td>Cout du projet sur 25 ans</td><td>"+Math.round(response.coutproj,0)+"</td><td>DT</td>");
-                        $('#capexres').append("<td>CAPEX</td><td>"+Math.round(response.capex,3)+"</td><td>DT</td>");
-                        $('#tricapres').append("<td>TRI sur les capitaux propres</td><td>"+Math.round(response.tricap,2)+"</td><td>%</td>");
-                        $('#trires').append("<td> TRI du projet  </td><td>"+Math.round(response.tri25,2)+"</td><td>%</td>");
-                        $('#subvres').append("<td>Subvention</td><td>"+((Math.round(response.subv,0)*Math.round(response.capex,0))/100)+"</td><td>DT</td>");
-                        $('#omres').append("<td>O&M</td><td>"+Math.round(response.opex[0],0)+"</td><td>DT</td>");
-                        $('#annuiteres').append("<td>Annuité</td><td>"+Math.round(response.annuite[5],0)+"</td><td>DT</td>");
-                        $('#vanres').append("<td> VAN sur 25 ans  </td><td>"+Math.round(response.van,0)+"</td><td>DT</td>");
-                        $('#puissanceres').append("<td> Puissance  </td><td>"+Math.round(response.peak,2)+"</td><td>kWc</td>");
+                        $('#productible').append("<td class="+"font-weight-bold"+">Productible annuel</td><td>"+Math.round(response.productible,0)+"</td><td>kWh/kWc</td>");
+                        $('#t_cd').append("<td class="+"font-weight-bold"+">Taux de l’énergie produite en excédant</td><td>"+Math.round(response.t_cedee*100,2)+"</td><td>%</td>");
+                        $('#f_r').append("<td class="+"font-weight-bold"+">Facture de régularisation </td><td>"+Math.round(response.f_reg,0)+"</td><td>DT</td>");
+                        $('#coutproj').append("<td class="+"font-weight-bold"+">Coùt du projet sur 25 ans</td><td>"+Math.round(response.coutproj,0)+"</td><td>DT</td>");
+                        $('#capexres').append("<td class="+"font-weight-bold"+">Coùt d'investissement</td><td>"+Math.round(response.capex,3)+"</td><td>DT</td>");
+                        $('#tricapres').append("<td class="+"font-weight-bold"+">TRI sur les capitaux propres</td><td>"+Math.round(response.tricap,2)+"</td><td>%</td>");
+                        $('#trires').append("<td class="+"font-weight-bold"+"> TRI du projet  </td><td>"+Math.round(response.tri25,2)+"</td><td>%</td>");
+                        $('#subvres').append("<td class="+"font-weight-bold"+">Subvention</td><td>"+((Math.round(response.subv,0)*Math.round(response.capex,0))/100)+"</td><td>DT</td>");
+                        $('#omres').append("<td class="+"font-weight-bold"+">Coùt d'opération et maintenance </td><td>"+Math.round(response.opex[0],0)+"</td><td>DT</td>");
+                        $('#annuiteres').append("<td class="+"font-weight-bold"+">Annuité</td><td>"+Math.round(response.annuite[5],0)+"</td><td>DT</td>");
+                        $('#vanres').append("<td class="+"font-weight-bold"+"> VAN sur 25 ans  </td><td>"+Math.round(response.van,0)+"</td><td>DT</td>");
+                        $('#puissanceres').append("<td class="+"font-weight-bold"+"> Puissance de la centrale  </td><td>"+Math.round(response.peak,2)+"</td><td>kWc</td>");
+                            
+                            
+                            if (response.annuite.length===0){
+                                $('#annuiteres').hide();
+                                $('#trires').hide();
+                            }
+
+                            if (response.f_reg==0){
+                                
+                                $('#f_r').hide();
+                            }
 
                         
 

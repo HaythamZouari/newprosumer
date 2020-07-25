@@ -414,12 +414,12 @@ body {
 }
 /* line 31, scss/_3_base.scss */
 a {
-  color: #db0012;
+  color: #555555;
   text-decoration: none;
 }
 /* line 35, scss/_3_base.scss */
 a:visited {
-  color: #b5267d;
+  color: #000000;
 }
 /* line 39, scss/_3_base.scss */
 a:hover, a:visited:hover {
@@ -427,7 +427,7 @@ a:hover, a:visited:hover {
   -moz-transition: all 0.25s ease;
   -o-transition: all 0.25s ease;
   transition: all 0.25s ease;
-  color: #8e0057;
+  color: #999999;
 }
 /* line 46, scss/_3_base.scss */
 h1, h2, h3, h4, h5 {
@@ -477,6 +477,7 @@ ul, ol {
 /* line 95, scss/_3_base.scss */
 figure {
   padding-bottom: .5rem;
+  
 }
 /* line 98, scss/_3_base.scss */
 figure figcaption {
@@ -580,25 +581,25 @@ em {
 }
 /* line 199, scss/_3_base.scss */
 code {
-  background-color: #ffe21e;
+  background-color: #ddd;
   padding: 1.25rem;
   display: block;
 }
 /* line 205, scss/_3_base.scss */
 table {
-  border: 1px solid #ffe21e;
+  border: 1px solid #ddd;
   font-size: 92%;
   margin-bottom: 2rem;
 }
 /* line 211, scss/_3_base.scss */
 table th {
-  background-color: #ffe951;
-  border: 1px solid #ffe21e;
+  background-color: #ddd;
+  border: 1px solid #ddd;
   padding: .25em .5em;
 }
 /* line 217, scss/_3_base.scss */
 table td {
-  border: 1px solid #ffe21e;
+  border: 1px solid #ddd;
   padding: .25em .5em;
 }
 #cash_tab3 {
@@ -857,7 +858,7 @@ a.button {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background-color: #db0086;
+  background-color: #ff0000;
   padding: .64rem 1.25rem;
   margin: 0 .5rem .5rem 0;
   text-align: center;
@@ -1110,7 +1111,7 @@ section#front-matter.anchor:before {
   padding: 0;
   padding-bottom: 2.5rem;
   margin: 0;
-  background-color: #ffe21e;
+  background-color: #ddd;
   z-index: 10;
   position: relative;
 }
@@ -1160,7 +1161,7 @@ section#front-matter.anchor:before {
 /* line 348, scss/_4_template.scss */
 #front-matter #abstract {
   width: 100%;
-  border-top: 1px solid #eacc00;
+  border-top: 1px solid #ddd;
   padding-top: 1.95375rem;
   padding-bottom: 1.25rem;
 }
@@ -1186,7 +1187,7 @@ section#front-matter.anchor:before {
 }
 /* line 375, scss/_4_template.scss */
 #front-matter #table-of-contents, #front-matter #notes, #front-matter #download {
-  border-top: 1px solid #eacc00;
+  border-top: 1px solid #ddd;
   padding-top: 1.5625rem;
   padding-bottom: 0.3125rem;
 }
@@ -1362,7 +1363,7 @@ section#front-matter.anchor:before {
   right: 0;
   font-size: 1.563rem;
   line-height: .75em;
-  color: #db0012;
+  color: #292323;
 }
 @media only screen and (min-width: 43em) {
   /* line 541, scss/_4_template.scss */
@@ -1525,12 +1526,13 @@ ul.nav > li.active-current a {
 /* line 715, scss/_4_template.scss */
 .section {
   padding: 2rem 0 2rem 0;
-  border-top: 1px solid #ffe21e;
+  border-top: 1px solid #ddd;
 }
 /* line 722, scss/_4_template.scss */
 .section-content h1, .section-content h2, .section-content h3, .section-content h4, .section-content h5, .section-content h6, .section-content p, .section-content code, .section-content figcaption, .section-content .img-column img, .section-content .img-column chart, .section-content .permalink, .section-content ol, .section-content ul {
   padding-right: 1.25rem;
   padding-left: 1.25rem;
+  
 }
 /* line 727, scss/_4_template.scss */
 .section-content .number {
@@ -1588,7 +1590,7 @@ ul.nav > li.active-current a {
 /* line 779, scss/_4_template.scss */
 .section-content .img-container figcaption {
   font-size: 80%;
-  color: #b2aa3f;
+  color: #444444;
   margin-top: .5em;
 }
 /* line 784, scss/_4_template.scss */
@@ -1851,6 +1853,7 @@ ul.nav > li.active-current a {
     float: left;
     width: 66.666%;
     padding: 00;
+    
   }
   /* line 1056, scss/_4_template.scss */
   .section-content .img-column figcaption {
@@ -1930,7 +1933,7 @@ ul.nav > li.active-current a {
 /* line 1125, scss/_4_template.scss */
 .appendix {
   font-size: .8em;
-  background-color: #ffe951;
+  background-color: #ddd;
   position: relative;
   z-index: 1;
 }
@@ -2074,7 +2077,7 @@ ul.nav > li.active-current a {
 }
 /* line 1285, scss/_4_template.scss */
 .page-footer {
-  background-color: #ffe21e;
+  background-color: #ddd;
   padding-top: 1.953rem;
   padding-bottom: .5rem;
   font-size: .8rem;
@@ -2105,7 +2108,7 @@ ul.nav > li.active-current a {
 }
 /* line 1318, scss/_4_template.scss */
 .quick-links .back-to-top {
-  border-bottom: 1px solid #ffe21e;
+  border-bottom: 1px solid #ddd;
   padding-bottom: .8rem;
   margin-bottom: .8rem;
 }

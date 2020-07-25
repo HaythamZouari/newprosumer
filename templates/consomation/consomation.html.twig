@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 <div class="card bg-secondary border border-0">
     <div class="card-header bg-transparent pb-5" >
+    <button type="button" id="help" class="btn btn-primary"onclick="help()">Aide</button>
         <div class="card-body px-lg-5 py-lg-5">
             <form class="consomation" id="consomationForm" action="{{ path('project_show',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
                 <div>
@@ -21,7 +22,7 @@
                          
                          <div class="col">
                             <input class="custom-control-input" name="transport_energie" id="transport_energie" type="checkbox">
-                            <label class="custom-control-label" for="transport_energie"><h4 >Transport de  l'energie vers ce site<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si la date de début et de fin du congé ou de l'arrét technique s'il existe">?</button></h4></label><br>
+                            <label class="custom-control-label" for="transport_energie"><h4 >Transport de  l'energie vers ce site<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si la centrale sera intégrée directement à ce site ( ne pas cocher) ou sera implantée loin de ce site ( cocher)">?</button></h4></label><br>
                         </div>
                      
                     </div>    
@@ -686,10 +687,21 @@
         $('[data-toggle="popover"]').popover();
     })
 
+    function help(){
 
-            
+       x=document.getElementsByClassName('btn btn-primary btn-sm');
+       
+        for (let i = 0; i < x.length; i++) {
+           
 
-    
+            if (x[i].style.display === "none") {
+                x[i].style.display = "inline";
+            } else {
+                x[i].style.display = "none";
+            }
+        }
+
+    }
 
 
  

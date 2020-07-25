@@ -96,6 +96,11 @@ class Finance
     /**
      * @ORM\Column(type="float")
      */
+    private $replinv;
+
+    /**
+     * @ORM\Column(type="float")
+     */
     private $tarifTransport;
 
     /**
@@ -380,6 +385,18 @@ class Finance
     public function setOpex(float $opex): self
     {
         $this->opex = $opex;
+
+        return $this;
+    }
+
+    public function getReplinv(): ?float
+    {
+        return $this->replinv;
+    }
+
+    public function setReplinv(float $replinv): self
+    {
+        $this->replinv = $replinv;
 
         return $this;
     }

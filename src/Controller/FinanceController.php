@@ -57,6 +57,8 @@ class FinanceController extends AbstractController
             $finance->setTarifTransport(0.007);
             $finance->setTauxActualisation((float)$request->get('taux_actualisation'));
             $allautoconsomme=$project->getAutoConsomer();
+            $replinv=((float)$request->get('replinv'));
+            $finance->setReplinv((float)$request->get('replinv'));
             
             for ($i=0;$i<count($allautoconsomme[0]);$i++){ 
             $tottransporte[$i][0]=0;
@@ -114,9 +116,9 @@ class FinanceController extends AbstractController
             $f_transporter=[];
             $f_regularisation=FinanceService::factureRegularisation($g_E_cedee,$project);
             $frais_exp=FinanceService::fraisExploitation($project);
-            $opex=FinanceService::opex($project);
+            $opex=FinanceService::opex($project,$replinv);
             
-                $f_transporter=FinanceService::facteurTransport($project,$totautoconsomme);
+                $f_transporter=FinanceService::facteurTransport($project,$tottransporte);
            
             for ($i=0;$i<30;$i++) {
                 $gain[]=$g_E_cedee[$i]+$g_E_transporter[$i];
@@ -197,10 +199,7 @@ class FinanceController extends AbstractController
                     'depense'=>$depense,
                     'gain'=>$gain,
                     'cash_flow'=>$cash_flow,
-                    
-
-
-
+                   
                     ]);
         }
     }

@@ -111,7 +111,8 @@ class RapportController extends AbstractController
                 $month[$j][$i]['ete']=0;
                 $month[$j][$i]['soir']=0;
                 $month[$j][$i]['nuit']=0;
-
+                $month[$j][$i]['total']=0;
+                $month[$j][$i]['total']=0;
             }
         }   
         for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){  
@@ -119,6 +120,15 @@ class RapportController extends AbstractController
         $month[$j]=PostHoraire::PostHoraire($project->getConsomation()->getallConsomationAnnuel()[$j]);
     
         }
+
+        for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+            for($i=0;$i<13;$i++){
+
+        $month[$j][$i]['total']= $month[$j][$i]['jour']+$month[$j][$i]['ete']+$month[$j][$i]['soir']+$month[$j][$i]['nuit'];
+
+                
+            }
+        }   
         return $this->render('rapport/index.html.twig', [
 
             'cmmonth'=>$month,
