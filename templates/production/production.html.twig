@@ -3,74 +3,75 @@
  <div class="card bg-secondary">
 
     <div class="card-header bg-transparent pb-5" >
-    <button type="button" id="help" class="btn btn-primary"onclick="help()">Aide</button>
-     <button type="button" class="btn btn-primary btn-sm" style="position:relative;left:90%" data-toggle="popover"  data-content="Choisir la base de données à partir de laquelle importer les données de production">
-                            ?
-                        </button>  
-    <div class="container">
-    
-    
-        <div class="row text-center">
-       
-            <div class="col-xl-4 col-lg-6">
-                <div class="card card-stats mb-4 mb-xl-0">
-                    <button  class="btn btn-lg" type="button"   onclick="ninjabtn()">Ninja API</button>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-6">
-                <div class="card card-stats mb-4 mb-xl-0">
-                    <button  class="btn btn-lg" type="button"  onclick="pvgisbtn()">PVGIS API</button>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-6">
-                <div class="card card-stats mb-4 mb-xl-0">
-
-                    <button  class="btn btn-lg" type="button"  onclick="csvbtn()">PVsyst</button>
-                    
-                </div>
-               
-            </div>
-            
-            
-
-        </div> 
-         
-        <div class="row">
-            <div class="col-xl-8">
-              
-                   {{include('project/map.html.twig') }}
-              
-              
-            </div>
-            <div class="col-xl-4">
-                <div class="card-body" id="ninjadiv" style="display: none">
-                    {{ include('production/ninja.html.twig') }}
-                </div>
-                <div class="card-body" id="pvgisdiv" style="display: none">
-                    {{ include('production/pvgis.html.twig') }}
-                </div>
-                <div class="card-body" id="csvdiv" style="display: none">
-                    {{ include('production/csvreader.html.twig') }}
-                </div>
-            </div>
-            
-           
-            
-        </div>
+        <button type="button" id="help" class="btn btn-primary"onclick="help()">Aide</button>
+        <button type="button" class="btn btn-primary btn-sm" style="position:relative;left:90%" data-toggle="popover"  data-content="Choisir la base de données à partir de laquelle importer les données de production">
+                                ?
+                                </button>  
+    </div>                            
+        <div class="container">
         
-        </div>
-         <div class="text-center">
-                <div class="alert alert-success" id="successprod" role="alert" style="display:none">
-                                                    <strong>Production Validée</strong> 
-                </div>
-                <div class="alert alert-danger" id="errorprod" role="alert" style="display:none">
-                                                        <strong>Production non Valide</strong> 
+        
+            <div class="row text-center">
+        
+                <div class="col-xl-4 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <button  class="btn btn-lg" type="button"   onclick="ninjabtn()">Ninja API</button>
                     </div>
-                <button type="button" onclick="retourpvgis()" class="btn-secondary btn">Retour</button>
-                <button type="button" onclick="prodavancer()" id="prodavancer" disabled="disabled" class="btn-secondary btn">Continuer</button>
+                </div>
+                <div class="col-xl-4 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <button  class="btn btn-lg" type="button"  onclick="pvgisbtn()">PVGIS API</button>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+
+                        <button  class="btn btn-lg" type="button"  onclick="csvbtn()">PVsyst</button>
+                        
+                    </div>
+                
+                </div>
+                
+
+            </div> 
+            
+            <div class="row">
+                <div class="col-xl-8">
+                
+                    {{include('project/map.html.twig') }}
+                
+                
+                </div>
+
+                <div class="col-xl-4">
+                    <div class="card-body" id="ninjadiv" style="display: none">
+                        {{ include('production/ninja.html.twig') }}
+                    </div>
+                    <div class="card-body" id="pvgisdiv" style="display: none">
+                        {{ include('production/pvgis.html.twig') }}
+                    </div>
+                    <div class="card-body" id="csvdiv" style="display: none">
+                        {{ include('production/csvreader.html.twig') }}
+                    </div>
+                </div>
+                
+            
+                
             </div>
-        
-    </div>
+            
+            </div>
+            <div class="text-center">
+                    <div class="alert alert-success" id="successprod" role="alert" style="display:none">
+                                                        <strong>Production Validée</strong> 
+                    </div>
+                    <div class="alert alert-danger" id="errorprod" role="alert" style="display:none">
+                                                            <strong>Production non Valide</strong> 
+                    </div>
+                    <button type="button" onclick="retourpvgis()" class="btn-secondary btn">Retour</button>
+                    <button type="button" onclick="prodavancer()" id="prodavancer" disabled="disabled" class="btn-secondary btn">Continuer</button>
+            </div>
+            
+        </div>
   
 </div>
 
