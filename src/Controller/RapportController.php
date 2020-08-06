@@ -154,6 +154,7 @@ class RapportController extends AbstractController
             'typeTarif'=>$TarifSouscrit,
             'coutproj'=>($project->getFinance()->getDepense()+$project->getFinance()->getCapex()-$project->getFinance()->getCredit()-$project->getFinance()->getSubvention()),
             'lcoe'=>(($project->getFinance()->getDepense()+$project->getFinance()->getCapex())-$project->getFinance()->getCredit()-$project->getFinance()->getSubvention())/$prod25ans,
+            'relpin'=>$project->getFinance()->getReplinv(),
         ]);
 
     }

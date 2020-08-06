@@ -47,14 +47,19 @@
             background-color: white;
             margin: 0;
             }
+
+            table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            }
             /* line 31, scss/_3_base.scss */
             a {
-            color: #db0012;
+            color: #555555;
             text-decoration: none;
             }
             /* line 35, scss/_3_base.scss */
             a:visited {
-            color: #b5267d;
+            color: #555555;
             }
             /* line 39, scss/_3_base.scss */
             a:hover, a:visited:hover {
@@ -217,14 +222,14 @@
             }
             /* line 205, scss/_3_base.scss */
             table {
-            border: 1px solid #ddd;
+            
             font-size: 92%;
             margin-bottom: 2rem;
             }
             /* line 211, scss/_3_base.scss */
             table th {
             background-color: #ddd;
-            border: 1px solid #ddd;
+           
             padding: .25em .5em;
             }
             /* line 217, scss/_3_base.scss */
@@ -293,7 +298,7 @@
             /* line 779, scss/_4_template.scss */
             .section-content .img-container figcaption {
             font-size: 70%;
-            color: #b2aa3f;
+            color:#444444;
             width:90%;
            
             }
@@ -378,7 +383,7 @@
             }
             #front-matter {
             
-            background-color: #ffe21e;
+            background-color: #ddd;
             width: 100%;
             height: 100%;
             display:block;
@@ -535,7 +540,7 @@
                                               <ol class="nested-numbers">
                                                   <li><a href="#methodologie">Methodologie</a></li>
                                                   <li><a href="#contexte-energetique">Contexte énergétique</a></li>
-                                                  <li><a href="#cadre-reglementaire">Cadre réglementaire</a></li>
+                                                 
                                                   <li><a href="#processus-de-developpement">Procéssus de développement</a></li>
                                               </ol>
                                           </li>
@@ -605,8 +610,8 @@
                                         <ul class="nav">
                                             <li><a href="#methodologie">1.1 Methodologie</a></li>
                                             <li><a href="#contexte-energetique">1.2 Contexte énergétique</a></li>
-                                            <li><a href="#cadre-reglementaire">1.3 Cadre réglementaire</a></li>
-                                            <li><a href="#processus-de-developpement">1.4 Processus de développement</a></li>
+                                           
+                                            <li><a href="#processus-de-developpement">1.3 Processus de développement</a></li>
                                         </ul>
                                         
                                     </li>
@@ -634,8 +639,7 @@
                             
                                 <section class="anchor" id="methodologie">
                                     <h3><span class="number">1.1 </span>Méthodologie</h3>
-                                        <p>Les modèles financiers PV sont utilisés par les développeurs de projets et les banques pour évaluer la rentabilité d'un projet PV. La tâche consiste à prévoir le flux de trésorerie actualisé aussi précisément que possible, afin d'évaluer si le projet représente une opportunité d'investissement intéressante.
-                                        Un modèle financier PV typique aborde les sujets suivants:</p>
+                                       <p> Un modèle financier PV typique aborde les sujets suivants:</p>
                                         
                                         <ul>
                                             <li>Estimation des ressources d'irradiance</li>
@@ -786,7 +790,7 @@
                                 </section><!-- end #cadre-reglementaire -->
 <p style="page-break-before: always;display:block;"></p>   
                                 <section class="anchor" id="processus-de-developpement">
-                                        <h3><span class="number">1.4 </span>Processus de developpemnet</h3>
+                                        <h3><span class="number">1.3 </span>Processus de developpemnet</h3>
 
                                         <p>Toute collectivité locale et tout établissement public ou privé,
                                         raccordé au réseau électrique national en Moyenne Tension ou Haute
@@ -831,7 +835,7 @@
                                         peuvent être allégées, voir même non
                                         nécessaires dans le cas où le site de consommation disposerait déjà des infrastructures de 
                                         raccordement suffisantes au réseau MT/HT.</p>
-                                            <p style="page-break-before: always;display:block;"></p>                                           
+<p style="page-break-before: always;display:block;"></p>                                           
                                         <p>Enfin, certaines procédures listées dans la présente partie sont fournies à titre informatif 
                                         et leur application doit être évaluée au cas par
                                         cas par le porteur projet, en fonction du type de projet (éolien, PV sur toiture, PV sur sol)
@@ -909,7 +913,7 @@
                                             <p style="page-break-before: always;display:block;"></p>
                         </div>                    
                         <div id="avectransport">        
-                                        <h4><span class="number">1.4.2 </span>Les projets sur site déporté, avec transport d’électricité sur le réseau </h4>
+                                        <h4><span class="number">1.4.1 </span>Les projets sur site déporté, avec transport d’électricité sur le réseau </h4>
                                         <p>La seconde configuration possible pour un projet d’autoconsommation est un projet avec
                                         transport d’électricité sur le réseau.
                                         Dans ce cas, le lieu de production de l’électricité n’est pas le lieu où cette électricité
@@ -1016,6 +1020,7 @@
                                         </tr> 
                                         </table>
                                     </div> 
+                                     <p style="page-break-before: always;display:block;"></p>
                         </div>
                                 </section><!-- end #processus-de-developpement -->
                         
@@ -1024,7 +1029,7 @@
                      
                         
                         <!-- End:   SECTION 1 - INTRODUCTION -->
-                        <p style="page-break-before: always;display:block;"></p>
+                       
                          <!-- Start: Section 2 - Hypotheses -->
                       
                         <section  class="section anchor group" id="hypothese">
@@ -1127,6 +1132,17 @@
                                                 <td >{{ finance.capex |number_format(0, '.', ' ')}}</td>
                                                 <td>DT</td>
                                             </tr>
+                                            <tr>
+                                                <td>Coùt annuel des opérations et maintenance </td>
+                                                <td>{{ (finance.opex * finance.capex / 100)|number_format(0, '.', ' ')}}</td>
+                                                <td>DT</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Coùt de remplacement des onduleurs</td>
+                                                <td >{{ finance.replinv |number_format(0, '.', ' ')}}</td>
+                                                <td>DT</td>
+                                            </tr>
+                                            
                                            
                                             <tr class= 'annuite'>
                                                 <td>Montant du crédit</td>
@@ -1180,6 +1196,7 @@
                                                 <td>%</td>
                                             </tr>
                                             
+                                            
                                         </table>
                                     
                                     </div>
@@ -1219,7 +1236,7 @@
                                   <div style="overflow-x:auto;">
                                     <table>
                                     <tr>
-                                                <td>Puissance</td>
+                                                <td>Puissance de la centrale</td>
                                                 <td >{{ puissance_centrale }}</td>
                                                 <td>kWc</td>
                                             </tr>
@@ -1314,8 +1331,8 @@
                                             </tr>
                                             <tr>
                                                 <td>Temps de retour sur investissement</td>
-                                                <td id='pbperiod'>
-                                                <td>DT</td>
+                                                <td class='pbperiod'>
+                                                <td>ans</td>
                                             </tr>
                                           
                                             
@@ -1470,7 +1487,7 @@
                                             <p style="page-break-before: always;display:block;"></p>                                       
                                           <figure class="img-container img-full group">
                                               <chart id="rp_cm{{j}}"></chart> 
-                                              <figcaption ><span class="caption-headline">Répartition de la consommation brute par postes horaires</span> Ce graphique présente la répartition de la consommation électrique annuelle selon les postes horaires. Dans cette répartition on considére le changement de postes horaires en été et en hiver comme décrit dans l'introduction. Cette répartition se base sur la courbe de charge de la consommation électrique soit synthétisée à partir de l'outil de création de courbe de charge ou à partir de la courbe de charge fournie par la STEG. </figcaption>
+                                              <figcaption ><span class="caption-headline">Répartition de la consommation brute par postes horaires</span> Ce graphique présente la répartition de la consommation électrique annuelle selon les postes horaires. Dans cette répartition on considére le changement de postes horaires en été et en hiver comme décrit dans l'introduction. Cette répartition se base sur la courbe de charge de la consommation électrique.</figcaption>
                                           </figure>
                                         
                                   
@@ -1487,7 +1504,7 @@
                                          
                                           <figure class="img-container img-full group">
                                               <chart id="heat_cm{{j}}"></chart> 
-                                              <figcaption ><span class="caption-headline">Heatmap de la consommation</span>Le Heatmap permet de visualiser rapidement l’évolution des données sur une journée. Chaque colonne représente une journée, l’activité du matin se situe en haut de la carte, et celle du soir en bas. La colorisation évolue en passant du noir (consommation faible) au rouge (consommation forte) avec un dégradé.</figcaption>
+                                              <figcaption ><span class="caption-headline">Heatmap de la consommation</span>Le Heatmap permet de visualiser rapidement l’évolution des données sur une journée. Chaque colonne représente une journée, l’activité du matin se situe en bas de la carte, et celle du soir en haut. La colorisation évolue en passant du noir (consommation faible) au rouge (consommation forte) avec un dégradé.</figcaption>
                                           </figure>
                                       
                                   {% endfor %}
@@ -1593,12 +1610,12 @@
  {% for j in range(0, ((cmmonth|length)-1)) %}                                             
                                     <figure class="img-container img-full group">
                                         <chart id="auto_cm_imp{{j}}"></chart> 
-                                        <figcaption ><span class="caption-headline">Répartition de la consommation du site {{j}}  </span>Ce graphique indique la répartition de la consommation aprés l'installation de la centrale photovoltaique entre énergie autoproduite et énergie importée du réseau"</figcaption>
+                                        <figcaption ><span class="caption-headline">Répartition de la consommation du site {{j}}  </span>Ce graphique indique la répartition de la consommation aprés l'installation de la centrale photovoltaique entre énergie autoconsommée et énergie achétée de la STEG</figcaption>
                                     </figure>
      {% endfor %}                        
                                     <figure class="img-container img-full group">
                                         <chart id="rp_pd"></chart> 
-                                        <figcaption ><span class="caption-headline">Répartition de l'énergie produite par poste horaire</span></figcaption>
+                                        <figcaption ><span class="caption-headline">Répartition de l'énergie produite par poste horaire</span>Ce graphique indique la répartition de la production entre énergie autoconsommée et énergies vendue à la STEG pour chaque poste horaire et pour la totalité de la production</figcaption>
                                     </figure>
 <p style="page-break-before: always;display:block;"></p>                                            
                                         
@@ -1610,7 +1627,7 @@
                                     </figure>
                                     {% for j in range(0, ((cmmonth|length)-1)) %}
  <p style="page-break-before: always;display:block;"></p>                                                              
-                                    <h4>Tableau 3 Consommation mensuelle après la centrale photovoltaïque</h4>
+                                    <h4>Tableau 3 Energie achétée de la STEG après l'installation de la centrale photovoltaïque</h4>
                                     <div style="overflow-x:auto;">
                                         <table>
                                             <th>
@@ -1638,9 +1655,29 @@
                                     </div>
                                     <figure class="img-container img-full group">
                                         <chart id="rp_m_cm{{j}}"></chart> 
-                                        <figcaption ><span class="caption-headline">Répartition mensuelle de l'énergie consommée</span></figcaption>
+                                        <figcaption ><span class="caption-headline">Répartition mensuelle de la consommation brute</span>Ce graphique indique la répartition de la consommation brute entre celle fournie par le centrale photovoltaique (autoconsommée) et celle fournie par la STEG</figcaption>
                                     </figure>
-                {% endfor %}   
+
+                                    
+                                     <figure class="img-container img-full group">
+                                        <chart id="rp_imp{{j}}"></chart> 
+                                        <figcaption ><span class="caption-headline">Répartition de la consommation par postes horaires avant et aprés l'intégration de la centrale photovoltaique</span>Ce graphique est une comparaison entre l'ancienne répartition de la consommation ( avant l'intérgration de la centrale PV ) et la nouvelle répartition par postes horaires (aprés l'intérgration de la centrale PV)</figcaption>
+                                    </figure>
+                                    
+                                
+                                     <figure class="img-container img-full group">
+                                        <chart id="hm_cm1{{j}}"></chart> 
+                                        <figcaption ><span class="caption-headline">Histogramme de la consommation avant et aprés l'intégration de la centrale photovoltaique</span>Ce graphique est une superposition de la consommation avant et aprés l'intégration de la centrale photovoltaique ( le nombre d'heures d'appels des puissances pour la consommation brute et la puissance appélée de la STEG</figcaption>
+                                    </figure>
+                                    
+                                    
+                                   
+
+                                
+                                    
+                {% endfor %} 
+
+
                                     
                             </div>
                         </section> 
@@ -1737,23 +1774,29 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Temps de retour sur investissement</td>
-                                                        <td id='pbperiod'>
+                                                        <td class='pbperiod'>
                                                         
-                                                        <td>DT</td>
+                                                        <td>ans</td>
                                                     </tr>
                                                   </table>
                                                 </div> 
                                                           
                                             <figure class="img-container img-full group">
                                         <chart id="chat_cashflow1"></chart> 
-                                        <figcaption ><span class="caption-headline">Répartition des gains et dépenses sur la durée de vie du projet</span></figcaption>
+                                        <figcaption ><span class="caption-headline">Répartition des gains et dépenses sur la durée de vie du projet</span>Ce graphique illustre les flux de trésories annuels sur la durée des vie du projet ( les gains valeurs positives et les dépenses valeurs négatives)</figcaption>
                                 </figure>
  <p style="page-break-after: always"></p>                             
                                                   
-                                            <figure class="img-container img-full group">
-                                        <chart id="chat_cashflow"></chart> 
-                                        <figcaption ><span class="caption-headline">Cash flow et cash flow cumulés sur la durée de vie du projet</span></figcaption>
+                                <figure class="img-container img-full group">
+                                    <chart id="chat_cashflow"></chart> 
+                                    <figcaption ><span class="caption-headline">Cash flow et cash flow cumulés sur la durée de vie du projet</span> Ce graphique est la superposition des cashs flows (axe à gauche) et des cashs flow cumulés (axe à droite) sur la durée de vie du projet</figcaption>
                                 </figure>
+                                <div class= 'annuite'>
+                                    <figure class=" img-container img-full group">
+                                        <chart id="final_chart"></chart> 
+                                        <figcaption ><span class="caption-headline">Variation du DSCR sur la durée de remboursement du crédit</span> Ce graphique indique les varations du du taux de couverture du service de la dette (DSCR) sur la durée de remboursement du crédit tout en comparant l'annuité et le le cash flow disonible pour le service de la dette (CFADS) </figcaption>
+                                    </figure>
+                                </div>    
                             
  <p style="page-break-after: always"></p>                                       
                             <h3 >Cash flow</h3>
@@ -1765,7 +1808,7 @@
                                         <td scope="col">Gain par autoconsommation(DT)</td>
                                         <td scope="col">Gain de l'éxcédant vendu à la STEG(DT)</td>
                                         <td scope="col">Gain par ans (DT)</td>
-                                        <td scope="col">Facture transport (DT)</td>
+                                        <td scope="col" class='transport'>Facture transport (DT)</td>
                                         <td scope="col">Coùt d'opération et maintenance(DT)</td>
                                         <td scope="col" class= 'annuite'>Annuité (DT)</td>
                                         <td scope="col" class= 'regul'>Facture de régularisation (DT)</td>
@@ -1789,7 +1832,7 @@
                                         <td scope="col">Gain par autoconsommation(DT)</td>
                                         <td scope="col">Gain de l'éxcédant vendu à la STEG(DT)</td>
                                         <td scope="col">Gain par ans (DT)</td>
-                                        <td scope="col">Facture transport (DT)</td>
+                                        <td scope="col" class='transport'>Facture transport (DT)</td>
                                         <td scope="col">Coùt d'opération et maintenance(DT)</td>
                                         <td scope="col" class='annuite'>Annuité (DT)</td>
                                         <td scope="col" class= 'regul'>Facture de régularisation (DT)</td>
@@ -1814,7 +1857,7 @@
                                         <td scope="col">Gain par autoconsommation Total(DT)</td>
                                         <td scope="col">Gain de l'éxcédant vendu à la STEG(DT)</td>
                                         <td scope="col">Gain par ans (DT)</td>
-                                        <td scope="col">Facture transport (DT)</td>
+                                        <td scope="col" class='transport'>Facture transport (DT)</td>
                                         <td scope="col">Coùt d'opération et maintenance(DT)</td>
                                         <td scope="col" class='annuite'>Annuité (DT)</td>
                                         <td scope="col" class='regul'>Facture de régularisation (DT)</td>
@@ -1830,12 +1873,7 @@
                                 </table>
                             </div>       
                                 
-                        <div class= 'annuite'>
-                            <figure class=" img-container img-full group">
-                                <chart id="final_chart"></chart> 
-                                <figcaption ><span class="caption-headline">Variation du DSCR sur la durée de remboursement du crédit</span> </figcaption>
-                            </figure>
-                        </div>    
+                       
                             </div>
                         </section>
                      
@@ -2013,7 +2051,7 @@
                     dataType: 'json',
                     cache: false,
                     success: function (response) {
-                        if (response.transpE=0){
+                        if (response.transpE==0){
 
                             $('#avectransport').hide();
                         }
@@ -2064,11 +2102,6 @@
                         
                         };
 
-                            console.log('auto_consomeTot');
-                            console.log(auto_consomeTot);
-                            console.log('cedee');
-                            console.log(response.cedee);
-                            
 
                           consomation_tmp=[];
                             production_tmp=[];
@@ -2170,26 +2203,7 @@
                                
                                 
                             };
-                        
-                        console.log("PH");
-                         console.log(response.PH_consomationannuel);
-                          console.log(response.PH_auto_consomer);
-                           console.log(response.PH_importer);
-                        console.log(response.auto_consomer);
-                        console.log(response.consomation);
-                        console.log(PH_consomation);
-                        console.log(PH_auto_consome);
-                        console.log(PH_importer);
-                        console.log("prod");
-                        console.log(PH_production);
-                        console.log(PH_productionannuel);
-                        console.log("cedee");
-                        console.log(PH_cedee);
-                        console.log(PH_cedeeannuel);
-                        
-                        console.log("resPH");
-                       
-                        console.log(response.PH_auto_consomer);
+                    
 
                         for (let i = 0; i <4 ; i++) {
                             PH_cedee_ps[i]=(PH_cedee[i]/PH_production[i])*100;
@@ -2229,16 +2243,7 @@
                              }
                         }
 
-                        console.log( "ps");
-                        
-                        console.log( PH_cedee_ps);
-                        console.log( PH_imp_ps);
-                        console.log( PH_autoconsomer_ps2);
-                        console.log( "month");
-                        console.log(PH_cedee_ps);
-                        console.log( month_auto);
-                        console.log( month_cm_t);
-                      
+                       
                           
 
                           
@@ -2259,6 +2264,8 @@
 
                         cashflow.unshift(response.cashFlowIn);
                         cashflow_cum.unshift(response.cashFlowIn);
+                        console.log(response.cashflow_cum);
+                        console.log(response.cashflow);
                         
                             l=0;
                             
@@ -2268,15 +2275,8 @@
 
                        
 
-                        pbperiod=l+((response.cashflow_cum[l-1])*(-1)/cashflow[l])
-
-                        console.log('payback');
-                        console.log(pbperiod);
-                        console.log(response.cashflow_cum[l]);
-                        console.log(cashflow[l]);
-                        $('#pbperiod').append(round(pbperiod,2)+'</td>');
-                        
-
+                        pbperiod=l+((response.cashflow_cum[l-1])*(-1)/cashflow[l+1])
+                         $('.pbperiod').append(round(pbperiod,2)+'</td>')
 
                      for (let j = 0; j < response.consomation.length; j++) {  
                         for (let i = 1; i <13 ; i++) {
@@ -2321,7 +2321,7 @@
                                     "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
                                     "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
                                     "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                    "<td>"+round(response.Facture_transport[i],0)+"</td>"+
+                                    "<td class='transport'>"+round(response.Facture_transport[i],0)+"</td>"+
                                     "<td>"+round(response.opex[i],0)+"</td>"+
                                     "<td class='annuite'>"+round(response.annuite[i],0)+"</td>"+
                                     "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
@@ -2340,7 +2340,7 @@
                                 "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
                                     "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
                                     "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                    "<td>"+round(response.Facture_transport[i],0)+"</td>"+
+                                    "<td class='transport'>"+round(response.Facture_transport[i],0)+"</td>"+
                                     "<td>"+round(response.opex[i],0)+"</td>"+
                                     "<td class=annuite'>"+round(response.annuite[i],0)+"</td>"+
                                     "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
@@ -2359,7 +2359,7 @@
                                     "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
                                     "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
                                     "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                    "<td>"+round(response.Facture_transport[i],0)+"</td>"+
+                                    "<td class='transport'>"+round(response.Facture_transport[i],0)+"</td>"+
                                     "<td>"+round(response.opex[i],0)+"</td>"+
                                     "<td></td>"+
                                     "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
@@ -2380,7 +2380,7 @@
                                     "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
                                     "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
                                     "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                    "<td>"+round(response.Facture_transport[i],0)+"</td>"+
+                                    "<td class='transport'>"+round(response.Facture_transport[i],0)+"</td>"+
                                     "<td>"+round(response.opex[i],0)+"</td>"+
                                     "<td></td>"+
                                     "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
@@ -2401,7 +2401,7 @@
                                     "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
                                     "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
                                     "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                    "<td>"+round(response.Facture_transport[i],0)+"</td>"+
+                                    "<td class='transport'>"+round(response.Facture_transport[i],0)+"</td>"+
                                     "<td>"+round(response.opex[i],0)+"</td>"+
                                     "<td></td>"+
                                     "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
@@ -2575,6 +2575,7 @@
                         data = [trace2,trace3,trace4,trace5,trace6,trace7];
 
                         layout = { barmode: 'relative',xaxis: {range: [0, 25]},
+                                    legend: {x: 0.35, y: 5, orientation: 'h'}
                                     
                                         };
 
@@ -2587,9 +2588,6 @@
                            
                         };
 
-                        console.log('annuite');
-                        console.log(response.annuite);
-
                          if (response.facture_regrularisation[1]==0){
 
                             Plotly.deleteTraces(chat_cashflow1, 3);
@@ -2601,6 +2599,12 @@
                             Plotly.deleteTraces(chat_cashflow1, 2);
                             $( ".annuite" ).hide();
                         }   
+
+                         if (response.Facture_transport[1]==0){
+
+                            Plotly.deleteTraces(chat_cashflow1, 1);
+                            $( ".transport" ).hide();
+                        }   
            
            
                     }
@@ -2610,8 +2614,8 @@
 
            
             setTimeout(function() {     
-        //*******************plotly start***********************************************//
-           
+                    //*******************plotly start***********************************************//
+                    /****************donutchart conso*////
                    
                    for (let j = 0; j < PH_consomation.length; j++) {     
                         data = [{
@@ -2621,7 +2625,10 @@
                             name: 'Consommation',
                             hoverinfo: 'label+percent+name',
                             hole: .4,
-                            type: 'pie'
+                            type: 'pie',
+                            marker: {
+                                colors: ['rgb(255, 127, 14))', 'rgb(214, 39, 40)', 'rgb(31, 119, 180)', 'rgb(44, 160, 44)']
+                            },
                         }];
 
                         layout = {
@@ -2640,6 +2647,49 @@
                         };
                         Plotly.newPlot('rp_cm'.concat(j), data, layout, {responsive: true});
 
+                   };
+                        /******************************donutchart importée******///
+                        for (let j = 0; j < PH_importer.length; j++) {   
+                            trace2 = {
+                            values: Object.values(PH_importer[j]),
+                            labels: ['jour','pointe ete','soir','nuit'],
+                            domain: {column: 1},
+                            name: 'Energie achetée de la STEG',
+                            hoverinfo: 'label+percent+name',
+                            hole: .4,
+                            type: 'pie',
+                            title:'Energie achetée de la STEG'
+                             
+                        }
+                        
+                         trace1 = {
+                            values: Object.values(PH_consomation[j]),
+                            labels: ['jour','pointe ete','soir','nuit'],
+                            domain: {column: 0},
+                            name: 'Consommation Brute',
+                            hoverinfo: 'label+percent+name',
+                            hole: .4,
+                            type: 'pie',
+                            title:'Consommation Brute',
+                            marker: {
+                                colors: ['rgb(255, 127, 14))', 'rgb(214, 39, 40)', 'rgb(31, 119, 180)', 'rgb(44, 160, 44)']
+                            },
+                           
+                            
+                        }
+                        
+
+                        data = [trace1,trace2];
+
+                        layout = {
+                            grid: {rows: 1, columns: 2, pattern: 'independent'},
+                            title: ' Repartition de la Consommation site'.concat(j),
+                            showlegend: true,
+                             
+                            
+                        };
+                        Plotly.newPlot('rp_imp'.concat(j), data, layout, {responsive: true});
+                        
                     
                     
                         //*********************************************************
@@ -2685,7 +2735,38 @@
                         //*********************************************************
                         data = [];
                         layout = {};
-                        //*********************Consomation Histogram**************
+                        //*********************Consomation et importée Histogram**************
+                        trace1 = {
+                            x: consomationTot[j],
+                            name: 'Consommation brute',
+                            
+                            histnorm: "count",
+                           
+                            
+                            type: "histogram",
+                        };
+                        trace2 = {
+                            x: importerTot[j],
+                            name: 'Energie consommée de la STEG ',
+                            
+                            histnorm: "count",
+                            
+                            
+                            type: "histogram",
+                        };
+                        layout = {
+                            bargap: 0.05,
+                            bargroupgap: 0.2,
+                            barmode: "overlay",
+                            
+                            xaxis: {title: "Puissance"},
+                            yaxis: {title: "Fréquence"},
+                        
+                            legend: {x: 0.35, y: 5, orientation: 'h'}
+                        };
+                        data = [trace1,trace2];                        
+                        Plotly.newPlot('hm_cm1'.concat(j), data, layout, {responsive: true});
+                        //*********************Consomation et importée Histogram**************
                         trace1 = {
                             x: consomationTot[j],
                             name: 'consommation',
@@ -2694,7 +2775,7 @@
                             marker: {
                                 color: "rgba(255, 100, 102, 0.7)",
                                 line: {
-                                    color: "rgba(255, 100, 102, 1)",
+                                    color:  "rgba(255, 100, 102, 1)",
                                     width: 0.01
                                 }
                             },
@@ -2706,12 +2787,15 @@
                             bargap: 0.05,
                             bargroupgap: 0.2,
                             barmode: "overlay",
-                            title: "Histogramme de la consommation du site".concat(j),
+                            title: "Consommation",
                             xaxis: {title: "Puissance"},
                             yaxis: {title: "Fréquence"}
+                            
                         };
+                        data = [trace1];                     
                         Plotly.newPlot('hm_cm'.concat(j), data, layout, {responsive: true});
-                        //*********************************************************
+                        
+                        //*********************************************************                  
                         data = [];
                         layout = {};
                         //*********************Consomation Heatmap**************
@@ -2722,115 +2806,94 @@
                             type: 'heatmap'
                         }];
                         Plotly.newPlot('heat_cm'.concat(j), data, {yflip: true}, {responsive: true},);
-                   }    
+                    }    
                         //***********************tableau Répartition des différents paramètres par poste horaire
-                    
-                    for (let j = 0; j < PH_consomation.length; j++) {     
-                        
-                        for (let i = 0; i < 4; i++) {
-                            $('#t_charge'.concat(j)).append(
-                                "<td>" + round(Object.values(PH_consomation[j])[i], 0) + "</td>"
-                            );
-                            $('#t_transportee'.concat(j)).append(
-                                "<td>" + round(Object.values(PH_auto_consome[j])[i], 0) + "</td>"
-                            );
-
-                           
                             
-                            $('#t_imp'.concat(j)).append(
-                                "<td>" + round(Object.values(PH_importer[j])[i], 0) + "</td>"
-                            );
+                            for (let j = 0; j < PH_consomation.length; j++) {     
+                                
+                                for (let i = 0; i < 4; i++) {
+                                    $('#t_charge'.concat(j)).append(
+                                        "<td>" + round(Object.values(PH_consomation[j])[i], 0) + "</td>"
+                                    );
+                                    $('#t_transportee'.concat(j)).append(
+                                        "<td>" + round(Object.values(PH_auto_consome[j])[i], 0) + "</td>"
+                                    );
+
+                                
+                                    
+                                    $('#t_imp'.concat(j)).append(
+                                        "<td>" + round(Object.values(PH_importer[j])[i], 0) + "</td>"
+                                    );
+                                }
+                            
+                                $('#t_charge'.concat(j)).append(
+                                    "<td>" + round(Object.values(PH_consomation[j]).reduce(reducer), 0) + "</td>"
+                                );
+                                $('#t_transportee'.concat(j)).append(
+                                    "<td>" + round(Object.values(PH_auto_consome[j]).reduce(reducer), 0) + "</td>"
+                                );
+                                $('#t_imp'.concat(j)).append(
+                                    "<td>" + round(Object.values(PH_importer[j]).reduce(reducer), 0) + "</td>"
+                                );
+                                
+                            }
+                            
+                                for (let i = 0; i <4 ; i++) {
+
+                                        $('#t_prod').append(
+                                            "<td>" + round(Object.values(PH_productionannuel)[i], 0) + "</td>"
+                                        );
+                                        $('#t_cedee').append(
+                                            "<td>" + round(Object.values(PH_cedeeannuel)[i], 0) + "</td>"
+                                        );
+
+                                    };   
+
+                                    $('#t_prod').append(
+                                        "<td>" + round(PH_production.reduce(reducer), 0) + "</td>"
+                                    );
+                                    $('#t_cedee').append(
+                                        "<td>" + round(PH_cedee.reduce(reducer), 0) + "</td>"
+                                    );
+                            
+                        for (let j = 0; j < PH_consomation.length; j++) {     
+                                //************************************************************************
+                                data = [{
+                                    values: [Object.values(PH_auto_consome[j]).reduce(reducer),Object.values(PH_importer[j]).reduce(reducer)],
+                                    labels: ['Autoconsommée', 'Achetée de la STEG'],
+                                    domain: {column: 0},
+                                    
+                                    hoverinfo: 'label+percent+name',
+                                    hole: .4,
+                                    type: 'pie'
+                                }];
+
+                                layout = {
+                                    
+                                    
+                                };
+                                Plotly.newPlot('auto_cm_imp'.concat(j), data, layout, {responsive: true});
                         }
-                    
-                        $('#t_charge'.concat(j)).append(
-                            "<td>" + round(Object.values(PH_consomation[j]).reduce(reducer), 0) + "</td>"
-                        );
-                        $('#t_transportee'.concat(j)).append(
-                            "<td>" + round(Object.values(PH_auto_consome[j]).reduce(reducer), 0) + "</td>"
-                        );
-                        $('#t_imp'.concat(j)).append(
-                            "<td>" + round(Object.values(PH_importer[j]).reduce(reducer), 0) + "</td>"
-                        );
-                        
-                    }
-                    
-                        for (let i = 0; i <4 ; i++) {
-
-                                $('#t_prod').append(
-                                    "<td>" + round(Object.values(PH_productionannuel)[i], 0) + "</td>"
-                                );
-                                $('#t_cedee').append(
-                                    "<td>" + round(Object.values(PH_cedeeannuel)[i], 0) + "</td>"
-                                );
-
-                            };   
-
-                            $('#t_prod').append(
-                                "<td>" + round(PH_production.reduce(reducer), 0) + "</td>"
-                            );
-                            $('#t_cedee').append(
-                                "<td>" + round(PH_cedee.reduce(reducer), 0) + "</td>"
-                            );
-                      
-                   for (let j = 0; j < PH_consomation.length; j++) {     
-                        //************************************************************************
-                        data = [{
-                            values: [Object.values(PH_auto_consome[j]).reduce(reducer),Object.values(PH_importer[j]).reduce(reducer)],
-                            labels: ['Auto-consommee', 'importee'],
-                            domain: {column: 0},
-                            name: 'Auto-consommee , E-importee',
-                            hoverinfo: 'label+percent+name',
-                            hole: .4,
-                            type: 'pie'
-                        }];
-
-                        layout = {
-                            title: 'Auto-consommee , E-importee',
-                            
-                        };
-                        Plotly.newPlot('auto_cm_imp'.concat(j), data, layout, {responsive: true});
-                   }
                         //**************************************repartion energy produite**********************
-                        PH_cedee_ps.push((PH_cedee.reduce(reducer)/PH_production.reduce(reducer))*100);
+                    PH_cedee_ps.push((PH_cedee.reduce(reducer)/PH_production.reduce(reducer))*100);
 
                         trace1 = {
                             x: ['Jour','Ete','Soir','Nuit','Total'],
                             y: PH_cedee_ps,
-                            name: 'Cedée',
+                            name: 'Vendue à la STEG',
                             type: 'bar'
                         };
 
                         data = [trace1];
 
-                        layout = {barmode: 'stack'};
+                        layout = {barmode: 'stack',legend: {x: 0.35, y: 5, orientation: 'h'}};
 
                         Plotly.newPlot('rp_pd', data, layout,{responsive: true});
                         for (let j=0; j<PH_autoconsomer_ps2.length;j++){
                              PH_autoconsomer_ps2[j].push(((Object.values(PH_auto_consome[j])).reduce(reducer)/PH_production.reduce(reducer))*100);
-                        Plotly.addTraces('rp_pd', {name: 'Auto-consommee'.concat(j),type: 'bar',x:['Jour','Ete','Soir','Nuit','Total'],y: PH_autoconsomer_ps2[j]});
+                        Plotly.addTraces('rp_pd', {name: 'Autoconsommée'.concat(j),type: 'bar',x:['Jour','Ete','Soir','Nuit','Total'],y: PH_autoconsomer_ps2[j]});
                         }
-                        //***********************prod/consomer********************
-                   /* console.log('PH_cedee');
-                    console.log(PH_cedee);
-                    console.log(PH_cedee.reduce(reducer));
-                     console.log(PH_production.reduce(reducer));
-                     console.log((PH_cedee.reduce(reducer)/PH_production.reduce(reducer))*100);
-                    trace1={
-                        x: ['Production'],
-                        y: [(PH_cedee.reduce(reducer)/PH_production.reduce(reducer))*100],
-                        name: 'Cedée',
-                        type: 'bar'
-                    };
-                    layout = {barmode: 'stack'};
-                    data = [trace1];
-                   
-                    Plotly.newPlot('pd_cm', data, layout, {responsive: true});
-
-                    for (let j=0; j<PH_autoconsomer_ps2.length;j++){
-                           Plotly.addTraces('pd_cm', {name: 'Auto-consommee'.concat(j),type: 'bar',x: ['Production'],y: [((Object.values(PH_auto_consome[j])).reduce(reducer)/PH_production.reduce(reducer))*100]});
-                        };
-                        */
-
+                      
                         //*********************************************************
                        
                         
@@ -2848,7 +2911,7 @@
                         data.push(trace1);
 
                         layout = {
-                            title: 'Supérposition de la consommation et la production',
+                            legend: {x: 0.35, y: 5, orientation: 'h'},
                             xaxis: {
                                 autorange: true,
                                 range: [production[0][0], production[0][production[0].length-1]],
@@ -2882,22 +2945,22 @@
                         layout={};
 
                         trace1 = {
-                            x: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+                            x: ["Janvier","Fevrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Decembre"],
                             y: month_auto[j],
-                            name: 'Transportee',
+                            name: 'Autoconsommée',
                             type: 'bar'
                         };
 
                         trace2 = {
-                            x: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+                            x: ["Janvier","Fevrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Decembre"],
                             y: month_imp[j],
-                            name: 'Importee',
+                            name: 'Achetée de la STEG',
                             type: 'bar'
                         };
 
                         data = [trace1, trace2];
 
-                        layout = {barmode: 'stack'};
+                        layout = {barmode: 'stack',legend: {x: 0.35, y: 5, orientation: 'h'}};
 
                         Plotly.newPlot('rp_m_cm'.concat(j), data, layout,{responsive: true});
 
@@ -2931,6 +2994,7 @@
                                             overlaying: 'y',
                                             side: 'right'
                                         },
+                                        legend: {x: 0.35, y: 5, orientation: 'h'}
                                         };
 
                         Plotly.newPlot('chat_cashflow', data, layout,{responsive: true});
@@ -2969,6 +3033,7 @@
                                 side: 'right'
                             },
                             rangeslider: {range: [cfadstmp[0], cfadstmp[cfadstmp.length-1]]},
+                            legend: {x: 0.35, y: 5, orientation: 'h'}
                         };
 
                         Plotly.newPlot('final_chart', data, layout,{responsive: true});
