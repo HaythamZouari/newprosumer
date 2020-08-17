@@ -18,39 +18,37 @@
                 <a class="nav-link mb-sm-3 mb-md-0" style="pointer-events: none;" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fa fa-university" aria-hidden="true"></i>  Finance</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link mb-sm-3 mb-md-0" style="pointer-events: none; "id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-4" aria-selected="false" ><i class="fa fa-bullhorn" aria-hidden="true"></i>Resultats</a>
+                <a class="nav-link mb-sm-3 mb-md-0" style="pointer-events: none; "id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-4" aria-selected="false" ><i class="fa fa-bullhorn" aria-hidden="true"></i>
+   Resultats</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-5-tab" style="pointer-events: none; " href="{{ path('rapport',{'id':project.id}) }}" ><i class="fa fa-file" aria-hidden="true"></i>   Rapport</a>
             </li>
         </ul>
     </div>
-   
+    <div>
         <div class="row">
             <div class=" ml-2 col-xl ">
-                
+                <div>
                     
                         <div class="card" id="tabs-icons-text-1">
                             <div>
                                 {{ include('consomation/consomation.html.twig') }}
                             </div>
                         </div>
+                        </div>
 
-
-                        <div class="card" id="tabs-icons-text-2" style="display:none">
-                            <div>
+                        <div class="card" id="tabs-icons-text-2" style="display:none" >
+                            <div class="card-body">
                                 {{ include('production/production.html.twig') }}
                             </div>
                         </div>
-                        
-
-                        
                         <div class="card" id="tabs-icons-text-3" style="display:none">
                             <div class="card-body">
                                 {{ include('finance/index.html.twig') }}
                             </div>
                         </div>
-                         
+                         </div>
                         <div class="card" id="tabs-icons-text-4" style="display:none">
                             <div class="card-body">
                                 {{ include('result/result.html.twig') }}
@@ -58,11 +56,11 @@
                         </div>
                         
                     
-               
+                </div>
             </div>
         </div>
     </div>
-   
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

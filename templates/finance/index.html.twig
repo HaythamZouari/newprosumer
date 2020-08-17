@@ -1,6 +1,7 @@
 <div class="card bg-secondary">
-    <div class="card-header bg-transparent pb-5" ><button type="button" id="help" class="btn btn-primary"onclick="help()">Aide</button>
-        
+    <div class="card-header bg-transparent pb-5" >
+    <button type="button" id="help" class="btn btn-primary"onclick="help()">Aide</button>
+        <div class="card-body px-lg-5 py-lg-5">
         <div class="card-body px-lg-5 py-lg-5">
             <form id="financeForm"  action="{{ path('finance',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
                 <div class="form-group ">
@@ -20,15 +21,14 @@
                 <div class="form-group">
 
                     <label class="form-control-label required" for="subvention">Subvention </label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le type de la subvention qui sera allouée au projet">?</button>
-                </div>    
                 <div class="row">
                     <div class="col">                 
-                        <select class="form-control" id="typesub">
-                            <option value=0>Sans subvention</option>
-                            <option value=1>Subvention FTE</option>
-                            <option value=2>Subvention Développement régional premier groupe</option>
-                            <option value=3>Subvention Développement régional deuxiéme groupe</option>
-                        </select>
+                    <select class="form-control" id="typesub">
+                        <option value=0>Sans subvention</option>
+                        <option value=1>Subvention FTE</option>
+                        <option value=2>Subvention Développement régional premier groupe</option>
+                        <option value=3>Subvention Développement régional deuxiéme groupe</option>
+                    </select>
                     </div>
                     <div class="col"> 
                         <input type="number" name="subvention" value="0" max="100" id="subvention" min="0" class="form-control">
@@ -129,17 +129,19 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <div class="alert alert-success" id="successfin" role="alert" style="display:none"><strong>Finance Validée</strong> </div>
-                    <div class="alert alert-danger" id="errorfin" role="alert" style="display:none"><strong>Finance non Valide</strong> </div>
-                        <button type="button"  id="financeretour()"  onclick="financeretour()" class="btn-secondary btn">Retour</button>
-                        <button type="button"  id="finance"  onclick="financeSubmit()" class="btn-secondary btn"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingfin" style="display:none"></span>Valider</button>
-                        <button type="button"  id="financeavancer" disabled="disabled" onclick="finavance()" class="btn-secondary btn">Continuer</button>
+                <div class="alert alert-success" id="successfin" role="alert" style="display:none">
+                                                <strong>Finance Validée</strong> </div>
+                                    <div class="alert alert-danger" id="errorfin" role="alert" style="display:none">
+                                                <strong>Finance non Valide</strong> </div>
+                     <button type="button"  id="financeretour()"  onclick="financeretour()" class="btn-secondary btn">Retour</button>
+                    <button type="button"  id="finance"  onclick="financeSubmit()" class="btn-secondary btn"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loadingfin" style="display:none"></span>Valider</button>
+                    <button type="button"  id="financeavancer" disabled="disabled" onclick="finavance()" class="btn-secondary btn">Continuer</button>
                 </div>
             </form>
         </div>
     </div>
-
-
+</div>
+</div>
 <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
 <script>
 

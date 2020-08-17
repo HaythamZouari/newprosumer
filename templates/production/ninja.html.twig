@@ -1,7 +1,13 @@
 <form class="production" id="productionForm" action="{{ path('ninja',{'id':project.id}) }}"  enctype="multipart/form-data">
     <div class="row">
         <div class="col">
-            
+            <!--div class="form-group">
+                <label class="form-control-label required" for="raddatabase">Base de données irradiance</label>
+                <select name="raddatabase" class="form-control" id="raddatabase">
+                    
+                    <option value="sarah">CM-SAF SARAH</option>
+                </select>
+            </div-->
             <div class="form-group">
                 <label class="form-control-label required" for="capacity">Puissance (kWc)</label> <button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir la puissance de la centrale que vous voulez simuler">
                             ?
