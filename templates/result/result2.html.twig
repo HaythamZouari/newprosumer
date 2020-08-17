@@ -1,138 +1,124 @@
 <div class="row align-content-center">
-    <div class="col-xl-12 mb-4 mb-xl-12" >
-        <div class="row align-content-center">
-            <div class="col-xl-3 col-lg-6">
-            </div>
-            <div class="form-group">
+        <div class="col-xl-12 mb-4 mb-xl-12" >
+            <div class="row align-content-center">
+                <div class="col-xl-3 col-lg-6">
+                </div>
+                  <div class="form-group">
                     <div style="display: inline-block"> <label for="exampleFormControlSelect1" >Site</label></div>
                     <div style="display: inline-block"> <select class="form-control" id="SiteSelector"> </select></div>
                     
                    
                 </div>
-            <div class="col-xl-3 col-lg-6">
-                <div class="card card-stats mb-4 mb-xl-0">
-                    <button  class="btn btn-lg" type="button" data-toggle="modal" data-target="#charts" >Graphiques</button>
+                
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <button  class="btn btn-lg" type="button" data-toggle="modal" data-target="#charts" id="graphiques" >Graphiques</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-xl-3 col-lg-6">
-                <div class="card card-stats mb-4 mb-xl-0">
-                    <button  class="btn btn-lg" type="button" data-toggle="modal" data-target="#myModal" id="tableaus" >Tableau</button>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <button  class="btn btn-lg" type="button" data-toggle="modal" data-target="#myModal" id="tableaus" >Tableau</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-xl-3 col-lg-6">
+                <div class="col-xl-3 col-lg-6">
+                </div>
             </div>
         </div>
-    </div>
+    </div>    
     <div class="col-xl-12 mb-4 mb-xl-0 align-content-center" >
         <div class="card">
             <div class="card-body">
-                <h4 class="text-primary">Récapitulatif énergétique</h4>
+            <div class="row">
+                <div class="col">
+                <h3 class="font-weight-bold text-center ">Récapitulatif énergétique annuel</h3>
                 <div class="table">
-                    <table class="table align-items-center table-bordered ">
+                    <table class="table align-items-center table-striped ">
                         <thead class="thead-light">
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Puissance</td>
-                            {% if project.pvgis != null %}
-                                <td >{{ project.pvgis.peakpower }}</td>
-                            {% elseif project.csvprod != null %}
-                                <td >{{ project.csvprod.Puissence }}</td>
-                            {% elseif project.ninja != null %}
-                                <td >{{ project.ninja.capacity }}</td>    
-                            {% endif %}
-                            <td>kWc</td>
+                        <tr id="puissanceres">
+                            <td class="font-weight-bold  ">Puissance:</td>
                         </tr>
                         <tr id="productible">
-                            <td>Productible :</td>
+                            <td class="font-weight-bold  ">Productible :</td>
                         </tr>
                         <tr id="t_cd">
-                            <td>Taux de l’énergie cédée :</td>
+                            <td class="font-weight-bold  ">Taux de l’énergie cédée :</td>
                         </tr>
                         <tr id="prod25">
-                            <td>Production PV 25 ans</td>
+                            <td class="font-weight-bold  ">Production PV 25 ans</td>
                         </tr>
                         
                         <tr id="consommationS">
-                            <td>Consommation du site</td>
+                            <td class="font-weight-bold  ">Consommation du site</td>
                         </tr>
                         <tr id="auto_consommationS">
-                        <td>Economies d'énergie du site</td>
+                        <td class="font-weight-bold  ">Economies d'énergie du site</td>
                         </tr>
                         <tr id="importerS">
-                            <td>Energie importée de la STEG</td>
+                            <td class="font-weight-bold  ">Energie importée de la STEG</td>
                         </tr>
                         <tr id="t_autoc">
-                            <td>Taux d’autoconsommation du site</td>
+                            <td class="font-weight-bold  ">Taux d’autoconsommation du site</td>
                         </tr>
 
                         </tbody>
                     </table>
                 </div>
-                <h4 class="text-primary">Récapitulatif financier</h4>
+                </div>
+                <div class="col">
+                <h3 class="font-weight-bold text-center ">Récapitulatif financier annuel</h3>
                 <div class="table">
-                    <table class="table align-items-center table-bordered ">
+                    <table class="table align-items-center table-striped ">
                         <thead class="thead-light">
                         </thead>
                         <tbody>
-                        <tr>
-                            {% if project.finance != null %}
-                            <td>CAPEX</td>
-                            <td >{{ project.finance.capex |number_format(0, '.', ' ')}}</td>
-                            <td>DT</td>
+                        <tr id="capexres">
+                            <td class="font-weight-bold  ">CAPEX:</td>
                         </tr>
-                        <tr>
-                            <td>Subvention</td>
-                            <td>{{ project.finance.subvention |number_format(0, '.', ' ')}}</td>
-                            <td>%</td>
+                        <tr id="subvres">
+                            <td class="font-weight-bold  ">Subvention:</td>
                         </tr>
-                        <tr>
-                            <td>O&M </td>
-                            <td>{{ ((project.finance.opex)*(project.finance.capex))/100 |number_format(0, '.', ' ')}}</td>
-                            <td>DT</td>
+                        <tr id="omres">
+                            <td class="font-weight-bold  ">O&M:</td>
                         </tr>
                         <tr id="annuiteres">
-                            <td>Annuite :</td>
+                            <td class="font-weight-bold  ">Annuite :</td>
                         </tr>
                         <tr  id="f_r">
-                            <td>Facture de regularisation :</td>
+                            <td class="font-weight-bold  ">Facture de regularisation :</td>
                         </tr>
                         <tr id="coutproj">
-                            <td>Cout du projet sur 25 ans :</td>
+                            <td class="font-weight-bold  ">Cout du projet sur 25 ans :</td>
                         </tr>
-                        <tr>
-                            <td>VAN sur 25 ans :</td>
-                            <td>{{ project.finance.van|number_format(0, '.', ' ') }}</td>
-                            <td>DT</td>
+                        <tr id="vanres">
+                            <td class="font-weight-bold  ">VAN sur 25 ans :</td>
                         </tr>
-                        <tr id="lcoe">
-                            <td>LCOE sur 25 ans :</td>
+                        <tr  id="lcoe">
+                            <td class="font-weight-bold  ">LCOE sur 25 ans :</td>
                         </tr>
-                        <tr>
-                            <td>TRI sur les capitaux propres :</td>
-                            <td>{{ project.finance.Tricapitaux|number_format(2, '.', ' ') }}</td>
-                            <td>%</td>
+                        <tr id="tricapres">
+                            <td class="font-weight-bold  ">TRI sur les capitaux propres :</td>
                         </tr>
-                        <tr>
-                            <td>TRI du projet :</td>
-                            <td>{{ project.finance.tri25|number_format(2, '.', ' ') }}</td>
-                            <td>%</td>
+                        <tr id="trires">
+                            <td class="font-weight-bold  ">TRI du projet :</td>
                         </tr>
-                        {% endif %}
                         <tr>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <br>
+                 </div>   
+                </div>
             </div>
 
         </div>
     </div>
-</div>
+    <button type="button" onclick="retourresult()" class="btn-secondary btn" style="width:100%">Retour</button>
 <div class="modal resizer-handler" id="myModal" role="dialog">
     <div class="modal-dialog-scrollable">
 
+    
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -155,7 +141,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tableau</h4>
+                <h4 class="modal-title">Graphiques</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -167,46 +153,46 @@
                                     <div class="col-xl-3 mb-3 mb-xl-3">
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-primary btn-lg btn-block dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="lescourb">
-                                                Les courbes
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="lescourb">
-                                                <button class="dropdown-item" type="button" id="consomer" >Consommation</button>
-                                                <button class="dropdown-item" type="button" id="produite">Production</button>
-                                                <button class="dropdown-item" type="button" id="autoconsomer">Auto-Consommation</button>
-                                                <button class="dropdown-item" type="button" id="cedee" >Cedee</button>
-                                                <button class="dropdown-item" type="button" id="importe" >Importee</button>
+                                                    Les courbes
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="lescourb">
+                                                    <button class="dropdown-item" type="button" id="consomer" >Consommation</button>
+                                                    <button class="dropdown-item" type="button" id="produite">Production</button>
+                                                    <button class="dropdown-item" type="button" id="autoconsomer">Auto-Consommation</button>
+                                                    <button class="dropdown-item" type="button" id="cedee" >Cedee</button>
+                                                    <button class="dropdown-item" type="button" id="importe" >Importee</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-7 mb-12 mb-xl-12">
-                                    </div>
-                                    <div class="col-xl-1  mb-12 mb-xl-12">
-                                        <div class="dropdown">
-                                            <button type="button" class="btn btn-primary btn-block dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="lescourb">
-                                                Type de diagramme
-                                            </button>
-                                            <div class="dropdown-menu col-xl-12" aria-labelledby="lescourb">
-                                                <button type="button"  class="dropdown-item" id="time_series">Time series</button>
-                                                <button type="button" class="dropdown-item"  id="histograme">Histogramme</button>
-                                                <button type="button" class="dropdown-item"  id="heatmap">Heat map</button>
-                                                <button type="button"  class="dropdown-item" id="donutsChart">Donut Chart</button>
+                                        <div class="col-xl-7 mb-12 mb-xl-12">
+                                        </div>
+                                        <div class="col-xl-1  mb-12 mb-xl-12">
+                                            <div class="dropdown">
+                                                <button type="button" class="btn btn-primary btn-block dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="lescourb">
+                                                    Type de diagramme
+                                                </button>
+                                                <div class="dropdown-menu col-xl-12" aria-labelledby="lescourb">
+                                                    <button type="button"  class="dropdown-item" id="time_series">Time series</button>
+                                                    <button type="button" class="dropdown-item"  id="histograme">Histogramme</button>
+                                                    <button type="button" class="dropdown-item"  id="heatmap">Heat map</button>
+                                                    <button type="button"  class="dropdown-item" id="donutsChart">Donut Chart</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div  class="card-body">
-                                <div class="row">
-                                    <div   class="col">
-                                        <div id="chart_consomtation"></div>
+                                <div  class="card-body">
+                                    <div class="row">
+                                        <div   class="col">
+                                            <div id="chart_consomtation"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
             </div>
@@ -894,27 +880,59 @@
                         console.log(t_auto[1]);
 
 
-                        $('#auto_consommationS').append(" <td>"+Math.round(response.auto_consommationS[0],0)+"</td><td>kWh</td>");
-                        $('#consommationS').append(" <td>"+Math.round(response.consommationS[0],0)+"</td><td>kWh</td>");
-                        $('#importerS').append(" <td>"+Math.round(response.importerS[0],0)+"</td><td>kWh</td>");
-                        $('#prod25').append(" <td>"+Math.round(response.prod25,0)+"</td><td>kWh</td>");
-                        $('#lcoe').append("<td>"+Math.round(response.lcoe,3)+"</td><td>DT</td>");
-                        $('#t_autoc').append("<td>"+Math.round(response.t_auto[0]*100,2)+"</td><td>%</td>");
+                           $('#auto_consommationS').empty();
+                        $('#consommationS').empty();
+                        $('#importerS').empty();
+                        $('#prod25').empty();
+                        $('#lcoe').empty();
+                        $('#t_autoc').empty();
+                        
+                        $('#productible').empty();
+                        $('#t_cd').empty();
+                        $('#f_r').empty();
+                        $('#coutproj').empty();
+                        $('#capexres').empty();
+                        $('#tricapres').empty();
+                        $('#trires').empty();
+                        $('#subvres').empty();
+                        $('#omres').empty();
+                        $('#annuiteres').empty();
+                        $('#vanres').empty();
+                        $('#puissanceres').empty();
+
+
+
+                       $('#auto_consommationS').append("<td class="+"font-weight-bold"+">Economies d'énergie du site </td><td>"+Math.round(response.auto_consommationS[0],0)+"</td><td>kWh</td>");
+                        $('#consommationS').append("<td class="+"font-weight-bold"+">Consommation du site</td><td>"+Math.round(response.consommationS[0],0)+"</td><td>kWh</td>");
+                        $('#importerS').append("<td class="+"font-weight-bold"+">Energie achetée de la STEG</td><td>"+Math.round(response.importerS[0],0)+"</td><td>kWh</td>");
+                        $('#prod25').append("<td class="+"font-weight-bold"+">Production PV sur 25 ans</td><td>"+Math.round(response.prod25,0)+"</td><td>kWh</td>");
+                        $('#lcoe').append("<td class="+"font-weight-bold"+">LCOE sur 25 ans</td><td>"+(Math.round(response.lcoe*1000)/1000)+"</td><td>DT</td>");
+                        $('#t_autoc').append("<td class="+"font-weight-bold"+"> Taux de couverture de la consommation</td><td>"+Math.round(response.t_auto[0]*100,2)+"</td><td>%</td>");
                         /*$('#t_couv').append("<td>"+Math.round(response.t_couverture*100,2)+"</td><td>%</td>");*/
-                        $('#productible').append("<td>"+Math.round(response.productible,0)+"</td><td>kWh/kWc</td>");
-                        $('#t_cd').append("<td>"+Math.round(response.t_cedee*100,2)+"</td><td>%</td>");
-                        $('#f_r').append("<td>"+Math.round(response.f_reg,0)+"</td><td>DT</td>");
-                        $('#coutproj').append("<td>"+Math.round(response.coutproj,0)+"</td><td>DT</td>");
-                        $('#capexres').append("<td>"+Math.round(response.capex,3)+"</td><td>DT</td>");
-                        $('#tricapres').append("<td>"+Math.round(response.tricap,2)+"</td><td>%</td>");
-                        $('#trires').append("<td>"+Math.round(response.tri25,2)+"</td><td>%</td>");
-                        $('#subvres').append("<td>"+((Math.round(response.subv,0)*Math.round(response.capex,0))/100)+"</td><td>DT</td>");
-                        $('#omres').append("<td>"+Math.round(response.opex[0],0)+"</td><td>DT</td>");
-                        $('#annuiteres').append("<td>"+Math.round(response.annuite[5],0)+"</td><td>DT</td>");
-                        $('#vanres').append("<td>"+Math.round(response.van,0)+"</td><td>DT</td>");
-                        $('#puissanceres').append("<td>"+Math.round(response.peak,2)+"</td><td>kWc</td>");
+                        $('#productible').append("<td class="+"font-weight-bold"+">Productible annuel</td><td>"+Math.round(response.productible,0)+"</td><td>kWh/kWc</td>");
+                        $('#t_cd').append("<td class="+"font-weight-bold"+">Taux de l’énergie produite en excédant</td><td>"+Math.round(response.t_cedee*100,2)+"</td><td>%</td>");
+                        $('#f_r').append("<td class="+"font-weight-bold"+">Facture de régularisation </td><td>"+Math.round(response.f_reg,0)+"</td><td>DT</td>");
+                        $('#coutproj').append("<td class="+"font-weight-bold"+">Coùt du projet sur 25 ans</td><td>"+Math.round(response.coutproj,0)+"</td><td>DT</td>");
+                        $('#capexres').append("<td class="+"font-weight-bold"+">Coùt d'investissement</td><td>"+Math.round(response.capex,3)+"</td><td>DT</td>");
+                        $('#tricapres').append("<td class="+"font-weight-bold"+">TRI sur les capitaux propres</td><td>"+Math.round(response.tricap,2)+"</td><td>%</td>");
+                        $('#trires').append("<td class="+"font-weight-bold"+"> TRI du projet  </td><td>"+Math.round(response.tri25,2)+"</td><td>%</td>");
+                        $('#subvres').append("<td class="+"font-weight-bold"+">Subvention</td><td>"+((Math.round(response.subv,0)*Math.round(response.capex,0))/100)+"</td><td>DT</td>");
+                        $('#omres').append("<td class="+"font-weight-bold"+">Coùt d'opération et maintenance </td><td>"+Math.round(response.opex[0],0)+"</td><td>DT</td>");
+                        $('#annuiteres').append("<td class="+"font-weight-bold"+">Annuité</td><td>"+Math.round(response.annuite[5],0)+"</td><td>DT</td>");
+                        $('#vanres').append("<td class="+"font-weight-bold"+"> VAN sur 25 ans  </td><td>"+Math.round(response.van,0)+"</td><td>DT</td>");
+                        $('#puissanceres').append("<td class="+"font-weight-bold"+"> Puissance de la centrale  </td><td>"+Math.round(response.peak,2)+"</td><td>kWc</td>");
 
                         
+                            if (response.annuite.length===0){
+                                $('#annuiteres').hide();
+                                $('#trires').hide();
+                            }
+
+                            if (response.f_reg==0){
+                                
+                                $('#f_r').hide();
+                            }
+
 
                         
                          for (let j = 0; j < consomationTot.length ; j++) {

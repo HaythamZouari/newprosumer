@@ -48,11 +48,7 @@
                  
             });
             this.on("success", function (file, response) {
-                for (let i = 0; i < response.data.length ; i++) {
-                    dates =new Date(response.data[i][0]*1000);
-                    dates.setHours(dates.getHours()-1);
-                    response.data[i][0]=dates;
-                }
+                
                 
                 console.log(response.da);
                 $('#successprod').show();
