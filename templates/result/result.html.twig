@@ -153,14 +153,14 @@
                                     <div class="col-xl-3 mb-3 mb-xl-3">
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-primary btn-lg btn-block dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="lescourb">
-                                                    Les courbes
+                                                    Variables
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="lescourb">
-                                                    <button class="dropdown-item" type="button" id="consomer" >Consommation</button>
+                                                    <button class="dropdown-item" type="button" id="consomer" >Consommation Brute</button>
                                                     <button class="dropdown-item" type="button" id="produite">Production</button>
                                                     <button class="dropdown-item" type="button" id="autoconsomer">Auto-Consommation</button>
-                                                    <button class="dropdown-item" type="button" id="cedee" >Cedee</button>
-                                                    <button class="dropdown-item" type="button" id="importe" >Importee</button>
+                                                    <button class="dropdown-item" type="button" id="cedee" >Injectée dans le réseau</button>
+                                                    <button class="dropdown-item" type="button" id="importe" >Electricité achetée de la STEG</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -169,7 +169,7 @@
                                         <div class="col-xl-1  mb-12 mb-xl-12">
                                             <div class="dropdown">
                                                 <button type="button" class="btn btn-primary btn-block dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="lescourb">
-                                                    Type de diagramme
+                                                    Graphiques
                                                 </button>
                                                 <div class="dropdown-menu col-xl-12" aria-labelledby="lescourb">
                                                     <button type="button"  class="dropdown-item" id="time_series">Time series</button>
@@ -354,7 +354,7 @@
             trace4 = {
                 type: "scatter",
                 mode: "lines",
-                name: 'Energie cedee',
+                name: 'Injectée dans le réseau',
                 x: production[0],
                 y: cedee[1],
                 line: {color: '#900C3F'}
@@ -372,9 +372,9 @@
             };
             Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
             k=j+1;
-            Plotly.addTraces('chart_consomtation', {name: 'consommation'.concat(k),x:production[0],y: consomationTot[j]});
-            Plotly.addTraces('chart_consomtation', {name: 'Auto consommation'.concat(k),x:production[0],y: auto_consomeTot[j]});
-            Plotly.addTraces('chart_consomtation', {name: 'Importée'.concat(k),x:production[0],y: importerTot[j]});
+            Plotly.addTraces('chart_consomtation', {name: 'Consommation Brute'.concat(k),x:production[0],y: consomationTot[j]});
+            Plotly.addTraces('chart_consomtation', {name: 'Auto-consommation'.concat(k),x:production[0],y: auto_consomeTot[j]});
+            Plotly.addTraces('chart_consomtation', {name: 'Achétée de la STEG'.concat(k),x:production[0],y: importerTot[j]});
 
         
         });
@@ -465,7 +465,7 @@
             if (btn===4){
                 trace1 = {
                     x: cedee[1],
-                    name: 'Auto consomer',
+                    name: 'Auto-consommée',
                     autobinx: true,
                     histnorm: "count",
                     marker: {
@@ -492,7 +492,7 @@
             if (btn===5){
                 trace1 = {
                     x: importerTot[j],
-                    name: 'Importée',
+                    name: 'Achetée de la STEG',
                     autobinx: true,
                     histnorm: "count",
                     marker: {
@@ -646,13 +646,13 @@
                     values: PH_cedee,
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consommation',
+                    name: 'Consommation brute',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
                 }];
                 layout = {
-                    title: 'Cedee',
+                    title: 'Injectée dans le réseau',
                     showlegend: false,
                     annotations: [
                         {
@@ -677,7 +677,7 @@
                     type: 'pie'
                 }];
                 layout = {
-                    title: 'Importée',
+                    title: 'Achetée de la STEG',
                     showlegend: false,
                     annotations: [
                         {
