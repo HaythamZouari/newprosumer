@@ -3,6 +3,7 @@
 
 namespace App\Service;
 use DateTime;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Csv as ReaderCsv;
 use PhpOffice\PhpSpreadsheet\Reader\Ods as ReaderOds;
 use PhpOffice\PhpSpreadsheet\Reader\Xls as ReaderXls;
@@ -59,7 +60,9 @@ class ExcelReader
     static public function createDataFromSpreadsheet(string $filename)
     {
         $worksheetit=0;
-        $spreadsheet = ExcelReader::readFile($filename);
+        $spreadsheet = IOFactory::load($filename);
+
+        
         unset($data);
         unset($data1);
         $data =[];

@@ -312,19 +312,33 @@ class ProductionController extends AbstractController
     public function readcsv(EventDispatcherInterface $eventDispatcher,Request $request,FileUpload $fileUpload,Project $project){
         $csvreader = new CsvProd();
         $result=[];
+        $i=0;
 
         $file = $request->files->get('file');
         $filePath =$fileUpload->uploadcsv($file,'production');
-        //delete the first 13 lines of the csv code
-        shell_exec('sed -i 1,13d uploads/'.$filePath);
-        $csv = array_map('str_getcsv', file('uploads/'.$filePath));
-        for($i=0;$i<count($csv);$i++ ){
-            $csv[$i]=explode(';',$csv[$i][0]);
-            $result[$i][0]= DateTime::createFromFormat('d/m/Y H:i', $csv[$i][0])->getTimestamp()+1200;
-            $result[$i][1]=(float)$csv[$i][1];
-        }
+              
+            $handle = fopen('uploads/'.$filePath, 'r');
+            while (($line = fgetcsv($handle)) !== FALSE) {
+                //$line is an array of the csv elements
+                $result[$i]=$line;
+                $csv[$i]=explode(';',$result[$i][0]);
+                $i++;
+            }
+            $period = CarbonPeriod::create('2014-01-01 01:00','PT1H','2014-12-31 23:00');
+                $i=13;
+                foreach ($period as $key=>$date) {
+                    /*$string=$array[$i][0];*/
+                    $data[]=[(int)$date->getTimestamp(),(float)($csv[$i][1])];
+
+                    $i++;
+
+                }
+                array_push($data,[1420070400,0]);
+            
+  
+
         $csvreader->setPath('uploads/'.$filePath);
-        $csvreader->setResult(Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$result));
+        $csvreader->setResult($data);
         //$csvreader->setResult($result);
         $csvreader->setPuissence(((float)$request->get('csvpuiss')));
         $csvreader->setProject($project);
@@ -343,6 +357,6 @@ class ProductionController extends AbstractController
         );
 
         
-        return new JsonResponse(['data'=>Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$result),'da'=>$csv]);
+        return new JsonResponse(['da'=>$data]);
     }
 }
