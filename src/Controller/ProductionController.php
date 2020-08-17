@@ -291,7 +291,7 @@ class ProductionController extends AbstractController
     }
 
             
-            $ninja->setResult(Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data));
+            $ninja->setResult(Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data,$project->getConsomation()->getConsomationAnnuel()));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($ninja);
             $project->setCsvProd(null);
@@ -338,7 +338,7 @@ class ProductionController extends AbstractController
   
 
         $csvreader->setPath('uploads/'.$filePath);
-        $csvreader->setResult($data);
+        $csvreader->setResult(Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data,$project->getConsomation()->getConsomationAnnuel()));
         //$csvreader->setResult($result);
         $csvreader->setPuissence(((float)$request->get('csvpuiss')));
         $csvreader->setProject($project);
