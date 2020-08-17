@@ -60,7 +60,7 @@ class ExcelReader
     static public function createDataFromSpreadsheet(string $filename)
     {
         $worksheetit=0;
-        $spreadsheet = IOFactory::load($filename);
+        $spreadsheet = ExcelReader::readFile($filename);
 
         
         unset($data);
