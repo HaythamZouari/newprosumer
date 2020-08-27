@@ -231,7 +231,7 @@
         let PH_consomation=[];
         let PH_production=[];
         let PH_auto_consome=[];
-        let PH_cedee=[];
+        
         let PH_importer=[];
         let PH_auto_consomeTmp=[];
         let PH_importerTmp=[];
@@ -253,20 +253,14 @@
         let auto_consomer_heatmap1Tot=[];
       
             let auto_consommationS =[];
-                        let consommationS =[];
-                        let importerS =[];
-                        let t_auto =[];
-        PH_production[0]=0;
-        PH_production[1]=0;
-        PH_production[2]=0;
-        PH_production[3]=0;
+            let consommationS =[];
+            let importerS =[];
+            let t_auto =[];
+              
+        let PH_cedee=[];
         
-        PH_cedee[0]=0;
-        PH_cedee[1]=0;
-        PH_cedee[2]=0;
-        PH_cedee[3]=0;
         let presence_data=0;
-
+         
         
         $("#consomer").on('click',function () {
             btn=1;
@@ -593,10 +587,10 @@
             }
             if (btn===2){
                 data = [{
-                    values: PH_production,
+                    values: Object.values(PH_production),
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consommation',
+                    name: 'Production',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
@@ -643,7 +637,7 @@
             }
             if (btn===4){
                 data = [{
-                    values: PH_cedee,
+                    values: Object.values(PH_cedee),
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
                     name: 'Consommation brute',
@@ -660,7 +654,7 @@
                                 size: 14
                             },
                             showarrow: false,
-                            text: 'CM',
+                           
                         }
                     ]
                 };
@@ -685,7 +679,7 @@
                                 size: 14
                             },
                             showarrow: false,
-                            text: 'CM',
+                           
                         }
                     ]
                 };
@@ -702,12 +696,15 @@
                     dataType: 'json',
                     cache: false,
                     success: function (response) {
-            
+
+                        $('#SiteSelector').empty()
+                        consomationTot=[];
                         for (let j = 0; j < response.consomation.length; j++) {
 
                                 consomationTotTmp=[];
                                 auto_consomeTotTmp=[];
                                 importerTotTmp=[];
+                                
 
                             for (let i = 0; i < response.consomation[0].length ; i++) {
                                     dates = new Date(response.consomation[0][i][0] * 1000);
@@ -734,10 +731,11 @@
                         };
 
 
-                        PH_consomation=response.PH_consomationannuel;
+                            PH_consomation=response.PH_consomationannuel;
                             PH_auto_consome=response.PH_auto_consomerannuel;
                             PH_importer=response.PH_importerannuel;
-                    
+                            PH_production=response.PH_productionannuel;
+                            PH_cedee=response.PH_cedeeannuel;
                            
                          
                             consomation_tmp=[];
@@ -868,6 +866,7 @@
                         console.log("importe");
                         console.log(importer_heatmap1Tot);
                         console.log("production");
+                        console.log(PH_production);
                         console.log(production);
                         console.log(consomationTot[0]);
                         console.log(consomationTot);
@@ -937,7 +936,7 @@
 
                         
 
-                        
+                       
                          for (let j = 0; j < consomationTot.length ; j++) {
                                 $('#SiteSelector').append("<option value="+j+">"+"Site"+j+"</option>"
                                 );
@@ -947,8 +946,7 @@
                 });
             
         };
-
-        
+         
         
         function retourresult(){
                     $('#tabs-icons-text-3-tab').css("pointer-events"," visible");

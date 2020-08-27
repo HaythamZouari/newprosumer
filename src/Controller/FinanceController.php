@@ -2,15 +2,16 @@
 
 namespace App\Controller;
 
+use Math_Finance;
 use App\Entity\Finance;
 use App\Entity\Project;
+use App\Service\PostHoraire;
 use App\Service\FinanceService;
-use Math_Finance;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use PhpOffice\PhpSpreadsheet\Calculation\Financial as Finances;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FinanceController extends AbstractController
 {
@@ -87,26 +88,227 @@ class FinanceController extends AbstractController
                     }
                   
             }   
+
+
+            for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){   
+                for($i=0;$i<13;$i++){
+                    $autconsommePH[$j][$i]['jour']=0;
+                    $autconsommePH[$j][$i]['ete']=0;
+                    $autconsommePH[$j][$i]['soir']=0;
+                    $autconsommePH[$j][$i]['nuit']=0; 
+
+                    $CedePH[$j][$i]['jour']=0;
+                    $CedePH[$j][$i]['ete']=0;
+                    $CedePH[$j][$i]['soir']=0;
+                    $CedePH[$j][$i]['nuit']=0; 
+                    
+                    $ImportePH[$j][$i]['jour']=0;
+                    $ImportePH[$j][$i]['ete']=0;
+                    $ImportePH[$j][$i]['soir']=0;
+                    $ImportePH[$j][$i]['nuit']=0;   
+
+                }
+            }
+
+            if($project->getPvgis() != null)
+                $production=$project->getPvgis()->getResult() ;
+            if($project->getCsvProd() != null)
+                    $production=$project->getCsvProd()->getResult();
+            if ($project->getNinja() != null)
+                    $production=$project->getNinja()->getResult();
+            
+                    
+                    if($project->getCsvProd()!=null){
+                        $degradation=$project->getCsvProd()->getDegradation();
+                    }
+                    if($project->getPvgis()!=null)
+                        $degradation=$project->getPvgis()->getDegradation();
+                    if($project->getNinja()!=null)
+                        $degradation=$project->getNinja()->getDegradation();        
+                
+                
+
+
+
+            $productionPH[0]=PostHoraire::PostHoraire($production);
+
+            for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){   
+                for($i=0;$i<13;$i++){
+                    $autconsommePH[$j][$i]['jour']=0;
+                    $autconsommePH[$j][$i]['ete']=0;
+                    $autconsommePH[$j][$i]['soir']=0;
+                    $autconsommePH[$j][$i]['nuit']=0; 
+
+                    $CedePH[$j][$i]['jour']=0;
+                    $CedePH[$j][$i]['ete']=0;
+                    $CedePH[$j][$i]['soir']=0;
+                    $CedePH[$j][$i]['nuit']=0; 
+                    
+                    $ImportePH[$j][$i]['jour']=0;
+                    $ImportePH[$j][$i]['ete']=0;
+                    $ImportePH[$j][$i]['soir']=0;
+                    $ImportePH[$j][$i]['nuit']=0;
+                    
+                   
+
+                    $autconsommePHTot[$i]['jour']=0;
+                    $autconsommePHTot[$i]['ete']=0;
+                    $autconsommePHTot[$i]['soir']=0;
+                    $autconsommePHTot[$i]['nuit']=0;
+
+                }
+            }
+
+            if (($project->getConsomation()->getTransportEng())==false){
+                $autconsommePH[0]=PostHoraire::PostHoraire($allautoconsomme[0]);
+                $c=1;
+                $productionPH[1]=PostHoraire::PostHoraire($project->getCedee()[0]);
+                
+            }
+            else{
+                $c=0;
+            }
+
+            for ($j=$c;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+                $consommationPH[$j]=PostHoraire::PostHoraire($project->getConsomation()->getallConsomationAnnuel()[$j]);
+                for($i=0;$i<13;$i++){
+                    $autconsommePH[$j][$i]['jour']=min($productionPH[$j][$i]['jour'],$consommationPH[$j][$i]['jour']);
+                    $autconsommePH[$j][$i]['ete']=min($productionPH[$j][$i]['ete'],$consommationPH[$j][$i]['ete']);
+                    $autconsommePH[$j][$i]['soir']=min($productionPH[$j][$i]['soir'],$consommationPH[$j][$i]['soir']);
+                    $autconsommePH[$j][$i]['nuit']=min($productionPH[$j][$i]['nuit'],$consommationPH[$j][$i]['nuit']);                  
+        
+                }
+               
+                for($i=0;$i<13;$i++){
+                    $ImportePH[$j][$i]['jour']=($consommationPH[$j][$i]['jour']-$autconsommePH[$j][$i]['jour']);
+                    $Importe[$j][$i]['ete']=($consommationPH[$j][$i]['ete']-$autconsommePH[$j][$i]['ete']);
+                    $Importe[$j][$i]['soir']=($consommationPH[$j][$i]['soir']-$autconsommePH[$j][$i]['soir']);
+                    $Importe[$j][$i]['nuit']=($consommationPH[$j][$i]['nuit']-$autconsommePH[$j][$i]['nuit']);                  
+        
+                }
+                for($i=0;$i<13;$i++){
+                    $CedePH[$j][$i]['jour']=($productionPH[$j][$i]['jour']-$autconsommePH[$j][$i]['jour']);
+                    $CedePH[$j][$i]['ete']=($productionPH[$j][$i]['ete']-$autconsommePH[$j][$i]['ete']);
+                    $CedePH[$j][$i]['soir']=($productionPH[$j][$i]['soir']-$autconsommePH[$j][$i]['soir']);
+                    $CedePH[$j][$i]['nuit']=($productionPH[$j][$i]['nuit']-$autconsommePH[$j][$i]['nuit']);                  
+        
+                }
+                $productionPH[$j+1]=$CedePH[$j];
+            }    
+
+            for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+                
+                for($i=0;$i<13;$i++){
+                    $autconsommePHTot[$i]['jour']+= $autconsommePH[$j][$i]['jour'];
+                    $autconsommePHTot[$i]['ete']+= $autconsommePH[$j][$i]['ete'];
+                    $autconsommePHTot[$i]['soir']+= $autconsommePH[$j][$i]['soir'];
+                    $autconsommePHTot[$i]['nuit']+= $autconsommePH[$j][$i]['nuit'];                  
+        
+                }
+            }
+
+            
+
+
+
            
 
             if($project->getConsomation()->getTypeTarif()==0){
                     $g_E_transporter =FinanceService::gainEnergieTransporterUnif($finance->getTarifUni(),$project,$totautoconsomme);
+                    $g_E_cedee=FinanceService::gainEnergieCedee($finance->getTarifHoraire(),$project);
+                    $f_transporter=FinanceService::facteurTransport($project,$tottransporte);
+                    $f_regularisation=FinanceService::factureRegularisation($g_E_cedee,$project);
                
             }
 
             else  {
                 
-                $g_E_transporter =FinanceService::gainEnergieTransporterHoraire($finance->getTarifHoraire(),$project,$totautoconsomme);
+                $auto_consomer_postHor[0]=0;
+                $auto_consomer_postHor[1]=0;
+                $auto_consomer_postHor[2]=0;
+                $auto_consomer_postHor[3]=0;
+                foreach ($autconsommePHTot as $tmp) {
+                    $auto_consomer_postHor[0]+=$tmp['jour'];
+                    $auto_consomer_postHor[1]+=$tmp['soir'];
+                    $auto_consomer_postHor[2]+=$tmp['nuit'];
+                    $auto_consomer_postHor[3]+=$tmp['ete'];
+        
+                }
+                for($j=0;$j<30;$j++){
+                    $result[$j]=0;
+                    for ($i= 0 ;$i<4;$i++){
+                        $result[$j]+= ($auto_consomer_postHor[$i]*
+                            pow((1-($degradation/100)),$i)*
+                            $finance->getTarifHoraire()['achat'][$i]*
+                            pow((1+($project->getFinance()->getAugTarifAchat()/100)),$j));
+                    }
+                }
+
+                $g_E_transporter=$result;            
                 
-            }  
+                $lastit=count($project->getConsomation()->getallConsomationAnnuel())-1;
+                
+                $cedee_postH[0]=0;
+                $cedee_postH[1]=0;
+                $cedee_postH[2]=0;
+                $cedee_postH[3]=0;
+                $result=[];
+                foreach ($CedePH[$lastit] as $tmp) {
+                    $cedee_postH[0]+=$tmp['jour'];
+                    $cedee_postH[1]+=$tmp['soir'];
+                    $cedee_postH[2]+=$tmp['nuit'];
+                    $cedee_postH[3]+=$tmp['ete'];
+                }
+                for($j=0;$j<30;$j++) {
+                    $g_E_cedee[$j]=0;
+                    for ($i = 0; $i < 4; $i++) {
+                        $g_E_cedee[$j] += ($cedee_postH[$i] *
+                            pow((1 -($degradation/100)), $j) *
+                            $finance->getTarifHoraire()['vende'][$i] *
+                            pow((1 + ($project->getFinance()->getAugTarifVende()/100)), $j));
+                    }
+                }
 
+                $total_auto_consome=$auto_consomer_postHor[0]+$auto_consomer_postHor[1]+$auto_consomer_postHor[2]+$auto_consomer_postHor[3];
+                for ($i=0;$i<30;$i++){
+                    $f_transporter[$i] = ($total_auto_consome*pow((1-($degradation/100)),$i)*
+                        $project->getFinance()->getTarifTransport());
+                }
 
+                
+                    $cedee_total=0;
+                    $prod_total=0;
+                    $cedee_total=$cedee_postH[0]+$cedee_postH[1]+$cedee_postH[2]+$cedee_postH[3];
+                    
+                    for($i=0;$i<count($production);$i++){
+                        
+                        $prod_total+=$production[$i][1];
+                    }
+                    $taux_cedee=$cedee_total/$prod_total;
+                    $result=[];
+                    for($i=0;$i<30;$i++){
+                        if($cedee_total>0){
+                            $f_regularisation[$i]=0;
+                            $f_regularisation[$i]=(($g_E_cedee[$i]/$cedee_total)*
+                                (($taux_cedee-0.3)*
+                                    $prod_total)
+                            );
+
+                        }
+                        else
+                        $f_regularisation[$i]=0;
+                        if($f_regularisation[$i]<0)
+                        $f_regularisation[$i]=0;
+
+                    }
+
+            }
 
           
 
             
 
-            $g_E_cedee=FinanceService::gainEnergieCedee($finance->getTarifHoraire(),$project);
+            
             $gain=[];
             $cash_flow=[];
             $cash_flow_cumule=[];
@@ -114,7 +316,7 @@ class FinanceController extends AbstractController
             $dscr=[];
             $annuite=[];
             $f_transporter=[];
-            $f_regularisation=FinanceService::factureRegularisation($g_E_cedee,$project);
+           
             $frais_exp=FinanceService::fraisExploitation($project);
             $opex=FinanceService::opex($project,$replinv);
             
@@ -199,7 +401,7 @@ class FinanceController extends AbstractController
                     'depense'=>$depense,
                     'gain'=>$gain,
                     'cash_flow'=>$cash_flow,
-                   
+                   'autoconsoPH'=>$autconsommePHTot
                     ]);
         }
     }

@@ -593,10 +593,10 @@
             }
             if (btn===2){
                 data = [{
-                    values: PH_production,
+                    values: Object.values(PH_production),
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consommation',
+                    name: 'Production',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
@@ -643,10 +643,10 @@
             }
             if (btn===4){
                 data = [{
-                    values: PH_cedee,
+                    values: Object.values(PH_cedee),
                     labels: ['jour','pointe ete','soir','nuit'],
                     domain: {column: 0},
-                    name: 'Consommation',
+                    name: 'Consommation brute',
                     hoverinfo: 'label+percent+name',
                     hole: .4,
                     type: 'pie'
@@ -660,7 +660,7 @@
                                 size: 14
                             },
                             showarrow: false,
-                            text: 'CM',
+                           
                         }
                     ]
                 };
@@ -685,7 +685,7 @@
                                 size: 14
                             },
                             showarrow: false,
-                            text: 'CM',
+                            
                         }
                     ]
                 };
@@ -702,7 +702,7 @@
                     dataType: 'json',
                     cache: false,
                     success: function (response) {
-            
+                       
                         for (let j = 0; j < response.consomation.length; j++) {
 
                                 consomationTotTmp=[];
@@ -734,10 +734,11 @@
                         };
 
 
-                        PH_consomation=response.PH_consomationannuel;
+                            PH_consomation=response.PH_consomationannuel;
                             PH_auto_consome=response.PH_auto_consomerannuel;
                             PH_importer=response.PH_importerannuel;
-                    
+                            PH_production=response.PH_productionannuel;
+                            PH_cedee=response.PH_cedeeannuel;
                            
                          
                             consomation_tmp=[];

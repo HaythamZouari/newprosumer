@@ -97,67 +97,125 @@ class ResultController extends AbstractController
     
     
                 $productible=$prd_annuel/$ps_centrale;
-        
-
                 
-            
-           
-       /* for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){    
-            for($i=0;$i<13;$i++){
-                $monthimp[$j][$i]['jour']=0;
-                $monthimp[$j][$i]['ete']=0;
-                $monthimp[$j][$i]['soir']=0;
-                $monthimp[$j][$i]['nuit']=0;
-                $monthimp_uniform[$j][$i]=0;
-                $month_auto[$j][$i]=0;
 
-            }
-        }   
-        for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){
-            foreach ($allimporte[$j] as $item) {
-                $date = new \DateTime(null);
-                $date->setTimestamp($item[0]);
-                if (((int)$date->format('m')) > 5 && ((int)$date->format('m')) < 9) {
-                    if( (int)$date->format('H')>=7&&(int)$date->format('H')<=8 ||
-                        (int)$date->format('H')>13&&(int)$date->format('H')<=18){
-                        $monthimp[$j][((int)$date->format('m'))]['jour']+=$item[1];
-                    }
-                    elseif ((int)$date->format('H')>=0&&(int)$date->format('H')<=6 ||
-                        (int)$date->format('H')>21&&(int)$date->format('H')<=23){
-                        $monthimp[$j][((int)$date->format('m'))]['nuit']+=$item[1];
-                    }
-                    elseif ((int)$date->format('H')>=9&&(int)$date->format('H')<=13){
-                        $monthimp[$j][((int)$date->format('m'))]['ete']+=$item[1];
-                    }
-                    else
-                        $monthimp[$j][((int)$date->format('m'))]['soir']+=$item[1];
+
+
+                /**********************calcul pour tarif horaire*****************/
+                $lastit=count($project->getConsomation()->getallConsomationAnnuel())-1;
+                
+
+            for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){   
+                    $autconsommePHTotps[$j]['jour']=0;
+                    $autconsommePHTotps[$j]['ete']=0;
+                    $autconsommePHTotps[$j]['soir']=0;
+                    $autconsommePHTotps[$j]['nuit']=0;
+
+                    $ImportePHTotps[$j]['jour']=0;
+                    $ImportePHTotps[$j]['ete']=0;
+                    $ImportePHTotps[$j]['soir']=0;
+                    $ImportePHTotps[$j]['nuit']=0;
+
+
+                for($i=0;$i<13;$i++){
+                    $autconsommePH[$j][$i]['jour']=0;
+                    $autconsommePH[$j][$i]['ete']=0;
+                    $autconsommePH[$j][$i]['soir']=0;
+                    $autconsommePH[$j][$i]['nuit']=0; 
+
+                    $CedePH[$j][$i]['jour']=0;
+                    $CedePH[$j][$i]['ete']=0;
+                    $CedePH[$j][$i]['soir']=0;
+                    $CedePH[$j][$i]['nuit']=0; 
+                    
+                    $ImportePH[$j][$i]['jour']=0;
+                    $ImportePH[$j][$i]['ete']=0;
+                    $ImportePH[$j][$i]['soir']=0;
+                    $ImportePH[$j][$i]['nuit']=0;
+                    
+                    $autconsommePHTot[$i]['jour']=0;
+                    $autconsommePHTot[$i]['ete']=0;
+                    $autconsommePHTot[$i]['soir']=0;
+                    $autconsommePHTot[$i]['nuit']=0;
+
+                    
+
+
                 }
-                else{
-                    if( (int)$date->format('H')>=7&&(int)$date->format('H')<=17){
-                        $monthimp[$j][((int)$date->format('m'))]['jour']+=$item[1];
-                    }
-                    elseif ((int)$date->format('H')>=0&&(int)$date->format('H')<=6 ||
-                        (int)$date->format('H')>=21&&(int)$date->format('H')<=23){
-                        $monthimp[$j][((int)$date->format('m'))]['nuit']+=$item[1];
-                    }
-                    else{
-                        $monthimp[$j][((int)$date->format('m'))]['soir']+=$item[1];
-                    }
+            }
+
+            if (($project->getConsomation()->getTransportEng())==false){
+                $autconsommePH[0]=PostHoraire::PostHoraire($allautoconsomme[0]);
+                $consommationPH[0]=PostHoraire::PostHoraire($project->getConsomation()->getallConsomationAnnuel()[0]);
+                $ImportePH[0]=PostHoraire::PostHoraire($allimporte[0]);
+                $CedePH[0]=PostHoraire::PostHoraire($project->getCedee()[0]);
+
+                $c=1;
+                $productionPH[0]=PostHoraire::PostHoraire($prodvalue);
+                $productionPH[1]=$CedePH[0];
+                
+            }
+            else{
+                $c=0;
+                $productionPH[0]=PostHoraire::PostHoraire($prodvalue);
+            }
+
+            for ($j=$c;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+                $consommationPH[$j]=PostHoraire::PostHoraire($project->getConsomation()->getallConsomationAnnuel()[$j]);
+                for($i=0;$i<13;$i++){
+                    $autconsommePH[$j][$i]['jour']=min($productionPH[$j][$i]['jour'],$consommationPH[$j][$i]['jour']);
+                    $autconsommePH[$j][$i]['ete']=min($productionPH[$j][$i]['ete'],$consommationPH[$j][$i]['ete']);
+                    $autconsommePH[$j][$i]['soir']=min($productionPH[$j][$i]['soir'],$consommationPH[$j][$i]['soir']);
+                    $autconsommePH[$j][$i]['nuit']=min($productionPH[$j][$i]['nuit'],$consommationPH[$j][$i]['nuit']);                  
+        
+                }
+               
+                for($i=0;$i<13;$i++){
+                    $ImportePH[$j][$i]['jour']=($consommationPH[$j][$i]['jour']-$autconsommePH[$j][$i]['jour']);
+                    $ImportePH[$j][$i]['ete']=($consommationPH[$j][$i]['ete']-$autconsommePH[$j][$i]['ete']);
+                    $ImportePH[$j][$i]['soir']=($consommationPH[$j][$i]['soir']-$autconsommePH[$j][$i]['soir']);
+                    $ImportePH[$j][$i]['nuit']=($consommationPH[$j][$i]['nuit']-$autconsommePH[$j][$i]['nuit']);                  
+        
+                }
+                for($i=0;$i<13;$i++){
+                    $CedePH[$j][$i]['jour']=($productionPH[$j][$i]['jour']-$autconsommePH[$j][$i]['jour']);
+                    $CedePH[$j][$i]['ete']=($productionPH[$j][$i]['ete']-$autconsommePH[$j][$i]['ete']);
+                    $CedePH[$j][$i]['soir']=($productionPH[$j][$i]['soir']-$autconsommePH[$j][$i]['soir']);
+                    $CedePH[$j][$i]['nuit']=($productionPH[$j][$i]['nuit']-$autconsommePH[$j][$i]['nuit']);                  
+        
+                }
+                $productionPH[$j+1]=$CedePH[$j];
+            }    
+
+            for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+
+                for($i=0;$i<13;$i++){
+                    $autconsommePHTot[$i]['jour']+= $autconsommePH[$j][$i]['jour'];
+                    $autconsommePHTot[$i]['ete']+= $autconsommePH[$j][$i]['ete'];
+                    $autconsommePHTot[$i]['soir']+= $autconsommePH[$j][$i]['soir'];
+                    $autconsommePHTot[$i]['nuit']+= $autconsommePH[$j][$i]['nuit'];                  
+        
+                }
+            }
+
+                $auto_consomer_postHor[0]=0;
+                $auto_consomer_postHor[1]=0;
+                $auto_consomer_postHor[2]=0;
+                $auto_consomer_postHor[3]=0;
+                foreach ($autconsommePHTot as $tmp) {
+                    $auto_consomer_postHor[0]+=$tmp['jour'];
+                    $auto_consomer_postHor[1]+=$tmp['soir'];
+                    $auto_consomer_postHor[2]+=$tmp['nuit'];
+                    $auto_consomer_postHor[3]+=$tmp['ete'];
+        
                 }
 
-            }
-        } 
-        $monthimp_uniform=[];
-        $month_auto=[];
-        for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){   
-            for($i=0;$i<count($allautoconsomme[0]);$i++){
-                $date = new \DateTime(null);
-                $date->setTimestamp($allautoconsomme[$j][$i][0]);
-                $monthimp_uniform[$j][((int)$date->format('m'))]+=$allimporte[$j][$i][1];
-                $month_auto[$j][((int)$date->format('m'))]+=$allautoconsomme[$j][$i][1];
-            }
-        }
-       */
+               
+
+
+
+                /************************************************************** */
+
          
             for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){
                 $cm_annuel[$j]=0;
@@ -170,6 +228,9 @@ class ResultController extends AbstractController
 
             $gain_cedeetot=0;
             $gain_transptot=0;
+
+    if($project->getConsomation()->getTypeTarif()==0){
+
         for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){                  
             for ($i=0;$i<count($project->getConsomation()->getallConsomationAnnuel()[0]);$i++) {
                 $cm_annuel[$j]+= $project->getConsomation()->getallConsomationAnnuel()[$j][$i][1];
@@ -179,18 +240,16 @@ class ResultController extends AbstractController
            
             $taux_auto[$j]=(float)($a_cm_annuel[$j]/$cm_annuel[$j]);
             $imp_annuel[$j]=(float)($cm_annuel[$j]-$a_cm_annuel[$j]);
-        }    
+        }  
+        
+
+        
         for ($i=0;$i<count($project->getConsomation()->getallConsomationAnnuel()[0]);$i++) {
 
         $cedee_annuel+=$project->getCedee()[count($project->getConsomation()->getallConsomationAnnuel())-1][$i][1];
 
         }
-            $f_reg=$project->getFinance()->getFRegularisation()[0];
            
-                for($i=0;$i<(count($project->getFinance()->getGainTransporter()));$i++){
-                    $f_transport[]=$project->getFinance()->getfactransport()[$i];
-                }
-
             
             for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){   
                 $PH_consomation[$j]=[];
@@ -216,17 +275,125 @@ class ResultController extends AbstractController
                 $PH_importerannuel[$j]=Horaireannuel::Horaireannuel($project->getImporte()[$j]);
             }
 
-            if($project->getConsomation()->getTypeTarif()==0){
+            
                 for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
                     $g_E_transporterSite[$j] =FinanceService::gainEnergieTransporterUnif($project->getfinance()->getTarifUni(),$project,$project->getAutoConsomer()[$j]);
                 }
+            
+
+                $cedee_postH=Horaireannuel::Horaireannuel($project->getCedee()[count($project->getConsomation()->getallConsomationAnnuel())-1]);
+                $cedeLastIt=PostHoraire::PostHoraire($project->getCedee()[count($project->getConsomation()->getallConsomationAnnuel())-1]);
+    }
+    else{
+
+
+        for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){                  
+            for ($i=0;$i<count($project->getConsomation()->getallConsomationAnnuel()[0]);$i++) {
+                $cm_annuel[$j]+= $project->getConsomation()->getallConsomationAnnuel()[$j][$i][1];
+            }
+        }  
+        for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+
+            for($i=0;$i<13;$i++){
+                $autconsommePHTotps[$j]['jour']+= $autconsommePH[$j][$i]['jour'];
+                $autconsommePHTotps[$j]['ete']+= $autconsommePH[$j][$i]['ete'];
+                $autconsommePHTotps[$j]['soir']+= $autconsommePH[$j][$i]['soir'];
+                $autconsommePHTotps[$j]['nuit']+= $autconsommePH[$j][$i]['nuit'];
+                
+                
+
+                $ImportePHTotps[$j]['jour']+= $ImportePH[$j][$i]['jour'];
+                $ImportePHTotps[$j]['ete']+= $ImportePH[$j][$i]['ete'];
+                $ImportePHTotps[$j]['soir']+= $ImportePH[$j][$i]['soir'];
+                $ImportePHTotps[$j]['nuit']+= $ImportePH[$j][$i]['nuit'];         
+    
+            }
+            $a_cm_annuel[$j]=$autconsommePHTotps[$j]['jour']+$autconsommePHTotps[$j]['ete']+$autconsommePHTotps[$j]['soir']+$autconsommePHTotps[$j]['nuit'];
+            $taux_auto[$j]=(float)($a_cm_annuel[$j]/$cm_annuel[$j]);
+            $imp_annuel[$j]=(float)($cm_annuel[$j]-$a_cm_annuel[$j]);
+        }
+
+
+        
+        
+                
+                $cedee_postH[0]=0;
+                $cedee_postH[1]=0;
+                $cedee_postH[2]=0;
+                $cedee_postH[3]=0;
+               
+                foreach ($CedePH[$lastit] as $tmp) {
+                    $cedee_postH[0]+=$tmp['jour'];
+                    $cedee_postH[1]+=$tmp['soir'];
+                    $cedee_postH[2]+=$tmp['nuit'];
+                    $cedee_postH[3]+=$tmp['ete'];
+                }
+                
+        
+        
+
+        $cedee_annuel=$cedee_postH[0]+$cedee_postH[1]+$cedee_postH[2]+$cedee_postH[3];
+
+        
+           
+            
+            for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){   
+                $PH_consomation[$j]=[];
+                $PH_auto_consomer[$j]=[];
+                $PH_importer[$j]=[];
             }
 
-            else  {
-                for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
-                $g_E_transporterSite[$j] =FinanceService::gainEnergieTransporterHoraire($project->getfinance()->getTarifHoraire(),$project,$project->getAutoConsomer()[$j]);
+            for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){   
+
+                $PH_consomation[$j]=$consommationPH[$j];
+                
+                $PH_auto_consomer[$j]=$autconsommePH[$j];
+                    
+                $PH_importer[$j]=$ImportePH[$j];
+            }
+
+            for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){   
+
+                $PH_consomationannuel[$j]=Horaireannuel::Horaireannuel($project->getConsomation()->getallConsomationAnnuel()[$j]);
+                
+                $PH_auto_consomerannuel[$j]=$autconsommePHTotps[$j];
+                    
+                $PH_importerannuel[$j]=$ImportePHTotps[$j];
+            }
+
+        for ($k=0;$k<count($project->getConsomation()->getallConsomationAnnuel());$k++){   
+
+           
+                $auto_consomer_postHor[0]=$autconsommePHTotps[$k]['jour'];
+                $auto_consomer_postHor[1]=$autconsommePHTotps[$k]['soir'];
+                $auto_consomer_postHor[2]=$autconsommePHTotps[$k]['nuit'];
+                $auto_consomer_postHor[3]=$autconsommePHTotps[$k]['ete'];
+    
+            
+    
+            for($j=0;$j<30;$j++){
+                $result[$j]=0;
+                for ($i= 0 ;$i<4;$i++){
+                    $result[$j]+= ($auto_consomer_postHor[$i]*
+                        pow((1-($degradation/100)),$i)*
+                        $project->getFinance()->getTarifHoraire()['achat'][$i]*
+                        pow((1+($project->getFinance()->getAugTarifAchat()/100)),$j));
                 }
-            }  
+                $g_E_transporterSite[$k][$j] = $result[$j];
+            }
+            
+        }
+        $cedeLastIt=$CedePH[count($project->getConsomation()->getallConsomationAnnuel())-1];
+
+    }
+
+            $f_reg=$project->getFinance()->getFRegularisation()[0];
+           
+            for($i=0;$i<(count($project->getFinance()->getGainTransporter()));$i++){
+                $f_transport[]=$project->getFinance()->getfactransport()[$i];
+            }
+
+
 
 
             return new JsonResponse(['consomation'=>$project->getConsomation()->getallConsomationAnnuel(),
@@ -249,12 +416,14 @@ class ResultController extends AbstractController
                 'PH_consomation'=>$PH_consomation,
                 'PH_production'=>PostHoraire::PostHoraire($prodvalue),
                 'PH_auto_consomer'=>$PH_auto_consomer,
-                'PH_cedee'=>PostHoraire::PostHoraire($project->getCedee()[count($project->getConsomation()->getallConsomationAnnuel())-1]),
+                'PH_cedee'=>$cedeLastIt,
+                
                 'PH_importer'=>$PH_importer,
                 'PH_consomationannuel'=>$PH_consomationannuel,
                 'PH_auto_consomerannuel'=>$PH_auto_consomerannuel,
                 'PH_importerannuel'=>$PH_importerannuel,
-                'PH_cedeeannuel'=>Horaireannuel::Horaireannuel($project->getCedee()[count($project->getConsomation()->getallConsomationAnnuel())-1]),
+                'PH_cedeeannuel'=>$cedee_postH,
+                
                 'PH_productionannuel'=>Horaireannuel::Horaireannuel($prodvalue),
                 /*'monthimp_unif'=>$monthimp_uniform,
                 'month_auto'=>$month_auto,*/
@@ -284,8 +453,9 @@ class ResultController extends AbstractController
                 'taux_credit'=>$project->getFinance()->getTauxInteret(),
                 'tricap'=>$project->getFinance()->getTricapitaux(),
                 'tri25'=>$project->getFinance()->getTri25(),
-                'van'=>$project->getFinance()->getVan()
+                'van'=>$project->getFinance()->getVan(),
                 
+
 
                 ]);
         }

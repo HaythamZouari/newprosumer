@@ -154,6 +154,7 @@ $("#opex").change(function() {
 
     }
 });
+power=0;
 
 $("#replinv").change(function() {
     if (($( "#peakpower" ).val())!=0){
@@ -428,6 +429,8 @@ $("#capexpu").change(function() {
             dataType: 'json',
             cache: false,
             success: function (response) {
+                console.log('autoconsoPH');
+        console.log(response.autoconsoPH);
                 
                     res();
                 $('#successfin').show();
@@ -443,6 +446,7 @@ $("#capexpu").change(function() {
        
         return false;
         {% endif %}
+        
     }
     function finavance(){
 
