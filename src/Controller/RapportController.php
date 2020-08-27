@@ -52,11 +52,11 @@ class RapportController extends AbstractController
                $prd_annuel+= $project->getPvgis()->getResult()[$i][1];
             }
             $prodvalue= $project->getPvgis()->getResult();
-            $ps_centrale=$project->getPvgis()->getPeakPower();
+            $ps_centrale=$project->getPvgis()->getPeakPower()[0]+$project->getPvgis()->getPeakPower()[1]+$project->getPvgis()->getPeakPower()[2];
             $lat=$project->getPvgis()->getLat();
             $lon=$project->getPvgis()->getLon();
-            $azimut=$project->getPvgis()->getAzimuth();
-            $incl = $project->getPvgis()->getSlop();
+            $azimut=$project->getPvgis()->getAzimuth()[0];
+            $incl = $project->getPvgis()->getSlop()[0];
             $loss=$project->getPvgis()->getLoss();
         }
 

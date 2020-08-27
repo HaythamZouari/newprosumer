@@ -32,12 +32,12 @@ class Pvgis
     private $mounting_type;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="array")
      */
     private $slop;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="array")
      */
     private $azimuth;
 
@@ -47,7 +47,7 @@ class Pvgis
     private $pv_tech;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="array")
      */
     private $peak_power;
 
@@ -113,24 +113,24 @@ class Pvgis
         return $this;
     }
 
-    public function getSlop(): ?float
+    public function getSlop(): ?array
     {
         return $this->slop;
     }
 
-    public function setSlop(float $slop): self
+    public function setSlop(array $slop): self
     {
         $this->slop = $slop;
 
         return $this;
     }
 
-    public function getAzimuth(): ?float
+    public function getAzimuth(): ?array
     {
         return $this->azimuth;
     }
 
-    public function setAzimuth(float $azimuth): self
+    public function setAzimuth(array $azimuth): self
     {
         $this->azimuth = $azimuth;
 
@@ -149,12 +149,12 @@ class Pvgis
         return $this;
     }
 
-    public function getPeakPower(): ?float
+    public function getPeakPower(): ?array
     {
         return $this->peak_power;
     }
 
-    public function setPeakPower(float $peak_power): self
+    public function setPeakPower(array $peak_power): self
     {
         $this->peak_power = $peak_power;
 

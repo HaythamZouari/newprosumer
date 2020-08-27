@@ -66,7 +66,7 @@ class ResultController extends AbstractController
                     for ($i=0;$i<count($project->getPvgis()->getResult());$i++) {
                         $prd_annuel+= $project->getPvgis()->getResult()[$i][1];
                     }
-                    $ps_centrale=$project->getPvgis()->getPeakPower();
+                    $ps_centrale=$project->getPvgis()->getPeakPower()[0]+$project->getPvgis()->getPeakPower()[1]+$project->getPvgis()->getPeakPower()[2];
                 }
                 else if($project->getCsvProd()!=null){
                     for ($i=0;$i<count($project->getCsvProd()->getResult());$i++) {

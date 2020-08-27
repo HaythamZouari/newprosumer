@@ -29,14 +29,14 @@ class ProductionController extends AbstractController
         $pvgis = new Pvgis();
         $pvgis->setProject($project);
         $pvgis->setLat((float)$request->get('lat'));
-        $pvgis->setAzimuth((float)$request->get('aspect'));
+        $pvgis->setAzimuth([(float)$request->get('aspect'),(float)$request->get('aspect2'),(float)$request->get('aspect3')]);
         $pvgis->setLon((float)$request->get('lon'));
         $pvgis->setLoss((float)$request->get('loss'));
         $pvgis->setMountingType((int)$request->get('trackingtype'));
-        $pvgis->setPeakPower(((float)$request->get('peakpower'))+((float)$request->get('peakpower2'))+((float)$request->get('peakpower3')));
+        $pvgis->setPeakPower([(float)$request->get('peakpower'),(float)$request->get('peakpower2'),(float)$request->get('peakpower3')]);
         $pvgis->setPvTech('crystSi');
         $pvgis->setDegradation((float)$request->get('degradation'));
-        $pvgis->setSlop((float)$request->get('angle'));
+        $pvgis->setSlop([(float)$request->get('angle'),(float)$request->get('angle2'),(float)$request->get('angle3')]);
         $httpClient = HttpClient::create();
         $response = $httpClient->request('GET',
             'http://re.jrc.ec.europa.eu/pvgis5/seriescalc.php?'.
