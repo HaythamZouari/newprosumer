@@ -56,7 +56,13 @@ class RapportController extends AbstractController
             $lat=$project->getPvgis()->getLat();
             $lon=$project->getPvgis()->getLon();
             $azimut=$project->getPvgis()->getAzimuth()[0];
+            $azimut1=$project->getPvgis()->getAzimuth()[1];
+            $azimut2=$project->getPvgis()->getAzimuth()[2];
+
             $incl = $project->getPvgis()->getSlop()[0];
+            $incl1 = $project->getPvgis()->getSlop()[1];
+            $incl2 = $project->getPvgis()->getSlop()[2];
+            
             $loss=$project->getPvgis()->getLoss();
         }
 
@@ -329,6 +335,8 @@ class RapportController extends AbstractController
             'cmmonth'=>$month,
             'loss'=>$loss,
             'incl'=>$incl,
+            'incl1'=>$incl1,
+            'incl2'=>$incl2,
             'f_r'=>$f_reg,
             'facture_annuel'=>$factureannuel,
             'tri'=>$project->getFinance()->getTri25(),
@@ -336,6 +344,8 @@ class RapportController extends AbstractController
             'productible'=>$productible,
             'prod25ans'=>$prod25ans,
             'azim'=>$azimut,
+            'azim1'=>$azimut1,
+            'azim2'=>$azimut2,
             'lat'=>$lat,
             'lon'=>$lon,
             'puissance_centrale'=>$ps_centrale,
