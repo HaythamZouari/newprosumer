@@ -32,7 +32,8 @@ class FinanceController extends AbstractController
                 $finance->setTauxInteret((float)$request->get('interet'));
                 $finance->setDelaiGrace((float)$request->get('delai_grace'));
                 $finance->setMaturiteProj((float)$request->get('maturite_proj'));
-
+                
+                
             }
 
             if (($project->getConsomation()->getTransportEng())==false){
@@ -316,15 +317,21 @@ class FinanceController extends AbstractController
             $dscr=[];
             $annuite=[];
             $f_transporter=[];
+            $subvention=[];
            
             $frais_exp=FinanceService::fraisExploitation($project);
             $opex=FinanceService::opex($project,$replinv);
             
-                $f_transporter=FinanceService::facteurTransport($project,$tottransporte);
-           
+            $f_transporter=FinanceService::facteurTransport($project,$tottransporte);
             for ($i=0;$i<30;$i++) {
-                $gain[]=$g_E_cedee[$i]+$g_E_transporter[$i];
+            $subvention[$i]=0;
             }
+            $subvention[(float)$request->get('ansubvention')]=$finance->getCapex()*($finance->getSubvention()/100);
+
+            for ($i=0;$i<30;$i++) {
+                $gain[]=$g_E_cedee[$i]+$g_E_transporter[$i]+$subvention[$i];
+            }
+            
             if ($finance->getCredit()===true){
                 $annuite= FinanceService::Anuite($finance->getMaturiteProj(),$finance->getDelaiGrace(),$project);
                 
@@ -367,6 +374,7 @@ class FinanceController extends AbstractController
             
 
             $finance->setAnnuite($annuite);
+            $finance->setSubventionarray($subvention);
             $finance->setfactransport($f_transporter);
             $finance->setDepense($dep);
             $finance->setGainCedee($g_E_cedee);

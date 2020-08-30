@@ -83,6 +83,14 @@ class User implements AdvancedUserInterface, \Serializable
     private $enabled;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $abon1;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $abon2;
+    /**
      * @ORM\Column(type="string", length=190 , nullable=true)
      */
     private $img_URL;
@@ -256,6 +264,32 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->enabled;
     }
+    
+
+    public function getabon1(): ?bool
+    {
+        return $this->abon1;
+    }
+
+    public function setabon1(bool $abon1): self
+    {
+        $this->abon1 = $abon1;
+
+        return $this;
+    }
+
+    public function getabon2(): ?bool
+    {
+        return $this->abon2;
+    }
+
+    public function setabon2(bool $abon2): self
+    {
+        $this->abon2 = $abon2;
+
+        return $this;
+    }
+
 
     /**
      * @param mixed $enabled

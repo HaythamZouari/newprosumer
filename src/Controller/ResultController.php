@@ -454,6 +454,7 @@ class ResultController extends AbstractController
                 'tricap'=>$project->getFinance()->getTricapitaux(),
                 'tri25'=>$project->getFinance()->getTri25(),
                 'van'=>$project->getFinance()->getVan(),
+                'subventionarray'=>$project->getFinance()->getSubventionarray(),
                 
 
 

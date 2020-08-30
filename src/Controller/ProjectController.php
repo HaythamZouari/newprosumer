@@ -212,6 +212,10 @@ class ProjectController extends AbstractController
             $samediCheck=$request->get('samediCheck');
             $dateconge_deb= new \DateTime($request->get('dateconge_deb'));
             $dateconge_fin= new \DateTime($request->get('dateconge_fin'));
+            $dateconge_deb1= new \DateTime($request->get('dateconge_deb1'));
+            $dateconge_fin1= new \DateTime($request->get('dateconge_fin1'));
+            $dateconge_deb2= new \DateTime($request->get('dateconge_deb2'));
+            $dateconge_fin2= new \DateTime($request->get('dateconge_fin2'));
             $number= $request->get('number');
             
             
@@ -630,6 +634,16 @@ class ProjectController extends AbstractController
                                 $dataSynW[$i][1]=$Phn;
                             }
                         }
+                        if((((int)$date->format('m'))>=((int)$dateconge_deb1->format('m')))&&(((int)$date->format('m'))<=((int)$dateconge_fin1->format('m')))){
+                            if ((((int)$date->format('d')))>=(((int)$dateconge_deb1->format('d')))&&(((int)$date->format('d'))<=((int)$dateconge_fin1->format('d')))){
+                                $dataSynW[$i][1]=$Phn;
+                            }
+                        }
+                        if((((int)$date->format('m'))>=((int)$dateconge_deb2->format('m')))&&(((int)$date->format('m'))<=((int)$dateconge_fin2->format('m')))){
+                            if ((((int)$date->format('d')))>=(((int)$dateconge_deb2->format('d')))&&(((int)$date->format('d'))<=((int)$dateconge_fin2->format('d')))){
+                                $dataSynW[$i][1]=$Phn;
+                            }
+                        }
                         else{
                         
                             if(((int)$date->format('d'))==1&&((int)$date->format('m'))==1){
@@ -1018,8 +1032,13 @@ class ProjectController extends AbstractController
             $consomation->setTransportEng(true);
             
         }
-        
-        
+
+        if ((($request->get('vershoraire'))<>null)&($request->get('tarif')==0)){
+            $consomation->setTypeTarif(1);
+        }
+        else{ 
+        $consomation->setTypeTarif($request->get('tarif'));
+        }
             
             $allDateDeb[$number]=$dateDeb;
             $allDateFin[$number]=$dateFin;
@@ -1033,7 +1052,7 @@ class ProjectController extends AbstractController
             $consomation->setallConsomationAnnuel($allDataAvgW);
             $consomation->setConsomationAnnuel($dataAvgW);
             $consomation->setTabTarif($allTarif);
-            $consomation->setTypeTarif($request->get('tarif'));
+            
             $consomation->setProject($project);
             $project->setConsomation($consomation);
             $entityManager=$this->getDoctrine()->getManager();

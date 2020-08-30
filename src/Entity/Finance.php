@@ -27,6 +27,11 @@ class Finance
     private $subvention;
 
     /**
+     * @ORM\Column(type="array")
+     */
+    private $subventionarray;
+
+    /**
      * @ORM\Column(type="float")
      */
     private $duree_proj;
@@ -230,6 +235,19 @@ class Finance
 
         return $this;
     }
+
+    public function getSubventionarray(): ?array
+    {
+        return $this->subventionarray;
+    }
+
+    public function setSubventionarray(array $subventionarray): self
+    {
+        $this->subventionarray = $subventionarray;
+
+        return $this;
+    }
+
     public function __construct()
     {
         $this->wacc=0;

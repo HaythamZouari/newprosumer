@@ -71,58 +71,89 @@
                                          <button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Choisir le domaine d'activité du point de consommation ( des profils sont prédéfinis à titre indicatifs).">
                                             ?
                                         </button>   </br>
-                                        <div style="display: inline-block"><label class="form-control-label"  for="saison" >Nombre de Saisons</label></div>
-                                        <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state" id="saison" name="saison">
-                                            <option id="sais1" value="1" >1</option>
-                                            <option id="sais2" value="2">2</option>
-                                            <option id="sais3" value="3" selected>3</option>
-                                            </select>
+                                        <div style="display: none"><label class="form-control-label"  for="saison" >Nombre de Saisons</label></div>
+                                        <div style="display: none"><input class="form-control" type="text"   id="saison" name="saison">
+                                        </input>
                                         </div>
-                                         <button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le nombre de saisons d'activité du consommateur (par exemple Saison1: Double séances; Saison2: Séance Unique; Saison3 : Double Séances">
-                                            ?
-                                        </button>   
-                                        </br>
+                                        
+                                        
                                         <div id= "saison1">
                                             <h4>Saison1</h4>
                                             
                                             <label class="form-control-label required" for="monthSlider1" style="display: inline-block;padding-left: 10%;">Plage mensuelle</label> <button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le mois de début et de fin de la saison 1">?</button>
                                             <label class="form-control-label required" for="hourSlider1" style="display: inline-block;padding-left: 40%;">Plage horaire</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'heure de début et de fin de travail durant la saison 1">?</button></br></br>
                                             <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider1" name="monthSlider1" class="form-control" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider1" name="hourSlider1" class="form-control"/> </lo></br>
+                                            <button type="button" class="btn btn-primary btn-sm" id="butsaison1" onclick="addsaison1()">Nouvelle saison</button>
                                         </div>
-                                        <div id = "saison2">
+                                        
+                                        <div id = "saison2" >
                                             <h4 >Saison2</h4>
                                             <h4 style="display: inline-block;padding-left: 10%">Plage mensuelle</h4><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le mois de début et de fin de la saison 2">?</button><h4 style="display: inline-block;padding-left: 40%;">Plage horaire</h4><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'heure de début et de fin de travail durant la saison 2">?</button></br></br>
                                             <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider2" name="monthSlider2" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider2" name="hourSlider2" /> </lo></br>
+                                             <button type="button" class="btn btn-primary btn-sm" id="butsaison2" onclick="addsaison2()">Nouvelle saison</button>
                                         </div>   
 
-                                        <div id = "saison3">
+                                        <div id = "saison3" >
                                             <h4 >Saison3</h4>
                                             <h4 style="display: inline-block;padding-left: 10%;">Plage mensuelle</h4><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le mois de début et de fin de la saison 3">?</button><h4 style="display: inline-block;padding-left: 40%;">Plage horaire</h4><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'heure de début et de fin de travail durant la saison 3">?</button></br></br>
                                             <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider3" name="monthSlider3" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider3" name="hourSlider3" /> </lo></br>
-                                        </div>   
+                                        </div>
+                                        <br></br>   
                                         <div class="custom-control custom-checkbox mb-3">
                                         <input class="custom-control-input" id="samediCheck" name="samediCheck" type="checkbox">
-                                        <label class="custom-control-label" for="samediCheck"><h4>Travail Samedi<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si le consommateur travaille les Samedis et definir l'heure de début et de fin du travail durant les Samedis">?</button></h4></label> <lo style="display: inline-block;width: 62%;padding-left: 70px;"><input type="text" id="hourSlider-samedi" name="hourSlider_samedi" /> </lo>
+                                        <label class="custom-control-label" for="samediCheck"><h4>Travail Samedi<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si le consommateur travaille les Samedis et definir l'heure de début et de fin du travail durant les Samedis">?</button></h4></label> <lo id="hourSlider-samedicont" style="display: inline-block;width: 62%;padding-left: 70px;"><input type="text" id="hourSlider-samedi" name="hourSlider_samedi" /> </lo>
                                         </div>   
                                         <div class="custom-control custom-checkbox mb-3">
                                         <input class="custom-control-input" id="dimancheCheck" name="dimancheCheck" type="checkbox">
-                                        <label class="custom-control-label" for="dimancheCheck"><h4>Travail Dimanche<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si le consommateur travaille les Dimanches et definir l'heure de début et de fin du travail durant les dimanches">?</button></h4></label><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider-dimanche" name="hourSlider_dimanche" /> </lo>
+                                        <label class="custom-control-label" for="dimancheCheck"><h4>Travail Dimanche<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si le consommateur travaille les Dimanches et definir l'heure de début et de fin du travail durant les dimanches">?</button></h4></label><loid="hourSlider-dimanchecont" style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider-dimanche" name="hourSlider_dimanche" /> </lo>
                                         </div>   
                                         <div class="custom-control custom-checkbox mb-3">
                                             <div class="row">
+                                            
                                                 <div class="col">
+                                                
                                                     <input class="custom-control-input" id="congeCheck" name="congeCheck" type="checkbox">
                                                     <label class="custom-control-label" for="congeCheck"><h4 >Période de Congé /Arrét technique<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si la date de début et de fin du congé ou de l'arrét technique s'il existe">?</button></h4></label><br>
                                                 </div>
+                                            </div>
+                                            <div class="row"> 
                                                 <div class="col">
+                                                
                                                     <label class="form-control-label required" for="dateconge_deb"><h4 >Début</h4></label>
                                                     <input type="date" name="dateconge_deb" id="dateconge_deb" class="form-control" >
                                                 </div>
                                                 <div class="col">
                                                     <label class="form-control-label required" for="dateconge_fin"><h4 >Fin</h4></label>
+                                                    <button type="button" class="btn btn-primary btn-sm" id="butconge1" onclick="addconge1()">Nouvelle période</button>
                                                     <input type="date" name="dateconge_fin" id="dateconge_fin" class="form-control" >
+                                                    
                                                 </div>
-                                            </div>
+                                                
+                                            </div>    
+                                            <div class="row" style="display:none" id="conge1">
+                                                <div class="col">
+                                                    <label class="form-control-label required" for="dateconge_deb1"><h4 >Début</h4></label>
+                                                    <input type="date" name="dateconge_deb1" id="dateconge_deb1" class="form-control" >
+                                                </div>                                               
+                                                <div class="col">
+                                                    <label class="form-control-label required" for="dateconge_fin1"><h4 >Fin</h4></label>
+                                                     <button type="button" class="btn btn-primary btn-sm" id="butconge2" onclick="addconge2()">Nouvelle période</button>
+                                                    <input type="date" name="dateconge_fin1" id="dateconge_fin1" class="form-control" >
+                                                   
+                                                </div>
+                                                
+                                             </div>   
+                                             <div class="row" style="display:none" id="conge2">
+                                                <div class="col">
+                                                    <label class="form-control-label required" for="dateconge_deb2"><h4 >Début</h4></label>
+                                                    <input type="date" name="dateconge_deb2" id="dateconge_deb2" class="form-control" >
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-control-label required" for="dateconge_fin2"><h4 >Fin</h4></label>
+                                                    <input type="date" name="dateconge_fin2" id="dateconge_fin2" class="form-control" >
+                                                </div>
+                                            </div>    
+                                            
                                         </div>        
                                     </div>
                                 </div>
@@ -167,6 +198,8 @@
                         </div>    
                     </div>
                     <div id="Uniforme" class="tarif form-group collapse multi-collapse show">
+                    <input class="custom-control-input" name="vershoraire" id="vershoraire" type="checkbox">
+                    <label class="custom-control-label" for="vershoraire"><h4 >Simuler ce projet en régime horaire<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Cochez si vous disposez d'un historique de consommation en tarif uniforme et vous voulez simuler les résultats de ce site en tarif uniforme">?</button></h4></label><br>
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush">
                                 <thead class="thead-light">
@@ -660,6 +693,24 @@
            
        });
 
+       $( document ).ready(function() {
+            $('#saison2').hide();
+            $('#saison3').hide();
+        });
+      /*
+        $("#samediCheck").change(function(){
+       if ($("#samediCheck").val()=="on")
+        $("#hourSlider-samedicont").show();
+       else
+       $("#hourSlider-samedicont").hide();
+        });
+        $("#dimancheCheck").change(function(){
+       if ($("#dimancheCheck").val()=="on")
+        $("#hourSlider-dimanchecont").show();
+       else
+       $("#hourSlider-dimanchecont").hide();
+        });
+*/
     function incrementValue()
     {
         var value = parseInt(document.getElementById('number').value, 10);
@@ -674,6 +725,34 @@
         document.getElementById('continuer').setAttribute('disabled','disabled');
          $('#success').hide();
          $('#successconso').hide();
+    }
+
+    function addconge1()
+    {
+        $('#conge1').show();
+         $('#butconge1').hide();
+
+    }
+    function addconge2()
+    {
+        $('#conge2').show();
+        $('#butconge2').hide();
+    }
+
+    $('#saison').val(1);
+
+    function addsaison1()
+    {
+        $('#saison2').show();
+        $('#butsaison1').hide();
+        $('#saison').val(2);
+    }
+
+    function addsaison2()
+    {
+        $('#saison3').show();
+        $('#butsaison2').hide();
+        $('#saison').val(3);
     }
 
     function load(){
@@ -786,7 +865,7 @@
                 },
             };
             Plotly.newPlot('plot', data10, layout10,{responsive: true});  
-                  console.log('data');
+                console.log('data');
                 console.log(response.data);
                 console.log(response.factor); 
                 console.log(response.somme);
@@ -891,26 +970,7 @@
     
 
 
-        $(document).ready(function(){
-            $('#saison').on('change', function() {
-                if ( this.value == '1')
-                {
-                    $("#saison1").show();
-                    $("#saison2").hide();
-                    $("#saison3").hide();
-                }
-                else if ( this.value == '2') {
-                    $("#saison1").show();
-                    $("#saison2").show();
-                    $("#saison3").hide();
-                }
-                else {
-                        $("#saison1").show();
-                        $("#saison2").show();
-                        $("#saison3").show();
-                }
-            });
-        });
+        
              
 
          

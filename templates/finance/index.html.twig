@@ -22,7 +22,8 @@
 
                     <label class="form-control-label required" for="subvention">Subvention </label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le type de la subvention qui sera allouée au projet">?</button>
                 <div class="row">
-                    <div class="col">                 
+                    <div class="col">  
+                    <label class="form-control-label " > </label>                
                     <select class="form-control" id="typesub">
                         <option value=0>Sans subvention</option>
                         <option value=1>Subvention FTE</option>
@@ -31,11 +32,22 @@
                     </select>
                     </div>
                     <div class="col"> 
+                    <label class="form-control-label " > </label> 
                         <input type="number" name="subvention" value="0" max="100" id="subvention" min="0" class="form-control">
                     </div>%
-                    <div class="col">     
+                    <div class="col">
+                     <label class="form-control-label " > </label>     
                         <input type="number"  value="0" max="100" id="subventionDT" min="0" class="form-control">
                     </div>DT
+                    <div class="col">   
+                    <label class="form-control-label required" for="ansubvention">Remboursement de la subvention </label>
+                    <select class="form-control" id="ansubvention" name="ansubvention">
+                        <option value=0>Année 0</option>
+                        <option value=1>Année 1</option>
+                        <option value=2>Année 2</option>
+                        <option value=3>Année 3</option>
+                    </select>
+                    </div>
                  </div>      
                 </div>
                 <div class="row">
@@ -145,6 +157,7 @@
 <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
 <script>
 
+$('#financeForm input').on( 'input', function() {
 $("#opex").change(function() {
    if ($( "#opex" ).val()>5){
        $("#opexvalid").show();
@@ -319,7 +332,7 @@ $("#capex").change(function() {
     if(($( "#csvpuiss" ).val())!=0){
         power=$( "#csvpuiss" ).val();
     }
-    if ($( "#capex" ).val()>3500*power){
+    if ($( "#capex" ).val()>3500*power||$( "#capexpu" ).val()>3500){
            $( "#capexvalid" ).show();
         }
     else  {
@@ -370,6 +383,23 @@ $("#capex").change(function() {
         }
     }
 });   
+
+
+/*$("#peakpower").change(function() {
+    if (($( "#peakpower" ).val())!=0){
+        power=parseInt($( "#peakpower" ).val())+parseInt($( "#peakpower2" ).val())+parseInt($( "#peakpower3" ).val());
+    }
+    else
+    if(($( "#capacity" ).val())!=0){
+        power=$( "#capacity" ).val();
+    }
+    else
+    if(($( "#csvpuiss" ).val())!=0){
+        power=$( "#csvpuiss" ).val();
+    }
+    ("#capex").val(2500*power);
+});*/
+
 $("#capexpu").change(function() {
     
     if (($( "#peakpower" ).val())!=0){
@@ -384,10 +414,54 @@ $("#capexpu").change(function() {
         power=$( "#csvpuiss" ).val();
     }
     $( "#replinv" ).val((100*power));
-        $( "#capex" ).val(($( "#capexpu" ).val())*power);
+    $( "#capex" ).val(($( "#capexpu" ).val())*power);
+    $( "#dette" ).val(0.7*($( "#capex" ).val()));
     });
+    if ($( "#typesub" ).val()==0){
+    $( "#subvention" ).val(0);
+    $( "#subventionDT" ).val(0);
+    }
+    else
+    if ($( "#typesub" ).val()==1){
+        if ((($( "#capex" ).val())*0.2)<=200000){
+            $( "#subvention" ).val(20);
+            $( "#subventionDT" ).val(($( "#capex" ).val())*0.2);
+        }
+        else{
+         $( "#subvention" ).val(20000000/($( "#capex" ).val()));
+            $( "#subventionDT" ).val(200000);
+        }
+    }
+     else
+    if ($( "#typesub" ).val()==2){
+        if ((($( "#capex" ).val())*0.15)<=1500000){
+            $( "#subvention" ).val(15);
+            $( "#subventionDT" ).val(($( "#capex" ).val())*0.15);
+        }
+        else{
+         $( "#subvention" ).val(150000000/($( "#capex" ).val()));
+            $( "#subventionDT" ).val(1500000);
+        }
+    }
+     else
+    if ($( "#typesub" ).val()==3){
+        if ((($( "#capex" ).val())*0.3)<=3000000){
+            $( "#subvention" ).val(30);
+            $( "#subventionDT" ).val(($( "#capex" ).val())*0.3);
+        }
+        else{
+         $( "#subvention" ).val(300000000/($( "#capex" ).val()));
+            $( "#subventionDT" ).val(300000000);
+        }
+    }
+    if ($( "#capexpu" ).val()>3500){
+           $( "#capexvalid" ).show();
+        }
+    else  {
+        $( "#capexvalid" ).hide();
+    }  
 
-    
+  });   
 
 
 
@@ -469,6 +543,8 @@ $("#capexpu").change(function() {
                 $('#tabs-icons-text-2').toggle();
                 $('#tabs-icons-text-2-tab').addClass('active');
                 $('#tabs-icons-text-3-tab').removeClass('active');
+                $('#successprod').hide();
+                $('#prodavancer').prop('disabled',true);
 
 
     }
