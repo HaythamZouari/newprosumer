@@ -164,6 +164,7 @@ class FinanceController extends AbstractController
                 $autconsommePH[0]=PostHoraire::PostHoraire($allautoconsomme[0]);
                 $c=1;
                 $productionPH[1]=PostHoraire::PostHoraire($project->getCedee()[0]);
+                $CedePH[0]=$productionPH[1];
                 
             }
             else{
