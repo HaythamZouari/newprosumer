@@ -58,10 +58,14 @@ class RapportController extends AbstractController
             $azimut=$project->getPvgis()->getAzimuth()[0];
             $azimut1=$project->getPvgis()->getAzimuth()[1];
             $azimut2=$project->getPvgis()->getAzimuth()[2];
+            
 
             $incl = $project->getPvgis()->getSlop()[0];
             $incl1 = $project->getPvgis()->getSlop()[1];
             $incl2 = $project->getPvgis()->getSlop()[2];
+            $pschamp=$project->getPvgis()->getPeakPower()[0];
+            $pschamp1=$project->getPvgis()->getPeakPower()[1];
+            $pschamp2=$project->getPvgis()->getPeakPower()[2];
             
             $loss=$project->getPvgis()->getLoss();
         }
@@ -70,6 +74,14 @@ class RapportController extends AbstractController
             for ($i=0;$i<count($project->getNinja()->getResult());$i++) {
                $prd_annuel+= $project->getNinja()->getResult()[$i][1];
             }
+            $incl1 = 0;
+            $incl2 = 0;
+            $azimut1=0;
+            $azimut2=0;
+            $pschamp=0;
+            $pschamp1=0;
+            $pschamp2=0;
+
             $prodvalue= $project->getNinja()->getResult();
             $ps_centrale=$project->getNinja()->getCapacity();
             $lat=$project->getNinja()->getLat();
@@ -79,6 +91,13 @@ class RapportController extends AbstractController
             $loss=$project->getNinja()->getLoss();
         }
         else if($project->getCsvProd()!=null){
+            $incl1 = 0;
+            $incl2 = 0;
+            $azimut1=0;
+            $azimut2=0;
+            $pschamp=0;
+            $pschamp1=0;
+            $pschamp2=0;
 
             for ($i=0;$i<count($project->getCsvProd()->getResult());$i++) {
                 $prd_annuel+= $project->getCsvProd()->getResult()[$i][1];
@@ -349,6 +368,9 @@ class RapportController extends AbstractController
             'lat'=>$lat,
             'lon'=>$lon,
             'puissance_centrale'=>$ps_centrale,
+            'pschamp'=>$pschamp,
+            'pschamp1'=>$pschamp1,
+            'pschamp2'=>$pschamp2,
             'project'=>$project,
             'cm_annual'=>$cm_annuel,
             'finance'=>$project->getFinance(),

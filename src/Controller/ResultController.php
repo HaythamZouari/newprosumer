@@ -67,18 +67,45 @@ class ResultController extends AbstractController
                         $prd_annuel+= $project->getPvgis()->getResult()[$i][1];
                     }
                     $ps_centrale=$project->getPvgis()->getPeakPower()[0]+$project->getPvgis()->getPeakPower()[1]+$project->getPvgis()->getPeakPower()[2];
+                    $incl = $project->getPvgis()->getSlop()[0];
+                    $incl1 = $project->getPvgis()->getSlop()[1];
+                    $incl2 = $project->getPvgis()->getSlop()[2];
+                    $pschamp=$project->getPvgis()->getPeakPower()[0];
+                    $pschamp1=$project->getPvgis()->getPeakPower()[1];
+                    $pschamp2=$project->getPvgis()->getPeakPower()[2];
+                    $azimut=$project->getPvgis()->getAzimuth()[0];
+                    $azimut1=$project->getPvgis()->getAzimuth()[1];
+                    $azimut2=$project->getPvgis()->getAzimuth()[2];
                 }
+
+               
+                
                 else if($project->getCsvProd()!=null){
                     for ($i=0;$i<count($project->getCsvProd()->getResult());$i++) {
                         $prd_annuel+= $project->getCsvProd()->getResult()[$i][1];
                     }
                     $ps_centrale=$project->getCsvProd()->getPuissence();
+                    $incl1 = 0;
+                    $incl2 = 0;
+                    $azimut1=0;
+                    $azimut2=0;
+                    $pschamp=0;
+                    $pschamp1=0;
+                    $pschamp2=0;
                 }
+               
                 else if($project->getNinja()!=null){
                     for ($i=0;$i<count($project->getNinja()->getResult());$i++) {
                         $prd_annuel+= $project->getNinja()->getResult()[$i][1];
                     }
-                    $ps_centrale=$project->getNinja()->getCapacity();    
+                    $ps_centrale=$project->getNinja()->getCapacity(); 
+                    $incl1 = 0;
+                    $incl2 = 0;
+                    $azimut1=0;
+                    $azimut2=0;
+                    $pschamp=0;
+                    $pschamp1=0;
+                    $pschamp2=0;   
                 }
 
                 if($project->getCsvProd()!=null){
@@ -455,6 +482,11 @@ class ResultController extends AbstractController
                 'tri25'=>$project->getFinance()->getTri25(),
                 'van'=>$project->getFinance()->getVan(),
                 'subventionarray'=>$project->getFinance()->getSubventionarray(),
+                
+                
+                'pschamp'=>$pschamp,
+                'pschamp1'=>$pschamp1,
+                'pschamp2'=>$pschamp2,
                 
 
 

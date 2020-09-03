@@ -1063,6 +1063,14 @@
                                                 <td >{{ puissance_centrale|number_format(2, '.', ' ') }}</td>
                                                 <td>kWc</td>
                                             </tr>
+                                            <tr class="pvgis">
+                                                <td>Puissance par sous champ</td>
+                                                <td >{{ pschamp|number_format(2, '.', ' ') }}</td>
+                                                 <td >{{ pschamp1|number_format(2, '.', ' ') }}</td>
+                                                  <td >{{ pschamp2|number_format(2, '.', ' ') }}</td>
+                                                <td>kWc</td>
+                                            </tr>
+                                            
                                             {% for i in range(0, ((cm_annual|length)-1)) %}
                                             <tr>
                                               <td>Consommation annuelle Site {{i}}</td>
@@ -1106,17 +1114,17 @@
                                                 <tr>
                                                     <td>Inclinaison des modules</td>
                                                     <td>{{ incl }}</td>
-                                                    <td>{{ incl1 }}</td>
-                                                    <td>{{ incl2 }}</td>
+                                                    <td class="pvgis">{{ incl1 }}</td>
+                                                    <td class="pvgis">{{ incl2 }}</td>
 
 
                                                     <td>°</td>
                                                 </tr>
-                                                 <tr>
+                                                 <tr >
                                                     <td>Orientations des modules</td>
                                                     <td>{{ azim }}</td>
-                                                    <td>{{ azim1 }}</td>
-                                                    <td>{{ azim2 }}</td>
+                                                    <td class="pvgis">{{ azim1 }}</td>
+                                                    <td class="pvgis">{{ azim2 }}</td>
                                                     <td>°</td>
                                                 </tr>
                                                 <tr>
@@ -2045,7 +2053,8 @@
             let llcr=[];
             let cfadstmp=[];
             let llcrtmp=[];
- 
+
+            
 
             
             const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -2057,6 +2066,10 @@
                     dataType: 'json',
                     cache: false,
                     success: function (response) {
+                        if (response.pschamp==0){
+                            $('.pvgis').hide();
+                        }
+ 
                         if (response.transpE==0){
 
                             $('#avectransport').hide();
