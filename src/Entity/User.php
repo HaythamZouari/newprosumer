@@ -84,12 +84,14 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="boolean")
+     * options={"default": 0}
      */
-    private $abon1;
+    private $abon1=0;
     /**
      * @ORM\Column(type="boolean")
+     * options={"default": 0}
      */
-    private $abon2;
+    private $abon2=0;
     /**
      * @ORM\Column(type="string", length=190 , nullable=true)
      */
