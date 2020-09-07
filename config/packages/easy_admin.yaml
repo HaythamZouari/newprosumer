@@ -12,16 +12,21 @@ easy_admin:
         fields:
           - 'id'
           - 'name'
-          - 'adress'
-          - 'description'
           - 'user'
-          - 'pvwatt'
-          - 'pvgis'
           - 'consomation'
+          - 'pvgis'
+          - 'ninja'
+          - 'csvProd'
+          - 'finance'
+
     Finance:
       class: App\Entity\Finance
     Consomation:
       class: App\Entity\Consomation 
     Pvgis:
       class: App\Entity\Pvgis     
+    CsvProd:
+      class: App\Entity\CsvProd 
+    Ninja:
+      class: App\Entity\Ninja    
 
