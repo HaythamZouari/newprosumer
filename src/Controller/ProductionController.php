@@ -11,6 +11,7 @@ use Carbon\CarbonPeriod;
 use App\Event\ProjectEvent;
 use App\Service\FileUpload;
 use App\Service\Datesorting;
+use App\Service\PostHoraire;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +36,7 @@ class ProductionController extends AbstractController
         $pvgis->setMountingType((int)$request->get('trackingtype'));
         $pvgis->setPeakPower([(float)$request->get('peakpower'),(float)$request->get('peakpower2'),(float)$request->get('peakpower3')]);
         $pvgis->setPvTech('crystSi');
-        $pvgis->setDegradation((float)$request->get('degradation'));
+        $pvgis->setDegradation((float)$request->get('degradationp'));
         $pvgis->setSlop([(float)$request->get('angle'),(float)$request->get('angle2'),(float)$request->get('angle3')]);
         $httpClient = HttpClient::create();
         $response = $httpClient->request('GET',
@@ -211,6 +212,7 @@ class ProductionController extends AbstractController
                 ' '.(int)((substr($string,9,2))+1).':00'),(float)($array[$i][1]/1000)];
         }
         */
+        
 
         $logger->info('testt',$data);
         $pvgis->setResult(Datesorting::SorteDate($project->getConsomation()->getConsomationAnnuel()[0][0],$data,$project->getConsomation()->getConsomationAnnuel()));
@@ -231,10 +233,11 @@ class ProductionController extends AbstractController
         $auto=$project->getAutoConsomer();
         $cedee=$project->getCedee();
         $importee=$project->getImporte();
-        return new JsonResponse(['period'=>$period,'data'=>$data,'array'=>$array,'data2'=>$array,'con'=>$consommation,
+        return new JsonResponse(['period'=>$period,'data'=>$data,'array'=>$array,'data2'=>$array,
         'pro'=>$production,
-        'aut'=>$auto,
-        'ced'=>$cedee,
+        'aut'=>$project->getAutoConsomer(),
+        'ced'=>$project->getcedeePH(),
+        'inject'=>$project->getinject(),
         'imp'=>$importee, ]);
     }
     /**
@@ -252,7 +255,7 @@ class ProductionController extends AbstractController
         $ninja->setCapacity((float)$request->get('capacity'));
         $ninja->setRaddatabase('sarah');
         $ninja->setTilt((float)$request->get('tilt'));
-        $ninja->setDegradation((float)$request->get('degradation'));
+        $ninja->setDegradation((float)$request->get('degradationn'));
         $httpClient = HttpClient::create(['auth_bearer'=>'540a78d893c082fcdeda47f1b318dbc4c1ef7922']);
         $response = $httpClient->request('GET',
             'https://www.renewables.ninja/api/data/pv?lat='.$request->get('lat').
@@ -342,7 +345,7 @@ class ProductionController extends AbstractController
         //$csvreader->setResult($result);
         $csvreader->setPuissence(((float)$request->get('csvpuiss')));
         $csvreader->setProject($project);
-        $csvreader->setDegradation((float)$request->get('degradation'));
+        $csvreader->setDegradation((float)$request->get('degradationc'));
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($csvreader);

@@ -54,7 +54,7 @@ class FinanceController extends AbstractController
             $finance->setDureeProj((float)$request->get('duree_proj'));
             $finance->setOpex((float)$request->get('opex'));
             $finance->setSubvention((float)$request->get('subvention'));
-            $finance->setTarifHoraire(['vende'=>[0=>0.115,1=>0.168,2=>0.087,3=>0.182],'achat'=>[0=>0.245,1=>0.334,2=>0.193,3=>0.371]]);
+            $finance->setTarifHoraire(['vende'=>[0=>0.115,1=>0.182,2=>0.168,3=>0.087],'achat'=>[0=>0.245,1=>0.371,2=>0.334,3=>0.193]]);
             $finance->setTarifUni(0.256);
             $finance->setTarifTransport(0.007);
             $finance->setTauxActualisation((float)$request->get('taux_actualisation'));
@@ -79,38 +79,19 @@ class FinanceController extends AbstractController
             for ($i=0;$i<count($allautoconsomme[0]);$i++){ 
                 $totautoconsomme[$i][0]=0;
                 $totautoconsomme[$i][1]=0;
+            }
+    
+            for ($i=0;$i<count($allautoconsomme[0]);$i++){ 
+                for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+
+                $totautoconsomme[$i][1]+=$allautoconsomme[$j][$i][1];
+                $totautoconsomme[$i][0]= $allautoconsomme[0][$i][0];
                 }
-    
-                for ($i=0;$i<count($allautoconsomme[0]);$i++){ 
-                    for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
-    
-                    $totautoconsomme[$i][1]+=$allautoconsomme[$j][$i][1];
-                    $totautoconsomme[$i][0]= $allautoconsomme[0][$i][0];
-                    }
-                  
+                
             }   
 
 
-            for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){   
-                for($i=0;$i<13;$i++){
-                    $autconsommePH[$j][$i]['jour']=0;
-                    $autconsommePH[$j][$i]['ete']=0;
-                    $autconsommePH[$j][$i]['soir']=0;
-                    $autconsommePH[$j][$i]['nuit']=0; 
-
-                    $CedePH[$j][$i]['jour']=0;
-                    $CedePH[$j][$i]['ete']=0;
-                    $CedePH[$j][$i]['soir']=0;
-                    $CedePH[$j][$i]['nuit']=0; 
-                    
-                    $ImportePH[$j][$i]['jour']=0;
-                    $ImportePH[$j][$i]['ete']=0;
-                    $ImportePH[$j][$i]['soir']=0;
-                    $ImportePH[$j][$i]['nuit']=0;   
-
-                }
-            }
-
+            
             if($project->getPvgis() != null)
                 $production=$project->getPvgis()->getResult() ;
             if($project->getCsvProd() != null)
@@ -130,84 +111,49 @@ class FinanceController extends AbstractController
                 
 
 
+           
 
-            $productionPH[0]=PostHoraire::PostHoraire($production);
+            for($i=0;$i<13;$i++){
+                $CedePH[$i]['jour']=0;
+                $CedePH[$i]['ete']=0;
+                $CedePH[$i]['soir']=0;
+                $CedePH[$i]['nuit']=0; 
 
-            for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){   
-                for($i=0;$i<13;$i++){
-                    $autconsommePH[$j][$i]['jour']=0;
-                    $autconsommePH[$j][$i]['ete']=0;
-                    $autconsommePH[$j][$i]['soir']=0;
-                    $autconsommePH[$j][$i]['nuit']=0; 
+                $autconsommePHTot[$i]['jour']=0;
+                $autconsommePHTot[$i]['ete']=0;
+                $autconsommePHTot[$i]['soir']=0;
+                $autconsommePHTot[$i]['nuit']=0;
 
-                    $CedePH[$j][$i]['jour']=0;
-                    $CedePH[$j][$i]['ete']=0;
-                    $CedePH[$j][$i]['soir']=0;
-                    $CedePH[$j][$i]['nuit']=0; 
-                    
-                    $ImportePH[$j][$i]['jour']=0;
-                    $ImportePH[$j][$i]['ete']=0;
-                    $ImportePH[$j][$i]['soir']=0;
-                    $ImportePH[$j][$i]['nuit']=0;
-                    
-                   
-
-                    $autconsommePHTot[$i]['jour']=0;
-                    $autconsommePHTot[$i]['ete']=0;
-                    $autconsommePHTot[$i]['soir']=0;
-                    $autconsommePHTot[$i]['nuit']=0;
-
-                }
             }
-
-            if (($project->getConsomation()->getTransportEng())==false){
-                $autconsommePH[0]=PostHoraire::PostHoraire($allautoconsomme[0]);
-                $c=1;
-                $productionPH[1]=PostHoraire::PostHoraire($project->getCedee()[0]);
-                $CedePH[0]=$productionPH[1];
-                
-            }
-            else{
-                $c=0;
-            }
-
-            for ($j=$c;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
-                $consommationPH[$j]=PostHoraire::PostHoraire($project->getConsomation()->getallConsomationAnnuel()[$j]);
-                for($i=0;$i<13;$i++){
-                    $autconsommePH[$j][$i]['jour']=min($productionPH[$j][$i]['jour'],$consommationPH[$j][$i]['jour']);
-                    $autconsommePH[$j][$i]['ete']=min($productionPH[$j][$i]['ete'],$consommationPH[$j][$i]['ete']);
-                    $autconsommePH[$j][$i]['soir']=min($productionPH[$j][$i]['soir'],$consommationPH[$j][$i]['soir']);
-                    $autconsommePH[$j][$i]['nuit']=min($productionPH[$j][$i]['nuit'],$consommationPH[$j][$i]['nuit']);                  
-        
-                }
-               
-                for($i=0;$i<13;$i++){
-                    $ImportePH[$j][$i]['jour']=($consommationPH[$j][$i]['jour']-$autconsommePH[$j][$i]['jour']);
-                    $Importe[$j][$i]['ete']=($consommationPH[$j][$i]['ete']-$autconsommePH[$j][$i]['ete']);
-                    $Importe[$j][$i]['soir']=($consommationPH[$j][$i]['soir']-$autconsommePH[$j][$i]['soir']);
-                    $Importe[$j][$i]['nuit']=($consommationPH[$j][$i]['nuit']-$autconsommePH[$j][$i]['nuit']);                  
-        
-                }
-                for($i=0;$i<13;$i++){
-                    $CedePH[$j][$i]['jour']=($productionPH[$j][$i]['jour']-$autconsommePH[$j][$i]['jour']);
-                    $CedePH[$j][$i]['ete']=($productionPH[$j][$i]['ete']-$autconsommePH[$j][$i]['ete']);
-                    $CedePH[$j][$i]['soir']=($productionPH[$j][$i]['soir']-$autconsommePH[$j][$i]['soir']);
-                    $CedePH[$j][$i]['nuit']=($productionPH[$j][$i]['nuit']-$autconsommePH[$j][$i]['nuit']);                  
-        
-                }
-                $productionPH[$j+1]=$CedePH[$j];
-            }    
 
             for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
                 
-                for($i=0;$i<13;$i++){
-                    $autconsommePHTot[$i]['jour']+= $autconsommePH[$j][$i]['jour'];
-                    $autconsommePHTot[$i]['ete']+= $autconsommePH[$j][$i]['ete'];
-                    $autconsommePHTot[$i]['soir']+= $autconsommePH[$j][$i]['soir'];
-                    $autconsommePHTot[$i]['nuit']+= $autconsommePH[$j][$i]['nuit'];                  
+                for($i=1;$i<13;$i++){
+                    $autconsommePHTot[$i]['jour']+= $project->getauto_consomerPH()[$j][$i]['jour'];
+                    $autconsommePHTot[$i]['ete']+= $project->getauto_consomerPH()[$j][$i]['ete'];
+                    $autconsommePHTot[$i]['soir']+= $project->getauto_consomerPH()[$j][$i]['soir'];
+                    $autconsommePHTot[$i]['nuit']+= $project->getauto_consomerPH()[$j][$i]['nuit'];                  
         
                 }
             }
+
+            if (count($project->getConsomation()->getallConsomationAnnuel())>1){
+
+                for ($j=1;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+                    
+                    for($i=1;$i<13;$i++){
+                        $CedePH[$i]['jour']+= $project->getcedeePH()[$j][$i]['jour'];
+                        $CedePH[$i]['ete']+= $project->getcedeePH()[$j][$i]['ete'];
+                        $CedePH[$i]['soir']+= $project->getcedeePH()[$j][$i]['soir'];
+                        $CedePH[$i]['nuit']+= $project->getcedeePH()[$j][$i]['nuit'];                  
+            
+                    }
+                }
+            }
+            else{
+                $CedePH=$project->getinjectPH();
+            }
+
 
             
 
@@ -231,9 +177,9 @@ class FinanceController extends AbstractController
                 $auto_consomer_postHor[3]=0;
                 foreach ($autconsommePHTot as $tmp) {
                     $auto_consomer_postHor[0]+=$tmp['jour'];
-                    $auto_consomer_postHor[1]+=$tmp['soir'];
-                    $auto_consomer_postHor[2]+=$tmp['nuit'];
-                    $auto_consomer_postHor[3]+=$tmp['ete'];
+                    $auto_consomer_postHor[1]+=$tmp['ete'];
+                    $auto_consomer_postHor[2]+=$tmp['soir'];
+                    $auto_consomer_postHor[3]+=$tmp['nuit'];
         
                 }
                 for($j=0;$j<30;$j++){
@@ -255,11 +201,11 @@ class FinanceController extends AbstractController
                 $cedee_postH[2]=0;
                 $cedee_postH[3]=0;
                 $result=[];
-                foreach ($CedePH[$lastit] as $tmp) {
+                foreach ($CedePH as $tmp) {
                     $cedee_postH[0]+=$tmp['jour'];
-                    $cedee_postH[1]+=$tmp['soir'];
-                    $cedee_postH[2]+=$tmp['nuit'];
-                    $cedee_postH[3]+=$tmp['ete'];
+                    $cedee_postH[1]+=$tmp['ete'];
+                    $cedee_postH[2]+=$tmp['soir'];
+                    $cedee_postH[3]+=$tmp['nuit'];
                 }
                 for($j=0;$j<30;$j++) {
                     $g_E_cedee[$j]=0;
@@ -324,13 +270,22 @@ class FinanceController extends AbstractController
             $opex=FinanceService::opex($project,$replinv);
             
             $f_transporter=FinanceService::facteurTransport($project,$tottransporte);
+            array_unshift($g_E_cedee,0);
+            array_unshift($g_E_transporter,0);
+            array_unshift($frais_exp,0);
+            array_unshift($opex,0);
+            array_unshift($f_transporter,0);
+            array_unshift($f_regularisation,0);
+            
+
             for ($i=0;$i<30;$i++) {
             $subvention[$i]=0;
+            $annuite[$i]=0;
             }
             $subvention[(float)$request->get('ansubvention')]=$finance->getCapex()*($finance->getSubvention()/100);
 
             for ($i=0;$i<30;$i++) {
-                $gain[]=$g_E_cedee[$i]+$g_E_transporter[$i]+$subvention[$i];
+                $gain[]=$g_E_cedee[$i]+$g_E_transporter[$i];
             }
             
             if ($finance->getCredit()===true){
@@ -339,26 +294,29 @@ class FinanceController extends AbstractController
                 $delee=$finance->getDelaiGrace();
                 $maturite=$finance->getMaturiteProj();
 
-                for ($i=0;$i<25;$i++)
+                for ($i=0;$i<30;$i++)
                     $CFADS[$i]= ($gain[$i]-$opex[$i]- $f_transporter[$i] - $f_regularisation[$i]);
                /* for ($i=$delee+$maturite;$i<30;$i++)
                     $CFADS[$i]=0;*/
             }
+
+            for($i=0;$i<30;$i++){
+                $depense[$i]=$opex[$i]+$f_regularisation[$i]+$f_transporter[$i]+$annuite[$i];
+            }
            
-            $depense =FinanceService::depenses($opex,$annuite,$f_regularisation,$f_transporter,$finance->getMaturiteProj(),$finance->getDelaiGrace());
-            for($i=0;$i<25;$i++){
+            for($i=0;$i<($request->get('duree_proj'));$i++){
                 $dep+=$depense[$i];
             }
             for($i=0;$i<30;$i++) {
                 $cash_flow[]=$gain[$i] - $depense[$i];
             }
-            for($i=0;$i<$finance->getMaturiteProj()+$finance->getDelaiGrace();$i++){
+            for($i=0;$i<30;$i++){
+                $dscr[$i]=0;
+            }
+            for($i=1;$i<=$finance->getMaturiteProj()+$finance->getDelaiGrace();$i++){
                 $dscr[$i]=(float)($CFADS[$i]/$annuite[$i]);
             }
-            $cash_flow_cumule[0]=$cash_flow[0]+FinanceService::cashflowInt($project);
-            for($i=1;$i<count($cash_flow);$i++){
-                $cash_flow_cumule[$i]=$cash_flow_cumule[$i-1]+$cash_flow[$i];
-            }
+           
             $consommation=$project->getConsomation()->getallConsomationAnnuel();
             if($project->getCsvProd()!=null){
                 $production=$project->getCsvProd()->getResult();
@@ -372,7 +330,25 @@ class FinanceController extends AbstractController
             $auto=$project->getAutoConsomer();
             $cedee=$project->getCedee();
             $importee=$project->getImporte();
+            for ($i=0;$i<30;$i++) {
+                $cash_flow[$i]=$cash_flow[$i]+$subvention[$i];
+                
+                }
+            $cash_flow[0]=$cash_flow[0]+FinanceService::cashflowInt($project);
+            $cash_flow_cumule[0]=$cash_flow[0];
+            for($i=1;$i<count($cash_flow);$i++){
+                $cash_flow_cumule[$i]=$cash_flow_cumule[$i-1]+$cash_flow[$i];
+            }
+
             
+
+            for ($i=0;$i<=($request->get('duree_proj'));$i++) {
+                $cash_flowres[$i]=$cash_flow[$i];
+                $CFADSres[$i]=$CFADS[$i]+$subvention[$i];
+    
+                
+                
+            }
 
             $finance->setAnnuite($annuite);
             $finance->setSubventionarray($subvention);
@@ -388,12 +364,13 @@ class FinanceController extends AbstractController
             $finance->setCashflowIn(FinanceService::cashflowInt($project));
             $finance->setGainAns($gain);
             $finance->setLlcr(FinanceService::LLCR($project,$annuite,$CFADS));
-            array_unshift($CFADS, (-1*($finance->getCapex()*(1- ($finance->getSubvention()/100)))));
-            array_unshift($cash_flow,FinanceService::cashflowInt($project));
-            $finance->setTri25(((float)Finances::IRR($CFADS,0.1))*100);
-            $finance->setTricapitaux((float)Finances::IRR($cash_flow,0.3)*100);
-            array_unshift($cash_flow,$finance->getTauxActualisation()/100);
-            $finance->setVan(Finances::NPV($cash_flow));
+            array_unshift($CFADS, (-1*($finance->getCapex())));
+            array_unshift($CFADSres, (-1*($finance->getCapex())));
+            
+            $finance->setTri25(((float)Finances::IRR($CFADSres,0.2))*100);
+            $finance->setTricapitaux((float)Finances::IRR($cash_flowres,0.3)*100);
+            array_unshift($cash_flowres,$finance->getTauxActualisation()/100);
+            $finance->setVan(Finances::NPV($cash_flowres));
             $this->getDoctrine()->getManager()->persist($finance);
             $this->getDoctrine()->getManager()->flush();
                 //for($i=0;$i<$)

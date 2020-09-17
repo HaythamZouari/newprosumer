@@ -20,9 +20,9 @@
                         </button>  
                          </div>   
                          
-                         <div class="col">
+                         <div class="col" id="transport_energiecol">
                             <input class="custom-control-input" name="transport_energie" id="transport_energie" type="checkbox">
-                            <label class="custom-control-label" for="transport_energie"><h4 >Transport de  l'energie vers ce site<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si la centrale sera intégrée directement à ce site ( ne pas cocher) ou sera implantée loin de ce site ( cocher)">?</button></h4></label><br>
+                            <label class="custom-control-label" for="transport_energie"><h4 >Transport de  l'énergie vers ce site<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si la centrale sera intégrée directement à ce site ( ne pas cocher) ou sera implantée loin de ce site ( cocher)">?</button></h4></label><br>
                         </div>
                      
                     </div>    
@@ -83,14 +83,14 @@
                                             <label class="form-control-label required" for="monthSlider1" style="display: inline-block;padding-left: 10%;">Plage mensuelle</label> <button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le mois de début et de fin de la saison 1">?</button>
                                             <label class="form-control-label required" for="hourSlider1" style="display: inline-block;padding-left: 40%;">Plage horaire</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'heure de début et de fin de travail durant la saison 1">?</button></br></br>
                                             <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider1" name="monthSlider1" class="form-control" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider1" name="hourSlider1" class="form-control"/> </lo></br>
-                                            <button type="button" class="btn btn-primary btn-sm" id="butsaison1" onclick="addsaison1()">Nouvelle saison</button>
+                                            <button type="button" class="btn btn-secondary btn-sm" id="butsaison1" onclick="addsaison1()">Nouvelle saison</button>
                                         </div>
                                         
                                         <div id = "saison2" >
                                             <h4 >Saison2</h4>
                                             <h4 style="display: inline-block;padding-left: 10%">Plage mensuelle</h4><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le mois de début et de fin de la saison 2">?</button><h4 style="display: inline-block;padding-left: 40%;">Plage horaire</h4><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'heure de début et de fin de travail durant la saison 2">?</button></br></br>
                                             <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider2" name="monthSlider2" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider2" name="hourSlider2" /> </lo></br>
-                                             <button type="button" class="btn btn-primary btn-sm" id="butsaison2" onclick="addsaison2()">Nouvelle saison</button>
+                                             <button type="button" class="btn btn-secondary btn-sm" id="butsaison2" onclick="addsaison2()">Nouvelle saison</button>
                                         </div>   
 
                                         <div id = "saison3" >
@@ -124,7 +124,7 @@
                                                 </div>
                                                 <div class="col">
                                                     <label class="form-control-label required" for="dateconge_fin"><h4 >Fin</h4></label>
-                                                    <button type="button" class="btn btn-primary btn-sm" id="butconge1" onclick="addconge1()">Nouvelle période</button>
+                                                    <button type="button" class="btn btn-secondary btn-sm" id="butconge1" onclick="addconge1()">Nouvelle période</button>
                                                     <input type="date" name="dateconge_fin" id="dateconge_fin" class="form-control" >
                                                     
                                                 </div>
@@ -137,7 +137,7 @@
                                                 </div>                                               
                                                 <div class="col">
                                                     <label class="form-control-label required" for="dateconge_fin1"><h4 >Fin</h4></label>
-                                                     <button type="button" class="btn btn-primary btn-sm" id="butconge2" onclick="addconge2()">Nouvelle période</button>
+                                                     <button type="button" class="btn btn-secondary btn-sm" id="butconge2" onclick="addconge2()">Nouvelle période</button>
                                                     <input type="date" name="dateconge_fin1" id="dateconge_fin1" class="form-control" >
                                                    
                                                 </div>

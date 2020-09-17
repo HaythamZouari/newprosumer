@@ -1750,12 +1750,12 @@
                                                     </tr>
                                                     <tr class='regul'>
                                                         <td >Facture de régularisation</td>
-                                                        <td>{{ finance.fregularisation[0]|number_format(3, '.', ' ') }}</td>
+                                                        <td>{{ finance.fregularisation[1]|number_format(0, '.', ' ') }}</td>
                                                         <td>DT</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Gains par autoconsommation la  1ére année</td>
-                                                        <td>{{ finance.GainTransporter[0]|number_format(0, '.', ' ')}}</td>
+                                                        <td>{{ finance.GainTransporter[1]|number_format(0, '.', ' ')}}</td>
                                                         <td>DT</td>
                                                     </tr>
                                                   
@@ -1778,7 +1778,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>VAN</td>
-                                                        <td>{{ finance.van|number_format(3, '.', ' ') }}</td>
+                                                        <td>{{ finance.van|number_format(0, '.', ' ') }}</td>
                                                         <td>DT</td>
                                                     </tr>
                                                     <tr>
@@ -2079,7 +2079,7 @@
 
                         }
 
-                        for (let i = 0; i < response.maturiter+response.delee; i++) {
+                        for (let i = 1; i <= response.maturiter+response.delee; i++) {
                             annuite[i]=response.annuite[i];
                             cfads[i]=response.cfads[i];
                         }
@@ -2112,7 +2112,7 @@
                             
                             
                                 cedee[0][i]=dates;
-                                cedee[1][i]=response.cedee[response.cedee.length-1][i][1];
+                                cedee[1][i]=response.cedee[i][1];
                             };
                                 
                                 consomationTot.push(consomationTotTmp);
@@ -2120,6 +2120,16 @@
                                 importerTot.push(importerTotTmp);
                         
                         };
+                            console.log("PH_production");
+                            console.log(response.PH_production);
+                            console.log("PH_auto_consomer");
+                            console.log(response.PH_auto_consomer);
+                            console.log("PH_consomation");
+                            console.log(response.PH_consomation);
+                            console.log("PH_importer");
+                            console.log(response.PH_importer);
+                            console.log("PH_cedee");
+                            console.log(response.PH_cedee);
 
 
                           consomation_tmp=[];
@@ -2170,7 +2180,7 @@
                                     auto_consome_tmp=[];
                                     consomation_tmp.push(response.consomation[j][i][1]);
                                     production_tmp.push(response.production[i][1]);
-                                    cedee_tmp.push(response.cedee[response.consomation.length-1][i][1]);
+                                    cedee_tmp.push(response.cedee[i][1]);
                                     auto_consome_tmp.push(response.auto_consomer[j][i][1]);
                                     importe_tmp.push(response.importer[j][i][1]);
                                
@@ -2178,7 +2188,7 @@
                                 else{
                                     consomation_tmp.push(response.consomation[j][i][1]);
                                     production_tmp.push(response.production[i][1]);
-                                    cedee_tmp.push(response.cedee[response.consomation.length-1][i][1]);
+                                    cedee_tmp.push(response.cedee[i][1]);
                                     auto_consome_tmp.push(response.auto_consomer[j][i][1]);
                                     importe_tmp.push(response.importer[j][i][1]);
 
@@ -2187,6 +2197,7 @@
 
                             };
                             
+
                                 consomation_heatmap=new transpose(consomation_heatmap1);
                                 production_heatmap=new transpose(production_heatmap1);
                                 cedee_heatmap=new transpose(cedee_heatmap1);
@@ -2203,31 +2214,12 @@
                             PH_consomation=response.PH_consomationannuel;
                             PH_auto_consome=response.PH_auto_consomerannuel;
                             PH_importer=response.PH_importerannuel;
-                            
-
-
-
-                         for (let k = 1; k < 13 ; k++) {
-                                
-                                PH_production[0]+=response.PH_production[k]['jour'];
-                                PH_production[3]+=response.PH_production[k]['nuit'];
-                                PH_production[1]+=response.PH_production[k]['ete'];
-                                PH_production[2]+=response.PH_production[k]['soir'];
-                               
-                                PH_cedee[0]+=response.PH_cedee[k]['jour'];
-                                PH_cedee[3]+=response.PH_cedee[k]['nuit'];
-                                PH_cedee[1]+=response.PH_cedee[k]['ete'];
-                                PH_cedee[2]+=response.PH_cedee[k]['soir'];
-                               
-                                
-                            };
-
-                            PH_productionannuel=PH_production;
-                            PH_cedeeannuel=PH_cedee;
+                            PH_productionannuel=response.PH_productionannuel;
+                            PH_cedeeannuel=response.PH_cedeeannuel;
                     
 
                         for (let i = 0; i <4 ; i++) {
-                            PH_cedee_ps[i]=(PH_cedee[i]/PH_production[i])*100;
+                            PH_cedee_ps[i]=(Object.values(PH_cedeeannuel)[i]/Object.values(PH_productionannuel)[i])*100;
                         }
 
                          for (let j = 0; j < response.consomation.length; j++) { 
@@ -2243,7 +2235,7 @@
                                
                             for (let i = 0; i <4 ; i++) {
                                  PH_imp_ps[j][i]=( Object.values(PH_importer[j])[i]/ Object.values(PH_consomation[j])[i])*100;
-                                 PH_autoconsomer_ps2[j][i]=( Object.values(PH_auto_consome[j])[i]/PH_production[i])*100;
+                                 PH_autoconsomer_ps2[j][i]=( Object.values(PH_auto_consome[j])[i]/Object.values(PH_productionannuel)[i])*100;
                             }
 
 
@@ -2264,13 +2256,18 @@
                              }
                         }
 
-                       
+                        for (let j = 0; j < response.consomation.length; j++) { 
+                             for (let i = 0; i < 12; i++) {
+                                month_auto[j][i]*=100;
+                                month_imp[j][i]*=100;
+                             }
+                        }
                           
 
                           
 
                         let dataMonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
-                        for (let i = 0; i <response.maturiter+response.delee ; i++) {
+                        for (let i = 1; i <=response.maturiter+response.delee ; i++) {
                             dsacr[i]=response.dsacr[i];
                         }
 
@@ -2278,14 +2275,14 @@
                             llcr[i]=response.llcr[i];
                         }
 
-                        for (let i = 0; i <response.dureeProj ; i++) {
+                        for (let i = 0; i <25 ; i++) {
                             cashflow[i]=response.cashflow[i];
                             cashflow_cum[i]=response.cashflow_cum[i];
                         }
 
-                        cashflow.unshift(response.cashFlowIn);
-                        cashflow_cum.unshift(response.cashFlowIn);
-                        console.log(response.cashflow_cum);
+                        
+                        console.log(response.annuite);
+                        console.log(response.gain_E_transporter);
                         console.log(response.cashflow);
                         
                         
@@ -2321,25 +2318,12 @@
                         }
                    
                         /////////////*cashtab start*///////
-                             $('#result_finance').append("<tr><td>" + 0 +"</td>"+
-                                    "<td></td>"+
-                                    "<td></td>"+
-                                    "<td></td>"+
-                                    "<td></td>"+
-                                    "<td></td>"+
-                                    "<td></td>"+
-                                    "<td></td>"+
-                                    "<td>"+round(response.cashFlowIn,0)+"</td>"+
-                                    "<td></td>"+
-                                    "<td class='annuite'></td>"+
-                                    "<td></td class='annuite'>"+
-                                    "<td></td class='annuite'>"
-                                    +"</tr>"
-                                );
-                         
-                             for(let i=0;i<response.delee;i++){
+                             
+                        
+
+                             for(let i=0;i<10;i++){
                                  
-                                $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
+                                $('#result_finance').append("<tr><td>" +(i)+"</td>"+
                                     "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
                                     "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
                                     "<td>"+round(response.gain_ans[i],0)+"</td>"+
@@ -2356,49 +2340,10 @@
                                 );
                             }
 
-                            for(let i=response.delee;i<response.maturiter+response.delee;i++){
-                                
-                                $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
-                                "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
-                                    "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
-                                    "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                    "<td class='transport'>"+round(response.Facture_transport[i],0)+"</td>"+
-                                    "<td>"+round(response.opex[i],0)+"</td>"+
-                                    "<td class=annuite'>"+round(response.annuite[i],0)+"</td>"+
-                                    "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
-                                    "<td>"+round(response.cashflow[i],0)+"</td>"+
-                                    "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                    "<td class='annuite'>"+round(response.cfads[i],0)+"</td>"+
-                                    "<td class='annuite'>"+round(response.dsacr[i],2)+"</td>"+
-                                    "<td class='annuite'>"+round(response.llcr[i],2)+"</td>"
-                                    +"</tr>"
-
-                                );
-
-                            }
-                            for(let i=response.maturiter+response.delee;i<10;i++){
-                                $('#result_finance').append("<tr><td>" +(i+1)+"</td>"+
-                                    "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
-                                    "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
-                                    "<td>"+round(response.gain_ans[i],0)+"</td>"+
-                                    "<td class='transport'>"+round(response.Facture_transport[i],0)+"</td>"+
-                                    "<td>"+round(response.opex[i],0)+"</td>"+
-                                    "<td></td>"+
-                                    "<td class='regul'>"+round(response.facture_regrularisation[i],0)+"</td>"+
-                                    "<td>"+round(response.cashflow[i],0)+"</td>"+
-                                    "<td>"+round(response.cashflow_cum[i],0)+"</td>"+
-                                    "<td class='annuite'>"+round(response.cfads[i],0)+"</td>"+
-                                    "<td class='annuite'></td>"+
-                                    "<td class='annuite'></td>"+
-
-                                    +"</tr>"
-
-                                );
-
-                            }
+                        
 
                             for(let i=10;i<20;i++){
-                                $('#result_finance2').append("<tr><td>" +(i+1)+"</td>"+
+                                $('#result_finance2').append("<tr><td>" +(i)+"</td>"+
                                     "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
                                     "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
                                     "<td>"+round(response.gain_ans[i],0)+"</td>"+
@@ -2419,7 +2364,7 @@
                             }
 
                             for(let i=20;i<30;i++){
-                                $('#result_finance3').append("<tr><td>" +(i+1)+"</td>"+
+                                $('#result_finance3').append("<tr><td>" +(i)+"</td>"+
                                     "<td>"+round(response.gain_E_transporter[i],0)+"</td>"+
                                     "<td>"+round(response.gain_E_cedee[i],0)+"</td>"+
                                     "<td>"+round(response.gain_ans[i],0)+"</td>"+
@@ -2499,7 +2444,7 @@
                             var cell2 = row.insertCell(0);
                             cell2.innerHTML = "Gain par autoconsommation au site"+j;
                              response.g_E_transporterSite[j].unshift(0);
-                            for(let i=0;i<11;i++){
+                            for(let i=0;i<10;i++){
                            
                             var cell1 = row.insertCell(i+1);
 
@@ -2514,9 +2459,9 @@
                             var cell2 = row.insertCell(0);
                             cell2.innerHTML = "Gain par autoconsommation au site"+j;
                             
-                            for(let i=11;i<21;i++){
+                            for(let i=10;i<20;i++){
                             
-                            var cell1 = row.insertCell(i-10);
+                            var cell1 = row.insertCell(i-9);
 
                             
                             cell1.innerHTML =  round(response.g_E_transporterSite[j][i],0);
@@ -2528,9 +2473,9 @@
                             var row = table.insertRow(j+1);
                             var cell2 = row.insertCell(0);
                             cell2.innerHTML = "Gain par autoconsommation au site"+j;
-                            for(let i=21;i<31;i++){
+                            for(let i=20;i<30;i++){
                             
-                            var cell1 = row.insertCell(i-20);
+                            var cell1 = row.insertCell(i-19);
 
                             
                             cell1.innerHTML =  round(response.g_E_transporterSite[j][i],0);
@@ -2541,14 +2486,9 @@
                         
 
                         /////////////*cashtab end*///////
-                        console.log('response.subventionarray')
-                        console.log(response.subventionarray)
-                        response.gain_E_cedee.unshift(0);
-                        response.Facture_transport.unshift(0);
-                        response.annuite.unshift(0);
-                        response.facture_regrularisation.unshift(0);
-                        response.opex.unshift(0);
-                        response.subventionarray.unshift(0);
+                        
+                       
+                        
                         
 
                                     
@@ -2881,10 +2821,10 @@
                                     };   
 
                                     $('#t_prod').append(
-                                        "<td>" + round(PH_production.reduce(reducer), 0) + "</td>"
+                                        "<td>" + round(Object.values(PH_productionannuel).reduce(reducer), 0) + "</td>"
                                     );
                                     $('#t_cedee').append(
-                                        "<td>" + round(PH_cedee.reduce(reducer), 0) + "</td>"
+                                        "<td>" + round(Object.values(PH_cedeeannuel).reduce(reducer), 0) + "</td>"
                                     );
                             
                         for (let j = 0; j < PH_consomation.length; j++) {     
@@ -2906,7 +2846,7 @@
                                 Plotly.newPlot('auto_cm_imp'.concat(j), data, layout, {responsive: true});
                         }
                         //**************************************repartion energy produite**********************
-                    PH_cedee_ps.push((PH_cedee.reduce(reducer)/PH_production.reduce(reducer))*100);
+                    PH_cedee_ps.push((Object.values(PH_cedeeannuel).reduce(reducer))/(Object.values(PH_productionannuel).reduce(reducer))*100);
 
                         trace1 = {
                             x: ['Jour','Ete','Soir','Nuit','Total'],
@@ -2921,7 +2861,7 @@
 
                         Plotly.newPlot('rp_pd', data, layout,{responsive: true});
                         for (let j=0; j<PH_autoconsomer_ps2.length;j++){
-                             PH_autoconsomer_ps2[j].push(((Object.values(PH_auto_consome[j])).reduce(reducer)/PH_production.reduce(reducer))*100);
+                             PH_autoconsomer_ps2[j].push(((Object.values(PH_auto_consome[j])).reduce(reducer)/Object.values(PH_productionannuel).reduce(reducer))*100);
                         Plotly.addTraces('rp_pd', {name: 'Autoconsommée'.concat(j),type: 'bar',x:['Jour','Ete','Soir','Nuit','Total'],y: PH_autoconsomer_ps2[j]});
                         }
                       
@@ -3025,7 +2965,7 @@
                                             overlaying: 'y',
                                             side: 'right'
                                         },
-                                        legend: {x: 0.35, y: 5, orientation: 'h'}
+                                        
                                         };
 
                         Plotly.newPlot('chat_cashflow', data, layout,{responsive: true});
@@ -3050,7 +2990,7 @@
                             line: {color: '#17BECF'}
                         };
                         trace3 = {
-                            y: cfadstmp,
+                            y: cfads,
                             name: 'CFADS',
                             type: 'bar'
                         };
@@ -3063,8 +3003,8 @@
                                 overlaying: 'y',
                                 side: 'right'
                             },
-                            rangeslider: {range: [cfadstmp[0], cfadstmp[cfadstmp.length-1]]},
-                            legend: {x: 0.35, y: 5, orientation: 'h'}
+                            xaxis: {range: [0, cfads.length+1]},
+                            
                         };
 
                         Plotly.newPlot('final_chart', data, layout,{responsive: true});

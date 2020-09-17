@@ -55,9 +55,9 @@ class FinanceService
         $auto_consomer_postHor[3]=0;
         foreach ($auto_consomer_postHor_temp as $tmp) {
             $auto_consomer_postHor[0]+=$tmp['jour'];
-            $auto_consomer_postHor[1]+=$tmp['soir'];
-            $auto_consomer_postHor[2]+=$tmp['nuit'];
-            $auto_consomer_postHor[3]+=$tmp['ete'];
+            $auto_consomer_postHor[1]+=$tmp['ete'];
+            $auto_consomer_postHor[2]+=$tmp['soir'];
+            $auto_consomer_postHor[3]+=$tmp['nuit'];
 
         }
         for($j=0;$j<30;$j++){
@@ -75,6 +75,14 @@ class FinanceService
     
     public static function gainEnergieCedee(array $tarif,Project $project){
 
+        for($i=0;$i<13;$i++){
+            $CedePH[$i]['jour']=0;
+            $CedePH[$i]['ete']=0;
+            $CedePH[$i]['soir']=0;
+            $CedePH[$i]['nuit']=0; 
+
+        }
+
         
         if($project->getCsvProd()!=null){
             $degradation=$project->getCsvProd()->getDegradation();
@@ -85,20 +93,37 @@ class FinanceService
             $degradation=$project->getNinja()->getDegradation();
 
 
+            if (count($project->getConsomation()->getallConsomationAnnuel())>1){
+
+                for ($j=1;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+                    
+                    for($i=1;$i<13;$i++){
+                        $CedePH[$i]['jour']+= $project->getcedeePH()[$j][$i]['jour'];
+                        $CedePH[$i]['ete']+= $project->getcedeePH()[$j][$i]['ete'];
+                        $CedePH[$i]['soir']+= $project->getcedeePH()[$j][$i]['soir'];
+                        $CedePH[$i]['nuit']+= $project->getcedeePH()[$j][$i]['nuit'];                  
             
-        $allcedee=$project->getCedee();
-        $lastit=count($project->getConsomation()->getallConsomationAnnuel())-1;
-        $cedee_postH_tmp=PostHoraire::PostHoraire($allcedee[$lastit]);
+                    }
+                }
+            }
+            else{
+                $CedePH=$project->getinjectPH();
+            }
+
+
+
+            
+        
         $cedee_postH[0]=0;
         $cedee_postH[1]=0;
         $cedee_postH[2]=0;
         $cedee_postH[3]=0;
         $result=[];
-        foreach ($cedee_postH_tmp as $tmp) {
+        foreach ($CedePH as $tmp) {
             $cedee_postH[0]+=$tmp['jour'];
-            $cedee_postH[1]+=$tmp['soir'];
-            $cedee_postH[2]+=$tmp['nuit'];
-            $cedee_postH[3]+=$tmp['ete'];
+            $cedee_postH[1]+=$tmp['ete'];
+            $cedee_postH[2]+=$tmp['soir'];
+            $cedee_postH[3]+=$tmp['nuit'];
         }
         for($j=0;$j<30;$j++) {
             $result[$j]=0;
@@ -128,16 +153,16 @@ class FinanceService
             $result[$i]=0;
         }
        
-        for($i=0;$i<$delee;$i++){
+        for($i=1;$i<=$delee;$i++){
             $result[$i]=($project->getFinance()->getTauxInteret()/100)*($project->getFinance()->getMontantDette());
         }
-        for($i=$delee;$i<($delee+$maturite);$i++){
+        for($i=$delee+1;$i<=($delee+$maturite);$i++){
             $result[$i]=((($project->getFinance()->getTauxInteret()/100)*
             $project->getFinance()->getMontantDette())/
             (1-pow((1+($project->getFinance()->getTauxInteret()/100)),-$project->getFinance()->getMaturiteProj()))
         );
         }
-        for($i=($delee+$maturite);$i<30;$i++){   
+        for($i>($delee+$maturite);$i<30;$i++){   
             $result[$i]=0;
         }
         return $result;
@@ -208,15 +233,10 @@ class FinanceService
     }
     public static function depenses(array $frais_exp,array $annuite,array $f_reg,array $f_transport,int $maturite,int $delee){
         $result=[];
-        for($i=0;$i<$delee;$i++){
+        for($i=0;$i<30;$i++){
             $result[$i]=$frais_exp[$i]+$f_reg[$i]+$f_transport[$i]+$annuite[$i];
         }
-        for($i=$delee;$i<($delee+$maturite);$i++){
-            $result[$i]=$frais_exp[$i]+$annuite[$i]+$f_reg[$i]+$f_transport[$i];
-        }
-        for($i=($maturite+$delee);$i<(count($f_transport));$i++){
-            $result[$i]=$frais_exp[$i]+$f_reg[$i]+$f_transport[$i];
-        }
+        
         return $result;
     }
     public static function depenses2(array $frais_exp,array $annuite,array $f_reg){
@@ -238,20 +258,23 @@ class FinanceService
         return $result;
     }
     public static function LLCR(Project $project, array $annuite,array $cfads){
-        $result=[];
+        for($i=0;$i<30;$i++){
+            $result[$i]=0;
+        }
+       
         $solderep=[];
         $tmp_result=[];
 
-        for($i=0;$i<($project->getFinance()->getMaturiteProj())+($project->getFinance()->getDelaiGrace());$i++){
+        for($i=1;$i<=($project->getFinance()->getMaturiteProj())+($project->getFinance()->getDelaiGrace());$i++){
             $tmp_result[$i]=0; 
             $k=1;          
-            for($j=$i;$j<($project->getFinance()->getMaturiteProj())+($project->getFinance()->getDelaiGrace());$j++){
+            for($j=$i;$j<=($project->getFinance()->getMaturiteProj())+($project->getFinance()->getDelaiGrace());$j++){
 
                 $tmp_result[$i] += $cfads[$j]/pow((1+($project->getFinance()->getTauxInteret()/100)),$k);
                 $k++;
 
             }
-            $solderep[0]=$project->getFinance()->getMontantDette();
+            $solderep[1]=$project->getFinance()->getMontantDette();
             $solderep[$i+1]=$solderep[$i]*(1+(($project->getFinance()->getTauxInteret())/100))-$annuite[$i];            
             $result[$i]=($tmp_result[$i]/$solderep[$i]);           
         }

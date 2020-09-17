@@ -721,7 +721,7 @@
                             
                             
                                 cedee[0][i]=dates;
-                                cedee[1][i]=response.cedee[response.cedee.length-1][i][1];
+                                cedee[1][i]=response.cedee[i][1];
                             };
                                 
                                 consomationTot.push(consomationTotTmp);
@@ -786,7 +786,7 @@
                                     auto_consome_tmp=[];
                                     consomation_tmp.push(response.consomation[j][i][1]);
                                     production_tmp.push(response.production[i][1]);
-                                    cedee_tmp.push(response.cedee[response.consomation.length-1][i][1]);
+                                    cedee_tmp.push(response.cedee[i][1]);
                                     auto_consome_tmp.push(response.auto_consomer[j][i][1]);
                                     importe_tmp.push(response.importer[j][i][1]);
                                     
@@ -800,7 +800,7 @@
                                 else{
                                     consomation_tmp.push(response.consomation[j][i][1]);
                                     production_tmp.push(response.production[i][1]);
-                                    cedee_tmp.push(response.cedee[response.consomation.length-1][i][1]);
+                                    cedee_tmp.push(response.cedee[i][1]);
                                     auto_consome_tmp.push(response.auto_consomer[j][i][1]);
                                     importe_tmp.push(response.importer[j][i][1]);
 
@@ -874,7 +874,7 @@
                         console.log("PH_consomation");
                         
                         console.log(PH_consomation);
-                        console.log(PH_auto_consome);
+                        console.log(response.PH_auto_consomer);
                         console.log(response.PH_auto_consomerS);
                         console.log(t_auto[1]);
                         console.log("date");
@@ -918,7 +918,7 @@
                         $('#tricapres').append("<td class="+"font-weight-bold"+">TRI sur les capitaux propres</td><td>"+Math.round(response.tricap,2)+"</td><td>%</td>");
                         $('#trires').append("<td class="+"font-weight-bold"+"> TRI du projet  </td><td>"+Math.round(response.tri25,2)+"</td><td>%</td>");
                         $('#subvres').append("<td class="+"font-weight-bold"+">Subvention</td><td>"+((Math.round(response.subv,0)*Math.round(response.capex,0))/100)+"</td><td>DT</td>");
-                        $('#omres').append("<td class="+"font-weight-bold"+">Coùt d'opération et maintenance </td><td>"+Math.round(response.opex[0],0)+"</td><td>DT</td>");
+                        $('#omres').append("<td class="+"font-weight-bold"+">Coùt d'opération et maintenance </td><td>"+Math.round(response.opex[1],0)+"</td><td>DT</td>");
                         $('#annuiteres').append("<td class="+"font-weight-bold"+">Annuité</td><td>"+Math.round(response.annuite[5],0)+"</td><td>DT</td>");
                         $('#vanres').append("<td class="+"font-weight-bold"+"> VAN sur 25 ans  </td><td>"+Math.round(response.van,0)+"</td><td>DT</td>");
                         $('#puissanceres').append("<td class="+"font-weight-bold"+"> Puissance de la centrale  </td><td>"+Math.round(response.peak,2)+"</td><td>kWc</td>");

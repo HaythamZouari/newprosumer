@@ -10,14 +10,14 @@ easy_admin:
       class: App\Entity\Project
       form:
         fields:
-          - 'id'
-          - 'name'
-          - 'user'
-          - 'consomation'
-          - 'pvgis'
-          - 'ninja'
-          - 'csvProd'
-          - 'finance'
+          - { property: 'id' }
+          - { property: 'name' }
+          - { property: 'user' }
+          - { property: 'consomation' }
+          - { property: 'pvgis' }
+          - { property: 'ninja' }
+          - { property: 'csvProd' }
+          - { property: 'finance' }
 
     Finance:
       class: App\Entity\Finance

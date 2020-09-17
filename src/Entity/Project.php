@@ -86,6 +86,41 @@ class Project
      */
     private $finance;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private  $consomationPH = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private  $productionPH = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private  $auto_consomerPH = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private  $importerPH = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private  $cedeePH = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private  $injectPH = [];
+
+     /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private  $inject = [];
+
 
 
 
@@ -255,6 +290,90 @@ class Project
     public function setFinance(?Finance $finance): self
     {
         $this->finance = $finance;
+
+        return $this;
+    }
+
+    public function getconsomationPH(): ?array
+    {
+        return $this->consomationPH;
+    }
+
+    public function setconsomationPH(?array $consomationPH): self
+    {
+        $this->consomationPH = $consomationPH;
+
+        return $this;
+    }
+
+    public function getproductionPH(): ?array
+    {
+        return $this->productionPH;
+    }
+
+    public function setproductionPH(?array $productionPH): self
+    {
+        $this->productionPH = $productionPH;
+
+        return $this;
+    }
+
+    public function getauto_consomerPH(): ?array
+    {
+        return $this->auto_consomerPH;
+    }
+
+    public function setauto_consomerPH(?array $auto_consomerPH): self
+    {
+        $this->auto_consomerPH = $auto_consomerPH;
+
+        return $this;
+    }
+
+    public function getimporterPH(): ?array
+    {
+        return $this->importerPH;
+    }
+
+    public function setimporterPH(?array $importerPH): self
+    {
+        $this->importerPH = $importerPH;
+
+        return $this;
+    }
+
+    public function getcedeePH (): ?array
+    {
+        return $this->cedeePH ;
+    }
+
+    public function setcedeePH (?array $cedeePH ): self
+    {
+        $this->cedeePH  = $cedeePH ;
+
+        return $this;
+    }
+
+    public function getinjectPH(): ?array
+    {
+        return $this->injectPH;
+    }
+
+    public function setinjectPH(?array $injectPH): self
+    {
+        $this->injectPH = $injectPH;
+
+        return $this;
+    }
+
+    public function getinject(): ?array
+    {
+        return $this->inject;
+    }
+
+    public function setinject(?array $inject): self
+    {
+        $this->inject = $inject;
 
         return $this;
     }

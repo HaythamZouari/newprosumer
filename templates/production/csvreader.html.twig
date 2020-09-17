@@ -12,7 +12,7 @@
     <label class="form-control-label required" for="">Dégradation des performances des modules PV (%)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir la dégradation annuelle des performances des modules photovoltaiques (Cette valeur est définie généralement à 0.5%)">
                             ?
                         </button>  
-    <input type="number" name="degradation" value="0.5" id="degradation" min="0" class="form-control">
+    <input type="value" class="form-control" name="degradationc" value="0.5" id="degradationc" min="0" >
 </div>
 
 <div class="form-group">
@@ -40,6 +40,7 @@
             });
             this.on("sending", function (file, xhr, formData) {
                formData.append('csvpuiss',$('#csvpuiss').val());
+               formData.append('degradationc',$('#degradationc').val());
                 // send additional data with the file as POST data if needed.
             });
             this.on("error", function (file) {

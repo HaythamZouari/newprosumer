@@ -47,7 +47,7 @@
                     <label class="form-control-label required" for="">Dégradation des performances des modules PV (%)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir la dégradation annuelle des performances des modules photovoltaiques (Cette valeur est définie généralement à 0.5%)">
                             ?
                         </button>  
-                    <input type="number" name="degradation" id="degradation" value="0.5" min="0" class="form-control">
+                    <input type="number" name="degradationp" id="degradationp" value="0.5" min="0" class="form-control">
                 </div>
                 
                 <div class="text-center">
@@ -144,9 +144,7 @@
 </form>
 
 <script>
-        $(function () {
-        $('[data-toggle="popover"]').popover()
-        })
+       
 
     function add_sous_champ2(){
             $('#sschamp2').show('active');
@@ -223,9 +221,13 @@
                     console.log(response.con);
                     console.log("pro");
                      console.log(response.pro);
+                     console.log("auto");
                       console.log(response.aut);
+                      console.log("cede");
                        console.log(response.ced);
                         console.log(response.imp);
+                        console.log("inject");
+                        console.log(response.inject);
 
                      $('#successprod').show();
                       $('#loadinggis').hide();
