@@ -347,7 +347,7 @@ class ResultController extends AbstractController
     }
 
 
-    $f_reg=$project->getFinance()->getFRegularisation()[0];
+    $f_reg=$project->getFinance()->getFRegularisation()[1];
     
     for($i=0;$i<(count($project->getFinance()->getGainTransporter()));$i++){
         $f_transport[]=$project->getFinance()->getfactransport()[$i];

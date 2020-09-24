@@ -236,7 +236,7 @@ class ProductionController extends AbstractController
         return new JsonResponse(['period'=>$period,'data'=>$data,'array'=>$array,'data2'=>$array,
         'pro'=>$production,
         'aut'=>$project->getAutoConsomer(),
-        'ced'=>$project->getcedeePH(),
+        'ced'=>$project->getcedee(),
         'inject'=>$project->getinject(),
         'imp'=>$importee, ]);
     }

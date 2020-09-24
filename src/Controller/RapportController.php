@@ -401,7 +401,7 @@ for($i=0;$i<(count($project->getFinance()->getGainTransporter()));$i++){
         }   
         for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){  
 
-        $month[$j]=PostHoraire::PostHoraire($project->getConsomation()->getallConsomationAnnuel()[$j]);
+        $month[$j]=$project->getconsomationPH()[$j];
     
         }
 

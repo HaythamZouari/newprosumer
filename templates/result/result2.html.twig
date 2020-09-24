@@ -202,7 +202,7 @@
     <script src={{ asset('build/js/transpose.js')}}></script>
     <script src={{ asset('build/js/plugins/jquery/dist/jquery.min.js') }}></script>
     <script>
-       let btn=0;
+         let btn=0;
         let consomation_heatmap1=[];
         let production_heatmap1=[];
         let auto_consomer_heatmap1=[];
@@ -231,7 +231,7 @@
         let PH_consomation=[];
         let PH_production=[];
         let PH_auto_consome=[];
-        let PH_cedee=[];
+        
         let PH_importer=[];
         let PH_auto_consomeTmp=[];
         let PH_importerTmp=[];
@@ -253,20 +253,14 @@
         let auto_consomer_heatmap1Tot=[];
       
             let auto_consommationS =[];
-                        let consommationS =[];
-                        let importerS =[];
-                        let t_auto =[];
-        PH_production[0]=0;
-        PH_production[1]=0;
-        PH_production[2]=0;
-        PH_production[3]=0;
+            let consommationS =[];
+            let importerS =[];
+            let t_auto =[];
+              
+        let PH_cedee=[];
         
-        PH_cedee[0]=0;
-        PH_cedee[1]=0;
-        PH_cedee[2]=0;
-        PH_cedee[3]=0;
         let presence_data=0;
-
+         
         
         $("#consomer").on('click',function () {
             btn=1;
@@ -306,10 +300,10 @@
             j=$("#SiteSelector").val();
 
                        
-           $('#auto_consommationS').append("<td>Economies d'énergie du site</td><td>"+Math.round(auto_consommationS[j],0)+"</td><td>kWh</td>");
-            $('#consommationS').append("<td>Consommation du site</td><td>"+Math.round(consommationS[j],0)+"</td><td>kWh</td>");
-            $('#importerS').append(" <td>Energie importée de la STEG</td><td>"+Math.round(importerS[j],0)+"</td><td>kWh</td>");
-            $('#t_autoc').append(" <td>Taux d’autoconsommation du site</td><td>"+Math.round(t_auto[j]*100,2)+"</td><td>%</td>");
+           $('#auto_consommationS').append("<td class="+"font-weight-bold"+">Economies d'énergie du site</td><td>"+Math.round(auto_consommationS[j],0)+"</td><td>kWh</td>");
+            $('#consommationS').append("<td class="+"font-weight-bold"+">Consommation du site</td><td>"+Math.round(consommationS[j],0)+"</td><td>kWh</td>");
+            $('#importerS').append(" <td class="+"font-weight-bold"+">Energie importée de la STEG</td><td>"+Math.round(importerS[j],0)+"</td><td>kWh</td>");
+            $('#t_autoc').append(" <td class="+"font-weight-bold"+">Taux d’autoconsommation du site</td><td>"+Math.round(t_auto[j]*100,2)+"</td><td>%</td>");
         });    
         
 
@@ -354,7 +348,7 @@
             trace4 = {
                 type: "scatter",
                 mode: "lines",
-                name: 'Injéctée dans le réseau',
+                name: 'Injectée dans le réseau',
                 x: production[0],
                 y: cedee[1],
                 line: {color: '#900C3F'}
@@ -372,9 +366,9 @@
             };
             Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
             k=j+1;
-            Plotly.addTraces('chart_consomtation', {name: 'consommation Brute'.concat(k),x:production[0],y: consomationTot[j]});
-            Plotly.addTraces('chart_consomtation', {name: 'Auto consommation'.concat(k),x:production[0],y: auto_consomeTot[j]});
-            Plotly.addTraces('chart_consomtation', {name: 'Achetée de la STEG'.concat(k),x:production[0],y: importerTot[j]});
+            Plotly.addTraces('chart_consomtation', {name: 'Consommation Brute'.concat(k),x:production[0],y: consomationTot[j]});
+            Plotly.addTraces('chart_consomtation', {name: 'Auto-consommation'.concat(k),x:production[0],y: auto_consomeTot[j]});
+            Plotly.addTraces('chart_consomtation', {name: 'Achétée de la STEG'.concat(k),x:production[0],y: importerTot[j]});
 
         
         });
@@ -465,7 +459,7 @@
             if (btn===4){
                 trace1 = {
                     x: cedee[1],
-                    name: 'Auto consommée',
+                    name: 'Auto-consommée',
                     autobinx: true,
                     histnorm: "count",
                     marker: {
@@ -685,29 +679,32 @@
                                 size: 14
                             },
                             showarrow: false,
-                            
+                           
                         }
                     ]
                 };
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
             }
         });
+    
         function res (url) {
-            if (presence_data===0){
-                presence_data=1;
+           
                 $.ajax({
-                   url: "{{ path('project_results',{ 'id':project.id }) }}",
+                    url: "{{ path('project_results',{ 'id':project.id }) }}",
                     type : 'POST',
                     data : data,
                     dataType: 'json',
                     cache: false,
                     success: function (response) {
-                       
+
+                        $('#SiteSelector').empty()
+                        consomationTot=[];
                         for (let j = 0; j < response.consomation.length; j++) {
 
                                 consomationTotTmp=[];
                                 auto_consomeTotTmp=[];
                                 importerTotTmp=[];
+                                
 
                             for (let i = 0; i < response.consomation[0].length ; i++) {
                                     dates = new Date(response.consomation[0][i][0] * 1000);
@@ -724,7 +721,7 @@
                             
                             
                                 cedee[0][i]=dates;
-                                cedee[1][i]=response.cedee[response.cedee.length-1][i][1];
+                                cedee[1][i]=response.cedee[i][1];
                             };
                                 
                                 consomationTot.push(consomationTotTmp);
@@ -789,7 +786,7 @@
                                     auto_consome_tmp=[];
                                     consomation_tmp.push(response.consomation[j][i][1]);
                                     production_tmp.push(response.production[i][1]);
-                                    cedee_tmp.push(response.cedee[response.consomation.length-1][i][1]);
+                                    cedee_tmp.push(response.cedee[i][1]);
                                     auto_consome_tmp.push(response.auto_consomer[j][i][1]);
                                     importe_tmp.push(response.importer[j][i][1]);
                                     
@@ -803,7 +800,7 @@
                                 else{
                                     consomation_tmp.push(response.consomation[j][i][1]);
                                     production_tmp.push(response.production[i][1]);
-                                    cedee_tmp.push(response.cedee[response.consomation.length-1][i][1]);
+                                    cedee_tmp.push(response.cedee[i][1]);
                                     auto_consome_tmp.push(response.auto_consomer[j][i][1]);
                                     importe_tmp.push(response.importer[j][i][1]);
 
@@ -869,6 +866,7 @@
                         console.log("importe");
                         console.log(importer_heatmap1Tot);
                         console.log("production");
+                        console.log(PH_production);
                         console.log(production);
                         console.log(consomationTot[0]);
                         console.log(consomationTot);
@@ -876,12 +874,14 @@
                         console.log("PH_consomation");
                         
                         console.log(PH_consomation);
-                        console.log(PH_auto_consome);
+                        console.log(response.PH_auto_consomer);
                         console.log(response.PH_auto_consomerS);
                         console.log(t_auto[1]);
+                        console.log("date");
+                        console.log(response.date);
+                         console.log(response.dumpdate);
 
-
-                           $('#auto_consommationS').empty();
+                        $('#auto_consommationS').empty();
                         $('#consommationS').empty();
                         $('#importerS').empty();
                         $('#prod25').empty();
@@ -903,7 +903,7 @@
 
 
 
-                       $('#auto_consommationS').append("<td class="+"font-weight-bold"+">Economies d'énergie du site </td><td>"+Math.round(response.auto_consommationS[0],0)+"</td><td>kWh</td>");
+                        $('#auto_consommationS').append("<td class="+"font-weight-bold"+">Economies d'énergie du site </td><td>"+Math.round(response.auto_consommationS[0],0)+"</td><td>kWh</td>");
                         $('#consommationS').append("<td class="+"font-weight-bold"+">Consommation du site</td><td>"+Math.round(response.consommationS[0],0)+"</td><td>kWh</td>");
                         $('#importerS').append("<td class="+"font-weight-bold"+">Energie achetée de la STEG</td><td>"+Math.round(response.importerS[0],0)+"</td><td>kWh</td>");
                         $('#prod25').append("<td class="+"font-weight-bold"+">Production PV sur 25 ans</td><td>"+Math.round(response.prod25,0)+"</td><td>kWh</td>");
@@ -918,33 +918,35 @@
                         $('#tricapres').append("<td class="+"font-weight-bold"+">TRI sur les capitaux propres</td><td>"+Math.round(response.tricap,2)+"</td><td>%</td>");
                         $('#trires').append("<td class="+"font-weight-bold"+"> TRI du projet  </td><td>"+Math.round(response.tri25,2)+"</td><td>%</td>");
                         $('#subvres').append("<td class="+"font-weight-bold"+">Subvention</td><td>"+((Math.round(response.subv,0)*Math.round(response.capex,0))/100)+"</td><td>DT</td>");
-                        $('#omres').append("<td class="+"font-weight-bold"+">Coùt d'opération et maintenance </td><td>"+Math.round(response.opex[0],0)+"</td><td>DT</td>");
+                        $('#omres').append("<td class="+"font-weight-bold"+">Coùt d'opération et maintenance </td><td>"+Math.round(response.opex[1],0)+"</td><td>DT</td>");
                         $('#annuiteres').append("<td class="+"font-weight-bold"+">Annuité</td><td>"+Math.round(response.annuite[5],0)+"</td><td>DT</td>");
                         $('#vanres').append("<td class="+"font-weight-bold"+"> VAN sur 25 ans  </td><td>"+Math.round(response.van,0)+"</td><td>DT</td>");
                         $('#puissanceres').append("<td class="+"font-weight-bold"+"> Puissance de la centrale  </td><td>"+Math.round(response.peak,2)+"</td><td>kWc</td>");
-
-                        
-                            if (response.annuite.length===0){
+                            
+                            
+                            if (response.annuite[1]===0){
                                 $('#annuiteres').hide();
                                 $('#trires').hide();
                             }
 
-                            if (response.f_reg==0){
+                            if (response.f_reg===0){
                                 
                                 $('#f_r').hide();
                             }
 
-
                         
+
+                       
                          for (let j = 0; j < consomationTot.length ; j++) {
                                 $('#SiteSelector').append("<option value="+j+">"+"Site"+j+"</option>"
                                 );
                             };
                     }       
+                       
                 });
-
-            }
-        }
+            
+        };
+         
         $(function () {
             res();
         })

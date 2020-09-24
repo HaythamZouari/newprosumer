@@ -924,12 +924,12 @@
                         $('#puissanceres').append("<td class="+"font-weight-bold"+"> Puissance de la centrale  </td><td>"+Math.round(response.peak,2)+"</td><td>kWc</td>");
                             
                             
-                            if (response.annuite.length===0){
+                            if (response.annuite[1]===0){
                                 $('#annuiteres').hide();
                                 $('#trires').hide();
                             }
 
-                            if (response.f_reg==0){
+                            if (response.f_reg===0){
                                 
                                 $('#f_r').hide();
                             }

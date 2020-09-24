@@ -165,7 +165,7 @@ class FinanceController extends AbstractController
                     $g_E_transporter =FinanceService::gainEnergieTransporterUnif($finance->getTarifUni(),$project,$totautoconsomme);
                     $g_E_cedee=FinanceService::gainEnergieCedee($finance->getTarifHoraire(),$project);
                     $f_transporter=FinanceService::facteurTransport($project,$tottransporte);
-                    $f_regularisation=FinanceService::factureRegularisation($g_E_cedee,$project);
+                    $f_regularisation=FinanceService::factureRegularisation($g_E_cedee,$project,$CedePH);
                
             }
 

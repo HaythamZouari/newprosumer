@@ -168,9 +168,8 @@ class FinanceService
         return $result;
     }
     //if
-    public static function factureRegularisation(array $gain_cedee,Project $project){
-        $lastit=count($project->getConsomation()->getallConsomationAnnuel())-1;
-        $cedee=$project->getCedee()[$lastit];
+    public static function factureRegularisation(array $gain_cedee,Project $project,$CedePH){
+        
         if ($project->getPvgis()!=null)
             $prod=$project->getPvgis()->getResult();
         if ($project->getNinja()!=null)
@@ -180,9 +179,23 @@ class FinanceService
 
         $cedee_total=0;
         $prod_total=0;
+
+        $cedee_postH[0]=0;
+        $cedee_postH[1]=0;
+        $cedee_postH[2]=0;
+        $cedee_postH[3]=0;
         
-        for($i=0;$i<count($cedee);$i++){
-            $cedee_total+=$cedee[$i][1];
+        foreach ($CedePH as $tmp) {
+            $cedee_postH[0]+=$tmp['jour'];
+            $cedee_postH[1]+=$tmp['ete'];
+            $cedee_postH[2]+=$tmp['soir'];
+            $cedee_postH[3]+=$tmp['nuit'];
+        }
+
+        $cedee_total=$cedee_postH[0]+$cedee_postH[1]+$cedee_postH[2]+$cedee_postH[3];
+        
+        for($i=0;$i<count($prod);$i++){
+            
             $prod_total+=$prod[$i][1];
         }
         $taux_cedee=$cedee_total/$prod_total;
