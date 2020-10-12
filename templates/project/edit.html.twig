@@ -3,6 +3,8 @@
 {% block title %}Editer Projet{% endblock %}
 
 {% block body %}
+<div class="card bg-secondary border border-0">
+    <div class="card-header bg-transparent pb-5" >
     <h1>Editer Projet</h1>
 
     {{ include('project/_form.html.twig', {'button_label': 'Update'}) }}
@@ -10,4 +12,6 @@
     <a href="{{ path('project_index') }}">Retour à la liste</a>
 
     {{ include('project/_delete_form.html.twig') }}
+    </div>
+    </div>
 {% endblock %}
