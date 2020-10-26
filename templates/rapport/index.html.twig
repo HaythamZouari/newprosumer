@@ -2294,7 +2294,7 @@
 
                        
 
-                        pbperiod=l+((response.cashflow_cum[l-1])*(-1)/cashflow[l+1])
+                        pbperiod=l-1+((response.cashflow_cum[l-1])*(-1)/cashflow[l+1])
                          $('.pbperiod').append(round(pbperiod,2)+'</td>')
 
                      for (let j = 0; j < response.consomation.length; j++) {  

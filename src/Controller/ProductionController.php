@@ -238,7 +238,13 @@ class ProductionController extends AbstractController
         'aut'=>$project->getAutoConsomer(),
         'ced'=>$project->getcedee(),
         'inject'=>$project->getinject(),
-        'imp'=>$importee, ]);
+        'imp'=>$importee, 
+
+        
+        
+        
+        ]);
+
     }
     /**
      * @Route("/ninja/{id}", name="ninja")

@@ -149,7 +149,7 @@ class ProjectListner implements EventSubscriberInterface
 
         for ($i=0;$i<count($consomation[0]);$i++){
             $consomationtot1[$i]=0;
-            $consomationtot[$i][1]=0;
+            $consomationtot[$i][1]=0.000000001;
             $consomationtot[$i][0]=0;
             $min[$i]=0;
             $ratio[$i]=0;

@@ -92,6 +92,7 @@
                 </div>
                 <div class="text-center">
                 <button type="button" onclick="add_sous_champ3()" class="btn-secondary btn">Ajouter sous-champ</button>
+                <button type="button" onclick="mod_sous_champ1()" class="btn-secondary btn">Modifier sous-champ 1</button>
                 </div> <br>
             </div>
             <div id="sschamp3">
@@ -128,6 +129,11 @@
                     <label class="form-control-label required" for="loss3" >Pertes [%]</label>
                     <input type="number" class="form-control" step="0.1" min="0" value=14  name="loss3" id="loss3">
                 </div>
+                <div class="text-center">
+                    <button type="button" onclick="mod_sous_champ2()" class="btn-secondary btn">Modifier sous-champ 2</button><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Ajouter un autre champ PV avec une Fixation différente ou une inclinaison et azimut différents">
+                            ?
+                        </button>      
+                </div><br>
                 
                 
             </div>
@@ -160,6 +166,24 @@
            
             
     }
+
+    function mod_sous_champ2(){
+            $('#sschamp3').hide('active');
+            $('#sschamp2').show('active');
+            $('#sschamp1').hide('active');
+           
+            
+    }
+
+    function mod_sous_champ1(){
+            $('#sschamp3').hide('active');
+            $('#sschamp2').hide('active');
+            $('#sschamp1').show('active');
+           
+            
+    }
+
+
 
     function fixe(){
         $('#angle').prop('disabled',false);

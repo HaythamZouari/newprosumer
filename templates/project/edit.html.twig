@@ -8,10 +8,15 @@
     <h1>Editer Projet</h1>
 
     {{ include('project/_form.html.twig', {'button_label': 'Update'}) }}
-
+<div class="row">
+    <div class="col">
     <a href="{{ path('project_index') }}">Retour à la liste</a>
 
     {{ include('project/_delete_form.html.twig') }}
+   </div>
+   <div class="col-sm-2">
+    <a class="btn btn-primary"  href="{{ path('project_show',{ 'id':project.id}) }}" >Reprendre le projet</a>
+    </div>
     </div>
     </div>
 {% endblock %}

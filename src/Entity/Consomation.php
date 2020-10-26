@@ -70,6 +70,12 @@ class Consomation
     private $url_ccv;
 
     /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $allurl_ccv;
+
+
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $type_tarif;
@@ -87,17 +93,126 @@ class Consomation
     /**
      * @ORM\Column(type="array", nullable=true)
      */
+    private $allcm_month = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
     private $avgweek = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $Activite = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $Dateconge_deb = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $Dateconge_deb1 = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $Dateconge_deb2 = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $Dateconge_fin = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $Dateconge_fin1 = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $Dateconge_fin2 = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $HourSlider1 = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $HourSlider2 = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $HourSlider3 = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $HourSlider_dimanche = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $HourSlider_samedi = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $MonthSlider1 = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $MonthSlider2 = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $MonthSlider3 = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $Saison = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $congeCheck = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $dimancheCheck = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $samediCheck = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $vershoraire = [];
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $dateDebForm;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $ferieCheck = [];
     public function __construct()
     {
-        for ($i =0 ; $i<7;$i++){
-            for($j =0;$j<=23;$j++){
-                $this->avgweek[0][$i][$j]=0;
-                $this->avgweek[1][$i][$j]=0;
-
-            }
-        }
-        $this->transportEng=false;
+       
+            $this->transportEng=false;
     }
 
     public function getId(): ?int
@@ -221,6 +336,18 @@ class Consomation
         return $this;
     }
 
+    public function getallUrlCcv(): ?array
+    {
+        return $this->allurl_ccv;
+    }
+
+    public function setallUrlCcv(array $allurl_ccv): self
+    {
+        $this->allurl_ccv=$allurl_ccv;
+
+        return $this;
+    }
+
     public function getTypeTarif(): ?bool
     {
         return $this->type_tarif;
@@ -267,6 +394,18 @@ class Consomation
         return $this;
     }
 
+    public function getallCmMonth(): ?array
+    {
+        return $this->allcm_month;
+    }
+
+    public function setallCmMonth(array $allcm_month): self
+    {
+        $this->allcm_month = $allcm_month;
+
+        return $this;
+    }
+
     public function getAvgweek(): ?array
     {
         return $this->avgweek;
@@ -274,13 +413,273 @@ class Consomation
 
     public function setAvgweek(array $avgweek): self
     {
-        for ($i =0 ; $i<7;$i++){
-            for($j =0;$j<=23;$j++){
-                $this->avgweek[0][$i][$j]=$avgweek[0][$i][$j];
-                $this->avgweek[1][$i][$j]=$avgweek[1][$i][$j];
 
-            }
-        }
+        $this->avgweek = $avgweek;
+        
+        return $this;
+    }
+
+    public function getActivite(): ?array
+    {
+        return $this->Activite;
+    }
+
+    public function setActivite(?array $Activite): self
+    {
+        $this->Activite = $Activite;
+
+        return $this;
+    }
+
+    public function getDatecongeDeb(): ?array
+    {
+        return $this->Dateconge_deb;
+    }
+
+    public function setDatecongeDeb(?array $Dateconge_deb): self
+    {
+        $this->Dateconge_deb = $Dateconge_deb;
+
+        return $this;
+    }
+
+    public function getDatecongeDeb1(): ?array
+    {
+        return $this->Dateconge_deb1;
+    }
+
+    public function setDatecongeDeb1(?array $Dateconge_deb1): self
+    {
+        $this->Dateconge_deb1 = $Dateconge_deb1;
+
+        return $this;
+    }
+
+    public function getDatecongeDeb2(): ?array
+    {
+        return $this->Dateconge_deb2;
+    }
+
+    public function setDatecongeDeb2(?array $Dateconge_deb2): self
+    {
+        $this->Dateconge_deb2 = $Dateconge_deb2;
+
+        return $this;
+    }
+
+    public function getDatecongeFin(): ?array
+    {
+        return $this->Dateconge_fin;
+    }
+
+    public function setDatecongeFin(?array $Dateconge_fin): self
+    {
+        $this->Dateconge_fin = $Dateconge_fin;
+
+        return $this;
+    }
+
+    public function getDatecongeFin1(): ?array
+    {
+        return $this->Dateconge_fin1;
+    }
+
+    public function setDatecongeFin1(?array $Dateconge_fin1): self
+    {
+        $this->Dateconge_fin1 = $Dateconge_fin1;
+
+        return $this;
+    }
+
+    public function getDatecongeFin2(): ?array
+    {
+        return $this->Dateconge_fin2;
+    }
+
+    public function setDatecongeFin2(?array $Dateconge_fin2): self
+    {
+        $this->Dateconge_fin2 = $Dateconge_fin2;
+
+        return $this;
+    }
+
+    public function getHourSlider1(): ?array
+    {
+        return $this->HourSlider1;
+    }
+
+    public function setHourSlider1(?array $HourSlider1): self
+    {
+        $this->HourSlider1 = $HourSlider1;
+
+        return $this;
+    }
+
+    public function getHourSlider2(): ?array
+    {
+        return $this->HourSlider2;
+    }
+
+    public function setHourSlider2(?array $HourSlider2): self
+    {
+        $this->HourSlider2 = $HourSlider2;
+
+        return $this;
+    }
+
+    public function getHourSlider3(): ?array
+    {
+        return $this->HourSlider3;
+    }
+
+    public function setHourSlider3(?array $HourSlider3): self
+    {
+        $this->HourSlider3 = $HourSlider3;
+
+        return $this;
+    }
+
+    public function getHourSliderDimanche(): ?array
+    {
+        return $this->HourSlider_dimanche;
+    }
+
+    public function setHourSliderDimanche(?array $HourSlider_dimanche): self
+    {
+        $this->HourSlider_dimanche = $HourSlider_dimanche;
+
+        return $this;
+    }
+
+    public function getHourSliderSamedi(): ?array
+    {
+        return $this->HourSlider_samedi;
+    }
+
+    public function setHourSliderSamedi(?array $HourSlider_samedi): self
+    {
+        $this->HourSlider_samedi = $HourSlider_samedi;
+
+        return $this;
+    }
+
+    public function getMonthSlider1(): ?array
+    {
+        return $this->MonthSlider1;
+    }
+
+    public function setMonthSlider1(?array $MonthSlider1): self
+    {
+        $this->MonthSlider1 = $MonthSlider1;
+
+        return $this;
+    }
+
+    public function getMonthSlider2(): ?array
+    {
+        return $this->MonthSlider2;
+    }
+
+    public function setMonthSlider2(?array $MonthSlider2): self
+    {
+        $this->MonthSlider2 = $MonthSlider2;
+
+        return $this;
+    }
+
+    public function getMonthSlider3(): ?array
+    {
+        return $this->MonthSlider3;
+    }
+
+    public function setMonthSlider3(?array $MonthSlider3): self
+    {
+        $this->MonthSlider3 = $MonthSlider3;
+
+        return $this;
+    }
+
+    public function getSaison(): ?array
+    {
+        return $this->Saison;
+    }
+
+    public function setSaison(?array $Saison): self
+    {
+        $this->Saison = $Saison;
+
+        return $this;
+    }
+
+    public function getCongeCheck(): ?array
+    {
+        return $this->congeCheck;
+    }
+
+    public function setCongeCheck(?array $congeCheck): self
+    {
+        $this->congeCheck = $congeCheck;
+
+        return $this;
+    }
+
+    public function getDimancheCheck(): ?array
+    {
+        return $this->dimancheCheck;
+    }
+
+    public function setDimancheCheck(?array $dimancheCheck): self
+    {
+        $this->dimancheCheck = $dimancheCheck;
+
+        return $this;
+    }
+
+    public function getSamediCheck(): ?array
+    {
+        return $this->samediCheck;
+    }
+
+    public function setSamediCheck(?array $samediCheck): self
+    {
+        $this->samediCheck = $samediCheck;
+
+        return $this;
+    }
+
+    public function getVershoraire(): ?array
+    {
+        return $this->vershoraire;
+    }
+
+    public function setVershoraire(?array $vershoraire): self
+    {
+        $this->vershoraire = $vershoraire;
+
+        return $this;
+    }
+
+    public function getDateDebForm(): ?string
+    {
+        return $this->dateDebForm;
+    }
+
+    public function setDateDebForm(?string $dateDebForm): self
+    {
+        $this->dateDebForm = $dateDebForm;
+
+        return $this;
+    }
+
+    public function getFerieCheck(): ?array
+    {
+        return $this->ferieCheck;
+    }
+
+    public function setFerieCheck(?array $ferieCheck): self
+    {
+        $this->ferieCheck = $ferieCheck;
+
         return $this;
     }
 }

@@ -182,20 +182,15 @@
 
                                     </div>
                                 </div>
-                                <div  class="card-body">
-                                    <div class="row">
-                                        <div   class="col">
-                                            <div id="chart_consomtation"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div id="chart_consomtation"></div>
+                                 
+                                    
+                                
                             </div>
                         </div>
                     </div>
                 </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-            </div>
+           
         </div>
     </div>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -252,10 +247,10 @@
         let importer_heatmap1Tot=[];
         let auto_consomer_heatmap1Tot=[];
       
-            let auto_consommationS =[];
-            let consommationS =[];
-            let importerS =[];
-            let t_auto =[];
+        let auto_consommationS =[];
+        let consommationS =[];
+        let importerS =[];
+        let t_auto =[];
               
         let PH_cedee=[];
         
@@ -277,7 +272,18 @@
         $("#importe").on('click',function () {
             btn=5;
         });
-        $("#tableaus").on('click',function () {
+       
+
+        let trace1 = {};
+        let trace2 = {};
+        let trace3 = {};
+        let trace4 = {};
+        let trace5 = {};
+        let data=[];
+        let layout={};
+
+
+         $("#tableaus").on('click',function () {
             $('#datatable').empty();
              j=$("#SiteSelector").val();
             for (let i = 0; i < consomationTot[0].length ; i++) {
@@ -300,33 +306,12 @@
             j=$("#SiteSelector").val();
 
                        
-           $('#auto_consommationS').append("<td class="+"font-weight-bold"+">Economies d'énergie du site</td><td>"+Math.round(auto_consommationS[j],0)+"</td><td>kWh</td>");
+            $('#auto_consommationS').append("<td class="+"font-weight-bold"+">Economies d'énergie du site</td><td>"+Math.round(auto_consommationS[j],0)+"</td><td>kWh</td>");
             $('#consommationS').append("<td class="+"font-weight-bold"+">Consommation du site</td><td>"+Math.round(consommationS[j],0)+"</td><td>kWh</td>");
             $('#importerS').append(" <td class="+"font-weight-bold"+">Energie importée de la STEG</td><td>"+Math.round(importerS[j],0)+"</td><td>kWh</td>");
             $('#t_autoc').append(" <td class="+"font-weight-bold"+">Taux d’autoconsommation du site</td><td>"+Math.round(t_auto[j]*100,2)+"</td><td>%</td>");
         });    
         
-
-        let trace1 = {};
-        let trace2 = {};
-        let trace3 = {};
-        let trace4 = {};
-        let trace5 = {};
-        let data=[];
-        let layout={};
-
-        console.log("consomation");
-        console.log(consomation);
-        console.log("consomationTot");
-        console.log(consomationTot);
-        console.log(consomationTot.length);
-         
-
-    $('#graphiques').on('click',function () {
-       j=$("#SiteSelector").val();
-    });
-
-
         $('#time_series').on('click',function () {
 
              j=$("#SiteSelector").val();
@@ -372,6 +357,9 @@
 
         
         });
+
+        
+        
         $('#histograme').on('click',function () {
              j=$("#SiteSelector").val();
             if (btn===1){
@@ -511,6 +499,7 @@
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
             }
         });
+
 
         $('#heatmap').on('click',function () {
              j=$("#SiteSelector").val();
@@ -686,264 +675,215 @@
                 Plotly.newPlot('chart_consomtation', data, layout,{responsive: true});
             }
         });
+           
     
         function res (url) {
-           
-                $.ajax({
-                    url: "{{ path('project_results',{ 'id':project.id }) }}",
-                    type : 'POST',
-                    data : data,
-                    dataType: 'json',
-                    cache: false,
-                    success: function (response) {
+        
+            $.ajax({
+                url: "{{ path('project_results',{ 'id':project.id }) }}",
+                type : 'POST',
+                data : data,
+                dataType: 'json',
+                cache: false,
+                success: function (response) {
 
-                        $('#SiteSelector').empty()
-                        consomationTot=[];
-                        for (let j = 0; j < response.consomation.length; j++) {
+                    $('#SiteSelector').empty()
+                    consomationTot=[];
+                    
+                    auto_consomeTot=[];
+                    importerTot=[];
+                    for (let j = 0; j < response.consomation.length; j++) {
 
-                                consomationTotTmp=[];
-                                auto_consomeTotTmp=[];
-                                importerTotTmp=[];
-                                
+                            consomationTotTmp=[];
+                            auto_consomeTotTmp=[];
+                            importerTotTmp=[];
+                            
 
-                            for (let i = 0; i < response.consomation[0].length ; i++) {
-                                    dates = new Date(response.consomation[0][i][0] * 1000);
-                                    year = dates.getFullYear();
-                                
-                                    consomationTotTmp[i]=response.consomation[j][i][1];
-                                    auto_consomeTotTmp[i]=response.auto_consomer[j][i][1];
-                                    importerTotTmp[i]=response.importer[j][i][1];
+                        for (let i = 0; i < response.consomation[0].length ; i++) {
+                                dates = new Date(response.consomation[0][i][0] * 1000);
+                                year = dates.getFullYear();
+                            
+                                consomationTotTmp[i]=response.consomation[j][i][1];
+                                auto_consomeTotTmp[i]=response.auto_consomer[j][i][1];
+                                importerTotTmp[i]=response.importer[j][i][1];
+                    
                         
-                            
-                                production[0][i] = dates;
-                                production[1][i] = response.production[i][1];
-                            
-                            
-                            
-                                cedee[0][i]=dates;
-                                cedee[1][i]=response.cedee[i][1];
-                            };
-                                
-                                consomationTot.push(consomationTotTmp);
-                                auto_consomeTot.push(auto_consomeTotTmp);
-                                importerTot.push(importerTotTmp);
+                            production[0][i] = dates;
+                            production[1][i] = response.production[i][1];
                         
+                        
+                        
+                            cedee[0][i]=dates;
+                            cedee[1][i]=response.cedee[i][1];
                         };
-
-
-                            PH_consomation=response.PH_consomationannuel;
-                            PH_auto_consome=response.PH_auto_consomerannuel;
-                            PH_importer=response.PH_importerannuel;
-                            PH_production=response.PH_productionannuel;
-                            PH_cedee=response.PH_cedeeannuel;
-                           
-                         
-                            consomation_tmp=[];
-                            production_tmp=[];
-                            cedee_tmp=[];
-                            importe_tmp=[];
-                            auto_consome_tmp=[];
-
-                            consomation_heatmap1=[];
-                            importer_heatmap1=[];
-                            auto_consomer_heatmap1=[];
-                            production_heatmap1=[];
-                            cedee_heatmap1=[];
-                        for (let j = 0; j < response.consomation.length ; j++) {
-
                             
-                            consomation_heatmap=[];
-                            importer_heatmap=[];
-                            auto_consomer_heatmap=[];
+                            consomationTot.push(consomationTotTmp);
+                            auto_consomeTot.push(auto_consomeTotTmp);
+                            importerTot.push(importerTotTmp);
+                    
+                    };
 
-                             consomation_heatmap1=[];
-                                production_heatmap1=[];
-                                cedee_heatmap1=[];
-                                importer_heatmap1=[];
-                                auto_consomer_heatmap1=[];
 
-                           consomation_tmp=[];
+                        PH_consomation=response.PH_consomationannuel;
+                        PH_auto_consome=response.PH_auto_consomerannuel;
+                        PH_importer=response.PH_importerannuel;
+                        PH_production=response.PH_productionannuel;
+                        PH_cedee=response.PH_cedeeannuel;
+                        
+                        
+                        consomation_tmp=[];
+                        production_tmp=[];
+                        cedee_tmp=[];
+                        importe_tmp=[];
+                        auto_consome_tmp=[];
+
+                        consomation_heatmap1=[];
+                        importer_heatmap1=[];
+                        auto_consomer_heatmap1=[];
+                        production_heatmap1=[];
+                        cedee_heatmap1=[];
+                    for (let j = 0; j < response.consomation.length ; j++) {
+
+                        
+                        consomation_heatmap=[];
+                        importer_heatmap=[];
+                        auto_consomer_heatmap=[];
+
+                        consomation_heatmap1=[];
+                        production_heatmap1=[];
+                        cedee_heatmap1=[];
+                        importer_heatmap1=[];
+                        auto_consomer_heatmap1=[];
+
+                        consomation_tmp=[];
+                        production_tmp=[];
+                        cedee_tmp=[];
+                        importe_tmp=[];
+                        auto_consome_tmp=[];
+
+                        for (let i = 0; i < response.consomation[0].length ; i++) {
+                            
+
+                            if(i>0 && (i%24)===0){
+
+                                consomation_heatmap1.push(consomation_tmp);
+                                production_heatmap1.push(production_tmp);
+                                cedee_heatmap1.push(cedee_tmp);
+                                importer_heatmap1.push(importe_tmp);
+                                auto_consomer_heatmap1.push(auto_consome_tmp);
+
+                                consomation_tmp=[];
                                 production_tmp=[];
                                 cedee_tmp=[];
                                 importe_tmp=[];
                                 auto_consome_tmp=[];
+                                consomation_tmp.push(response.consomation[j][i][1]);
+                                production_tmp.push(response.production[i][1]);
+                                cedee_tmp.push(response.cedee[i][1]);
+                                auto_consome_tmp.push(response.auto_consomer[j][i][1]);
+                                importe_tmp.push(response.importer[j][i][1]);
+                            }
+                            else{
+                                consomation_tmp.push(response.consomation[j][i][1]);
+                                production_tmp.push(response.production[i][1]);
+                                cedee_tmp.push(response.cedee[i][1]);
+                                auto_consome_tmp.push(response.auto_consomer[j][i][1]);
+                                importe_tmp.push(response.importer[j][i][1]);
 
-                            for (let i = 0; i < response.consomation[0].length ; i++) {
                                 
-
-                                if(i>0 && (i%24)===0){
-
-                                    consomation_heatmap1.push(consomation_tmp);
-                                    production_heatmap1.push(production_tmp);
-                                    cedee_heatmap1.push(cedee_tmp);
-                                    importer_heatmap1.push(importe_tmp);
-                                    auto_consomer_heatmap1.push(auto_consome_tmp);
-
-                                    consomation_tmp=[];
-                                    production_tmp=[];
-                                    cedee_tmp=[];
-                                    importe_tmp=[];
-                                    auto_consome_tmp=[];
-                                    consomation_tmp.push(response.consomation[j][i][1]);
-                                    production_tmp.push(response.production[i][1]);
-                                    cedee_tmp.push(response.cedee[i][1]);
-                                    auto_consome_tmp.push(response.auto_consomer[j][i][1]);
-                                    importe_tmp.push(response.importer[j][i][1]);
-                                    
-
-                                    
-                                    
-
-                                    
-                            
-                                }
-                                else{
-                                    consomation_tmp.push(response.consomation[j][i][1]);
-                                    production_tmp.push(response.production[i][1]);
-                                    cedee_tmp.push(response.cedee[i][1]);
-                                    auto_consome_tmp.push(response.auto_consomer[j][i][1]);
-                                    importe_tmp.push(response.importer[j][i][1]);
-
-                                    
-                                }
-
-                            };
-                            
-                                consomation_heatmap=new transpose(consomation_heatmap1);
-                                production_heatmap=new transpose(production_heatmap1);
-                                cedee_heatmap=new transpose(cedee_heatmap1);
-                                importer_heatmap=new transpose(importer_heatmap1);
-                                auto_consomer_heatmap=new transpose(auto_consomer_heatmap1);
-
-                                consomation_heatmap1Tot.push(consomation_heatmap);
-                                importer_heatmap1Tot.push(importer_heatmap);
-                                auto_consomer_heatmap1Tot.push(auto_consomer_heatmap);
+                            }
 
                         };
                         
-                        
+                            consomation_heatmap=new transpose(consomation_heatmap1);
+                            production_heatmap=new transpose(production_heatmap1);
+                            cedee_heatmap=new transpose(cedee_heatmap1);
+                            importer_heatmap=new transpose(importer_heatmap1);
+                            auto_consomer_heatmap=new transpose(auto_consomer_heatmap1);
 
-                         for (let j = 0; j < response.consomation.length ; j++) {
-                        auto_consommationS[j]=response.auto_consommationS[j];
-                        consommationS[j]=response.consommationS[j];
-                        importerS[j]=response.importerS[j];
-                        t_auto[j]=response.t_auto[j];
-                         };
+                            consomation_heatmap1Tot.push(consomation_heatmap);
+                            importer_heatmap1Tot.push(importer_heatmap);
+                            auto_consomer_heatmap1Tot.push(auto_consomer_heatmap);
+
+                    };
                     
-                       
-                           
+                    
 
+                        for (let j = 0; j < response.consomation.length ; j++) {
+                    auto_consommationS[j]=response.auto_consommationS[j];
+                    consommationS[j]=response.consommationS[j];
+                    importerS[j]=response.importerS[j];
+                    t_auto[j]=response.t_auto[j];
+                        };
+                
+                    
+                        
+
+                
+
+                    $('#auto_consommationS').empty();
+                    $('#consommationS').empty();
+                    $('#importerS').empty();
+                    $('#prod25').empty();
+                    $('#lcoe').empty();
+                    $('#t_autoc').empty();
+                    
+                    $('#productible').empty();
+                    $('#t_cd').empty();
+                    $('#f_r').empty();
+                    $('#coutproj').empty();
+                    $('#capexres').empty();
+                    $('#tricapres').empty();
+                    $('#trires').empty();
+                    $('#subvres').empty();
+                    $('#omres').empty();
+                    $('#annuiteres').empty();
+                    $('#vanres').empty();
+                    $('#puissanceres').empty();
+
+
+
+                    $('#auto_consommationS').append("<td class="+"font-weight-bold"+">Economies d'énergie du site </td><td>"+Math.round(response.auto_consommationS[0],0)+"</td><td>kWh</td>");
+                    $('#consommationS').append("<td class="+"font-weight-bold"+">Consommation du site</td><td>"+Math.round(response.consommationS[0],0)+"</td><td>kWh</td>");
+                    $('#importerS').append("<td class="+"font-weight-bold"+">Energie achetée de la STEG</td><td>"+Math.round(response.importerS[0],0)+"</td><td>kWh</td>");
+                    $('#prod25').append("<td class="+"font-weight-bold"+">Production PV sur 25 ans</td><td>"+Math.round(response.prod25,0)+"</td><td>kWh</td>");
+                    $('#lcoe').append("<td class="+"font-weight-bold"+">LCOE sur 25 ans</td><td>"+(Math.round(response.lcoe*1000)/1000)+"</td><td>DT</td>");
+                    $('#t_autoc').append("<td class="+"font-weight-bold"+"> Taux de couverture de la consommation</td><td>"+Math.round(response.t_auto[0]*100,2)+"</td><td>%</td>");
+                    /*$('#t_couv').append("<td>"+Math.round(response.t_couverture*100,2)+"</td><td>%</td>");*/
+                    $('#productible').append("<td class="+"font-weight-bold"+">Productible annuel</td><td>"+Math.round(response.productible,0)+"</td><td>kWh/kWc</td>");
+                    $('#t_cd').append("<td class="+"font-weight-bold"+">Taux de l’énergie produite en excédant</td><td>"+Math.round(response.t_cedee*100,2)+"</td><td>%</td>");
+                    $('#f_r').append("<td class="+"font-weight-bold"+">Facture de régularisation </td><td>"+Math.round(response.f_reg,0)+"</td><td>DT</td>");
+                    $('#coutproj').append("<td class="+"font-weight-bold"+">Coùt du projet sur 25 ans</td><td>"+Math.round(response.coutproj,0)+"</td><td>DT</td>");
+                    $('#capexres').append("<td class="+"font-weight-bold"+">Coùt d'investissement</td><td>"+Math.round(response.capex,3)+"</td><td>DT</td>");
+                    $('#tricapres').append("<td class="+"font-weight-bold"+">TRI sur les capitaux propres</td><td>"+Math.round(response.tricap,2)+"</td><td>%</td>");
+                    $('#trires').append("<td class="+"font-weight-bold"+"> TRI du projet  </td><td>"+Math.round(response.tri25,2)+"</td><td>%</td>");
+                    $('#subvres').append("<td class="+"font-weight-bold"+">Subvention</td><td>"+((Math.round(response.subv,0)*Math.round(response.capex,0))/100)+"</td><td>DT</td>");
+                    $('#omres').append("<td class="+"font-weight-bold"+">Coùt d'opération et maintenance </td><td>"+Math.round(response.opex[1],0)+"</td><td>DT</td>");
+                    $('#annuiteres').append("<td class="+"font-weight-bold"+">Annuité</td><td>"+Math.round(response.annuite[5],0)+"</td><td>DT</td>");
+                    $('#vanres').append("<td class="+"font-weight-bold"+"> VAN sur 25 ans  </td><td>"+Math.round(response.van,0)+"</td><td>DT</td>");
+                    $('#puissanceres').append("<td class="+"font-weight-bold"+"> Puissance de la centrale  </td><td>"+Math.round(response.peak,2)+"</td><td>kWc</td>");
                         
                         
+                        if (response.annuite[1]===0){
+                            $('#annuiteres').hide();
+                            $('#trires').hide();
+                        }
 
-                        /*
-
-                        consomationTot[0].sort(function(a,b) {
-                            return new Date(a.start).getTime() - new Date(b.start).getTime()
-                        });
-                        production[0].sort(function(a,b) {
-                            return new Date(a.start).getTime() - new Date(b.start).getTime()
-                        });
-                        cedee[0].sort(function(a,b) {
-                            return new Date(a.start).getTime() - new Date(b.start).getTime()
-                        });
-                        importer[0].sort(function(a,b) {
-                            return new Date(a.start).getTime() - new Date(b.start).getTime()
-                        });
-                        auto_consome[0].sort(function(a,b) {
-                            return new Date(a.start).getTime() - new Date(b.start).getTime()
-                        });*/
-                        console.log(response.consomation);
-                        console.log(consomation);
-                        console.log("consomation");
-                        console.log(consomation_heatmap1Tot);
-                        console.log("production");
-                        console.log(production_heatmap);
-                        console.log("cedee");
-                        console.log(cedee_heatmap);
-                        console.log('autoconsomation');
-                        console.log(auto_consomer_heatmap1Tot);
-                        console.log("importe");
-                        console.log(importer_heatmap1Tot);
-                        console.log("production");
-                        console.log(PH_production);
-                        console.log(production);
-                        console.log(consomationTot[0]);
-                        console.log(consomationTot);
-                        console.log(production[1]);
-                        console.log("PH_consomation");
-                        
-                        console.log(PH_consomation);
-                        console.log(response.PH_auto_consomer);
-                        console.log(response.PH_auto_consomerS);
-                        console.log(t_auto[1]);
-                        console.log("date");
-                        console.log(response.date);
-                         console.log(response.dumpdate);
-
-                        $('#auto_consommationS').empty();
-                        $('#consommationS').empty();
-                        $('#importerS').empty();
-                        $('#prod25').empty();
-                        $('#lcoe').empty();
-                        $('#t_autoc').empty();
-                        
-                        $('#productible').empty();
-                        $('#t_cd').empty();
-                        $('#f_r').empty();
-                        $('#coutproj').empty();
-                        $('#capexres').empty();
-                        $('#tricapres').empty();
-                        $('#trires').empty();
-                        $('#subvres').empty();
-                        $('#omres').empty();
-                        $('#annuiteres').empty();
-                        $('#vanres').empty();
-                        $('#puissanceres').empty();
-
-
-
-                        $('#auto_consommationS').append("<td class="+"font-weight-bold"+">Economies d'énergie du site </td><td>"+Math.round(response.auto_consommationS[0],0)+"</td><td>kWh</td>");
-                        $('#consommationS').append("<td class="+"font-weight-bold"+">Consommation du site</td><td>"+Math.round(response.consommationS[0],0)+"</td><td>kWh</td>");
-                        $('#importerS').append("<td class="+"font-weight-bold"+">Energie achetée de la STEG</td><td>"+Math.round(response.importerS[0],0)+"</td><td>kWh</td>");
-                        $('#prod25').append("<td class="+"font-weight-bold"+">Production PV sur 25 ans</td><td>"+Math.round(response.prod25,0)+"</td><td>kWh</td>");
-                        $('#lcoe').append("<td class="+"font-weight-bold"+">LCOE sur 25 ans</td><td>"+(Math.round(response.lcoe*1000)/1000)+"</td><td>DT</td>");
-                        $('#t_autoc').append("<td class="+"font-weight-bold"+"> Taux de couverture de la consommation</td><td>"+Math.round(response.t_auto[0]*100,2)+"</td><td>%</td>");
-                        /*$('#t_couv').append("<td>"+Math.round(response.t_couverture*100,2)+"</td><td>%</td>");*/
-                        $('#productible').append("<td class="+"font-weight-bold"+">Productible annuel</td><td>"+Math.round(response.productible,0)+"</td><td>kWh/kWc</td>");
-                        $('#t_cd').append("<td class="+"font-weight-bold"+">Taux de l’énergie produite en excédant</td><td>"+Math.round(response.t_cedee*100,2)+"</td><td>%</td>");
-                        $('#f_r').append("<td class="+"font-weight-bold"+">Facture de régularisation </td><td>"+Math.round(response.f_reg,0)+"</td><td>DT</td>");
-                        $('#coutproj').append("<td class="+"font-weight-bold"+">Coùt du projet sur 25 ans</td><td>"+Math.round(response.coutproj,0)+"</td><td>DT</td>");
-                        $('#capexres').append("<td class="+"font-weight-bold"+">Coùt d'investissement</td><td>"+Math.round(response.capex,3)+"</td><td>DT</td>");
-                        $('#tricapres').append("<td class="+"font-weight-bold"+">TRI sur les capitaux propres</td><td>"+Math.round(response.tricap,2)+"</td><td>%</td>");
-                        $('#trires').append("<td class="+"font-weight-bold"+"> TRI du projet  </td><td>"+Math.round(response.tri25,2)+"</td><td>%</td>");
-                        $('#subvres').append("<td class="+"font-weight-bold"+">Subvention</td><td>"+((Math.round(response.subv,0)*Math.round(response.capex,0))/100)+"</td><td>DT</td>");
-                        $('#omres').append("<td class="+"font-weight-bold"+">Coùt d'opération et maintenance </td><td>"+Math.round(response.opex[1],0)+"</td><td>DT</td>");
-                        $('#annuiteres').append("<td class="+"font-weight-bold"+">Annuité</td><td>"+Math.round(response.annuite[5],0)+"</td><td>DT</td>");
-                        $('#vanres').append("<td class="+"font-weight-bold"+"> VAN sur 25 ans  </td><td>"+Math.round(response.van,0)+"</td><td>DT</td>");
-                        $('#puissanceres').append("<td class="+"font-weight-bold"+"> Puissance de la centrale  </td><td>"+Math.round(response.peak,2)+"</td><td>kWc</td>");
+                        if (response.f_reg===0){
                             
-                            
-                            if (response.annuite[1]===0){
-                                $('#annuiteres').hide();
-                                $('#trires').hide();
-                            }
+                            $('#f_r').hide();
+                        }
 
-                            if (response.f_reg===0){
-                                
-                                $('#f_r').hide();
-                            }
+                    
 
-                        
-
-                       
-                         for (let j = 0; j < consomationTot.length ; j++) {
-                                $('#SiteSelector').append("<option value="+j+">"+"Site"+j+"</option>"
-                                );
-                            };
-                    }       
-                       
-                });
+                    
+                        for (let j = 0; j < consomationTot.length ; j++) {
+                            $('#SiteSelector').append("<option value="+j+">"+"Site"+j+"</option>"
+                            );
+                        };
+                }       
+                    
+            });
             
         };
          

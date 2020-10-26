@@ -21,6 +21,8 @@
                         </button>  
     <div class="form-control-file" id="csvimg">
         <div class="dropzone" id="csvreader"></div>
+        <div class="dropzone" id="csvreader1" style="display:none"></div>
+        <button type="button" id="changecsv" style="display:none" onclick="changecsv()" class="btn-secondary btn">Nouveau fichier CSV</button>
     </div>
 </div>
 <script>
@@ -32,7 +34,7 @@
         maxFiles: 1,
         dictMaxFilesExceeded: 'Only 1 file can be uploaded',
         maxFilesize: 20,  // in Mb
-        addRemoveLinks: false,
+        addRemoveLinks: true,
         acceptedFiles: ".csv",
         init: function () {
             this.on("maxfilesexceeded", function (file) {
@@ -59,4 +61,10 @@
             });
         }
     });
+
+     function changecsv(){
+
+          $('#csvreader').show();
+                $('#csvreader1').hide();
+     }
 </script>

@@ -3,14 +3,31 @@
 <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 <div class="card bg-secondary border border-0">
     <div class="card-header bg-transparent pb-5" >
+    <div class="row">
+    <div class="col">
+    
     <button type="button" id="help" class="btn btn-primary"onclick="help()">Aide</button>
+    </div>
+    <div class="col">
+    <div class="alert alert-primary" id="siteinfo" role="alert" style="display:none">
+    
+    <strong></strong> </div>
+    
+    </div>
+    <div class="col">
+    <div style="display: inline-block"> <label class="form-control-label required" for="exampleFormControlSelect1" > Editer Site</label></div>
+    <div style="display: inline-block"> <select class="form-control" id="selectEdit"> </select></div>
+    <!--div style="display: inline-block"><button type="button" onclick="editSite()" id='edit' value="editSite"   class="btn-secondary btn" >Editer Site</button><br></div-->
+    <button type="button" onclick="suppSite()" id='suppSi' class="btn-secondary btn" >Supprimer Site</button>
+    </div>
+    </div>    
         <div class="card-body px-lg-5 py-lg-5">
             <form class="consomation" id="consomationForm" action="{{ path('project_show',{'id':project.id}) }}" enctype="multipart/form-data" method="post">
                 <div>
                 
                     <div class="row">
                          <div class="col">
-                        <div style="display: inline-block"><button type="button" onclick="incrementValue()" id='increment' value="Increment Value"  disabled="disabled" class="btn-secondary btn" >Nouveau Site</button><br></div>
+                        <div style="display: inline-block"><button type="button" onclick="incrementValue()" id='increment' value="Increment Value"  class="btn-secondary btn" >Nouveau Site</button><br></div>
 
                        <div style="display: inline-block"> <label class="form-control-label required" for="number" >Site</label></div>
                         
@@ -49,17 +66,16 @@
                                    <div>
                                         <div style="display: inline-block"><label class="form-control-label" >Domaine d'activité</label></div>
                                         <div style="display: inline-block"><select class="form-control" data-toggle="select" title="Simple select" data-placeholder="Select a state" id="activite" name="activite">
-                                            
-                                            <option>Agroalimentaire</option>
+                                            <option>Electromecanique</option>
+                                            <option>Biscuiterie</option>
                                             <option>Bureautique</option>
                                             <option>Extraction</option>
                                             <option>Datacenter</option>
-                                            <option>Electromecanique</option>
                                             <option>Frigorifique</option>
                                             <option>Hotellerie</option>
                                             <option>Hypermarche</option>
                                             <option>Laitiere</option>
-                                            <option>Meuble</option>
+                                            <option>Mobilier</option>
                                             <option>Plastique</option>
                                             <option>Poulailler</option>
                                             <option>Textile</option>
@@ -77,13 +93,14 @@
                                         </div>
                                         
                                         
-                                        <div id= "saison1">
+                                        <div id= "saison1" >
                                             <h4>Saison1</h4>
                                             
                                             <label class="form-control-label required" for="monthSlider1" style="display: inline-block;padding-left: 10%;">Plage mensuelle</label> <button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le mois de début et de fin de la saison 1">?</button>
                                             <label class="form-control-label required" for="hourSlider1" style="display: inline-block;padding-left: 40%;">Plage horaire</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'heure de début et de fin de travail durant la saison 1">?</button></br></br>
                                             <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider1" name="monthSlider1" class="form-control" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider1" name="hourSlider1" class="form-control"/> </lo></br>
                                             <button type="button" class="btn btn-secondary btn-sm" id="butsaison1" onclick="addsaison1()">Nouvelle saison</button>
+                                            
                                         </div>
                                         
                                         <div id = "saison2" >
@@ -91,21 +108,49 @@
                                             <h4 style="display: inline-block;padding-left: 10%">Plage mensuelle</h4><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le mois de début et de fin de la saison 2">?</button><h4 style="display: inline-block;padding-left: 40%;">Plage horaire</h4><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'heure de début et de fin de travail durant la saison 2">?</button></br></br>
                                             <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider2" name="monthSlider2" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider2" name="hourSlider2" /> </lo></br>
                                              <button type="button" class="btn btn-secondary btn-sm" id="butsaison2" onclick="addsaison2()">Nouvelle saison</button>
+                                             <button type="button" class="btn btn-secondary btn-sm" id="butsuppsaison2" onclick="suppsaison2()">Supprimer saison</button>
                                         </div>   
 
                                         <div id = "saison3" >
                                             <h4 >Saison3</h4>
                                             <h4 style="display: inline-block;padding-left: 10%;">Plage mensuelle</h4><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir le mois de début et de fin de la saison 3">?</button><h4 style="display: inline-block;padding-left: 40%;">Plage horaire</h4><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Définir l'heure de début et de fin de travail durant la saison 3">?</button></br></br>
-                                            <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider3" name="monthSlider3" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider3" name="hourSlider3" /> </lo></br>
+                                            <lo style="display: inline-block;width:35%"> <input type="text" id="monthSlider3" name="monthSlider3" /></lo><lo style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider3" name="hourSlider3" /> </lo>
+                                            <button type="button" class="btn btn-secondary btn-sm" id="butsuppsaison3" onclick="suppsaison3()">Supprimer saison</button></br>
+                                            
                                         </div>
                                         <br></br>   
+
                                         <div class="custom-control custom-checkbox mb-3">
-                                        <input class="custom-control-input" id="samediCheck" name="samediCheck" type="checkbox">
-                                        <label class="custom-control-label" for="samediCheck"><h4>Travail Samedi<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si le consommateur travaille les Samedis et definir l'heure de début et de fin du travail durant les Samedis">?</button></h4></label> <lo id="hourSlider-samedicont" style="display: inline-block;width: 62%;padding-left: 70px;"><input type="text" id="hourSlider-samedi" name="hourSlider_samedi" /> </lo>
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <input class="custom-control-input" id="ferieCheck" name="ferieCheck" type="checkbox">
+                                                    <label class="custom-control-label" for="ferieCheck"><h4>Travail Jours Feriés<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si le consommateur travaille durant les jours fériés">?</button></h4></label> 
+                                                </div>
+                                                
+                                            </div>
+                                        </div>   
+                                        
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                <input class="custom-control-input" id="samediCheck" name="samediCheck" type="checkbox">
+                                                <label class="custom-control-label" for="samediCheck"><h4>Travail Samedi<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si le consommateur travaille les Samedis et definir l'heure de début et de fin du travail durant les Samedis">?</button></h4></label> 
+                                                </div>
+                                                <div class="col-sm-8">
+                                                <lo id="hourSlider-samedicont"><input type="text" id="hourSlider-samedi" name="hourSlider_samedi" /> </lo>
+                                                </div>
+                                            </div>
                                         </div>   
                                         <div class="custom-control custom-checkbox mb-3">
+                                        <div class="row">
+                                                <div class="col-sm-2">
                                         <input class="custom-control-input" id="dimancheCheck" name="dimancheCheck" type="checkbox">
-                                        <label class="custom-control-label" for="dimancheCheck"><h4>Travail Dimanche<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si le consommateur travaille les Dimanches et definir l'heure de début et de fin du travail durant les dimanches">?</button></h4></label><loid="hourSlider-dimanchecont" style="display: inline-block;width: 60%;padding-left: 60px;"><input type="text" id="hourSlider-dimanche" name="hourSlider_dimanche" /> </lo>
+                                        <label class="custom-control-label" for="dimancheCheck"><h4>Travail Dimanche<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si le consommateur travaille les Dimanches et definir l'heure de début et de fin du travail durant les dimanches">?</button></h4></label>
+                                        </div>
+                                                <div class="col-sm-8">
+                                        <lo id="hourSlider-dimanchecont"><input type="text" id="hourSlider-dimanche" name="hourSlider_dimanche" /> </lo>
+                                           </div>
+                                            </div>
                                         </div>   
                                         <div class="custom-control custom-checkbox mb-3">
                                             <div class="row">
@@ -116,7 +161,7 @@
                                                     <label class="custom-control-label" for="congeCheck"><h4 >Période de Congé /Arrét technique<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Indiquer si la date de début et de fin du congé ou de l'arrét technique s'il existe">?</button></h4></label><br>
                                                 </div>
                                             </div>
-                                            <div class="row"> 
+                                            <div class="row" style="display:none" id="conge"> 
                                                 <div class="col">
                                                 
                                                     <label class="form-control-label required" for="dateconge_deb"><h4 >Début</h4></label>
@@ -138,6 +183,7 @@
                                                 <div class="col">
                                                     <label class="form-control-label required" for="dateconge_fin1"><h4 >Fin</h4></label>
                                                      <button type="button" class="btn btn-secondary btn-sm" id="butconge2" onclick="addconge2()">Nouvelle période</button>
+                                                     <button type="button" class="btn btn-secondary btn-sm" id="butsuppconge2" onclick="suppconge2()">Supprimer période</button>
                                                     <input type="date" name="dateconge_fin1" id="dateconge_fin1" class="form-control" >
                                                    
                                                 </div>
@@ -150,6 +196,7 @@
                                                 </div>
                                                 <div class="col">
                                                     <label class="form-control-label required" for="dateconge_fin2"><h4 >Fin</h4></label>
+                                                    <button type="button" class="btn btn-secondary btn-sm" id="butsuppconge3" onclick="suppconge3()">Supprimer période</button>
                                                     <input type="date" name="dateconge_fin2" id="dateconge_fin2" class="form-control" >
                                                 </div>
                                             </div>    
@@ -163,7 +210,9 @@
                                     <label class="form-control-label control-label required" for="exlimg">Courbe de charge (XLSX)</label><button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Télécharger la courbe de charge extraite du compteur du consommateur et fournie par la STEG sans modifications">?</button>
                                     <div class="form-control-file" id="exlimg">
                                     <div class="dropzone" id="exlreader"></div>
-                                    <button type="button" onclick="load()" id='reload'  style="display:none" class="btn-secondary btn" >Ressayer une autre courbe</button>
+                                    <div class="dropzone" style="display:none" id="exlreader1"></div>
+                                    <button type="button" onclick="load()" id='reload'   class="btn-secondary btn" >Importer une autre courbe</button>
+                                    <button type="button" onclick="suppcc()" id='suppccourbe'   class="btn-secondary btn" >Supprimer la courbe</button>
                                     <div class="alert alert-success" id="success" role="alert" style="display:none">
                                                 <strong>Courbe de charge importée</strong> </div>
                                     <div class="alert alert-danger" id="error" role="alert" style="display:none">
@@ -181,9 +230,9 @@
                        
                         <br>
                         <label class="form-control-label required">Uniforme</label>
-                        <input type="radio" checked="checked" name="tarif" id="tarif" value="0" data-toggle="collapse" data-target=".tarif"  aria-expanded="true" aria-controls="Uniforme PostHoraire">
+                        <input type="radio" checked="checked" name="tarif" id="tarif0" value="0" data-toggle="collapse" data-target=".tarif"  aria-expanded="true" aria-controls="Uniforme PostHoraire">
                         <label class="form-control-label required">Quatre postes horaires</label>
-                        <input type="radio"  name="tarif" id="tarif" value="1" data-toggle="collapse" data-target=".tarif"  aria-expanded="false" aria-controls="PostHoraire Uniforme">
+                        <input type="radio"  name="tarif" id="tarif1" value="1" data-toggle="collapse" data-target=".tarif"  aria-expanded="false" aria-controls="PostHoraire Uniforme">
                     </div>
                     <div class="form-group">
                         <div class="row">
@@ -200,7 +249,7 @@
                     <div id="Uniforme" class="tarif form-group collapse multi-collapse show">
                     <div id="vershoraire1">
                     <input class="custom-control-input" name="vershoraire" id="vershoraire" type="checkbox">
-                    <label class="custom-control-label" for="vershoraire"><h4 >Simuler ce projet en régime horaire<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Cochez si vous disposez d'un historique de consommation en tarif uniforme et vous voulez simuler les résultats de ce site en tarif uniforme">?</button></h4></label><br>
+                    <label class="custom-control-label" for="vershoraire"><h4 >Simuler ce projet en régime horaire<button type="button" class="btn btn-primary btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="Cochez si vous disposez d'un historique de consommation en tarif uniforme et vous voulez simuler les résultats de ce site en tarif horaire">?</button></h4></label><br>
                        </div> 
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush">
@@ -689,6 +738,29 @@
 <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+ 
+       $("#selectEdit").change(function(){
+           
+           $(function() {
+               $('#siteinfo strong').empty();
+            $('#siteinfo strong').append('Vous pouvez éditer les données du site  '+$("#selectEdit").val());
+            });
+           
+           $('#siteinfo').show();
+            $('#number').val($("#selectEdit").val());
+             $('#successconso').hide();
+            $('#errorconso').hide();
+            document.getElementById('continuer').setAttribute('disabled','disabled');
+
+           editSite();
+
+
+            if ($("#selectEdit").val()==0)
+                $("#transport_energiecol").show();
+            else
+            $("#transport_energiecol").hide();
+        });
+
        $("#dateDeb").change(function() {
             $( "#dateFin" ).val($( "#dateDeb" ).val());
             document.getElementById("dateFin").stepUp(11);
@@ -699,46 +771,55 @@
             $('#saison2').hide();
             $('#saison3').hide();
         });
-      /*
+
+        $("#congeCheck").change(function(){
+            if ($("#congeCheck").val()=="on")
+                $("#conge").toggle();
+            else
+            $("#conge").toggle();
+        });
+           
+      
         $("#samediCheck").change(function(){
        if ($("#samediCheck").val()=="on")
-        $("#hourSlider-samedicont").show();
+        $("#hourSlider-samedicont").toggle();
        else
-       $("#hourSlider-samedicont").hide();
+       $("#hourSlider-samedicont").toggle();
         });
         $("#dimancheCheck").change(function(){
        if ($("#dimancheCheck").val()=="on")
-        $("#hourSlider-dimanchecont").show();
+        $("#hourSlider-dimanchecont").toggle();
        else
-       $("#hourSlider-dimanchecont").hide();
+       $("#hourSlider-dimanchecont").toggle();
         });
-*/
-    function incrementValue()
-    {
-        var value = parseInt(document.getElementById('number').value, 10);
-        value = isNaN(value) ? 0 : value;
-        value++;
-        document.getElementById('number').value = value;
-        document.getElementById('dateDeb').readOnly=true;
-       
-        Dropzone.forElement('#exlreader').removeAllFiles(true);
-        document.getElementById('increment').setAttribute('disabled','disabled');
-        document.getElementById('continue').removeAttribute('disabled');
-        document.getElementById('continuer').setAttribute('disabled','disabled');
-         $('#success').hide();
-         $('#successconso').hide();
-    }
 
+    
     function addconge1()
     {
         $('#conge1').show();
          $('#butconge1').hide();
+         $('#butsuppconge2').show();
+         
 
     }
     function addconge2()
     {
         $('#conge2').show();
         $('#butconge2').hide();
+        
+    }
+    function suppconge2()
+    {
+        $('#conge1').hide();
+        $('#butconge1').show();
+        
+    }
+
+    function suppconge3()
+    {
+        $('#conge2').hide();
+        $('#butconge2').show();
+        $('#butsuppconge2').show();
     }
 
     $('#saison').val(1);
@@ -755,19 +836,46 @@
         $('#saison3').show();
         $('#butsaison2').hide();
         $('#saison').val(3);
+        $('#butsuppsaison2').hide();
+    }
+
+    function suppsaison2()
+    {
+        
+        $('#saison2').hide();
+        $('#saison').val(1);
+        $('#butsaison1').show();
+    }
+
+    function suppsaison3()
+    {
+        
+        $('#saison3').hide();
+        $('#saison').val(2);
+         $('#butsaison2').show();
+         $('#butsuppsaison2').show();
+         
     }
 
     function load(){
         Dropzone.forElement('#exlreader').removeAllFiles(true);
+        $('#success').hide();
         $('#error').hide();
-        $('#reload').hide();
+        $('#plot').hide();
+       
         $('#errorconso').hide();
+        $('#exlreader1').hide();
+         $('#exlreader').show();
+
+        
 
     }
     $(function () {
         $('[data-toggle="popover"]').popover();
     })
 
+
+     
     function help(){
 
        x=document.getElementsByClassName('btn btn-primary btn-sm');
@@ -794,7 +902,7 @@
         dictMaxFilesExceeded: 'Only 20 file can be uploaded',
         maxFilesize: 20,  // in Mb
         acceptedFiles: ".xls,.xlsb,.xlsm,.xlsx,.xltm,.xlw,",
-        addRemoveLinks: false,
+        addRemoveLinks: true,
         init: function () {
             this.on("maxfilesexceeded", function (file) {
                 this.removeFile(file);
@@ -807,17 +915,14 @@
             
             this.on("sending", function (file, xhr, formData) {
                 // send additional data with the file as POST data if needed.
-                formData.append("tarif", $('[name=tarif]'));
+                formData.append("tarif", $('[name=tarif]').val());
+                formData.append("number", $('[name=number]').val());
             });
             this.on("success", function (file, response) {
                 $('#success').show();
+                $('#plot').show();
                 
-            /*    for (let i = 0; i < response.data.length ; i++) {
-                    dates =new Date(response.data[i][0]*1000);
-                    response.data[i][0]=dates;
-                }
-
-             */
+           
         let courbe=[];
         courbe[0]=[];
         courbe[1]=[];
@@ -867,17 +972,7 @@
                 },
             };
             Plotly.newPlot('plot', data10, layout10,{responsive: true});  
-                console.log('data');
-                console.log(response.data);
-                console.log(response.factor); 
-                console.log(response.somme);
-                console.log('info');
-                console.log(response.info);  
-                console.log(dates);  
-                console.log(response.tt); 
-                console.log('dataexl'); 
-                console.log(response.dataexl); 
-                console.log(response.period); 
+                
                             
             });
         }
@@ -894,7 +989,7 @@
         tooltip: true,
         scale: true,
         labels: false,
-        /*set: [1, 12]*/
+        /*set: [allMonthSlider1]*/
     
     });
      

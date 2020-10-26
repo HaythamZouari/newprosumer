@@ -26,12 +26,14 @@ class ProjectController extends AbstractController
     private $avgweek=[];
     public function __construct()
     {
-        for( $i =0 ; $i<7;$i++){
-            for($j = 0 ; $j<=23;$j++){
-                $avgweek[0][$i][$j]=0;
-                $avgweek[1][$i][$j]=0;
+        for( $k =0 ; $k<20;$k++){
+            for( $i =0 ; $i<7;$i++){
+                for($j = 0 ; $j<=23;$j++){
+                    $avgweek[$k][0][$i][$j]=0;
+                    $avgweek[$k][1][$i][$j]=0;
+                }
             }
-        }
+        }    
     }
 
     /**
@@ -156,10 +158,13 @@ class ProjectController extends AbstractController
 
 
         }*/
-
-
-        $project->getConsomation()->setAvgweek($tarifUni);
+        $allAvgweek=$project->getConsomation()->getAvgweek();
+        $allUrlCcv=$project->getConsomation()->getallUrlCcv();
+        $allUrlCcv[$request->get('number')]=$filePath;
+        $allAvgweek[$request->get('number')]=$tarifUni;
+        $project->getConsomation()->setAvgweek($allAvgweek);
         $project->getConsomation()->setUrlCcv($filePath);
+        $project->getConsomation()->setallUrlCcv($allUrlCcv);
         $entityManager=$this->getDoctrine()->getManager();
         $entityManager->persist($project);
         $entityManager->flush();
@@ -183,13 +188,41 @@ class ProjectController extends AbstractController
         
     if ($request->isXmlHttpRequest()){
         
+        
             $consomation =$project->getConsomation();
             $allDateDeb =$project->getConsomation()->getallDateDeb();
             $allDateFin =$project->getConsomation()->getallDateFin();
             $allDataAvgW =$project->getConsomation()->getallConsomationAnnuel();
             $allTarif =$project->getConsomation()->getTabTarif();
+            $allcm_month =$project->getConsomation()->getallCmMonth();
+
+            
+
+            $allActivite=$project->getConsomation()->getActivite();
+            $allDateconge_deb=$project->getConsomation()->getDatecongeDeb();
+            $allDateconge_deb1=$project->getConsomation()->getDatecongeDeb1();
+            $allDateconge_deb2=$project->getConsomation()->getDatecongeDeb2();
+            $allDateconge_fin=$project->getConsomation()->getDatecongeFin();
+            $allDateconge_fin1=$project->getConsomation()->getDatecongeFin1();
+            $allDateconge_fin2=$project->getConsomation()->getDatecongeFin2();
+            $allHourSlider1=$project->getConsomation()->getHourSlider1();
+            $allHourSlider2=$project->getConsomation()->getHourSlider2();
+            $allHourSlider3=$project->getConsomation()->getHourSlider3();
+            $allHourSlider_dimanche=$project->getConsomation()->getHourSliderDimanche();
+            $allHourSlider_samedi=$project->getConsomation()->getHourSliderSamedi();
+            $allMonthSlider1=$project->getConsomation()->getMonthSlider1();
+            $allMonthSlider2=$project->getConsomation()->getMonthSlider2();
+            $allMonthSlider3=$project->getConsomation()->getMonthSlider3();
+            $allSaison=$project->getConsomation()->getSaison();
+            $allCongeCheck=$project->getConsomation()->getCongeCheck();
+            $allDimancheCheck=$project->getConsomation()->getDimancheCheck();
+            $allSamediCheck=$project->getConsomation()->getSamediCheck();
+            $allVershoraire=$project->getConsomation()->getVershoraire();
+            $allFerieCheck=$project->getConsomation()->getFerieCheck();
+            
 
             $dateDeb= new \DateTime($request->get('dateDeb'));
+            $dateDebForm= $request->get('dateDeb');
             $dateDebexel= new \DateTime(null );
             $dateDebexel->setTimestamp($session->get('dateDebExl'));
             $dateFinexel= new \DateTime(null );
@@ -217,9 +250,70 @@ class ProjectController extends AbstractController
             $dateconge_deb2= new \DateTime($request->get('dateconge_deb2'));
             $dateconge_fin2= new \DateTime($request->get('dateconge_fin2'));
             $number= $request->get('number');
+            $allUrlCcv=$project->getConsomation()->getallUrlCcv();
+            $FerieCheck=$request->get('ferieCheck');
+
+            if (empty($allUrlCcv[$number])){
+
+                $allUrlCcv[$number]="";
+
+            }
+
+            $project->getConsomation()->setallUrlCcv($allUrlCcv);
+
+            if (empty($allDataAvgW[$number])){
+
+                $allDataAvgW[$number]=[];
+            }
+
             
+
+            $allActivite[$number]=$request->get('activite');
+            $allDateconge_deb[$number]=$request->get('dateconge_deb');
+            $allDateconge_deb1[$number]=$request->get('dateconge_deb1');
+            $allDateconge_deb2[$number]=$request->get('dateconge_deb2');
+            $allDateconge_fin[$number]=$request->get('dateconge_fin');
+            $allDateconge_fin1[$number]=$request->get('dateconge_fin1');
+            $allDateconge_fin2[$number]=$request->get('dateconge_fin2');
+            $allHourSlider1[$number]=$request->get('hourSlider1');
+            $allHourSlider2[$number]=$request->get('hourSlider2');
+            $allHourSlider3[$number]=$request->get('hourSlider3');
+            $allHourSlider_dimanche[$number]=$request->get('hourSlider_dimanche');
+            $allHourSlider_samedi[$number]=$request->get('hourSlider_samedi');
+            $allMonthSlider1[$number]=$request->get('monthSlider1');
+            $allMonthSlider2[$number]=$request->get('monthSlider2');
+            $allMonthSlider3[$number]=$request->get('monthSlider3');
+            $allSaison[$number]=$request->get('saison');
+            $allCongeCheck[$number]=$request->get('congeCheck');
+            $allDimancheCheck[$number]=$request->get('dimancheCheck');
+            $allSamediCheck[$number]=$request->get('samediCheck');
+            $allVershoraire[$number]=$request->get('vershoraire');
+            $allFerieCheck[$number]=$request->get('ferieCheck');
+
+
+            $project->getConsomation()->setActivite($allActivite);
+            $project->getConsomation()->setDatecongeDeb($allDateconge_deb);
+            $project->getConsomation()->setDatecongeDeb1($allDateconge_deb1);
+            $project->getConsomation()->setDatecongeDeb2($allDateconge_deb2);
+            $project->getConsomation()->setDatecongeFin($allDateconge_fin);
+            $project->getConsomation()->setDatecongeFin1($allDateconge_fin1);
+            $project->getConsomation()->setDatecongeFin2($allDateconge_fin2);
+            $project->getConsomation()->setHourSlider1($allHourSlider1);
+            $project->getConsomation()->setHourSlider2($allHourSlider2);
+            $project->getConsomation()->setHourSlider3($allHourSlider3);
+            $project->getConsomation()->setHourSliderDimanche($allHourSlider_dimanche);
+            $project->getConsomation()->setHourSliderSamedi($allHourSlider_samedi);
+            $project->getConsomation()->setMonthSlider1($allMonthSlider1);
+            $project->getConsomation()->setMonthSlider2($allMonthSlider2);
+            $project->getConsomation()->setMonthSlider3($allMonthSlider3);
+            $project->getConsomation()->setSaison($allSaison);
+            $project->getConsomation()->setCongeCheck($allCongeCheck);
+            $project->getConsomation()->setDimancheCheck($allDimancheCheck);
+            $project->getConsomation()->setSamediCheck($allSamediCheck);
+            $project->getConsomation()->setVershoraire($allVershoraire);
+            $project->getConsomation()->setFerieCheck($allFerieCheck);
             
-        if (empty($avgweek[0][0][0])){
+        if (empty($avgweek[$number][0][0][0])){
             
             $hourSliderreq1=explode(',',$hourSlider1);
             $hourSliderreq2=explode(',',$hourSlider2);
@@ -629,192 +723,201 @@ class ProjectController extends AbstractController
                         $date = new \DateTime(null );
                         $date->setTimestamp($dataSynW[$i][0]);
                         
-                        if((((int)$date->format('m'))>=((int)$dateconge_deb->format('m')))&&(((int)$date->format('m'))<=((int)$dateconge_fin->format('m')))){
-                            if ((((int)$date->format('d')))>=(((int)$dateconge_deb->format('d')))&&(((int)$date->format('d'))<=((int)$dateconge_fin->format('d')))){
+                        if((((int)$date->format('U'))>=((int)$dateconge_deb->format('U')))&&(((int)$date->format('U'))<=((int)$dateconge_fin->format('U')))){
+                            {
                                 $dataSynW[$i][1]=$Phn;
                             }
                         }
-                        if((((int)$date->format('m'))>=((int)$dateconge_deb1->format('m')))&&(((int)$date->format('m'))<=((int)$dateconge_fin1->format('m')))){
-                            if ((((int)$date->format('d')))>=(((int)$dateconge_deb1->format('d')))&&(((int)$date->format('d'))<=((int)$dateconge_fin1->format('d')))){
+                        if((((int)$date->format('U'))>=((int)$dateconge_deb1->format('U')))&&(((int)$date->format('U'))<=((int)$dateconge_fin1->format('U')))){
+                            {
                                 $dataSynW[$i][1]=$Phn;
                             }
                         }
-                        if((((int)$date->format('m'))>=((int)$dateconge_deb2->format('m')))&&(((int)$date->format('m'))<=((int)$dateconge_fin2->format('m')))){
-                            if ((((int)$date->format('d')))>=(((int)$dateconge_deb2->format('d')))&&(((int)$date->format('d'))<=((int)$dateconge_fin2->format('d')))){
+                        if((((int)$date->format('U'))>=((int)$dateconge_deb2->format('U')))&&(((int)$date->format('U'))<=((int)$dateconge_fin2->format('U')))){
+                            {
                                 $dataSynW[$i][1]=$Phn;
                             }
                         }
                         else{
+
+                            if ($FerieCheck!='on'){
                         
-                            if(((int)$date->format('d'))==1&&((int)$date->format('m'))==1){
-                                $dataSynW[$i][1]=$Phn;
+                                if(((int)$date->format('d'))==1&&((int)$date->format('m'))==1){
+                                    $dataSynW[$i][1]=$Phn;
+                                }
+                                elseif(((int)$date->format('d'))==14&&((int)$date->format('m'))==1){
+                                    $dataSynW[$i][1]=$Phn;
+                                }
+                                elseif(((int)$date->format('d'))==20&&((int)$date->format('m'))==3){
+                                    $dataSynW[$i][1]=$Phn;
+                                }
+                                elseif(((int)$date->format('d'))==9&&((int)$date->format('m'))==4){
+                                    $dataSynW[$i][1]=$Phn;
+                                }
+                                elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==5){
+                                    $dataSynW[$i][1]=$Phn;
+                                }
+                                elseif(((int)$date->format('d'))==25&&((int)$date->format('m'))==7){
+                                    $dataSynW[$i][1]=$Phn;
+                                }
+                                elseif(((int)$date->format('d'))==13&&((int)$date->format('m'))==8){
+                                    $dataSynW[$i][1]=$Phn;
+                                }
+                                elseif(((int)$date->format('d'))==15&&((int)$date->format('m'))==10){
+                                    $dataSynW[$i][1]=$Phn;
+                                }
                             }
-                            elseif(((int)$date->format('d'))==14&&((int)$date->format('m'))==1){
-                                $dataSynW[$i][1]=$Phn;
-                            }
-                            elseif(((int)$date->format('d'))==20&&((int)$date->format('m'))==3){
-                                $dataSynW[$i][1]=$Phn;
-                            }
-                            elseif(((int)$date->format('d'))==9&&((int)$date->format('m'))==4){
-                                $dataSynW[$i][1]=$Phn;
-                            }
-                            elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==5){
-                                $dataSynW[$i][1]=$Phn;
-                            }
-                            elseif(((int)$date->format('d'))==25&&((int)$date->format('m'))==7){
-                                $dataSynW[$i][1]=$Phn;
-                            }
-                            elseif(((int)$date->format('d'))==13&&((int)$date->format('m'))==8){
-                                $dataSynW[$i][1]=$Phn;
-                            }
-                            elseif(((int)$date->format('d'))==15&&((int)$date->format('m'))==10){
-                                $dataSynW[$i][1]=$Phn;
-                            }
-                            elseif(((int)$date->format('d'))==29&&((int)$date->format('m'))==2){
-                                unset($dataSynW[$i]);  
-                            }
-                        }  
-                    
+                            
+                                
+                        }
+                        
+                        
+                        if(((int)$date->format('d'))==29&&((int)$date->format('m'))==2){
+                            unset($dataSynW[$i]);
+                        }
                     }
 
                     $dataSynW = array_values($dataSynW);
                     
                     if($request->get('tarif')==0){
-                    $monthp = $request->get('date');
-                    $month=[];
-                    for($i=0;$i<13;$i++){
-                        $month[$i]=0;
-
-                    }
-                    foreach ($dataSynW as $item) {
-                        $date = new \DateTime(null );
-                        $date->setTimestamp($item[0]);
-                        $month[((int)$date->format('m'))]+=$item[1];
-                    }
-                    $monthtmp=$month;
-                    for($i =1 ; $i <13; $i++){
-                        if ($monthtmp[$i]==0) {
-                            $month[$i]=0;
-                        }
-                        else{
-                        $month[$i]=(float)$monthp[$i]/$month[$i];
-                        }
-                    }
-
-                    $dataSynWtm=$dataSynW;
-                    for ($i=0;$i<count($dataSynW);$i++) {
-                        $date = new \DateTime(null );
-                        $date->setTimestamp($dataSynW[$i][0]);
-                        $months=(int)$date->format('m');
-                        $day=(int)$date->format('d');
-                        $dataSynW[$i][1]*=$month[(int)((new \DateTime(null ))->setTimestamp($dataSynW[$i][0])->format('m'))];
-                    }
-                    $month=[];
+                        $monthp = $request->get('date');
+                        $month=[];
                         for($i=0;$i<13;$i++){
-                            $month[$i]['jour']=0;
-                            $month[$i]['ete']=0;
-                            $month[$i]['soir']=0;
-                            $month[$i]['nuit']=0;
+                            $month[$i]=0;
 
                         }
-                    $consomation->setCmMonth(PostHoraire::PostHoraire($dataSynW));
-                        $dataAvgW=$dataSynW;
-                        $dataAvgWtm=$dataSynWtm;
-                    }
-                        else {
-                            $dataSynWtm=$dataSynW;
-                            $monthp = $request->get('datehoraire');
-                            //$month is an array that contain the sum of the hours of every type in every month
-                            $month=[];
+                        foreach ($dataSynW as $item) {
+                            $date = new \DateTime(null );
+                            $date->setTimestamp($item[0]);
+                            $month[((int)$date->format('m'))]+=$item[1];
+                        }
+                        $monthtmp=$month;
+                        for($i =1 ; $i <13; $i++){
+                            if ($monthtmp[$i]==0) {
+                                $month[$i]=0;
+                            }
+                            else{
+                            $month[$i]=(float)$monthp[$i]/$month[$i];
+                            }
+                        }
+
+                        $dataSynWtm=$dataSynW;
+                        for ($i=0;$i<count($dataSynW);$i++) {
+                            $date = new \DateTime(null );
+                            $date->setTimestamp($dataSynW[$i][0]);
+                            $months=(int)$date->format('m');
+                            $day=(int)$date->format('d');
+                            $dataSynW[$i][1]*=$month[(int)((new \DateTime(null ))->setTimestamp($dataSynW[$i][0])->format('m'))];
+                        }
+                        $month=[];
                             for($i=0;$i<13;$i++){
                                 $month[$i]['jour']=0;
-                                $month[$i]['nuit']=0;
-                                $month[$i]['soir']=0;
                                 $month[$i]['ete']=0;
-                            }
-                            $month = PostHoraire::PostHoraire($dataSynW);
-                            $monthtmp = $month;
-                            $consomation->setCmMonth($month);
-                            for($i =1 ;$i < 13 ; $i++){
-                                if($i>5&&$i<9){
-                                    $month[$i]['jour']=$monthp['jour'][$i]/$month[$i]['jour'];
-                                    $month[$i]['nuit']=$monthp['nuit'][$i]/$month[$i]['nuit'];
-                                    $month[$i]['soir']=$monthp['soir'][$i]/$month[$i]['soir'];
-                                    $month[$i]['ete']=$monthp['ete'][$i]/$month[$i]['ete'];
-                                }
-                                else{
-                                    $month[$i]['jour']=$monthp['jour'][$i]/$month[$i]['jour'];
-                                    $month[$i]['nuit']=$monthp['nuit'][$i]/$month[$i]['nuit'];
-                                    $month[$i]['soir']=$monthp['soir'][$i]/$month[$i]['soir'];
-                                }
-                            }
-                            for($i=0;$i<count($dataSynW);$i++) {
-                                $date = new \DateTime(null );
-                                $date->setTimestamp($dataSynW[$i][0]);
+                                $month[$i]['soir']=0;
+                                $month[$i]['nuit']=0;
 
-                            if(((int)$date->format('w'))==0)
-                            $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
-                            elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==1){
-                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
                             }
-                            elseif(((int)$date->format('d'))==14&&((int)$date->format('m'))==1){
-                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
-                            }
-                            elseif(((int)$date->format('d'))==20&&((int)$date->format('m'))==3){
-                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
-                            }
-                            elseif(((int)$date->format('d'))==9&&((int)$date->format('m'))==4){
-                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
-                            }
-                            elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==5){
-                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
-                            }    
-                            elseif(((int)$date->format('d'))==25&&((int)$date->format('m'))==7){
-                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
-                            }
-                            elseif(((int)$date->format('d'))==13&&((int)$date->format('m'))==8){
-                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
-                            }
-                            elseif(((int)$date->format('d'))==15&&((int)$date->format('m'))==10){
-                                $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
-                            }
-
-
-
-                                elseif (((int)$date->format('m')) > 5 && ((int)$date->format('m')) < 9) {
-                                    if( (int)$date->format('H')>6&&(int)$date->format('H')<9 ||
-                                        (int)$date->format('H')>13&&(int)$date->format('H')<19){
-                                        $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['jour'];
-                                    }
-                                    elseif ((int)$date->format('H')>=0&&(int)$date->format('H')<=6 ||
-                                        (int)$date->format('H')>21&&(int)$date->format('H')<=23){
-                                        $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
-                                    }
-                                    elseif ((int)$date->format('H')>=9&&(int)$date->format('H')<14){
-                                        $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['ete'];
-                                    }
-                                    else
-                                        $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['soir'];
-                                }
-                                else{
-                                    if( (int)$date->format('H')>6&&(int)$date->format('H')<18){
-                                        $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['jour'];
-                                    }
-                                    elseif ((int)$date->format('H')>=0&&(int)$date->format('H')<=6 ||
-                                        (int)$date->format('H')>=21&&(int)$date->format('H')<=23){
-                                        $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
-                                    }
-                                    else {
-                                        $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['soir'];
-                                    }
-                                }
-                            }
-
+                        $consomation->setCmMonth(PostHoraire::PostHoraire($dataSynW));
+                        $allcm_month[$number]=$request->get('date');
                             $dataAvgW=$dataSynW;
                             $dataAvgWtm=$dataSynWtm;
-                           
+                    }
+                    else {
+                        $dataSynWtm=$dataSynW;
+                        $monthp = $request->get('datehoraire');
+                        //$month is an array that contain the sum of the hours of every type in every month
+                        $month=[];
+                        for($i=0;$i<13;$i++){
+                            $month[$i]['jour']=0;
+                            $month[$i]['nuit']=0;
+                            $month[$i]['soir']=0;
+                            $month[$i]['ete']=0;
                         }
-            
+                        $month = PostHoraire::PostHoraire($dataSynW);
+                        $monthtmp = $month;
+                        $consomation->setCmMonth($month);
+                        $allcm_month[$number]=$request->get('datehoraire');
+
+                        for($i =1 ;$i < 13 ; $i++){
+                            if($i>5&&$i<9){
+                                $month[$i]['jour']=$monthp['jour'][$i]/$month[$i]['jour'];
+                                $month[$i]['nuit']=$monthp['nuit'][$i]/$month[$i]['nuit'];
+                                $month[$i]['soir']=$monthp['soir'][$i]/$month[$i]['soir'];
+                                $month[$i]['ete']=$monthp['ete'][$i]/$month[$i]['ete'];
+                            }
+                            else{
+                                $month[$i]['jour']=$monthp['jour'][$i]/$month[$i]['jour'];
+                                $month[$i]['nuit']=$monthp['nuit'][$i]/$month[$i]['nuit'];
+                                $month[$i]['soir']=$monthp['soir'][$i]/$month[$i]['soir'];
+                            }
+                        }
+                        for($i=0;$i<count($dataSynW);$i++) {
+                            $date = new \DateTime(null );
+                            $date->setTimestamp($dataSynW[$i][0]);
+
+                        if(((int)$date->format('w'))==0)
+                        $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==1){
+                            $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==14&&((int)$date->format('m'))==1){
+                            $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==20&&((int)$date->format('m'))==3){
+                            $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==9&&((int)$date->format('m'))==4){
+                            $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==5){
+                            $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }    
+                        elseif(((int)$date->format('d'))==25&&((int)$date->format('m'))==7){
+                            $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==13&&((int)$date->format('m'))==8){
+                            $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+                        elseif(((int)$date->format('d'))==15&&((int)$date->format('m'))==10){
+                            $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                        }
+
+
+
+                            elseif (((int)$date->format('m')) > 5 && ((int)$date->format('m')) < 9) {
+                                if( (int)$date->format('H')>6&&(int)$date->format('H')<9 ||
+                                    (int)$date->format('H')>13&&(int)$date->format('H')<19){
+                                    $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['jour'];
+                                }
+                                elseif ((int)$date->format('H')>=0&&(int)$date->format('H')<=6 ||
+                                    (int)$date->format('H')>21&&(int)$date->format('H')<=23){
+                                    $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                                }
+                                elseif ((int)$date->format('H')>=9&&(int)$date->format('H')<14){
+                                    $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['ete'];
+                                }
+                                else
+                                    $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['soir'];
+                            }
+                            else{
+                                if( (int)$date->format('H')>6&&(int)$date->format('H')<18){
+                                    $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['jour'];
+                                }
+                                elseif ((int)$date->format('H')>=0&&(int)$date->format('H')<=6 ||
+                                    (int)$date->format('H')>=21&&(int)$date->format('H')<=23){
+                                    $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['nuit'];
+                                }
+                                else {
+                                    $dataSynW[$i][1]*=$month[((int)$date->format('m'))]['soir'];
+                                }
+                            }
+                        }
+
+                        $dataAvgW=$dataSynW;
+                        $dataAvgWtm=$dataSynWtm;
+                        
+                    }
+        
 
                     //******************************************************* 
 
@@ -839,10 +942,10 @@ class ProjectController extends AbstractController
                     }
                     else{
                         if(((int)$date->format('m') )>5 && ((int)$date->format('m'))<9) {
-                            $dataAvgW[] = [$date->getTimestamp(),$avgweek[0][((int)$date->format('w'))][((int)$date->format('H'))]];
+                            $dataAvgW[] = [$date->getTimestamp(),$avgweek[$number][0][((int)$date->format('w'))][((int)$date->format('H'))]];
                         }
                         else{
-                            $dataAvgW[] = [$date->getTimestamp(),$avgweek[1][((int)$date->format('w'))][((int)$date->format('H'))]];
+                            $dataAvgW[] = [$date->getTimestamp(),$avgweek[$number][1][((int)$date->format('w'))][((int)$date->format('H'))]];
                         }
 
                     }
@@ -854,28 +957,28 @@ class ProjectController extends AbstractController
                     $date = new \DateTime(null );
                     $date->setTimestamp($dataAvgW[$i][0]);
                     if(((int)$date->format('d'))==1&&((int)$date->format('m'))==1){
-                        $dataAvgW[$i][1]=$avgweek[1][0][((int)$date->format('H'))];
+                        $dataAvgW[$i][1]=$avgweek[$number][1][0][((int)$date->format('H'))];
                     }
                     elseif(((int)$date->format('d'))==14&&((int)$date->format('m'))==1){
-                        $dataAvgW[$i][1]=$avgweek[1][0][((int)$date->format('H'))];
+                        $dataAvgW[$i][1]=$avgweek[$number][1][0][((int)$date->format('H'))];
                     }
                     elseif(((int)$date->format('d'))==20&&((int)$date->format('m'))==3){
-                        $dataAvgW[$i][1]=$avgweek[1][0][((int)$date->format('H'))];
+                        $dataAvgW[$i][1]=$avgweek[$number][1][0][((int)$date->format('H'))];
                     }
                     elseif(((int)$date->format('d'))==9&&((int)$date->format('m'))==4){
-                        $dataAvgW[$i][1]=$avgweek[1][0][((int)$date->format('H'))];
+                        $dataAvgW[$i][1]=$avgweek[$number][1][0][((int)$date->format('H'))];
                     }
                     elseif(((int)$date->format('d'))==1&&((int)$date->format('m'))==5){
-                        $dataAvgW[$i][1]=$avgweek[1][0][((int)$date->format('H'))];
+                        $dataAvgW[$i][1]=$avgweek[$number][1][0][((int)$date->format('H'))];
                     }
                     elseif(((int)$date->format('d'))==25&&((int)$date->format('m'))==7){
-                        $dataAvgW[$i][1]=$avgweek[0][0][((int)$date->format('H'))];
+                        $dataAvgW[$i][1]=$avgweek[$number][0][0][((int)$date->format('H'))];
                     }
                     elseif(((int)$date->format('d'))==13&&((int)$date->format('m'))==8){
-                        $dataAvgW[$i][1]=$avgweek[0][0][((int)$date->format('H'))];
+                        $dataAvgW[$i][1]=$avgweek[$number][0][0][((int)$date->format('H'))];
                     }
                     elseif(((int)$date->format('d'))==15&&((int)$date->format('m'))==10){
-                        $dataAvgW[$i][1]=$avgweek[1][0][((int)$date->format('H'))];
+                        $dataAvgW[$i][1]=$avgweek[$number][1][0][((int)$date->format('H'))];
                     }
                     elseif(((int)$date->format('d'))==29&&((int)$date->format('m'))==2){
                         unset($dataAvgW[$i]);  
@@ -925,6 +1028,7 @@ class ProjectController extends AbstractController
 
                     }
                     $consomation->setCmMonth(PostHoraire::PostHoraire($dataAvgW));
+                    $allcm_month[$number]=$request->get('date');;
 
 
                 }
@@ -947,6 +1051,9 @@ class ProjectController extends AbstractController
                     $month = PostHoraire::PostHoraire($dataAvgW);
                     $monthtmp = $month;
                     $consomation->setCmMonth($month);
+                    $allcm_month[$number]=$request->get('datehoraire');
+                    
+                    
                     for($i =1 ;$i < 13 ; $i++){
                         if($i>5&&$i<9){
                             $month[$i]['jour']=$monthp['jour'][$i]/$month[$i]['jour'];
@@ -1047,11 +1154,16 @@ class ProjectController extends AbstractController
 
             $consomation->setallDateDeb($allDateDeb);    
             $consomation->setDateDeb($dateDeb);
+            $consomation->setDateDebForm($dateDebForm);
+            
             $consomation->setallDateFin($allDateFin);
             $consomation->setDateFin($dateFin);
             $consomation->setallConsomationAnnuel($allDataAvgW);
             $consomation->setConsomationAnnuel($dataAvgW);
             $consomation->setTabTarif($allTarif);
+            $consomation->setallCmMonth($allcm_month);
+
+            $alldata1=$project->getConsomation()->getallConsomationAnnuel();
             
             $consomation->setProject($project);
             $project->setConsomation($consomation);
@@ -1059,12 +1171,453 @@ class ProjectController extends AbstractController
             $entityManager->persist($consomation);
             $entityManager->persist($project);
             $entityManager->flush();
-            return new JsonResponse(['virgdata'=>$dataAvgW,'data'=>$dataAvgWtm,'data2'=>$monthtmp,'dataexl'=>round($dataexl[0][0]),'period'=>$date->getTimestamp(),'newdata'=>$dataAvgW,'alldata'=>$allDataAvgW,'nbre'=>count($allDateDeb),]);
+            return new JsonResponse([
+            'tabTarif'=>$project->getConsomation()->getTabTarif(),
+            'allCmMonth'=>$project->getConsomation()->getallCmMonth(),
+            'virgdata'=>$dataAvgW,
+            'data'=>$dataAvgWtm,
+            'data2'=>$monthtmp,
+            'dataexl'=>round($dataexl[0][0]),
+            'period'=>$date->getTimestamp(),
+            'newdata'=>$dataAvgW,
+            'alldata'=>$allDataAvgW,
+            'nbre'=>count($allDateDeb),
+            'alldata1'=>$alldata1,
+
+            
+            
+            
+            
+            
+            ]);
     }
         return $this->render('project/show.html.twig', [
             'project' => $project,
         ]);
     }
+
+
+     /**
+ 
+
+ * @Route("/suppsite/{id}",name="suppsite")
+     * @throws \Exception
+     */
+    public function suppsite(Project $project,Request $request)
+    {
+        
+        if ($request->isXmlHttpRequest()){
+            $consomation =$project->getConsomation();
+            $allDateDeb =$project->getConsomation()->getallDateDeb();
+            $allDateFin =$project->getConsomation()->getallDateFin();
+            $allDataAvgW =$project->getConsomation()->getallConsomationAnnuel();
+            $allTarif =$project->getConsomation()->getTabTarif();
+            $allcm_month =$project->getConsomation()->getallCmMonth();
+            $allActivite=$project->getConsomation()->getActivite();
+            $allDateconge_deb=$project->getConsomation()->getDatecongeDeb();
+            $allDateconge_deb1=$project->getConsomation()->getDatecongeDeb1();
+            $allDateconge_deb2=$project->getConsomation()->getDatecongeDeb2();
+            $allDateconge_fin=$project->getConsomation()->getDatecongeFin();
+            $allDateconge_fin1=$project->getConsomation()->getDatecongeFin1();
+            $allDateconge_fin2=$project->getConsomation()->getDatecongeFin2();
+            $allHourSlider1=$project->getConsomation()->getHourSlider1();
+            $allHourSlider2=$project->getConsomation()->getHourSlider2();
+            $allHourSlider3=$project->getConsomation()->getHourSlider3();
+            $allHourSlider_dimanche=$project->getConsomation()->getHourSliderDimanche();
+            $allHourSlider_samedi=$project->getConsomation()->getHourSliderSamedi();
+            $allMonthSlider1=$project->getConsomation()->getMonthSlider1();
+            $allMonthSlider2=$project->getConsomation()->getMonthSlider2();
+            $allMonthSlider3=$project->getConsomation()->getMonthSlider3();
+            $allSaison=$project->getConsomation()->getSaison();
+            $allCongeCheck=$project->getConsomation()->getCongeCheck();
+            $allDimancheCheck=$project->getConsomation()->getDimancheCheck();
+            $allSamediCheck=$project->getConsomation()->getSamediCheck();
+            $allVershoraire=$project->getConsomation()->getVershoraire();
+            $avgweek=$project->getConsomation()->getAvgweek();
+            $allUrlCcv=$project->getConsomation()->getallUrlCcv();
+            $allFerieCheck=$project->getConsomation()->getFerieCheck();
+
+           /* $consomationPH=$project->getconsomationPH();
+            $productionPH=$project->getproductionPH();
+            $auto_consomerPH=$project->getauto_consomerPH();
+            $importerPH=$project->getimporterPH();
+            $cedeePH=$project->getcedeePH();
+            $injectPH=$project->getinjectPH();
+            $inject=$project->getinject();
+            $auto_consomer=$project->getAutoConsomer();
+            $cedee=$project->getCedee();
+            $importer=$project->getImporte();
+
+            unset($consomationPH);
+            unset($productionPH);
+            unset($auto_consomerPH);
+            unset($importerPH);
+            unset($cedeePH);
+            unset($injectPH);
+            unset($inject);
+            unset($auto_consomer);
+            unset($cedee);
+            unset($importer);*/
+
+
+            
+
+            unset($avgweek[$request->get('number')]);
+           
+            unset($allDateDeb[$request->get('number')]); 
+            unset($allDateFin[$request->get('number')]); 
+            unset($allDataAvgW[$request->get('number')]); 
+            unset($allTarif[$request->get('number')]); 
+            unset($allcm_month[$request->get('number')]); 
+            unset($allActivite[$request->get('number')]); 
+            unset($allDateconge_deb[$request->get('number')]); 
+            unset($allDateconge_deb1[$request->get('number')]); 
+            unset($allDateconge_deb2[$request->get('number')]); 
+            unset($allDateconge_fin[$request->get('number')]); 
+            unset($allDateconge_fin1[$request->get('number')]); 
+            unset($allDateconge_fin2[$request->get('number')]); 
+            unset($allHourSlider1[$request->get('number')]); 
+            unset($allHourSlider2[$request->get('number')]); 
+            unset($allHourSlider3[$request->get('number')]); 
+            unset($allHourSlider_dimanche[$request->get('number')]); 
+            unset($allHourSlider_samedi[$request->get('number')]); 
+            unset($allMonthSlider1[$request->get('number')]); 
+            unset($allMonthSlider2[$request->get('number')]); 
+            unset($allMonthSlider3[$request->get('number')]); 
+            unset($allSaison[$request->get('number')]); 
+            unset($allCongeCheck[$request->get('number')]); 
+            unset($allDimancheCheck[$request->get('number')]); 
+            unset($allSamediCheck[$request->get('number')]); 
+            unset($allVershoraire[$request->get('number')]); 
+            unset($allFerieCheck[$request->get('number')]);
+
+            $avgweek=array_values($avgweek);
+           
+            $allDateDeb=array_values($allDateDeb); 
+            $allDateFin=array_values($allDateFin); 
+            $allDataAvgW=array_values($allDataAvgW); 
+            $allTarif=array_values($allTarif); 
+            $allcm_month=array_values($allcm_month); 
+            $allActivite=array_values($allActivite); 
+            $allDateconge_deb=array_values($allDateconge_deb); 
+            $allDateconge_deb1=array_values($allDateconge_deb1); 
+            $allDateconge_deb2=array_values($allDateconge_deb2); 
+            $allDateconge_fin=array_values($allDateconge_fin); 
+            $allDateconge_fin1=array_values($allDateconge_fin1); 
+            $allDateconge_fin2=array_values($allDateconge_fin2); 
+            $allHourSlider1=array_values($allHourSlider1); 
+            $allHourSlider2=array_values($allHourSlider2); 
+            $allHourSlider3=array_values($allHourSlider3); 
+            $allHourSlider_dimanche=array_values($allHourSlider_dimanche); 
+            $allHourSlider_samedi=array_values($allHourSlider_samedi); 
+            $allMonthSlider1=array_values($allMonthSlider1); 
+            $allMonthSlider2=array_values($allMonthSlider2); 
+            $allMonthSlider3=array_values($allMonthSlider3); 
+            $allSaison=array_values($allSaison); 
+            $allCongeCheck=array_values($allCongeCheck); 
+            $allDimancheCheck=array_values($allDimancheCheck); 
+            $allSamediCheck=array_values($allSamediCheck); 
+            $allVershoraire=array_values($allVershoraire);
+            $allFerieCheck=array_values($allFerieCheck);  
+
+
+            $project->setconsomationPH([]);
+            $project->setproductionPH([]);
+            $project->setauto_consomerPH([]);
+            $project->setimporterPH([]);
+            $project->setcedeePH([]);
+            $project->setinjectPH([]);
+            $project->setinject([]);
+            $project->setAutoConsomer([]);
+            $project->setCedee([]);
+            $project->setImporte([]);
+           
+
+
+            $project->getConsomation()->setallDateDeb($allDateDeb);
+            $project->getConsomation()->setallDateFin($allDateFin);
+            $project->getConsomation()->setallConsomationAnnuel($allDataAvgW);
+            $project->getConsomation()->setTabTarif($allTarif);
+            $project->getConsomation()->setallCmMonth($allcm_month);
+            $project->getConsomation()->setActivite($allActivite);
+            $project->getConsomation()->setDatecongeDeb($allDateconge_deb);
+            $project->getConsomation()->setDatecongeDeb1($allDateconge_deb1);
+            $project->getConsomation()->setDatecongeDeb2($allDateconge_deb2);
+            $project->getConsomation()->setDatecongeFin($allDateconge_fin);
+            $project->getConsomation()->setDatecongeFin1($allDateconge_fin1);
+            $project->getConsomation()->setDatecongeFin2($allDateconge_fin2);
+            $project->getConsomation()->setHourSlider1($allHourSlider1);
+            $project->getConsomation()->setHourSlider2($allHourSlider2);
+            $project->getConsomation()->setHourSlider3($allHourSlider3);
+            $project->getConsomation()->setHourSliderDimanche($allHourSlider_dimanche);
+            $project->getConsomation()->setHourSliderSamedi($allHourSlider_samedi);
+            $project->getConsomation()->setMonthSlider1($allMonthSlider1);
+            $project->getConsomation()->setMonthSlider2($allMonthSlider2);
+            $project->getConsomation()->setMonthSlider3($allMonthSlider3);
+            $project->getConsomation()->setSaison($allSaison);
+            $project->getConsomation()->setCongeCheck($allCongeCheck);
+            $project->getConsomation()->setDimancheCheck($allDimancheCheck);
+            $project->getConsomation()->setSamediCheck($allSamediCheck);
+            $project->getConsomation()->setVershoraire($allVershoraire);
+            $project->getConsomation()->setFerieCheck($allFerieCheck);
+            
+            
+                unset($allUrlCcv[$request->get('number')]); 
+                $allUrlCcv=array_values($allUrlCcv); 
+                $project->getConsomation()->setallUrlCcv($allUrlCcv);
+                $allUrlCcv=array_values($allUrlCcv); 
+
+            
+
+            $project->getConsomation()->setAvgweek($avgweek);
+            
+
+            $consomation->setProject($project);
+            $project->setConsomation($consomation);
+            $entityManager=$this->getDoctrine()->getManager();
+            $entityManager->persist($consomation);
+            $entityManager->persist($project);
+            $entityManager->flush();
+        }
+        return new JsonResponse(['avg'=>$project->getConsomation()->getAvgweek(), 'cm'=>$allcm_month,
+        'aut'=>$project->getAutoConsomer(),
+        'ced'=>$project->getCedee(),
+        
+        'imp'=>$project->getImporte() ]);
+
+        return $this->render('project/show.html.twig', [
+            'project' => $project,
+            'i'=>$request->get('number')
+        ]);
+    }
+
+
+     /**
+ 
+
+ * @Route("/suppcc/{id}",name="suppcc")
+     * @throws \Exception
+     */
+    public function suppcc(Project $project,Request $request)
+    {
+        
+        if ($request->isXmlHttpRequest()){
+            $consomation =$project->getConsomation();
+            $avgweek=$project->getConsomation()->getAvgweek();
+            $allUrlCcv=$project->getConsomation()->getallUrlCcv();
+            $avgweek[$request->get('number')]=[];
+            
+            $allUrlCcv[$request->get('number')]="";
+            $project->getConsomation()->setAvgweek($avgweek);
+            $project->getConsomation()->setallUrlCcv($allUrlCcv);
+            
+
+            $consomation->setProject($project);
+            $project->setConsomation($consomation);
+            $entityManager=$this->getDoctrine()->getManager();
+            $entityManager->persist($consomation);
+            $entityManager->persist($project);
+            $entityManager->flush();
+        }
+        return new JsonResponse(['avg'=>$project->getConsomation()->getAvgweek()]);
+
+        return $this->render('project/show.html.twig', [
+            'project' => $project,
+            'i'=>$request->get('number')
+        ]);
+    }
+    /**
+ 
+
+ * @Route("/editpro/{id}",name="editpro")
+     * @throws \Exception
+     */
+    public function getdata(Project $project,Request $request)
+    {
+        
+    if ($request->isXmlHttpRequest()){
+        $srcprod=0;
+        if($project->getPvgis() != null){
+            $srcprod=1;
+            $getLat=$project->getPvgis()->getLat();
+            $getAzimuth=$project->getPvgis()->getAzimuth();
+            $getLon=$project->getPvgis()->getLon();
+            $getLoss=$project->getPvgis()->getLoss();
+            $getMountingType=$project->getPvgis()->getMountingType();
+            $getPeakPower=$project->getPvgis()->getPeakPower();
+            $getPvTech=$project->getPvgis()->getPvTech();
+            $getDegradation=$project->getPvgis()->getDegradation();
+            $getSlop=$project->getPvgis()->getSlop();
+            }
+            else{
+
+            $getLat=36;
+            $getAzimuth=[0,0,0];
+            $getLon=10;
+            $getLoss=14;
+            $getMountingType=0;
+            $getPeakPower=[0,0,0];
+            $getPvTech='';
+            $getDegradation=0.5;
+            $getSlop=[30,30,30];
+
+            }
+
+            if ($project->getNinja() != null){
+                $srcprod=2;
+                $getLat_n=$project->getNinja()->getLat();
+                $getAzimuth_n=$project->getNinja()->getAzimuth();
+                $getLon_n=$project->getNinja()->getLon();
+                $getLoss_n=$project->getNinja()->getLoss();
+                $getTracking_n=$project->getNinja()->getTracking();
+                $getCapacity_n=$project->getNinja()->getCapacity();
+                $getRaddatabase_n=$project->getNinja()->getRaddatabase();
+                $getTilt_n=$project->getNinja()->getTilt();
+                $getDegradation_n=$project->getNinja()->getDegradation();   
+            } 
+            else{
+                $getLat_n=36;
+                $getAzimuth_n=0;
+                $getLon_n=10;
+                $getLoss_n=14;
+                $getTracking_n=0;
+                $getCapacity_n=0;
+                $getRaddatabase_n='';
+                $getTilt_n=30;
+                $getDegradation_n=0.5;
+            } 
+
+            if($project->getCsvProd()!=null){
+                $srcprod=3;
+                $deg_c=$project->getCsvProd()->getDegradation();
+                $pui_c=$project->getCsvProd()->getPuissence();
+                $path_c=$project->getCsvProd()->getPath();
+            }
+            else{
+                $deg_c=0.5;
+                $pui_c=0;
+                $path_c='';
+            }   
+            
+            if($project->getFinance()!= null){
+                if($project->getFinance()->getCredit()!=null){
+                    $dette=$project->getFinance()->getMontantDette();
+                    $interet=$project->getFinance()->getTauxInteret();
+                    $grace=$project->getFinance()->getDelaiGrace();
+                    $matur=$project->getFinance()->getMaturiteProj();
+                }
+                else{
+                    $dette=0;
+                    $interet=0;
+                    $grace=0;
+                    $matur=0;
+
+                }
+                $capex=$project->getFinance()->getCapex();
+            $atachat=$project->getFinance()->getAugTarifAchat();
+            $atvente=$project->getFinance()->getAugTarifVende();
+            $duree=$project->getFinance()->getDureeProj();
+            $opex=$project->getFinance()->getOpex();
+            $sub=$project->getFinance()->getSubvention();
+            $actu=$project->getFinance()->getTauxActualisation();
+            $credit=$project->getFinance()->getCredit();
+
+
+            }
+            else{
+                $dette=0;
+                $interet=9;
+                $grace=0;
+                $matur=7;
+                $capex=1000;
+                $atachat=7;
+                $atvente=5;
+                $duree=25;
+                $opex=1;
+                $sub=0;
+                $actu=8;
+                $credit=0;
+
+            }   
+
+
+
+return new JsonResponse(['tabTarif'=>$project->getConsomation()->getTabTarif(),'allCmMonth'=>$project->getConsomation()->getallCmMonth(),
+            'allActivite'=>$project->getConsomation()->getActivite(),
+            'allDateconge_deb'=>$project->getConsomation()->getDatecongeDeb(),
+            'allDateconge_deb1'=>$project->getConsomation()->getDatecongeDeb1(),
+            'allDateconge_deb2'=>$project->getConsomation()->getDatecongeDeb2(),
+            'allDateconge_fin'=>$project->getConsomation()->getDatecongeFin(),
+            'allDateconge_fin1'=>$project->getConsomation()->getDatecongeFin1(),
+            'allDateconge_fin2'=>$project->getConsomation()->getDatecongeFin2(),
+            'allHourSlider1'=>$project->getConsomation()->getHourSlider1(),
+            'allHourSlider2'=>$project->getConsomation()->getHourSlider2(),
+            'allHourSlider3'=>$project->getConsomation()->getHourSlider3(),
+            'allHourSlider_dimanche'=>$project->getConsomation()->getHourSliderDimanche(),
+            'allHourSlider_samedi'=>$project->getConsomation()->getHourSliderSamedi(),
+            'allMonthSlider1'=>$project->getConsomation()->getMonthSlider1(),
+            'allMonthSlider2'=>$project->getConsomation()->getMonthSlider2(),
+            'allMonthSlider3'=>$project->getConsomation()->getMonthSlider3(),
+            'allSaison'=>$project->getConsomation()->getSaison(),
+            'allCongeCheck'=>$project->getConsomation()->getCongeCheck(),
+            'allDimancheCheck'=>$project->getConsomation()->getDimancheCheck(),
+            'allSamediCheck'=>$project->getConsomation()->getSamediCheck(),
+            'allVershoraire'=>$project->getConsomation()->getVershoraire(),
+            'transport'=>$project->getConsomation()->getTransportEng(),
+            'datedeb'=>$project->getConsomation()->getDateDeb(),
+            'urlccv'=>$project->getConsomation()->getallUrlCcv(),
+            'datedebform'=>$project->getConsomation()->getDateDebForm(),
+            'allFerieCheck'=>$project->getConsomation()->getFerieCheck(),
+
+           
+            'lat'=>$getLat,
+            'azimuth'=>$getAzimuth,
+            'lon'=>$getLon,
+            'loss'=>$getLoss,
+            'mount'=>$getMountingType,
+            'power'=>$getPeakPower,
+            'pvtech'=>$getPvTech,
+            'deg'=>$getDegradation,
+            'slop'=>$getSlop,  
+            
+            'lat_n'=>$getLat_n,
+            'azimuth_n'=>$getAzimuth_n,
+            'lon_n'=>$getLon_n,
+            'loss_n'=>$getLoss_n,
+            'track_n'=>$getTracking_n,
+            'capacity_n'=>$getTracking_n,
+            'radd_n'=>$getRaddatabase_n,
+            'tilt_n'=>$getTilt_n,
+            'deg_n'=>$getDegradation_n,   
+
+            'deg_c'=>$deg_c,
+            'pui_c'=>$pui_c,
+            'path_c'=>$path_c,
+
+            'srcprod'=>$srcprod,
+
+            'capex'=>$capex,
+            'atachat'=>$atachat,
+            'atvente'=>$atvente,
+            'duree'=>$duree,
+            'opex'=>$opex,
+            'sub'=>$sub,
+            'actu'=>$actu,
+            'credit'=>$credit,
+            'dette'=>$dette,
+            'interet'=>$interet,
+            'grace'=>$grace,
+            'matur'=>$matur
+            
+                                      
+]);
+}
+    return $this->render('project/show.html.twig', [
+        'project' => $project,
+        'i'=>$request->get('number')
+    ]);
+}
+
 
     /**
      * @Route("/{id}/edit", name="project_edit", methods={"GET","POST"})

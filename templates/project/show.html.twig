@@ -6,7 +6,7 @@
    
 {% endblock %}
 {% block body %}
-    <div class="nav-wrapper">
+    <div class="nav-wrapper" >
         <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
             <li class="nav-item">
                 <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fa fa-plug" aria-hidden="true"></i>    Consommation</a>
@@ -27,7 +27,7 @@
         </ul>
     </div>
     <div>
-        <div class="row">
+        <div class="row" onload="myFunction()">
             <div class=" ml-2 col-xl ">
                 <div>
                     
@@ -65,14 +65,14 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
+   
     
-
-        // init,configure dropzone
         function consomationSubmit() {
             {% if not app.user %}
             window.location.replace('{{ path('security_login') }}')
             {% endif %};
              $('#loading').show();
+             
             var data = $('#consomationForm').serialize();
             var url = $('#consomationForm').attr('action');
             $.ajax({
@@ -81,33 +81,34 @@
                 data : data,
                 dataType: 'json',
                 cache: false,
+                
                 success: function (response) {
                     for (let i = 0; i < response.virgdata.length ; i++) {
                         dates = new Date(response.data[i][0] * 1000);
                         dates.setHours(dates.getHours() - 1);
                         response.virgdata[i][0] = dates;
                     }
-                    console.log('virgdata');
-                    console.log(response.virgdata);
-                    console.log(response.data);
-                    console.log(response.data2);
-                    console.log(response.period);
-                    console.log("newdata");
-                    console.log(response.newdata);
-                    console.log(response.alldata);
-                    console.log(response.nbre);
-                    console.log('dataexl'); 
-                    console.log(response.dataexl); 
-                    console.log(response.period); 
+                    $('#selectEdit').empty();
+                    for (let j = 0; j < response.alldata1.length ; j++) {
+                        
+                        $('#selectEdit').append("<option value="+j+">"+"Site"+j+"</option>"
+                        );
+                    };
+
+                    $('#number').val($("#selectEdit").val());
+
+                    loadEdit();
+                    
                    $('#successconso').show();
                    $('#loading').hide();
                     $('#errorconso').hide();
                    $('#transport_energiecol').hide();
-                   
+    
 
                    document.getElementById('continue').setAttribute('disabled','disabled');
                    document.getElementById('increment').removeAttribute('disabled');
-                   document.getElementById('continuer').removeAttribute('disabled');                  
+                   document.getElementById('continuer').removeAttribute('disabled');
+                                 
                 },
                  error: function (response) {
                  $('#errorconso').show();
@@ -115,15 +116,494 @@
                     $('#successconso').hide();
                    
                  }
+                 
             });
             
-            
-            /*
-            $.get( url ,data,function (dat) {
-               console.log(dat);
-            });
-             */
             return false;
+        }
+
+
+        window.onload = loadEdit();
+
+        
+        function suppcc(){
+            var data= $('#number').val();
+
+            Dropzone.forElement('#exlreader').removeAllFiles(true);
+            Dropzone.forElement('#exlreader1').removeAllFiles(true);
+            $('#exlreader1').hide();
+            $('#plot').hide();
+            $('#success').hide();
+            $('#error').hide();
+         $('#exlreader').show();
+            $.ajax({
+                url: '{{ path('suppcc',{'id':project.id}) }}' ,
+                type : 'POST',
+                
+                data :'&number='+data,
+                dataType: 'json',
+                cache: false,
+               
+                
+                success: function (response) {
+                    console.log(response.avg);
+               
+                }
+
+            });
+             return false;
+        }
+
+        
+
+        function loadEdit() {
+
+           /*  $(document).ready(function(){
+        $("#consomationForm :input").prop("disabled", true);
+    });*/
+    $("#hourSlider-samedicont").hide();
+    $("#hourSlider-dimanchecont").hide();
+    document.getElementById('continuer').setAttribute('disabled','disbled');
+                   var data= $('#number').val();               
+            $.ajax({
+                url: '{{ path('editpro',{'id':project.id}) }}' ,
+                type : 'POST',
+                data :'&number='+data,
+                dataType: 'json',
+               
+                
+                success: function (response) {
+                    
+                    $('#selectEdit').empty();
+                for (let j = 0; j < response.allCmMonth.length ; j++) {
+                    $('#selectEdit').append("<option value="+j+">"+"Site"+j+"</option>"
+                    );
+                };
+
+                 $(function() {
+               $('#siteinfo strong').empty();
+            $('#siteinfo strong').append('Vous pouvez editer les données du site  '+$("#selectEdit").val());
+            });
+
+                tabTarif=response.tabTarif;
+                allCmMonth=response.allCmMonth;
+
+                allActivite=response.allActivite;
+                allDateconge_deb=response.allDateconge_deb;
+                allDateconge_deb1=response.allDateconge_deb1;
+                allDateconge_deb2=response.allDateconge_deb2;
+                allDateconge_fin=response.allDateconge_fin;
+                allDateconge_fin1=response.allDateconge_fin1;
+                allDateconge_fin2=response.allDateconge_fin2;
+                allHourSlider1=response.allHourSlider1;
+                allHourSlider2=response.allHourSlider2;
+                allHourSlider3=response.allHourSlider3;
+                allHourSlider_dimanche=response.allHourSlider_dimanche;
+                allHourSlider_samedi=response.allHourSlider_samedi;
+                allMonthSlider1=response.allMonthSlider1;
+                allMonthSlider2=response.allMonthSlider2;
+                allMonthSlider3=response.allMonthSlider3;
+                allSaison=response.allSaison;
+                allCongeCheck=response.allCongeCheck;
+                allDimancheCheck=response.allDimancheCheck;
+                allSamediCheck=response.allSamediCheck;
+                allVershoraire=response.allVershoraire;
+                transport=response.transport;
+                datedebform=response.datedebform;
+                allFerieCheck=response.allFerieCheck;
+                urlccv=response.urlccv;
+                path_c=response.path_c;
+                srcprod=response.srcprod;
+
+                document.getElementById('continue').removeAttribute('disabled');
+                
+                
+                
+                /**pvgis data*/               
+
+                $('#tracking').val(response.mount);
+                $('#angle').val(response.slop[0]);
+                $('#aspect').val(response.azimuth[0]);
+                $('#peakpower').val(response.power[0]);
+                $('#loss').val(response.loss);
+                $('#degradationp').val(response.deg);
+                 $('#angle2').val(response.slop[1]);
+                $('#aspect2').val(response.azimuth[1]);
+                $('#peakpower2').val(response.power[1]);
+                $('#loss2').val(response.loss);
+                 $('#angle3').val(response.slop[2]);
+                $('#aspect3').val(response.azimuth[2]);
+                $('#peakpower3').val(response.power[2]);
+                $('#loss3').val(response.loss);
+
+                /*ninja data*/
+
+/*response.lat_n
+response.lon_n*/
+
+                $('#trackingn').val(response.track_n);
+                $('#angle').val(response.tilt_n);
+                $('#azimuthn').val(response.azimuth_n-180);
+                $('#capacity').val(response.capacity_n);
+                $('#lossn').val(response.loss_n);
+                $('#degradationn').val(response.deg_n);
+                 
+                
+                /*csv*/
+                $('#csvpuiss').val(response.pui_c);
+                $('#degradationc').val(response.deg_c);
+
+                
+
+                $('#capex').val(response.capex);
+                $('#aug_tarif_a').val(response.atachat);
+                $('#aug_tarif_v').val(response.atvente);
+                $('#duree_proj').val(response.duree);
+                $('#opex').val(response.opex);
+                $('#subvention').val(response.sub);
+                $('#taux_actualisation').val(response.actu);
+                $('#credit').val(response.credit);
+                $('#dette').val(response.dette);
+                $('#interet').val(response.interet);
+                $('#delai_grace').val(response.grace);
+                $('#maturite_proj').val(response.matur);
+                
+                if(response.credit==1){
+                    $('#credits_div').show();
+                    $('#credit').prop( "checked", true );
+                }
+
+                if(srcprod==1){
+                $('#ninjadiv').hide();
+                $('#pvgisdiv').show();
+                $('#csvdiv').hide();
+                $('#sschamp2').hide();
+                $('#sschamp3').hide();
+                
+                
+                }
+
+                if(srcprod==2){
+                $('#ninjadiv').show();
+                $('#pvgisdiv').hide();
+                $('#csvdiv').hide();
+                
+                }
+
+                 if(srcprod==3){
+                $('#ninjadiv').hide();
+                $('#pvgisdiv').hide();
+                $('#csvdiv').show();
+                
+                }
+
+
+                
+                editSite();
+                
+                     
+                     /*if($( "#selectEdit" ).val()==null){
+                         document.getElementById('edit').setAttribute('disabled','disabled');
+                         
+                     }else{
+                         document.getElementById('edit').removeAttribute('disabled','disabled');
+                         editSite();
+                     }*/
+                },
+                 error: function (response) {
+                
+                   
+                 }
+            });
+            
+            return false;
+        }
+
+    function incrementValue(){
+
+        var value = allActivite.length-1;
+        value = isNaN(value) ? 0 : value;
+        value++;
+        document.getElementById('number').value = value;
+        document.getElementById('dateDeb').readOnly=true;
+       
+        Dropzone.forElement('#exlreader').removeAllFiles(true);
+       
+        document.getElementById('continue').removeAttribute('disabled');
+        document.getElementById('continuer').setAttribute('disabled','disabled');
+        $('#exlreader1').hide();
+         $('#exlreader').show();
+
+         $('#success').hide();
+         $('#successconso').hide();
+         $('#saison1').show();
+
+            mSlider1.setValues(1,12);
+            mSlider2.setValues(1,12);
+            mSlider3.setValues(1,12);
+            hSlider1.setValues(1,23);
+            hSlider2.setValues(1,23);
+            hSlider3.setValues(1,23);
+         $('#saison3').hide();
+        $('#saison2').hide();
+        $('#saison').val(1);
+        $('#butsaison1').show();
+    }
+
+        function suppSite(){
+
+            
+
+             var data= $('#number').val();
+            $.ajax({
+                url: '{{ path('suppsite',{'id':project.id}) }}' ,
+                type : 'POST',
+                
+                data :'&number='+data,
+                dataType: 'json',
+                cache: false,
+               
+                
+                success: function (response) {
+                    console.log(response.avg);
+                     console.log(response.cm);
+                     console.log('aut');
+                     console.log(response.aut);
+                     console.log(response.ced);
+                     console.log(response.imp);
+
+                    $('#number').val(0);
+                    
+                     loadEdit();
+                     
+               
+                }
+
+            });
+             return false;
+
+             
+        }
+
+
+        
+
+
+        Dropzone.autoDiscover = false;
+            var dropzone_default = new Dropzone("#exlreader1", {
+                url: '{{ path('excelupload',{'id':project.id}) }}' ,
+            });
+
+        Dropzone.autoDiscover = false;
+            var dropzone_default1 = new Dropzone("#csvreader1", {
+                 url: '{{ path('readcsv',{'id': project.id}) }}' ,
+            });    
+
+        function editSite(){
+           
+     
+            document.getElementById('suppSi').removeAttribute('disabled');
+            
+
+
+            mSlider1.setValues(parseFloat(allMonthSlider1[$('#selectEdit').val()].split(",")[0]),parseFloat(allMonthSlider1[$('#selectEdit').val()].split(",")[1]));
+            mSlider2.setValues(parseFloat(allMonthSlider2[$('#selectEdit').val()].split(",")[0]),parseFloat(allMonthSlider2[$('#selectEdit').val()].split(",")[1]));
+            mSlider3.setValues(parseFloat(allMonthSlider3[$('#selectEdit').val()].split(",")[0]),parseFloat(allMonthSlider3[$('#selectEdit').val()].split(",")[1]));
+            hSlider1.setValues(parseFloat(allHourSlider1[$('#selectEdit').val()].split(",")[0]),parseFloat(allHourSlider1[$('#selectEdit').val()].split(",")[1]));
+            hSlider2.setValues(parseFloat(allHourSlider2[$('#selectEdit').val()].split(",")[0]),parseFloat(allHourSlider2[$('#selectEdit').val()].split(",")[1]));
+            hSlider3.setValues(parseFloat(allHourSlider3[$('#selectEdit').val()].split(",")[0]),parseFloat(allHourSlider3[$('#selectEdit').val()].split(",")[1]));
+            dimancheSlider.setValues(parseFloat(allHourSlider_dimanche[$('#selectEdit').val()].split(",")[0]),parseFloat(allHourSlider_dimanche[$('#selectEdit').val()].split(",")[1]));
+            samediSlider.setValues(parseFloat(allHourSlider_samedi[$('#selectEdit').val()].split(",")[0]),parseFloat(allHourSlider_samedi[$('#selectEdit').val()].split(",")[1]));
+
+                 
+            
+
+                $('#activite').val(allActivite[$('#selectEdit').val()]);
+                $('#dateconge_deb').val(allDateconge_deb[$('#selectEdit').val()]);
+                $('#dateconge_deb1').val(allDateconge_deb1[$('#selectEdit').val()]);
+                $('#dateconge_deb2').val(allDateconge_deb2[$('#selectEdit').val()]);
+                $('#dateconge_fin').val(allDateconge_fin[$('#selectEdit').val()]);
+                $('#dateconge_fin1').val(allDateconge_fin1[$('#selectEdit').val()]);
+                $('#dateconge_fin2').val(allDateconge_fin2[$('#selectEdit').val()]);
+                $('#dateDeb').val(datedebform);
+                $( "#dateFin" ).val($( "#dateDeb" ).val());
+                document.getElementById("dateFin").stepUp(11);
+
+                if(allDateconge_deb1[$('#selectEdit').val()]!=""){
+                    $('#conge1').show();
+                };
+
+                if(allDateconge_deb2[$('#selectEdit').val()]!=""){
+                    $('#conge2').show();
+                    $('#butsuppconge2').hide();
+                    $('#butconge2').hide();
+                };
+
+                if($('#selectEdit').val()==0){
+                    $('#transport_energiecol').show();
+                };
+
+                if(transport==1){
+                    $('#transport_energie').prop( "checked", true );
+                };
+
+                if(transport==0){
+                    $('#transport_energie').prop( "checked", false );
+                };
+
+                if(allCongeCheck[$('#selectEdit').val()]=="on"){
+                    $('#congeCheck').prop( "checked", true );
+                    $('#conge').show();
+                }else{
+                    $('#congeCheck').prop( "checked", false );
+                    $('#conge').hide();
+                }
+
+                if(allFerieCheck[$('#selectEdit').val()]=="on"){
+                    $('#ferieCheck').prop( "checked", true );
+                    
+                }else{
+                    $('#ferieCheck').prop( "checked", false );
+                   
+                }
+
+                if(allDimancheCheck[$('#selectEdit').val()]=="on"){
+                    $('#dimancheCheck').prop( "checked", true );
+                    $('#hourSlider-dimanchecont').show();
+                    
+                }else{
+                    $('#dimancheCheck').prop( "checked", false );
+                    $('#hourSlider-dimanchecont').hide();
+                }
+
+                if(allSamediCheck[$('#selectEdit').val()]=="on"){
+                    $('#samediCheck').prop( "checked", true );
+                    $('#hourSlider-samedicont').show();
+
+                }else{
+                    $('#samediCheck').prop( "checked", false );
+                    $('#hourSlider-samedicont').hide();
+                }
+
+                if(allVershoraire[$('#selectEdit').val()]=="on"){
+                    $('#vershoraire').prop( "checked", true );
+                }else{
+                    $('#vershoraire').prop( "checked", false );
+                }
+
+                if(allSaison[$('#selectEdit').val()]==1){
+
+                $('#saison1').show();
+                $('#saison2').hide();
+                $('#saison3').hide();
+
+                }
+
+                if(allSaison[$('#selectEdit').val()]==2){
+
+                $('#saison2').show();
+                $('#saison3').hide();
+
+                }
+
+                if(allSaison[$('#selectEdit').val()]==3){
+                $('#saison2').show();
+                $('#saison3').show();
+                $('#butsaison2').hide();
+                $('#butsuppsaison2').hide();
+
+                }
+                
+
+            if (tabTarif[$('#selectEdit').val()]==0){
+                $('#tarif0').prop( "checked", true );
+                /*$('#Uniforme').show();
+                $('#PostHoraire').hide();*/
+                $('#Uniforme').addClass( "show" );
+                $('#PostHoraire').removeClass( "show" );
+                for (let i = 1; i < 13;i++){
+                    $('[name ="date['+i+']"]').val(allCmMonth[$('#selectEdit').val()][i]);
+                }
+                
+            } else {
+
+                if (tabTarif[$('#selectEdit').val()]==1){
+                
+                $('#tarif1').prop( "checked", true );
+                $('#Uniforme').removeClass( "show" );
+                $('#PostHoraire').addClass( "show" );
+                 for (let i = 1; i < 13;i++){
+                    $('[name ="datehoraire[jour]['+i+']"]').val(allCmMonth[$('#selectEdit').val()]["jour"][i]);
+                    $('[name ="datehoraire[soir]['+i+']"]').val(allCmMonth[$('#selectEdit').val()]["soir"][i]);
+                    $('[name ="datehoraire[nuit]['+i+']"]').val(allCmMonth[$('#selectEdit').val()]["nuit"][i]);
+                    $('[name ="datehoraire[ete]['+i+']"]').val(allCmMonth[$('#selectEdit').val()]["ete"][i]);
+                }
+
+                }
+
+            }    
+
+            document.getElementById('continue').removeAttribute('disabled');
+            
+
+        
+            
+            if (urlccv[$('#selectEdit').val()]!=""){
+                $('#exlreader').hide();
+                $('#exlreader1').show();
+                /*$('#tabs-icons-text-s-3').tab('show');
+                $('#tabs-icons-text-s-2').hide();
+                $('#tabs-icons-text-s-3-tab').toggle();
+                $('#tabs-icons-text-s-2-tab').toggle();*/
+                
+                
+                $('#tabs-icons-text-s-3').addClass('active show');
+                $('#tabs-icons-text-s-2').removeClass('active show');
+                $('#tabs-icons-text-s-3-tab').addClass('active');
+                $('#tabs-icons-text-s-2-tab').removeClass('active');
+                
+                
+                Dropzone.forElement('#exlreader1').removeAllFiles(true);
+                $('#exlreader1').empty();
+
+                
+                
+
+                let mockFile = { name: urlccv[$('#selectEdit').val()] };
+                            
+                dropzone_default.options.addedfile.call(dropzone_default, mockFile);
+                dropzone_default.options.thumbnail.call(dropzone_default, mockFile, '/uploads/'+urlccv[$('#selectEdit').val()]);
+            }
+            else{
+                $('#exlreader').show();
+                $('#exlreader1').hide();
+                $('#tabs-icons-text-s-2').addClass('active show');
+                $('#tabs-icons-text-s-3').removeClass('active show');
+                $('#tabs-icons-text-s-2-tab').addClass('active');
+                $('#tabs-icons-text-s-3-tab').removeClass('active');
+           
+            }
+           
+            if (path_c!=null){
+            let mockFile = { name: path_c };
+                        
+            dropzone_default1.options.addedfile.call(dropzone_default1, mockFile);
+            dropzone_default1.options.thumbnail.call(dropzone_default1, mockFile, '/'+path_c);
+            $('#csvreader1').show();
+                $('#csvreader').hide();
+                 $('#changecsv').show();
+            }
+            else{
+
+                $('#csvreader').show();
+                $('#csvreader1').hide();
+
+                
+            }
+
+            console.log('path_c');
+            console.log(path_c);
+            
         }
 
         function valider(){
@@ -136,17 +616,19 @@
             $('#tabs-icons-text-1').toggle();
              map.resize();
         };
+
     </script>
 {% endblock %}
- {% block stylesheets %}
-  <style>
- @media only screen and  (min-width: 1000px) {
-  
-  .row {
-    width: 1000px;
-  }
-}
+
+{% block stylesheets %}
+    <style>
+    @media only screen and  (min-width: 1000px) {
+
+    .row {
+        width: 1000px;
+        }
+    }
 
 
-</style>
- {% endblock %}
+    </style>
+{% endblock %}
