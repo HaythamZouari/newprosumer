@@ -339,11 +339,11 @@ class ProjectController extends AbstractController
             if ($activite=='Abattoir'){
                 $Phd=119;$Phf=120;$Phm=494;$Phad=360;$Pham=372;$Phn=63;
                  }
-            elseif ($activite=='Agroalimentaire'){
+            elseif ($activite=='Biscuiterie'){
                 $Phd=134;$Phf=104;$Phm=175;$Phad=209;$Pham=195;$Phn=50;
                 }
-             elseif ($activite=='Bureautique'){
-                $Phd=404;$Phf=418;$Phm=590;$Phad=618;$Pham=632;$Phn=394;
+             elseif ($activite=='Administrative'){
+                $Phd=404;$Phf=418;$Phm=590;$Phad=618;$Pham=632;$Phn=100;
                 }
             elseif ($activite=='Extraction'){
                 $Phd=394;$Phf=336;$Phm=496;$Phad=269;$Pham=457;$Phn=19;
@@ -366,7 +366,7 @@ class ProjectController extends AbstractController
              elseif ($activite=='Laitiere'){
                 $Phd=800;$Phf=900;$Phm=1200;$Phad=1270;$Pham=1100;$Phn=820;
                 }
-             elseif ($activite=='Meuble'){
+             elseif ($activite=='Mobilier'){
                 $Phd=118;$Phf=80;$Phm=170;$Phad=180;$Pham=90;$Phn=42;
                 }
              elseif ($activite=='Plastique'){
