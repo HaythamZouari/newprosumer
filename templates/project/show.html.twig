@@ -103,11 +103,72 @@
                    $('#loading').hide();
                     $('#errorconso').hide();
                    $('#transport_energiecol').hide();
-    
+                document.getElementById('affcourbe').removeAttribute('disabled');
+
 
                    document.getElementById('continue').setAttribute('disabled','disabled');
                    document.getElementById('increment').removeAttribute('disabled');
                    document.getElementById('continuer').removeAttribute('disabled');
+
+
+                   /*****plot1**************/
+
+                   
+                   let courbe=[];
+                    courbe[0]=[];
+                    courbe[1]=[];
+                        
+                    let dates1 = [];
+                    for (let i = 0; i < response.newdata.length ; i++) {
+                        dates1[i] = new Date(response.newdata[i][0] * 1000);
+                        courbe[0][i] = dates1[i];
+                        courbe[1][i] = response.newdata[i][1];
+                        }    
+                    let trace10 = {};
+                    let data10=[];
+                    let layout10={};
+                    data10=[];
+                        trace10 = {
+                            type: "scatter",
+                            mode: "lines",
+                            name: 'Consommation',
+                            x: courbe[0],
+                            y: courbe[1],
+                            line: {color: '#17BECF'}
+                        };
+                        data10.push(trace10);
+
+                        layout10 = {
+                            title: 'Time series',
+                            xaxis: {
+                                autorange: true,
+                                range: [courbe[0][0], courbe[0][courbe[0].length-1]],
+                                rangeselector: {buttons: [
+                                        {
+                                            count: 1,
+                                            label: '1h',
+                                            step: 'hour',
+                                            stepmode: 'backward'
+                                        },
+                                        {
+                                            count: 6,
+                                            label: '6m',
+                                            step: 'month',
+                                            stepmode: 'backward'
+                                        },
+                                        {step: 'all'}
+                                    ]},
+                                rangeslider: {range: [courbe[0][0], courbe[0][courbe[0].length-1]]},
+                                type: 'date'
+                            },
+                        };
+                        Plotly.newPlot('plot1', data10, layout10,{responsive: true});  
+
+                        $('#affichercourbe').on('shown.bs.modal', function (e) {
+                         Plotly.newPlot('plot1', data10, layout10);
+                        })
+
+                        /**********plot1*/////////////////////
                                  
                 },
                  error: function (response) {
@@ -493,24 +554,35 @@ response.lon_n*/
 
                 if(allSaison[$('#selectEdit').val()]==1){
 
+                    $('#saison').val(1);
+
                 $('#saison1').show();
                 $('#saison2').hide();
                 $('#saison3').hide();
+               $('butsaison1').show();
 
                 }
 
                 if(allSaison[$('#selectEdit').val()]==2){
-
+                    $('#saison').val(2);
+                $('#saison1').show();
                 $('#saison2').show();
                 $('#saison3').hide();
+                $('#butsaison2').show();
+                $('#butsuppsaison2').show();
+                 $('butsaison1').hide();
 
                 }
 
                 if(allSaison[$('#selectEdit').val()]==3){
+                    $('#saison').val(3);
+                $('#saison1').show();
                 $('#saison2').show();
                 $('#saison3').show();
                 $('#butsaison2').hide();
+                $('butsaison1').hide();
                 $('#butsuppsaison2').hide();
+                $('#butsuppsaison3').show();
 
                 }
                 

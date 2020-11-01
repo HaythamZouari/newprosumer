@@ -704,10 +704,15 @@
                                                 <strong>Consommation non Valide</strong> </div>
                         
                                                 
-
-                        <button type="button" name="continue" id="continue" onclick="consomationSubmit()"  class="btn-secondary btn" > <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loading" style="display:none"></span>Valider Site</button>
-                        <button type="button" name="continuer" id="continuer" onclick="valider()"  class="btn-secondary btn" disabled='disabled' >Continuer</button>
-                         
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" name="continue" id="continue" onclick="consomationSubmit()"  class="btn-secondary btn" > <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loading" style="display:none"></span>Valider Site</button>
+                            <button type="button" name="continuer" id="continuer" onclick="valider()"  class="btn-secondary btn" disabled='disabled' >Continuer</button>
+                        </div>
+                        <div class="col-sm-1">
+                            <button  class="btn btn-lg" type="button" data-toggle="modal" id="affcourbe" data-target="#affichercourbe" disabled='disabled'  >Afficher la Courbe</button>
+                        </div>
+                    </div>     
                     </div>
                 </div>
             </form>
@@ -728,6 +733,25 @@
     </div>
 </div>
 
+<div class="modal resizer-handler" id="affichercourbe" role="dialog">
+    <div class="modal-dialog-scrollable">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Courbe de consommation</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+               <pre id="plot1"></pre>
+            </div>
+            <br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--<pre id="json"></pre>-->
 
                       
@@ -740,6 +764,8 @@
 <script>
  
        $("#selectEdit").change(function(){
+           
+           document.getElementById('affcourbe').setAttribute('disabled','disabled');
            
            $(function() {
                $('#siteinfo strong').empty();

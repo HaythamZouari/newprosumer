@@ -10,6 +10,9 @@
                    <div class="card-body">
                    <div >
                            <a class="btn btn-primary " href="{{ path('project_new') }}">Nouveau projet</a>
+
+                           <!--button type="button" name="compare" id="compare" onclick="compareSubmit()"  data-toggle="modal" data-target="#comparemodal" class="btn-secondary btn" > <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loading" style="display:none"></span>Comparer</button-->
+                            
                            
                        </div>
                     <div style="overflow-x:auto;">
@@ -24,17 +27,27 @@
                            </tr>
                            </thead>
                            <tbody>
+                        <!--form class="index" id="compareForm" action="{{ path('project_index') }}" enctype="multipart/form-data" method="post"-->
                            {% for project in projects %}
-                               {% if app.user ==project.user %}
+                               {% if app.user == project.user %}
                                    <tr>
                                        <td>{{ project.name }}</td>
                                        <td>{{ project.adress }}</td>
                                        <td>{{ project.description }}</td>
+                                       
+                                       
                                        <td>
                                            {% if project.consomation != null and project.finance != null %}
                                                {% if project.pvgis != null or project.csvProd != null or project.ninja != null %}
                                                    <a href="{{ path('rapport',{ 'id':project.id}) }}"><i class="fa fa-file" aria-hidden="true"></i></a>
                                                    <a href="{{ path('results',{ 'id':project.id}) }}"><i class="fa fa-chart-area" aria-hidden="true"></i></a>
+                                                   
+                                                        <!--input type="checkbox" id= "{{project.id}}" name="{{project.id}}"  -->
+                                                        
+                                                        
+                                                    
+
+
                                                    {% endif %}
                                            {% endif %}
 
@@ -43,6 +56,7 @@
                                    </tr>
                                {% endif %}
                            {% endfor %}
+                        <!--/form-->
                            </tbody>
                        </table>
                     </div>   
@@ -54,6 +68,67 @@
                 </div>
             </div>
         </div>
+
+<!--div class="modal resizer-handler" id="comparemodal" role="dialog">
+    <div class="modal-dialog-scrollable">
+
+    
+        
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Comparaison</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+               
+            </div>
+            <br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div-->
     
 
+{% endblock %}
+
+{% block javascripts %}
+
+
+{{ parent() }}
+<script>
+/**
+function compareSubmit() {
+            {% if not app.user %}
+            window.location.replace('{{ path('security_login') }}')
+            {% endif %};
+            
+             
+            var data = $('#compareForm').serialize();
+            var url = $('#compareForm').attr('action');
+            
+            $.ajax({
+                url: url,
+                type : 'POST',
+                data : data,
+                dataType: 'json',
+                cache: false,
+                
+                success: function (response) {
+                console.log(response.request);
+                console.log(response.fin);
+                                 
+                },
+                 error: function (response) {
+                 
+                   
+                 }
+                 
+            });
+            
+            return false;
+        }
+        *//
+</script>
 {% endblock %}

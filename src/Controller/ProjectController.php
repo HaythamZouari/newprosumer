@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use DateTimeZone;
 use App\Entity\Project;
+use App\Entity\Finance;
 use Carbon\CarbonPeriod;
 use App\Form\ProjectType;
 use App\Entity\Consomation;
 use App\Service\FileUpload;
 use App\Service\ExcelReader;
 use App\Service\PostHoraire;
+use App\Repository\FinanceRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,14 +39,33 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/", name="project_index", methods={"GET"})
+     * @Route("/", name="project_index", methods={"GET","POST"})
      */
-    public function index(ProjectRepository $projectRepository): Response
+    public function index(ProjectRepository $projectRepository, FinanceRepository $financeRepository, Request $request): Response
     {
+        /*if ($request->isXmlHttpRequest()){
+
+            $data = $request->getContent();
+            $data1=explode('=on&',$data);
+            $data1[count ($data1)-1]=substr($data1[count ($data1)-1], 0, -3);
+
+            for( $i =0 ; $i<count ($data1);$i++){
+                $project=$projectRepository->find(intval($data1[$i]));
+                $fin[$i]=$project->getFinance()->getcredit();
+            }
+
+            
+            
+            
+            
+            return new JsonResponse(['request'=>$data1, 'fin'=>$fin]);
+        }*/
         return $this->render('project/index.html.twig', [
             'projects' => $projectRepository->findBy(['user'=>$this->getUser()]),
+            /*'finance' =>$financeRepository->findAll(),*/
         ]);
     }
+    
 
     /**
      * @Route("/new", name="project_new", methods={"GET","POST"})
