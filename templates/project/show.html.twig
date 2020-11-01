@@ -87,6 +87,7 @@
                         dates = new Date(response.data[i][0] * 1000);
                         dates.setHours(dates.getHours() - 1);
                         response.virgdata[i][0] = dates;
+                        allActivite=response.allActivite;
                     }
                     $('#selectEdit').empty();
                     for (let j = 0; j < response.alldata1.length ; j++) {
@@ -383,6 +384,8 @@ response.lon_n*/
         }
 
     function incrementValue(){
+
+        $('#siteinfo').hide();
 
         var value = allActivite.length-1;
         value = isNaN(value) ? 0 : value;

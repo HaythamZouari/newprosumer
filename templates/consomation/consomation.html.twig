@@ -769,6 +769,8 @@
         
        $("#selectEdit").change(function(){
            loadEdit();
+
+           hSlider1.setValues(parseFloat(allHourSlider1[$('#selectEdit').val()].split(",")[0]),parseFloat(allHourSlider1[$('#selectEdit').val()].split(",")[1]));
            
            document.getElementById('affcourbe').setAttribute('disabled','disabled');
            

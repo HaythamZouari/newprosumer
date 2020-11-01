@@ -1204,6 +1204,7 @@ class ProjectController extends AbstractController
             'alldata'=>$allDataAvgW,
             'nbre'=>count($allDateDeb),
             'alldata1'=>$alldata1,
+            'allActivite'=>$allActivite
 
             
             
