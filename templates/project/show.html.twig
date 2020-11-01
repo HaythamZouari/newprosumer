@@ -95,9 +95,9 @@
                         );
                     };
 
-                    $('#number').val($("#selectEdit").val());
+                    $('#selectEdit').val($("#number").val());
 
-                    loadEdit();
+                    
                     
                    $('#successconso').show();
                    $('#loading').hide();
@@ -106,7 +106,7 @@
                 document.getElementById('affcourbe').removeAttribute('disabled');
 
 
-                   document.getElementById('continue').setAttribute('disabled','disabled');
+                  
                    document.getElementById('increment').removeAttribute('disabled');
                    document.getElementById('continuer').removeAttribute('disabled');
 
@@ -245,6 +245,8 @@
                $('#siteinfo strong').empty();
             $('#siteinfo strong').append('Vous pouvez editer les données du site  '+$("#selectEdit").val());
             });
+
+            $('#selectEdit').val($("#number").val());
 
                 tabTarif=response.tabTarif;
                 allCmMonth=response.allCmMonth;
