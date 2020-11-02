@@ -394,6 +394,7 @@ response.lon_n*/
         document.getElementById('dateDeb').readOnly=true;
        
         Dropzone.forElement('#exlreader').removeAllFiles(true);
+        document.getElementById('affcourbe').setAttribute('disabled','disabled');
        
         document.getElementById('continue').removeAttribute('disabled');
         document.getElementById('continuer').setAttribute('disabled','disabled');
@@ -407,9 +408,9 @@ response.lon_n*/
             mSlider1.setValues(1,12);
             mSlider2.setValues(1,12);
             mSlider3.setValues(1,12);
-            hSlider1.setValues(1,23);
-            hSlider2.setValues(1,23);
-            hSlider3.setValues(1,23);
+            hSlider1.setValues(0,23);
+            hSlider2.setValues(0,23);
+            hSlider3.setValues(0,23);
          $('#saison3').hide();
         $('#saison2').hide();
         $('#saison').val(1);
@@ -469,17 +470,54 @@ response.lon_n*/
            
      
             document.getElementById('suppSi').removeAttribute('disabled');
-            
+            console.log(allHourSlider1);
+            console.log(allHourSlider1[$('#selectEdit').val()].split(",")[0]);
+            console.log(parseFloat(allHourSlider1[$('#selectEdit').val()].split(",")[0]));
 
+            if((allHourSlider1[$('#selectEdit').val()].split(",")[0])=="Minuit"){
+
+                hsli1=(allHourSlider1[$('#selectEdit').val()].split(","))[0];
+            }else{
+                hsli1=parseFloat(allHourSlider1[$('#selectEdit').val()].split(",")[0]);
+            }
+
+
+             if((allHourSlider2[$('#selectEdit').val()].split(",")[0])=="Minuit"){
+
+                hsli2=(allHourSlider2[$('#selectEdit').val()].split(","))[0];
+            }else{
+                hsli2=parseFloat(allHourSlider2[$('#selectEdit').val()].split(",")[0]);
+            }
+
+             if((allHourSlider3[$('#selectEdit').val()].split(",")[0])=="Minuit"){
+
+                hsli3=(allHourSlider3[$('#selectEdit').val()].split(","))[0];
+            }else{
+                hsli3=parseFloat(allHourSlider3[$('#selectEdit').val()].split(",")[0]);
+            }
+
+             if((allHourSlider_dimanche[$('#selectEdit').val()].split(",")[0])=="Minuit"){
+
+                dsli=(allHourSlider_dimanche[$('#selectEdit').val()].split(","))[0];
+            }else{
+                dsli=parseFloat(allHourSlider_dimanche[$('#selectEdit').val()].split(",")[0]);
+            }
+
+            if((allHourSlider_samedi[$('#selectEdit').val()].split(",")[0])=="Minuit"){
+
+                ssli=(allHourSlider_samedi[$('#selectEdit').val()].split(","))[0];
+            }else{
+                ssli=parseFloat(allHourSlider_samedi[$('#selectEdit').val()].split(",")[0]);
+            }
 
             mSlider1.setValues(parseFloat(allMonthSlider1[$('#selectEdit').val()].split(",")[0]),parseFloat(allMonthSlider1[$('#selectEdit').val()].split(",")[1]));
             mSlider2.setValues(parseFloat(allMonthSlider2[$('#selectEdit').val()].split(",")[0]),parseFloat(allMonthSlider2[$('#selectEdit').val()].split(",")[1]));
             mSlider3.setValues(parseFloat(allMonthSlider3[$('#selectEdit').val()].split(",")[0]),parseFloat(allMonthSlider3[$('#selectEdit').val()].split(",")[1]));
-            hSlider1.setValues(parseFloat(allHourSlider1[$('#selectEdit').val()].split(",")[0]),parseFloat(allHourSlider1[$('#selectEdit').val()].split(",")[1]));
-            hSlider2.setValues(parseFloat(allHourSlider2[$('#selectEdit').val()].split(",")[0]),parseFloat(allHourSlider2[$('#selectEdit').val()].split(",")[1]));
-            hSlider3.setValues(parseFloat(allHourSlider3[$('#selectEdit').val()].split(",")[0]),parseFloat(allHourSlider3[$('#selectEdit').val()].split(",")[1]));
-            dimancheSlider.setValues(parseFloat(allHourSlider_dimanche[$('#selectEdit').val()].split(",")[0]),parseFloat(allHourSlider_dimanche[$('#selectEdit').val()].split(",")[1]));
-            samediSlider.setValues(parseFloat(allHourSlider_samedi[$('#selectEdit').val()].split(",")[0]),parseFloat(allHourSlider_samedi[$('#selectEdit').val()].split(",")[1]));
+            hSlider1.setValues(hsli1,parseFloat(allHourSlider1[$('#selectEdit').val()].split(",")[1]));
+            hSlider2.setValues(hsli2,parseFloat(allHourSlider2[$('#selectEdit').val()].split(",")[1]));
+            hSlider3.setValues(hsli3,parseFloat(allHourSlider3[$('#selectEdit').val()].split(",")[1]));
+            dimancheSlider.setValues(dsli,parseFloat(allHourSlider_dimanche[$('#selectEdit').val()].split(",")[1]));
+            samediSlider.setValues(ssli,parseFloat(allHourSlider_samedi[$('#selectEdit').val()].split(",")[1]));
 
                  
             

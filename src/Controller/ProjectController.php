@@ -401,7 +401,29 @@ class ProjectController extends AbstractController
                 }
             elseif ($activite=='Pharmaceutique'){
             $Phd=47;$Phf=68;$Phm=120;$Phad=78;$Pham=92;$Phn=36;
-                }      
+                }     
+                
+            if($hourSliderreq1=="Minuit"){
+                    $hourSliderreq1=0;
+            }
+
+            if($hourSliderreq2=="Minuit"){
+                $hourSliderreq1=0;
+            }
+
+            if($hourSliderreq3=="Minuit"){
+                $hourSliderreq1=0;
+            }
+
+            if($hourSliderreqS=="Minuit"){
+                $hourSliderreq1=0;
+            }
+            if($hourSliderreqD=="Minuit"){
+                $hourSliderreq1=0;
+            }
+
+
+
 
             $hd1=(int)$hourSliderreq1[0];$hf1=(int)$hourSliderreq1[1];$hm1=round(($hd1+$hf1)/2);$had1=round(($hd1+$hm1)/2);$ham1=round(($hf1+$hm1)/2);
             $hd2=(int)$hourSliderreq2[0];$hf2=(int)$hourSliderreq2[1];$hm2=round(($hd2+$hf2)/2);$had2=round(($hd2+$hm2)/2);$ham2=round(($hf2+$hm2)/2);
