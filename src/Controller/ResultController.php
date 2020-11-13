@@ -174,8 +174,21 @@ class ResultController extends AbstractController
                 }
             }
             else{
-                $CedePH=$project->getinjectPH();
-                $Cedetot=$project->getinject();
+
+                for ($j=0;$j<count($project->getConsomation()->getallConsomationAnnuel());$j++){ 
+
+                    for($i=1;$i<13;$i++){
+                        $CedePH[$i]['jour']+= $project->getcedeePH()[$j][$i]['jour'];
+                        $CedePH[$i]['ete']+= $project->getcedeePH()[$j][$i]['ete'];
+                        $CedePH[$i]['soir']+= $project->getcedeePH()[$j][$i]['soir'];
+                        $CedePH[$i]['nuit']+= $project->getcedeePH()[$j][$i]['nuit'];                  
+            
+                    }
+
+                }
+
+                
+                $Cedetot=$project->getCedee()[0];
             }
 
 
