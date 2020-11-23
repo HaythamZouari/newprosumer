@@ -116,7 +116,6 @@ class ProjectListner implements EventSubscriberInterface
                     $auto_consomer[0][$i]=[$consomation[0][$i][0],$consomation[0][$i][1]];
                     $cedee[0][$i]=[$consomation[0][$i][0],($production[0][$i][1]-$auto_consomer[0][$i][1])];
                     $importer[0][$i]=[$consomation[0][$i][0],($consomation[0][$i][1]-$auto_consomer[0][$i][1])];
-                   
                     $inject[$i]=[$consomation[0][$i][0],($production[0][$i][1]-$auto_consomer[0][$i][1])];
                 }
                 else
@@ -130,11 +129,10 @@ class ProjectListner implements EventSubscriberInterface
             $consomationPH[0]=PostHoraire::PostHoraire($consomation[0]);
             $auto_consomerPH[0]=PostHoraire::PostHoraire($auto_consomer[0]);
             $importerPH[0]=PostHoraire::PostHoraire($importer[0]);
-            for($i=0;$i<13;$i++){
-                $CedePH[0][$i]['jour']=0;
-                $CedePH[0][$i]['ete']=0;
-                $CedePH[0][$i]['soir']=0;
-                $CedePH[0][$i]['nuit']=0;  
+
+            if(count($consomation)==1){
+            $cedeePH[0]=PostHoraire::PostHoraire($cedee[0]);
+                
             }
 
 
