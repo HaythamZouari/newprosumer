@@ -26,3 +26,16 @@ Des clés présentes dans l'historique Git de l'application d'origine (jeton ren
 Réservé à `ROLE_ADMIN`. Mode local : le 1er compte créé est administrateur de ses propres données. Mode Supabase : les comptes sont
 gérés via `api/admin-users.js` (rôle vérifié côté serveur) ; pour nommer un administrateur :
 `update public.profiles set roles = '{ROLE_USER,ROLE_ADMIN}' where username = '...';`
+
+## Migration des données MySQL → Supabase
+```bash
+mysqldump --no-tablespaces --skip-extended-insert=false <base> > dump.sql      # dump complet de l'ancienne base
+node scripts/migrate-mysql.mjs --dump dump.sql --check                          # rapport : comptes, projets, colonnes non mappées
+node scripts/migrate-mysql.mjs --dump dump.sql --out migration-out              # génère les fichiers
+```
+Puis, **après les migrations 0001-0004** : exécuter `01_users.sql` (comptes avec leur mot de passe bcrypt d'origine — les
+utilisateurs se connectent avec les mêmes identifiants), puis les `02_projects_*.sql` (projets agrégés, rejouables), puis
+`SRC=<ancien public/uploads> sh 03_files.sh` (fichiers .xlsx importés vers le bucket `uploads`).
+Colonnes `array` Doctrine (PHP sérialisé) converties en JSON ; le mappage colonnes ↔ propriétés ne tient pas compte de la casse ni des « _ ».
+⚠ Validé sur un dump synthétique produit avec le vrai `serialize()` PHP ; **lancer d'abord `--check` sur le vrai dump** et relire les
+avertissements « propriétés sans colonne ».
