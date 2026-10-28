@@ -5,7 +5,7 @@
 // calcul se font côté client avec front-engine.
 //
 // Déploiement : placer ce fichier dans /api à la racine du projet Vercel.
-import { buildPvgisUrl, parsePvgisBasic, combineSeries } from '../src/producers/pvgis.js';
+import { buildPvgisUrl, parsePvgisBasic, parsePvgisLines, combineSeries } from '../src/producers/pvgis.js';
 
 function num(v, d = 0) {
   const n = Number(v);
@@ -18,6 +18,16 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
 
   const q = req.query || {};
+  // Mode « un champ » (utilisé par le contrôleur porté) : renvoie les lignes brutes de la réponse, à partir de l'en-tête
+  if (q.raw) {
+    try {
+      const r = await fetch(buildPvgisUrl({ lat: num(q.lat), lon: num(q.lon), peakpower: num(q.peakpower), loss: num(q.loss, 14), angle: num(q.angle), aspect: num(q.aspect) }, process.env.PVGIS_BASE || undefined));
+      if (!r.ok) return res.status(502).json({ error: `PVGIS ${r.status}` });
+      return res.status(200).json({ lines: parsePvgisLines(await r.text()) });
+    } catch (e) {
+      return res.status(502).json({ error: 'PVGIS injoignable', detail: String(e) });
+    }
+  }
   // Jusqu'à 3 champs PV : (peakpower, angle, aspect, loss[, trackingtype]) indexés.
   const commun = { lat: num(q.lat), lon: num(q.lon), trackingtype: num(q.trackingtype), raddatabase: q.raddatabase };
   const champs = [];

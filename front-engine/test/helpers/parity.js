@@ -11,6 +11,7 @@ import { Kernel } from '../../app/kernel.js';
 import { Request } from '../../app/http.js';
 import { CONTROLLERS } from '../../app/controllers/index.js';
 import { Project, User } from '../../app/entities.js';
+import { parsePvgisLines } from '../../src/producers/pvgis.js';
 import { PhpMt } from '../../app/lib/phpRandom.js';
 
 const require = createRequire(import.meta.url);
@@ -40,7 +41,14 @@ export async function runJs(spec, { controllers = CONTROLLERS } = {}) {
   await repo.saveProject(project);
 
   const mt = new PhpMt(spec.seed ?? 1);
+  // Réponses d'API rejouées (mêmes corps que ceux donnés au HttpClient doublé côté PHP)
+  let queue = [];
+  const producers = {
+    pvgis: async () => ({ lines: parsePvgisLines(queue.shift()) }),
+    ninja: async () => JSON.parse(queue.shift()),
+  };
   const services = {
+    producers,
     rand: (a, b) => mt.rand(a, b), uniqid: () => 'fixed',
     xlsx: async () => require('xlsx'), ...(spec.services || {}),
   };
@@ -48,6 +56,8 @@ export async function runJs(spec, { controllers = CONTROLLERS } = {}) {
   const out = [];
   for (const step of spec.steps) {
     const files = {};
+    queue = [...(step.http || [])];
+    if (step.csv !== undefined) files.file = new File([step.csv], 'prod.csv');
     if (step.file) files.file = new File([readFileSync(step.file)], basename(step.file));
     const route = step.path ? step.path.replace('{id}', project.id) : `/project/${project.id}`;
     const req = new Request({ method: step.method || 'POST', path: route, request: step.request || {}, files, headers: { 'x-requested-with': 'XMLHttpRequest' } });
@@ -57,7 +67,8 @@ export async function runJs(spec, { controllers = CONTROLLERS } = {}) {
   }
   const saved = await repo.findProject(project.id);
   const dump = (o, skip = []) => Object.fromEntries(Object.entries(o).filter(([k, v]) => !skip.includes(k) && (v === null || typeof v !== 'object' || Array.isArray(v) || !('project' in v && v.constructor !== Object))));
-  return { steps: out, consomation: dump(saved.getConsomation(), ['project']), project: dump(saved, ['user', 'userId', 'consomation', 'pvgis', 'ninja', 'csvProd', 'finance', 'pvwatt']), session: repo.session.data, saved };
+  return { steps: out, consomation: dump(saved.getConsomation(), ['project']), project: dump(saved, ['user', 'userId', 'consomation', 'pvgis', 'ninja', 'csvProd', 'finance', 'pvwatt']), session: repo.session.data, saved,
+    entities: Object.fromEntries(['pvgis', 'ninja', 'csvProd'].map((k) => [k, saved[`get${k[0].toUpperCase()}${k.slice(1)}`]()]).map(([k, e]) => [k, e && dump(e, ['project'])])) };
 }
 
 /** Comparaison récursive tolérante sur les flottants ; null/undefined/absent sont équivalents. */

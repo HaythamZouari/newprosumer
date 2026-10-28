@@ -67,6 +67,7 @@ export class Consomation {
   getTypeTarif() { return this.type_tarif; }
   setTypeTarif(type_tarif) { this.type_tarif = type_tarif; return this; }
   getProject() { return this.project; }
+  setProject(project) { this.project = project; if (project !== null && project.getConsomation() !== this) project.setConsomation(this); return this; }
   getCmMonth() { return this.cm_month; }
   setCmMonth(cm_month) { this.cm_month = cm_month; return this; }
   getallCmMonth() { return this.allcm_month; }
@@ -138,6 +139,7 @@ export class CsvProd {
   getResult() { return this.result; }
   setResult(result) { this.result = result; return this; }
   getProject() { return this.project; }
+  setProject(project) { this.project = project; if (project !== null && project.getCsvProd() !== this) project.setCsvProd(this); return this; }
 }
 
 export class Finance {
@@ -217,6 +219,7 @@ export class Finance {
   getTarifTransport() { return this.tarifTransport; }
   setTarifTransport(tarifTransport) { this.tarifTransport = tarifTransport; return this; }
   getProject() { return this.project; }
+  setProject(project) { this.project = project; if (project !== null && project.getFinance() !== this) project.setFinance(this); return this; }
   getFRegularisation() { return this.f_regularisation; }
   getfactransport() { return this.factransport; }
   setFRegularisation(f_regularisation) { this.f_regularisation = f_regularisation; return this; }
@@ -292,6 +295,7 @@ export class Ninja {
   getResult() { return this.result; }
   setResult(result) { this.result = result; return this; }
   getProject() { return this.project; }
+  setProject(project) { this.project = project; if (project !== null && project.getNinja() !== this) project.setNinja(this); return this; }
 }
 
 export class Project {
@@ -399,6 +403,7 @@ export class Pvgis {
   getResult() { return this.result; }
   setResult(result) { this.result = result; return this; }
   getProject() { return this.project; }
+  setProject(project) { this.project = project; if (project !== null && project.getPvgis() !== this) project.setPvgis(this); return this; }
 }
 
 export class Pvwatt {
@@ -432,6 +437,7 @@ export class Pvwatt {
   getResult() { return this.result; }
   setResult(result) { this.result = result; return this; }
   getProject() { return this.project; }
+  setProject(project) { this.project = project; if (project !== null && project.getPvwatt() !== this) project.setPvwatt(this); return this; }
 }
 
 export class User {

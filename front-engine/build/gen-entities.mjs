@@ -24,10 +24,17 @@ const SPECIAL = {
   Project: { ctor: 'this.consomation = new Consomation();' },
   Consomation: {
     ctor: 'this.transportEng = false;',
+    setProject: 'setProject(project) { this.project = project; if (project !== null && project.getConsomation() !== this) project.setConsomation(this); return this; }',
     // PHP : $this->url_ccv = $this->url_ccv."///".$url_ccv;
     setUrlCcv: 'setUrlCcv(url_ccv) { this.url_ccv = this.url_ccv + "///" + url_ccv; return this; }',
   },
-  Finance: { ctor: 'this.wacc = 0; this.tri25 = 0; this.tricapitaux = 0; this.van = 0; this.maturite_proj = 0; this.delai_grace = 0; this.taux_interet = 0; this.montant_dette = 0;' },
+  Pvgis: { setProject: 'setProject(project) { this.project = project; if (project !== null && project.getPvgis() !== this) project.setPvgis(this); return this; }' },
+  Ninja: { setProject: 'setProject(project) { this.project = project; if (project !== null && project.getNinja() !== this) project.setNinja(this); return this; }' },
+  CsvProd: { setProject: 'setProject(project) { this.project = project; if (project !== null && project.getCsvProd() !== this) project.setCsvProd(this); return this; }' },
+  Pvwatt: { setProject: 'setProject(project) { this.project = project; if (project !== null && project.getPvwatt() !== this) project.setPvwatt(this); return this; }' },
+  Finance: {
+    setProject: 'setProject(project) { this.project = project; if (project !== null && project.getFinance() !== this) project.setFinance(this); return this; }',
+    ctor: 'this.wacc = 0; this.tri25 = 0; this.tricapitaux = 0; this.van = 0; this.maturite_proj = 0; this.delai_grace = 0; this.taux_interet = 0; this.montant_dette = 0;' },
   User: { ctor: 'this.roles = [User.ROLE_USER]; this.enabled = false; this.img_URL = null;' },
 };
 
@@ -84,7 +91,7 @@ for (const f of files) {
     } else if (m.setter) {
       const arg = m.args.replace(/^[^$]*\$/, '').replace(/\s*=.*$/, '').trim() || 'v';
       out += `  ${m.name}(${arg}) { this.${m.setter} = ${arg}; return this; }\n`;
-    } else if (!/^setProject$/.test(m.name)) {
+    } else {
       // une méthode non triviale non traitée dans SPECIAL doit être signalée, jamais ignorée en silence
       console.warn(`ATTENTION ${cls}::${m.name} non générée (corps non reconnu)`);
     }

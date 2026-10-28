@@ -22,7 +22,8 @@ export function installMockServer({ kernel, currentPagePath, mode }) {
     if (u.origin !== location.origin) return null;
     let path = u.pathname;
     // mode hash : un POST vers la page elle-même (action="./#project-7", ancre retirée par jQuery)
-    if (mode === 'hash' && method === 'POST' && path === location.pathname) path = currentPagePath();
+    const norm = (x) => x.replace(/index\.html$/, ''); // './' et '/index.html' désignent la même page
+    if (mode === 'hash' && method === 'POST' && norm(path) === norm(location.pathname)) path = currentPagePath();
     return match(method, path) ? { path, search: u.search } : null;
   }
 

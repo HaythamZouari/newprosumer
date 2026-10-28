@@ -10,6 +10,7 @@ import { hashKeyToPath, pathToHashKey, match } from './routes.js';
 import { Form, formRenderer } from './forms.js';
 import { LocalAuth } from './auth.js';
 import { Mailer } from './mailer.js';
+import { createProducers } from './producers.js';
 import { CONTROLLERS } from './controllers/index.js';
 
 const cfg = window.NP_CONFIG || { mode: 'hash' };
@@ -71,7 +72,7 @@ async function boot() {
     s.onload = () => resolve(window.XLSX); s.onerror = () => reject(new Error('SheetJS introuvable'));
     document.head.appendChild(s);
   }));
-  const kernel = new Kernel({ repo, twig, cfg, controllers: CONTROLLERS, services: { auth, mailer, xlsx, autoEnable: true } });
+  const kernel = new Kernel({ repo, twig, cfg, controllers: CONTROLLERS, services: { auth, mailer, xlsx, producers: createProducers(cfg.apiBase || ''), autoEnable: true } });
 
   installMockServer({ kernel, currentPagePath: currentPath, mode: cfg.mode });
 
