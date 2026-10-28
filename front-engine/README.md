@@ -59,10 +59,25 @@ d'origine (24/24 tests). Particularité : le `else` sans accolades de
 `ProjectListner` (lignes 121-126) fait que le calcul du site 0 revient à
 `auto = min(conso, prod)` ; c'est reproduit et explicité dans le port.
 
-## Reste à faire (intégration, hors moteur)
+## Proxies de production (fonctions serverless Vercel)
 
-- Résolution de `cedePH`/`injectPH` : déjà produite par `projectData.js`
-  (`cedeePH`/`injectPH`), à brancher sur `gainEnergieCedee`.
-- Fonctions proxy Vercel pour PVGIS / renewables.ninja (CORS + token secret).
-- Backend Supabase (Auth + Postgres + Storage) et migration des données.
-- Front (UI, graphiques, PDF) assemblant le tout.
+`api/pvgis.js` et `api/ninja.js` sont des fonctions serverless qui appellent les
+APIs externes côté serveur (contournent le CORS, gardent le token ninja secret)
+et renvoient la série de puissances horaires (kW). La logique pure (URL + parsing)
+est dans `src/producers/` et testée hors-ligne (`test/producers.test.js`).
+
+Déploiement Vercel :
+- placer `api/` à la racine du projet déployé (racine = `front-engine/`) ;
+- variables d'environnement : `NINJA_TOKEN` (obligatoire pour ninja),
+  `CORS_ORIGIN` (optionnel, par défaut `*`) ;
+- ⚠️ l'endpoint PVGIS du PHP (`pvgis5/seriescalc.php`) est HORS SERVICE ;
+  les proxies visent l'API actuelle `v5_2`. Le format « basic » doit être
+  reconfirmé lors du 1er déploiement (réseau ouvert, impossible à tester ici) ;
+- ⚠️ le token ninja présent dans l'ancien `ProductionController.php` est exposé
+  dans l'historique Git → à révoquer/régénérer.
+
+## Reste à faire (intégration)
+
+- Backend Supabase (Auth + Postgres + Storage) et migration des données MySQL.
+- Front (UI, graphiques, PDF) assemblant le moteur et les proxies.
+- Brancher `cedeePH`/`injectPH` (produits par `projectData.js`) sur `gainEnergieCedee`.
