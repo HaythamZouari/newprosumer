@@ -13,22 +13,23 @@ const MAPBOX_STUB = `window.mapboxgl={accessToken:'',Map:function(){this.resize=
  window.MapboxGeocoder=function(){};`;
 
 async function session() {
-  const { url } = await startServer({ spaFallback: true });
+  const { url, server } = await startServer({ spaFallback: true });
   const { browser } = await launch();
   const page = await browser.newPage({ viewport: { width: 1400, height: 900 } });
+  page.setDefaultTimeout(15000); page.on('dialog', (d) => d.accept());
   const errors = [];
   page.on('pageerror', (e) => errors.push(String(e.message)));
   await page.route('**/api/mail', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
   await page.route(/mapbox-gl\.js|mapbox-gl-geocoder/, (r) => r.fulfill({ status: 200, contentType: 'text/javascript', body: MAPBOX_STUB }));
   await page.route('**/api/pvgis**', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ lines: pvgisBody().split('\n') }) }));
-  return { url, browser, page, errors };
+  return { url, server, browser, page, errors };
 }
 
 async function loginNewProject({ url, page }) {
-  await page.goto(url + '/register'); await page.waitForSelector('#user_username');
+  await page.goto(url + '/register'); await page.waitForSelector('#user_username'); await page.waitForTimeout(1200);
   await page.fill('#user_username', 'alice'); await page.fill('#user_email', 'alice@example.tn');
   await page.fill('#user_plainPassword_first', 'secret123'); await page.fill('#user_plainPassword_second', 'secret123');
-  await page.fill('#user_fullName', 'Alice'); await page.fill('#user_societe', 'Soc');
+  await page.fill('#user_fullName', 'Alice Test'); await page.fill('#user_societe', 'Societe');
   await page.click('#user_Register'); await page.waitForSelector('#username');
   await page.fill('#username', 'alice'); await page.fill('#password', 'secret123'); await page.click('#Login');
   await page.waitForURL('**/project/');
@@ -59,7 +60,7 @@ test('parcours complet : consommation par activité -> production -> finance -> 
     // finance
     await page.waitForSelector('#capex', { state: 'visible' });
     await page.fill('#capex', '20000'); await page.fill('#opex', '1.5'); await page.fill('#replinv', '1500');
-    await page.fill('#duree_proj', '25'); await page.fill('#aug_tarif_v', '2'); await page.fill('#aug_tarif_a', '3'); await page.fill('#taux_actualisation', '6');
+    await page.fill('#aug_tarif_v', '2'); await page.fill('#aug_tarif_a', '3'); await page.fill('#taux_actualisation', '6');
     await page.evaluate(() => financeSubmit());
     await page.waitForFunction(() => !document.getElementById('financeavancer').disabled, null, { timeout: 30000 });
     await page.evaluate(() => finavance());
@@ -75,5 +76,5 @@ test('parcours complet : consommation par activité -> production -> finance -> 
     assert.match(rap, /RAPPORT D'ETUDE ENERGETIQUE/i, 'rapport rendu');
     await page.screenshot({ path: '/tmp/e2e/rapport.png' });
     console.log('erreurs de page :', [...new Set(s.errors)]);
-  } finally { await s.browser.close(); }
+  } finally { await s.browser.close(); s.server.close(); }
 });
