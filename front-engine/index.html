@@ -53,6 +53,11 @@
   .top .spacer { flex: 1; }
   .theme-btn { font: inherit; font-size: .8rem; color: var(--fg); background: var(--surface-2);
     border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  .acct { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .acct-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .acct input { font: inherit; font-size: .8rem; padding: 6px 8px; border: 1px solid var(--border);
+    border-radius: 8px; background: var(--bg); color: var(--fg); max-width: 150px; }
+  .acct-msg { font-size: .74rem; color: var(--muted); font-family: var(--font-mono); }
 
   .layout { display: grid; grid-template-columns: 340px 1fr; gap: 22px; padding-block: 22px 40px; align-items: start; }
   @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
@@ -124,6 +129,21 @@
       <span class="tag">Calculateur d'autoconsommation solaire</span>
     </div>
     <span class="spacer"></span>
+    <div class="acct" id="acct" hidden>
+      <form class="acct-row" id="loginForm">
+        <input id="email" type="email" placeholder="email" autocomplete="email" required>
+        <input id="pw" type="password" placeholder="mot de passe" autocomplete="current-password" required>
+        <button class="theme-btn" id="btnLogin" type="submit">Connexion</button>
+        <button class="theme-btn" id="btnSignup" type="button">Créer</button>
+      </form>
+      <div class="acct-row" id="acctUser" hidden>
+        <select id="projSel" class="theme-btn"><option value="">Mes projets…</option></select>
+        <input id="projName" placeholder="nom du projet">
+        <button class="theme-btn" id="btnSave" type="button">Enregistrer</button>
+        <button class="theme-btn" id="btnLogout" type="button">Quitter</button>
+      </div>
+      <span class="acct-msg" id="acctMsg"></span>
+    </div>
     <button class="theme-btn" id="themeBtn" type="button">Thème</button>
   </div>
 </header>
@@ -235,6 +255,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script type="module">
   import { parts } from './src/tz.js';
   import { postHoraire } from './src/postHoraire.js';
@@ -242,6 +263,7 @@
   import { parseWorkbook } from './src/excelReader.js';
   import { computeProjectData } from './src/projectData.js';
   import { gainEnergieTransporterHoraire, gainEnergieCedee, fraisExploitation } from './src/financeService.js';
+  import * as store from './src/store.js';
 
   const $ = (id) => document.getElementById(id);
   const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
@@ -249,6 +271,8 @@
   const MOIS = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
 
   let consoSerie = null, prodSerie = null, usingSample = true;
+  let consoFile = null, prodFile = null;      // fichiers d'origine (pour Storage)
+  let last = null, currentProjectId = null;   // dernier calcul + projet Supabase courant
 
   // --- Jeu d'exemple déterministe : 30 jours, profil bureau + cloche solaire ---
   function sample() {
@@ -408,6 +432,7 @@
       consomation: [c], production: aligned,
       transportEng: $('injtot').checked ? 1 : 0, typeTarif: 0,
     });
+    last = { c, p: aligned, res };
     render(res, c, aligned);
     $('banner').classList.toggle('hide', !usingSample);
   }
@@ -425,16 +450,15 @@
       $(stateId).textContent = 'lecture…';
       try {
         const serie = await readFileSerie(file);
-        set(serie);
-        usingSample = !(consoSerie && prodSerie) ? usingSample : false;
+        set(serie, file);
         if (consoSerie && prodSerie) usingSample = false;
         $(stateId).textContent = `${file.name} — ${fmt(serie.length)} points`;
         compute();
       } catch (e) { $(stateId).textContent = 'format non reconnu'; }
     }
   }
-  wireDrop('dropConso', 'fileConso', 'stConso', (s) => { consoSerie = s; });
-  wireDrop('dropProd', 'fileProd', 'stProd', (s) => { prodSerie = s; });
+  wireDrop('dropConso', 'fileConso', 'stConso', (s, f) => { consoSerie = s; consoFile = f; });
+  wireDrop('dropProd', 'fileProd', 'stProd', (s, f) => { prodSerie = s; prodFile = f; });
 
   $('calc').addEventListener('click', compute);
 
@@ -448,4 +472,93 @@
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => compute());
 
   compute(); // ouvre sur les données d'exemple
+
+  // --- Intégration Supabase (auth + sauvegarde). Mode local si injoignable. ---
+  const msg = (t) => { $('acctMsg').textContent = t; };
+  const tarifsFromInputs = () => ({
+    achat: [+$('aJour').value, +$('aEte').value, +$('aSoir').value, +$('aNuit').value],
+    vende: [+$('vJour').value, +$('vEte').value, +$('vSoir').value, +$('vNuit').value],
+  });
+
+  async function refreshProjects() {
+    try {
+      const list = await store.listProjects();
+      const sel = $('projSel');
+      sel.innerHTML = '<option value="">Mes projets…</option>'
+        + list.map((p) => `<option value="${p.id}">${p.name || '(sans nom)'}</option>`).join('');
+    } catch { /* RLS/réseau : on ignore */ }
+  }
+
+  async function refreshAuth() {
+    const user = await store.currentUser();
+    const logged = !!user;
+    $('loginForm').hidden = logged;
+    $('acctUser').hidden = !logged;
+    msg(logged ? user.email : '');
+    if (logged) refreshProjects();
+  }
+
+  async function initSupabase() {
+    if (!(await store.isReachable())) return; // aperçu/offline -> mode local
+    $('acct').hidden = false;
+    await refreshAuth();
+
+    $('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try { await store.signIn($('email').value, $('pw').value); await refreshAuth(); }
+      catch (err) { msg(err.message || 'échec connexion'); }
+    });
+    $('btnSignup').addEventListener('click', async () => {
+      try { await store.signUp($('email').value, $('pw').value); msg('compte créé — vérifiez vos emails'); }
+      catch (err) { msg(err.message || 'échec création'); }
+    });
+    $('btnLogout').addEventListener('click', async () => { await store.signOut(); currentProjectId = null; await refreshAuth(); });
+
+    $('btnSave').addEventListener('click', async () => {
+      if (!last) { msg('calculez d\'abord'); return; }
+      try {
+        const id = await store.saveProject({
+          id: currentProjectId || undefined,
+          name: $('projName').value.trim() || 'Projet sans nom',
+          conso: last.c, prod: last.p,
+          transportEng: $('injtot').checked ? 1 : 0, typeTarif: 0, degr: +$('degr').value,
+          finance: { capex: +$('capex').value, opex: +$('opex').value, augTarifAchat: +$('augA').value, augTarifVende: +$('augA').value },
+          tarifs: tarifsFromInputs(), res: last.res,
+        });
+        currentProjectId = id;
+        if (consoFile) store.uploadSourceFile(consoFile, id, 'conso').catch(() => {});
+        if (prodFile) store.uploadSourceFile(prodFile, id, 'prod').catch(() => {});
+        msg('enregistré ✓'); refreshProjects();
+      } catch (err) { msg(err.message || 'échec enregistrement'); }
+    });
+
+    $('projSel').addEventListener('change', async (e) => {
+      const id = e.target.value; if (!id) return;
+      try {
+        const p = await store.loadProject(id);
+        currentProjectId = id;
+        if (p.conso) { consoSerie = p.conso; consoFile = null; }
+        if (p.prod) { prodSerie = p.prod; prodFile = null; }
+        usingSample = false;
+        $('projName').value = p.name;
+        $('injtot').checked = p.transportEng === 1;
+        $('degr').value = p.degr;
+        if (p.tarifs) {
+          const a = p.tarifs.achat || [], v = p.tarifs.vende || [];
+          [['aJour', a[0]], ['aEte', a[1]], ['aSoir', a[2]], ['aNuit', a[3]],
+           ['vJour', v[0]], ['vEte', v[1]], ['vSoir', v[2]], ['vNuit', v[3]]]
+            .forEach(([k, val]) => { if (val != null) $(k).value = val; });
+        }
+        if (p.finance) {
+          if (p.finance.capex != null) $('capex').value = p.finance.capex;
+          if (p.finance.opex != null) $('opex').value = p.finance.opex;
+          if (p.finance.aug_tarif_achat != null) $('augA').value = p.finance.aug_tarif_achat;
+        }
+        $('stConso').textContent = p.conso ? `chargé — ${fmt(p.conso.length)} points` : '';
+        $('stProd').textContent = p.prod ? `chargé — ${fmt(p.prod.length)} points` : '';
+        compute();
+      } catch (err) { msg('échec chargement'); }
+    });
+  }
+  initSupabase();
 </script>
