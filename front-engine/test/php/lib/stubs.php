@@ -46,7 +46,7 @@ namespace Symfony\Bundle\FrameworkBundle\Controller {
     abstract class AbstractController {
         private $doctrine;
         public function getDoctrine() { return $this->doctrine ??= new StubDoctrine(); }
-        public function render($t, $p = []) { return ['render' => $t]; }
+        public function render($t, $p = []) { return ['render' => $t, 'params' => $p]; }
         public function getUser() { return null; }
     }
 }

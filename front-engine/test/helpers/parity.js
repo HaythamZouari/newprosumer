@@ -52,7 +52,10 @@ export async function runJs(spec, { controllers = CONTROLLERS } = {}) {
     rand: (a, b) => mt.rand(a, b), uniqid: () => 'fixed',
     xlsx: async () => require('xlsx'), ...(spec.services || {}),
   };
-  const kernel = new Kernel({ repo, twig: null, controllers, services });
+  // Twig doublé : renvoie les variables du gabarit (le rendu réel est du Twig d'origine, testé en E2E)
+  const san = (v) => (v && typeof v === 'object' && !Array.isArray(v) && v.constructor !== Object ? '[objet]' : Array.isArray(v) ? v.map(san) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, san(x)])) : v);
+  const twig = { render: (t, p) => JSON.stringify({ render: t, params: san(Object.fromEntries(Object.entries(p).filter(([k]) => k !== 'app'))) }) };
+  const kernel = new Kernel({ repo, twig, controllers, services });
   const out = [];
   for (const step of spec.steps) {
     const files = {};

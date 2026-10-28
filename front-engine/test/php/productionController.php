@@ -24,6 +24,7 @@ namespace {
     require_once $src . 'Controller/ProductionController.php';
     require_once $src . 'Controller/FinanceController.php';
     require_once $src . 'Controller/ResultController.php';
+    require_once $src . 'Controller/RapportController.php';
 
     use App\Entity\Project;
     use Symfony\Component\HttpFoundation\Request;
@@ -55,9 +56,11 @@ namespace {
             case 'ninja': $r = $ctl->ninja($project, $dispatcher, $request); break;
             case 'finance': $r = (new App\Controller\FinanceController())->index($request, $project); break;
             case 'results': $r = (new App\Controller\ResultController())->index($request, $project); break;
+            case 'rapport': $r = (new App\Controller\RapportController())->index($project); break;
             case 'readcsv': $r = $ctl->readcsv($dispatcher, $request, new App\Service\FileUpload(''), $project); break;
         }
-        $out[] = $r->data;
+        $san = function ($v) use (&$san) { if (is_object($v)) return '[objet]'; if (is_array($v)) return array_map($san, $v); return $v; };
+        $out[] = is_array($r) ? $san($r) : $r->data;
     }
     $dump = function ($obj) { if ($obj === null) return null; $o = []; foreach ((new ReflectionObject($obj))->getProperties() as $p) { $p->setAccessible(true); $v = $p->getValue($obj); if (is_object($v)) continue; $o[$p->getName()] = $v; } return $o; };
     echo json_encode(['steps' => $out, 'urls' => HttpClient::$urls,
