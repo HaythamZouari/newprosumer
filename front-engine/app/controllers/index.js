@@ -3,6 +3,7 @@ import * as basic from './basic.js';
 import * as project from './project.js';
 import * as production from './production.js';
 import * as finance from './finance.js';
+import * as result from './result.js';
 
 /** project_show : GET = page du wizard ; POST XHR = construction de la courbe de consommation. */
 async function project_show(ctx) {
@@ -32,4 +33,6 @@ export const CONTROLLERS = {
   ninja: production.ninja,
   readcsv: production.readcsv,
   finance: finance.index,
+  project_results: result.project_results,
+  results: result.results,
 };

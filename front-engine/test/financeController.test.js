@@ -34,3 +34,11 @@ test('finance — production ninja', { skip }, () => compare({ ...consoProject()
 test('finance — production csv', { skip }, () => compare({ ...consoProject(), steps: [{ call: 'readcsv', path: '/readcsv/{id}', request: { csvpuiss: '120', degradationc: '0.4' }, csv: csvBody() }, finStep()] }));
 test('finance — pvgis 3 champs, durée 20 ans, remplacement onduleurs', { skip }, () => compare({ ...consoProject(), steps: [{ ...prodStep, request: pv({ peakpower: '300', peakpower2: '200', loss2: '10', angle2: '20', aspect2: '90', peakpower3: '100', loss3: '8', angle3: '10', aspect3: '-90' }), http: [pvgisBody(), pvgisBody(0.5), pvgisBody(0.25)] }, finStep({ duree_proj: '20', replinv: '40000', capex: '800000', ...credit })] }));
 test('finance — projet non rentable (TRI introuvable => 0)', { skip }, () => compare({ ...consoProject(), steps: [prodStep, finStep({ capex: '50000000', opex: '5' })] }));
+test('finance — TRI calculable (capex faible, rentabilité négative)', { skip }, async () => {
+  const { php } = await compare({ ...consoProject(), steps: [prodStep, finStep({ capex: '20000', replinv: '0' })] });
+  assert.notEqual(php.finance.tri25, 0);
+});
+test('finance — TRI calculable positif, tarif horaire avec crédit', { skip }, async () => {
+  const { php } = await compare({ ...consoProject(2019, { typeTarif: 1 }), steps: [prodStep, finStep({ capex: '5000', replinv: '0', dette: '3000', credit: 'on', interet: '7', delai_grace: '1', maturite_proj: '5' })] });
+  assert.notEqual(php.finance.tri25, 0);
+});

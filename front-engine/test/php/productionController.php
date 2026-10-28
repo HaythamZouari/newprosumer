@@ -23,6 +23,7 @@ namespace {
     foreach (['FinanceService'] as $s) require_once $src . "Service/$s.php";
     require_once $src . 'Controller/ProductionController.php';
     require_once $src . 'Controller/FinanceController.php';
+    require_once $src . 'Controller/ResultController.php';
 
     use App\Entity\Project;
     use Symfony\Component\HttpFoundation\Request;
@@ -53,6 +54,7 @@ namespace {
             case 'pvgis': $r = $ctl->pvgis($logger, $dispatcher, $project, $request); break;
             case 'ninja': $r = $ctl->ninja($project, $dispatcher, $request); break;
             case 'finance': $r = (new App\Controller\FinanceController())->index($request, $project); break;
+            case 'results': $r = (new App\Controller\ResultController())->index($request, $project); break;
             case 'readcsv': $r = $ctl->readcsv($dispatcher, $request, new App\Service\FileUpload(''), $project); break;
         }
         $out[] = $r->data;
