@@ -5,7 +5,8 @@
   "type": "module",
   "description": "Portage en JavaScript du moteur de calcul de NewProsumer (étape 1 de la migration front). Ne touche pas au code PHP existant.",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test test/*.test.js",
+    "test:e2e": "node --test test/e2e/*.e2e.mjs"
   },
   "dependencies": {
     "xlsx": "^0.18.5"

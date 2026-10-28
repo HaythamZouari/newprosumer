@@ -1,0 +1,9 @@
+{
+  "name": "newprosumer/php-parity-harness",
+  "description": "Dépendances PHP du banc de parité (PhpSpreadsheet/Carbon aux versions de composer.lock de l'application).",
+  "require": {
+    "phpoffice/phpspreadsheet": "1.13.0",
+    "nesbot/carbon": "2.35.0"
+  },
+  "config": { "platform-check": false, "allow-plugins": true }
+}
