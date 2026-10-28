@@ -3,6 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
   /* Identité Prosumers / Argon. Assistant de simulation en 5 étapes. */
   :root {
@@ -89,6 +90,11 @@
   .kpi .k-val small{font-size:.78rem;font-weight:400;color:var(--muted)}
   .kpi .ic{width:46px;height:46px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;font-weight:700}
 
+  .sliders{display:grid;grid-template-columns:repeat(6,1fr);gap:8px 10px;margin-top:6px}
+  @media(max-width:600px){.sliders{grid-template-columns:repeat(4,1fr)}}
+  .sliders .sl{display:flex;flex-direction:column;align-items:center;font-size:.64rem;color:var(--muted);gap:2px}
+  .sliders input[type=range]{width:100%}
+  #map{height:260px;border-radius:8px;overflow:hidden;margin:10px 0}
   .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;margin-bottom:10px}
   .legend span{display:inline-flex;align-items:center;gap:6px;color:var(--muted)}
   .dot{width:10px;height:10px;border-radius:3px;display:inline-block}
@@ -161,13 +167,45 @@
     <section class="card step-panel" data-panel="1">
       <div class="card-h"><h3>1. Courbe de consommation</h3><div class="sub">Importez votre relevé (STEG / compteur) — formats .xlsx, .xls, .csv, .ods. Les 3 structures de courbe sont reconnues.</div></div>
       <div class="card-b">
-        <label class="drop" id="dropConso" tabindex="0">
-          <span class="lbl">Déposer la courbe de consommation</span>
-          <span class="sub">glisser-déposer ou cliquer</span>
-          <span class="state" id="stConso"></span>
-          <input type="file" id="fileConso" accept=".xlsx,.xls,.csv,.ods">
-        </label>
-        <div class="alert alert-info" id="consoInfo">Pas de fichier sous la main ? Continuez pour utiliser un <b>profil d'exemple</b> (30 jours).</div>
+        <div class="seg">
+          <button type="button" id="modeImport" class="on">Importer un fichier</button>
+          <button type="button" id="modeBuild">Construire par activité</button>
+        </div>
+
+        <div id="paneImport">
+          <label class="drop" id="dropConso" tabindex="0">
+            <span class="lbl">Déposer la courbe de consommation</span>
+            <span class="sub">glisser-déposer ou cliquer</span>
+            <span class="state" id="stConso"></span>
+            <input type="file" id="fileConso" accept=".xlsx,.xls,.csv,.ods">
+          </label>
+          <div class="alert alert-info" id="consoInfo">Pas de fichier ? Passez à « Construire par activité », ou continuez avec un <b>profil d'exemple</b>.</div>
+        </div>
+
+        <div id="paneBuild" hidden>
+          <div class="grid2">
+            <div class="field"><label for="annKwh">Énergie annuelle (kWh)</label><input class="num" id="annKwh" type="number" min="0" value="300000"></div>
+            <div class="field"><label for="activite">Profil d'activité</label>
+              <select id="activite">
+                <option value="bureau">Bureau / tertiaire</option>
+                <option value="commerce">Commerce</option>
+                <option value="industrie">Industrie continue (3×8)</option>
+                <option value="residentiel">Résidentiel</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label>Profil horaire d'un jour ouvré (%)</label><div id="hourSliders" class="sliders"></div></div>
+          <div class="grid2">
+            <div class="field"><label for="sat">Samedi (<span id="satV">30</span> %)</label><input id="sat" type="range" min="0" max="100" value="30"></div>
+            <div class="field"><label for="sun">Dimanche (<span id="sunV">10</span> %)</label><input id="sun" type="range" min="0" max="100" value="10"></div>
+          </div>
+          <div class="field"><label>Modulation mensuelle (%)</label><div id="monthSliders" class="sliders"></div></div>
+          <div class="field"><label for="ferie">Jours fériés (<span id="ferieV">20</span> %)</label><input id="ferie" type="range" min="0" max="100" value="20"></div>
+          <div class="field"><label>Aperçu — jour ouvré moyen</label><div class="chartbox" style="height:160px"><canvas id="prevDay"></canvas></div></div>
+          <button class="btn btn-ghost" id="genCurve" type="button">Générer la courbe</button>
+          <div class="alert alert-ok hide" id="buildOk"></div>
+        </div>
+
         <div class="actions">
           <span></span>
           <button class="btn" id="next1" type="button">Continuer →</button>
@@ -184,6 +222,12 @@
           <button type="button" id="srcPvgis">PVGIS API</button>
           <button type="button" id="srcCsv">PVsyst (fichier)</button>
         </div>
+
+        <div class="field"><label for="addr">Adresse du site</label>
+          <div style="display:flex;gap:8px"><input id="addr" placeholder="ex. Tunis, Tunisie" style="flex:1;font:inherit;font-size:.9rem;padding:8px 10px;border-radius:6px;border:1px solid var(--input-border)"><button class="btn-sm" id="searchAddr" type="button">Rechercher</button></div>
+        </div>
+        <div id="map" hidden></div>
+        <div class="alert alert-info hide" id="mapNote">La carte interactive s'affiche une fois l'application déployée (serveur). En aperçu, saisissez la latitude et la longitude.</div>
 
         <div class="grid2">
           <div class="field"><label for="lat">Latitude</label><input class="num" id="lat" type="number" step="0.0001" value="36.8065"></div>
@@ -337,6 +381,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script type="module">
   import { parts } from './src/tz.js';
   import { postHoraire } from './src/postHoraire.js';
@@ -373,6 +418,7 @@
     document.querySelectorAll('.step').forEach((el) => el.classList.toggle('active', +el.dataset.step === n));
     paintSteps();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (n === 2 && lmap) setTimeout(() => lmap.invalidateSize(), 150);
     if (n === 4) runResults();
     if (n === 5) runReport();
   }
@@ -416,6 +462,86 @@
   // ---------- Étape 1 : consommation ----------
   wireDrop('dropConso', 'fileConso', 'stConso', (s, f) => { consoSerie = s; consoFile = f; usingSample = false; $('consoInfo').classList.add('hide'); });
   $('next1').addEventListener('click', () => { unlock(2); showStep(2); });
+
+  // --- Constructeur de courbe par activité (sans fichier) ---
+  const FERIES = [[1, 1], [14, 1], [20, 3], [9, 4], [1, 5], [25, 7], [13, 8], [15, 10]];
+  const isFerie = (d, m) => FERIES.some(([jj, mm]) => d === jj && m === mm);
+  const PRESETS = {
+    bureau: { h: [10, 10, 10, 10, 10, 12, 20, 45, 80, 90, 92, 90, 70, 88, 92, 90, 80, 60, 35, 22, 18, 15, 12, 10], sat: 25, sun: 10, months: [80, 80, 75, 70, 80, 95, 100, 100, 85, 72, 72, 80], ferie: 15 },
+    commerce: { h: [12, 10, 10, 10, 10, 15, 30, 55, 80, 88, 90, 92, 85, 88, 92, 92, 90, 85, 80, 70, 45, 25, 18, 14], sat: 85, sun: 55, months: [80, 78, 80, 82, 88, 95, 100, 98, 88, 82, 85, 92], ferie: 60 },
+    industrie: { h: [85, 85, 85, 85, 85, 88, 90, 92, 92, 92, 92, 90, 85, 90, 92, 92, 90, 90, 88, 88, 88, 87, 86, 85], sat: 85, sun: 80, months: [90, 90, 90, 90, 92, 95, 96, 85, 92, 92, 90, 90], ferie: 70 },
+    residentiel: { h: [30, 22, 18, 16, 16, 22, 45, 70, 55, 40, 35, 38, 45, 40, 38, 42, 55, 75, 95, 98, 90, 75, 55, 40], sat: 90, sun: 95, months: [95, 92, 82, 72, 65, 70, 78, 80, 68, 72, 85, 95], ferie: 95 },
+  };
+  let hourVals = [...PRESETS.bureau.h], monthVals = [...PRESETS.bureau.months];
+  let prevChart = null;
+  function drawPreview() {
+    if (prevChart) prevChart.destroy();
+    prevChart = new Chart($('prevDay'), { type: 'line', data: { labels: [...Array(24).keys()].map((h) => h + 'h'),
+      datasets: [{ data: hourVals, borderColor: css('--primary'), backgroundColor: 'rgba(94,114,228,.14)', fill: true, borderWidth: 2, pointRadius: 0, tension: .35 }] }, options: baseOpts() });
+  }
+  function renderSliders() {
+    const hc = $('hourSliders'); hc.innerHTML = '';
+    hourVals.forEach((v, h) => { const d = document.createElement('div'); d.className = 'sl'; d.innerHTML = `<span>${h}h</span><input type="range" min="0" max="100" value="${v}" data-h="${h}">`; hc.appendChild(d); });
+    const mc = $('monthSliders'); mc.innerHTML = '';
+    monthVals.forEach((v, m) => { const d = document.createElement('div'); d.className = 'sl'; d.innerHTML = `<span>${MOIS[m]}</span><input type="range" min="0" max="100" value="${v}" data-m="${m}">`; mc.appendChild(d); });
+    hc.querySelectorAll('input').forEach((i) => i.addEventListener('input', (e) => { hourVals[+e.target.dataset.h] = +e.target.value; drawPreview(); }));
+    mc.querySelectorAll('input').forEach((i) => i.addEventListener('input', (e) => { monthVals[+e.target.dataset.m] = +e.target.value; }));
+  }
+  function applyPreset(name) {
+    const p = PRESETS[name]; hourVals = [...p.h]; monthVals = [...p.months];
+    $('sat').value = p.sat; $('satV').textContent = p.sat; $('sun').value = p.sun; $('sunV').textContent = p.sun; $('ferie').value = p.ferie; $('ferieV').textContent = p.ferie;
+    renderSliders(); drawPreview();
+  }
+  $('sat').addEventListener('input', (e) => $('satV').textContent = e.target.value);
+  $('sun').addEventListener('input', (e) => $('sunV').textContent = e.target.value);
+  $('ferie').addEventListener('input', (e) => $('ferieV').textContent = e.target.value);
+  $('activite').addEventListener('change', (e) => applyPreset(e.target.value));
+  $('modeImport').addEventListener('click', () => { $('modeImport').classList.add('on'); $('modeBuild').classList.remove('on'); $('paneImport').hidden = false; $('paneBuild').hidden = true; });
+  $('modeBuild').addEventListener('click', () => { $('modeBuild').classList.add('on'); $('modeImport').classList.remove('on'); $('paneBuild').hidden = false; $('paneImport').hidden = true; if (!$('hourSliders').children.length) { renderSliders(); drawPreview(); } });
+  $('genCurve').addEventListener('click', () => {
+    const target = +$('annKwh').value || 0;
+    const satF = +$('sat').value / 100, sunF = +$('sun').value / 100, ferieF = +$('ferie').value / 100;
+    const wd = hourVals.map((v) => v / 100), mo = monthVals.map((v) => v / 100);
+    const raw = []; let total = 0;
+    for (let i = 0; i < 8760; i++) {
+      const ts = REF + i * 3600; const { H, w, m, d } = parts(ts);
+      let lvl = wd[H] * mo[m - 1];
+      if (isFerie(d, m)) lvl *= ferieF; else if (w === 6) lvl *= satF; else if (w === 0) lvl *= sunF;
+      raw.push([ts, lvl]); total += lvl;
+    }
+    const k = total > 0 ? target / total : 0;
+    consoSerie = raw.map(([ts, l]) => [ts, l * k]); consoFile = null; usingSample = false;
+    $('buildOk').classList.remove('hide'); $('buildOk').innerHTML = `Courbe générée : <b>${fmt(consoSerie.length)}</b> points, <b>${fmt(target)}</b> kWh/an.`;
+  });
+
+  // --- Carte Leaflet / OpenStreetMap (active une fois l'app déployée) ---
+  let lmap = null, lmark = null;
+  function setLatLon(la, lo) {
+    $('lat').value = (+la).toFixed(4); $('lon').value = (+lo).toFixed(4);
+    if (lmap) { lmap.setView([la, lo], 13); if (lmark) lmark.setLatLng([la, lo]); else lmark = L.marker([la, lo]).addTo(lmap); }
+  }
+  async function initMap() {
+    try {
+      const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 3500);
+      await fetch('https://tile.openstreetmap.org/0/0/0.png', { signal: ctrl.signal, mode: 'no-cors' }); clearTimeout(t);
+    } catch { $('mapNote').classList.remove('hide'); return; }
+    if (typeof L === 'undefined') { $('mapNote').classList.remove('hide'); return; }
+    $('map').hidden = false;
+    lmap = L.map('map').setView([+$('lat').value, +$('lon').value], 12);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© OpenStreetMap' }).addTo(lmap);
+    lmark = L.marker([+$('lat').value, +$('lon').value]).addTo(lmap);
+    lmap.on('click', (e) => setLatLon(e.latlng.lat, e.latlng.lng));
+    setTimeout(() => lmap.invalidateSize(), 200);
+  }
+  $('searchAddr').addEventListener('click', async () => {
+    const q = $('addr').value.trim(); if (!q) return;
+    try {
+      const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(q)}`, { headers: { Accept: 'application/json' } });
+      const j = await r.json();
+      if (j[0]) setLatLon(j[0].lat, j[0].lon); else { $('mapNote').textContent = 'Adresse introuvable.'; $('mapNote').classList.remove('hide'); }
+    } catch { $('mapNote').classList.remove('hide'); }
+  });
+  initMap();
 
   // ---------- Étape 2 : production ----------
   function pickSource(src) {
