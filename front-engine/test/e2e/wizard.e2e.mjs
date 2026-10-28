@@ -25,18 +25,21 @@ async function session() {
   return { url, server, browser, page, errors };
 }
 
+/** Le « serveur » démarre dans le navigateur (document.write) : on laisse la page se stabiliser avant de remplir. */
+const settle = async (page, sel) => { await page.waitForSelector(sel); await page.waitForLoadState('load'); await page.waitForTimeout(900); };
+
 async function loginNewProject({ url, page }) {
-  await page.goto(url + '/register'); await page.waitForSelector('#user_username'); await page.waitForTimeout(1200);
+  await page.goto(url + '/register'); await settle(page, '#user_username');
   await page.fill('#user_username', 'alice'); await page.fill('#user_email', 'alice@example.tn');
   await page.fill('#user_plainPassword_first', 'secret123'); await page.fill('#user_plainPassword_second', 'secret123');
   await page.fill('#user_fullName', 'Alice Test'); await page.fill('#user_societe', 'Societe');
-  await page.click('#user_Register'); await page.waitForSelector('#username');
+  await page.click('#user_Register'); await settle(page, '#username');
   await page.fill('#username', 'alice'); await page.fill('#password', 'secret123'); await page.click('#Login');
   await page.waitForURL('**/project/');
-  await page.goto(url + '/project/new'); await page.waitForSelector('#project_name');
+  await page.goto(url + '/project/new'); await settle(page, '#project_name');
   await page.fill('#project_name', 'Projet'); await page.fill('#project_adress', 'Client'); await page.fill('#project_description', 'd');
   await page.click('form button.btn'); await page.waitForURL('**/project/1');
-  await page.waitForSelector('#consomationForm');
+  await settle(page, '#consomationForm');
 }
 
 test('parcours complet : consommation par activité -> production -> finance -> résultats -> rapport', async () => {
@@ -78,3 +81,19 @@ test('parcours complet : consommation par activité -> production -> finance -> 
     console.log('erreurs de page :', [...new Set(s.errors)]);
   } finally { await s.browser.close(); s.server.close(); }
 });
+
+for (const t of [1, 2, 3]) {
+  test(`import de la courbe de charge réelle Type ${t} (Dropzone) puis validation du site`, { skip: !existsSync(sample(t)) && '.samples absent' }, async () => {
+    const s = await session(); const { page } = s;
+    try {
+      await loginNewProject(s);
+      await page.click('#tabs-icons-text-s-3-tab');
+      await page.locator('input.dz-hidden-input').first().setInputFiles(sample(t));
+      await page.waitForSelector('#success', { state: 'visible', timeout: 30000 });
+      assert.ok(await page.locator('#plot').isVisible(), 'courbe tracée');
+      await page.screenshot({ path: `/tmp/e2e/import${t}.png` });
+      await page.click('#continue');
+      await page.waitForFunction(() => !document.getElementById('continuer').disabled, null, { timeout: 20000 });
+    } finally { await s.browser.close(); s.server.close(); }
+  });
+}
