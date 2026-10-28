@@ -69,7 +69,10 @@ est dans `src/producers/` et testée hors-ligne (`test/producers.test.js`).
 Déploiement Vercel :
 - placer `api/` à la racine du projet déployé (racine = `front-engine/`) ;
 - variables d'environnement : `NINJA_TOKEN` (obligatoire pour ninja),
-  `CORS_ORIGIN` (optionnel, par défaut `*`) ;
+  `CORS_ORIGIN` (optionnel, défaut `*`), `PVGIS_BASE` (optionnel, pour basculer
+  l'endpoint, ex. `https://re.jrc.ec.europa.eu/api/v5_3/seriescalc`) ;
+- au 1er déploiement, confirmer sur la doc officielle que le format « basic »
+  de seriescalc a bien `time` en colonne 0 et `P` (W) en colonne 1 ;
 - ⚠️ l'endpoint PVGIS du PHP (`pvgis5/seriescalc.php`) est HORS SERVICE ;
   les proxies visent l'API actuelle `v5_2`. Le format « basic » doit être
   reconfirmé lors du 1er déploiement (réseau ouvert, impossible à tester ici) ;

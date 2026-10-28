@@ -39,7 +39,7 @@ export default async function handler(req, res) {
   try {
     const series = [];
     for (const p of champs) {
-      const r = await fetch(buildPvgisUrl(p));
+      const r = await fetch(buildPvgisUrl(p, process.env.PVGIS_BASE || undefined));
       if (!r.ok) return res.status(502).json({ error: `PVGIS ${r.status}` });
       series.push(parsePvgisBasic(await r.text()));
     }

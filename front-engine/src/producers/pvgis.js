@@ -7,14 +7,17 @@
 // v5_2 (https). Le format « basic » reste : des lignes « AAAAMMJJ:HHMM,P,... »
 // où P est la puissance PV en watts ; on la convertit en kW (/1000), comme le PHP.
 
-const PVGIS_BASE = 'https://re.jrc.ec.europa.eu/api/v5_2/seriescalc';
+// Endpoint par défaut (v5_2). Surchargeable au déploiement via la variable
+// d'environnement PVGIS_BASE (ex. .../api/v5_3/seriescalc) sans changer le code.
+export const PVGIS_BASE = 'https://re.jrc.ec.europa.eu/api/v5_2/seriescalc';
 
 /**
  * Construit l'URL seriescalc pour un sous-système.
  * @param {object} p { lat, lon, peakpower, loss, angle, aspect, trackingtype,
  *                      startyear, endyear, raddatabase }
+ * @param {string} [base] endpoint seriescalc (défaut PVGIS_BASE)
  */
-export function buildPvgisUrl(p) {
+export function buildPvgisUrl(p, base = PVGIS_BASE) {
   const q = new URLSearchParams({
     lat: p.lat,
     lon: p.lon,
@@ -30,7 +33,7 @@ export function buildPvgisUrl(p) {
     pvcalculation: 1,
   });
   if (p.raddatabase) q.set('raddatabase', p.raddatabase);
-  return `${PVGIS_BASE}?${q.toString()}`;
+  return `${base}?${q.toString()}`;
 }
 
 // Détecte une ligne de données « AAAAMMJJ:HHMM ».
