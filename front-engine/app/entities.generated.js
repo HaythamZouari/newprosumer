@@ -354,6 +354,8 @@ export class Project {
   setauto_consomerPH(auto_consomerPH) { this.auto_consomerPH = auto_consomerPH; return this; }
   getimporterPH() { return this.importerPH; }
   setimporterPH(importerPH) { this.importerPH = importerPH; return this; }
+  getcedeePH() { return this.cedeePH; }
+  setcedeePH(cedeePH) { this.cedeePH = cedeePH; return this; }
   getinjectPH() { return this.injectPH; }
   setinjectPH(injectPH) { this.injectPH = injectPH; return this; }
   getinject() { return this.inject; }

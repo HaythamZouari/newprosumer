@@ -72,6 +72,8 @@ copyDir('js/plugins/@fortawesome/fontawesome-free/webfonts');
 const TP = join(FE, 'third_party');
 mkdirSync(join(OUT, 'build', 'vendor'), { recursive: true });
 for (const f of readdirSync(TP)) cpSync(join(TP, f), join(OUT, 'build', 'vendor', f));
+// SheetJS (lecture des courbes de charge .xlsx/.xls/.csv/.ods), chargé à la demande
+cpSync(join(FE, 'node_modules', 'xlsx', 'dist', 'xlsx.full.min.js'), join(OUT, 'build', 'vendor', 'xlsx.full.min.js'));
 
 // ---------- 3. code applicatif ----------
 cpSync(join(FE, 'src'), join(OUT, 'src'), { recursive: true });

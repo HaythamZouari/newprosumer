@@ -47,11 +47,11 @@ function parseEntity(src, cls) {
     props.push({ name: m[1], def: m[2] !== undefined ? jsDefault(m[2]) : 'null' });
   }
   const methods = [];
-  for (const m of src.matchAll(/public function (\w+)\(([^)]*)\)(?:\s*:\s*[?\w\\]+)?\s*\{([\s\S]*?)\n    \}/g)) {
+  for (const m of src.matchAll(/public function (\w+)\s*\(([^)]*)\)(?:\s*:\s*[?\w\\]+)?\s*\{([\s\S]*?)\n    \}/g)) {
     const [, name, args, bodyRaw] = m;
     const body = bodyRaw.trim();
-    const getter = body.match(/^return \$this->(\w+);$/);
-    const setter = body.match(/^\$this->(\w+)\s*=\s*\$(\w+);\s*(?:return \$this;)?$/);
+    const getter = body.match(/^return \$this->(\w+)\s*;$/);
+    const setter = body.match(/^\$this->(\w+)\s*=\s*\$(\w+)\s*;\s*(?:return \$this;)?$/);
     methods.push({ name, args, getter: getter && getter[1], setter: setter && setter[1] });
   }
   return { props, methods };
@@ -82,8 +82,11 @@ for (const f of files) {
     if (m.getter) {
       out += `  ${m.name}() { return this.${m.getter}; }\n`;
     } else if (m.setter) {
-      const arg = m.args.replace(/^[^$]*\$/, '').replace(/\s*=.*$/, '') || 'v';
+      const arg = m.args.replace(/^[^$]*\$/, '').replace(/\s*=.*$/, '').trim() || 'v';
       out += `  ${m.name}(${arg}) { this.${m.setter} = ${arg}; return this; }\n`;
+    } else if (!/^setProject$/.test(m.name)) {
+      // une méthode non triviale non traitée dans SPECIAL doit être signalée, jamais ignorée en silence
+      console.warn(`ATTENTION ${cls}::${m.name} non générée (corps non reconnu)`);
     }
   }
   out += `}\n\n`;

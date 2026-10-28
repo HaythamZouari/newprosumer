@@ -62,7 +62,16 @@ async function boot() {
   const auth = new LocalAuth(repo);
   const twig = new TwigEnv(window.Twig, window.__NP_TEMPLATES__, { mode: cfg.mode, forms: formRenderer });
   const mailer = new Mailer({ repo, twig });
-  const kernel = new Kernel({ repo, twig, cfg, controllers: CONTROLLERS, services: { auth, mailer, autoEnable: true } });
+  // SheetJS est volumineux : chargé à la première importation de fichier seulement.
+  let xlsxPromise = null;
+  const xlsx = () => (xlsxPromise ||= new Promise((resolve, reject) => {
+    if (window.XLSX) return resolve(window.XLSX);
+    const s = document.createElement('script');
+    s.src = (cfg.mode === 'clean' ? '/' : '') + 'build/vendor/xlsx.full.min.js';
+    s.onload = () => resolve(window.XLSX); s.onerror = () => reject(new Error('SheetJS introuvable'));
+    document.head.appendChild(s);
+  }));
+  const kernel = new Kernel({ repo, twig, cfg, controllers: CONTROLLERS, services: { auth, mailer, xlsx, autoEnable: true } });
 
   installMockServer({ kernel, currentPagePath: currentPath, mode: cfg.mode });
 
