@@ -8,6 +8,10 @@ dans `test/php`). Les API externes passent par des fonctions serverless (`api/*`
 1. Importer le dépôt, **Root Directory = `front-engine`** (la branche doit contenir ce dossier).
 2. Variables d'environnement : `NINJA_TOKEN` (renewables.ninja), `RESEND_API_KEY`, `MAIL_FROM`, `MAIL_TO` (défaut contact@prosumers.tn),
    `MAPBOX_TOKEN` (carte de sélection d'adresse), `SUPABASE_URL`, `SUPABASE_ANON_KEY`.
+   Mode Supabase (comptes + synchronisation) : `NP_BACKEND=supabase`, `SUPABASE_SERVICE_KEY` (secret, fonction `api/approve`),
+   et appliquer `supabase/migrations/0001…0004`. Par défaut (`NP_BACKEND=local`) tout reste dans le navigateur (IndexedDB).
+   Le flux d'origine est conservé : inscription -> compte désactivé -> e-mail à l'administrateur -> lien /confirm/{token}.
+   ⚠ Le mode Supabase est testé contre un Supabase simulé (`test/supabaseSync.test.js`), pas encore contre l'instance réelle.
 3. `vercel.json` fournit build (`node build/build.mjs --mode=clean`), sortie `dist` et réécriture SPA.
 
 ## Tests

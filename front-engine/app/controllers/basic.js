@@ -37,12 +37,17 @@ export async function security_login(ctx) {
 }
 
 export async function security_logout(ctx) {
+  if (ctx.services.auth.logout) ctx.services.auth.logout();
   await ctx.repo.setCurrentUser(null);
   return ctx.redirect('/');
 }
 
 export async function security_confirm(ctx) {
   const token = ctx.params.token;
+  if (ctx.services.auth.approve) { // Supabase : activation côté serveur (service role)
+    const ok = await ctx.services.auth.approve(token);
+    return ctx.render('security/confirmation.html.twig', { user: ok ? {} : null });
+  }
   const user = await ctx.repo.findUserBy('confirmationToken', token);
   if (user) {
     user.enabled = true;
@@ -73,7 +78,11 @@ export async function user_register(ctx) {
       // (Avec Supabase, le compte reste désactivé jusqu'à /confirm/{token}, comme dans l'original.)
       if (services.autoEnable) user.enabled = true;
       user.plainPassword = null;
-      await repo.saveUser(user);
+      if (services.auth.register) {
+        // Supabase Auth : le compte distant est créé (désactivé) ; rien n'est stocké localement avant la 1re connexion
+        const r = await services.auth.register(user, v.plainPassword.first);
+        if (r.error) { form.setErrors({ email: [r.error] }); return ctx.render('register/index.html.twig', { form: form.createView() }); }
+      } else await repo.saveUser(user);
       if (services.mailer) await services.mailer.sendConfirmationEmail(user).catch(() => {});
       return ctx.redirect('/project/');
     }

@@ -9,6 +9,9 @@ import { installMockServer } from './mockServer.js';
 import { hashKeyToPath, pathToHashKey, match } from './routes.js';
 import { Form, formRenderer } from './forms.js';
 import { LocalAuth } from './auth.js';
+import { Supabase } from './supabase.js';
+import { SyncBackend } from './syncBackend.js';
+import { SupabaseAuth } from './supabaseAuth.js';
 import { Mailer } from './mailer.js';
 import { createProducers } from './producers.js';
 import { CONTROLLERS } from './controllers/index.js';
@@ -56,11 +59,15 @@ async function respond(res) {
 }
 
 async function boot() {
-  const backend = new IdbBackend();
-  const repo = new Repo(backend);
+  // 'local' : tout reste dans le navigateur (IndexedDB) ; 'supabase' : comptes Supabase Auth + synchronisation des projets
+  const useSupabase = cfg.backend === 'supabase' && cfg.supabaseUrl && cfg.supabaseKey;
+  const idb = new IdbBackend();
+  const sb = useSupabase ? new Supabase({ url: cfg.supabaseUrl, key: cfg.supabaseKey }) : null;
+  const sync = useSupabase ? new SyncBackend(idb, sb) : null;
+  const repo = new Repo(sync || idb);
   await repo.boot();
 
-  const auth = new LocalAuth(repo);
+  const auth = useSupabase ? new SupabaseAuth({ repo, sb, sync }) : new LocalAuth(repo);
   const twig = new TwigEnv(window.Twig, window.__NP_TEMPLATES__, { mode: cfg.mode, forms: formRenderer });
   const mailer = new Mailer({ repo, twig });
   // SheetJS est volumineux : chargé à la première importation de fichier seulement.
@@ -72,7 +79,7 @@ async function boot() {
     s.onload = () => resolve(window.XLSX); s.onerror = () => reject(new Error('SheetJS introuvable'));
     document.head.appendChild(s);
   }));
-  const kernel = new Kernel({ repo, twig, cfg, controllers: CONTROLLERS, services: { auth, mailer, xlsx, producers: createProducers(cfg.apiBase || ''), autoEnable: true } });
+  const kernel = new Kernel({ repo, twig, cfg, controllers: CONTROLLERS, services: { auth, mailer, xlsx, producers: createProducers(cfg.apiBase || ''), autoEnable: !useSupabase } });
 
   installMockServer({ kernel, currentPagePath: currentPath, mode: cfg.mode });
 
