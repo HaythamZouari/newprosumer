@@ -5,7 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { startServer, launch } from './harness.mjs';
-import { pvgisBody } from '../helpers/fixtures.js';
+import { pvgisBody, ninjaBody } from '../helpers/fixtures.js';
 
 const sample = (t) => new URL(`../../../.samples/type${t}/Type_${t}.xlsx`, import.meta.url).pathname;
 const MAPBOX_STUB = `window.mapboxgl={accessToken:'',Map:function(){this.resize=function(){};this.addControl=function(){}},
@@ -22,6 +22,7 @@ async function session() {
   await page.route('**/api/mail', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
   await page.route(/mapbox-gl\.js|mapbox-gl-geocoder/, (r) => r.fulfill({ status: 200, contentType: 'text/javascript', body: MAPBOX_STUB }));
   await page.route('**/api/pvgis**', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ lines: pvgisBody().split('\n') }) }));
+  await page.route('**/api/ninja**', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: ninjaBody() }));
   return { url, server, browser, page, errors };
 }
 
@@ -125,5 +126,31 @@ test('administration (équivalent EasyAdmin) : liste, modification, suppression,
     await page.fill('#username', 'bobby'); await page.fill('#password', 'secret123'); await page.click('#Login'); await page.waitForURL('**/project/');
     await page.goto(url + '/admin/User'); await page.waitForTimeout(1500);
     assert.match(await page.locator('body').innerText(), /Access Denied/);
+  } finally { await s.browser.close(); s.server.close(); }
+});
+
+test('production renewables.ninja dans le navigateur -> finance -> résultats', async () => {
+  const s = await session(); const { page, url } = s;
+  try {
+    await loginNewProject(s);
+    for (let m = 1; m <= 12; m++) await page.fill(`[name="date[${m}]"]`, '100000');
+    await page.click('#continue');
+    await page.waitForFunction(() => !document.getElementById('continuer').disabled, null, { timeout: 15000 });
+    await page.click('#continuer');
+    await page.waitForSelector('#tabs-icons-text-2', { state: 'visible' });
+    await page.evaluate(() => ninjabtn());
+    await page.fill('#capacity', '100');
+    await page.evaluate(() => productionSubmit());
+    await page.waitForFunction(() => !document.getElementById('prodavancer').disabled, null, { timeout: 30000 });
+    await page.evaluate(() => prodavancer());
+    await page.waitForSelector('#capex', { state: 'visible' });
+    await page.fill('#capex', '20000');
+    await page.evaluate(() => financeSubmit());
+    await page.waitForFunction(() => !document.getElementById('financeavancer').disabled, null, { timeout: 30000 });
+    await page.evaluate(() => finavance());
+    await page.waitForTimeout(1500);
+    const txt = await page.locator('#tabs-icons-text-4').innerText();
+    assert.match(txt, /Puissance de la centrale\s+100/);
+    await page.screenshot({ path: '/tmp/e2e/ninja-results.png' });
   } finally { await s.browser.close(); s.server.close(); }
 });
