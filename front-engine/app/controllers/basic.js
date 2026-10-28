@@ -89,7 +89,7 @@ export async function contact(ctx) {
     form.setErrors(validate('contact', form.values));
     if (form.isValid()) {
       const d = form.values;
-      if (services.mailer) await services.mailer.send({ from: d.email, to: 'contact@prosumers.tn', subject: 'Support Prosumers', body: d.message });
+      if (services.mailer) await services.mailer.send({ replyTo: d.email, to: 'contact@prosumers.tn', subject: 'Support Prosumers', body: d.message });
       return ctx.redirect('/contact');
     }
   }
