@@ -23,6 +23,7 @@ du fuseau de la machine qui exécute le code.
 | `src/horaireAnnuel.js` | `Horaireannuel` | Ventilation annuelle par poste tarifaire |
 | `src/dateSorting.js` | `Datesorting::SorteDate` | Réalignement production ↔ consommation |
 | `src/excelReader.js` | `ExcelReader::createDataFromSpreadsheet` | Parsing des 3 formes de courbe (SheetJS) |
+| `src/financeService.js` | `FinanceService` | Modèle financier 30 ans (gains, annuités, LLCR, cashflows) |
 
 ## Les 3 formes de courbe de charge (confirmées sur fichiers réels)
 
@@ -37,8 +38,13 @@ sous-échantillonnées au relevé ~xx:10 de chaque heure (fidèle au PHP).
 
 ## Tests de parité
 
-`test/php/run.php` exécute les services PHP d'origine de façon isolée ;
-`test/parity.test.js` compare leurs sorties à celles du JS.
+`test/php/run.php` et `test/php/finance.php` exécutent les services PHP
+d'origine de façon isolée (ce dernier via des stubs d'entités pour piloter
+`FinanceService` sans Symfony/Doctrine) ; les tests comparent leurs sorties au JS.
+
+Le portage de `FinanceService` reproduit **à l'identique** les bugs du PHP
+(signalés « BUG PHP » dans le code), afin que l'application portée donne les
+mêmes chiffres. Leur correction éventuelle sera une décision ultérieure.
 
 ```bash
 cd front-engine
@@ -47,6 +53,6 @@ node --test        # nécessite php en ligne de commande
 
 ## Reste à porter (étapes suivantes)
 
-- `FinanceService` (modèle financier sur 30 ans) — pur, portable.
 - Logique de `ProjectListner` (croisement conso/production : autoconso, cédée,
-  importée) — le bloc le plus dense.
+  importée, et la résolution de `cedePH`/`injectPH` consommée par `gainEnergieCedee`)
+  — le bloc le plus dense.
