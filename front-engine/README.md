@@ -24,6 +24,7 @@ du fuseau de la machine qui exécute le code.
 | `src/dateSorting.js` | `Datesorting::SorteDate` | Réalignement production ↔ consommation |
 | `src/excelReader.js` | `ExcelReader::createDataFromSpreadsheet` | Parsing des 3 formes de courbe (SheetJS) |
 | `src/financeService.js` | `FinanceService` | Modèle financier 30 ans (gains, annuités, LLCR, cashflows) |
+| `src/projectData.js` | `ProjectListner::onProjectEvent` | Croisement conso/production (autoconso, cédée, importée, multi-sites) |
 
 ## Les 3 formes de courbe de charge (confirmées sur fichiers réels)
 
@@ -51,8 +52,17 @@ cd front-engine
 node --test        # nécessite php en ligne de commande
 ```
 
-## Reste à porter (étapes suivantes)
+## État : moteur de calcul entièrement porté ✅
 
-- Logique de `ProjectListner` (croisement conso/production : autoconso, cédée,
-  importée, et la résolution de `cedePH`/`injectPH` consommée par `gainEnergieCedee`)
-  — le bloc le plus dense.
+Toute la logique de calcul pure est en JS et validée en parité contre le PHP
+d'origine (24/24 tests). Particularité : le `else` sans accolades de
+`ProjectListner` (lignes 121-126) fait que le calcul du site 0 revient à
+`auto = min(conso, prod)` ; c'est reproduit et explicité dans le port.
+
+## Reste à faire (intégration, hors moteur)
+
+- Résolution de `cedePH`/`injectPH` : déjà produite par `projectData.js`
+  (`cedeePH`/`injectPH`), à brancher sur `gainEnergieCedee`.
+- Fonctions proxy Vercel pour PVGIS / renewables.ninja (CORS + token secret).
+- Backend Supabase (Auth + Postgres + Storage) et migration des données.
+- Front (UI, graphiques, PDF) assemblant le tout.
