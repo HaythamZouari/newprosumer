@@ -81,16 +81,17 @@ if (existsSync(join(FE, 'app'))) cpSync(join(FE, 'app'), join(OUT, 'app'), { rec
 
 // ---------- 4. coquille + config ----------
 writeFileSync(join(OUT, 'config.js'),
-  `window.NP_CONFIG = ${JSON.stringify({ mode: MODE, supabaseUrl: process.env.SUPABASE_URL || 'https://strocizwjvxwranzamdq.supabase.co',
+  `window.NP_CONFIG = ${JSON.stringify({ mode: MODE, mapboxToken: process.env.MAPBOX_TOKEN || '', supabaseUrl: process.env.SUPABASE_URL || 'https://strocizwjvxwranzamdq.supabase.co',
     supabaseKey: process.env.SUPABASE_ANON_KEY || 'sb_publishable_7SjhMd5KLjGMTdk2k8jrYA_5M8mllJa' })};\n`);
+const P = MODE === 'clean' ? '/' : ''; // mode clean : l'URL peut avoir n'importe quelle profondeur (/project/7/edit) => chemins absolus
 writeFileSync(join(OUT, 'index.html'), `<meta charset="utf-8">
 <title>Prosumers</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
-<script src="config.js" charset="utf-8"></script>
-<script src="build/vendor/twig-1.17.1.min.js" charset="utf-8"></script>
-<script src="templates.js" charset="utf-8"></script>
-<script type="module" src="app/boot.js"></script>
+<script src="${P}config.js" charset="utf-8"></script>
+<script src="${P}build/vendor/twig-1.17.1.min.js" charset="utf-8"></script>
+<script src="${P}templates.js" charset="utf-8"></script>
+<script type="module" src="${P}app/boot.js"></script>
 </body>
 `);
 

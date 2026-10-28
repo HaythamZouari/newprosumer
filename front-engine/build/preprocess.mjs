@@ -27,6 +27,8 @@ const LOCAL = {
 const URL_REWRITES = [
   [/https?:\/\/rawgit\.com\/enyo\/dropzone\/master\/dist\/dropzone\.js/g, LOCAL.dropzoneJs],
   [/https?:\/\/rawgit\.com\/enyo\/dropzone\/master\/dist\/dropzone\.css/g, LOCAL.dropzoneCss],
+  // jeton Mapbox : retiré du dépôt ; fourni à la construction (MAPBOX_TOKEN) via config.js
+  [/'\[REMOVED_MAPBOX_TOKEN\][^']*'/g, "(window.NP_CONFIG && window.NP_CONFIG.mapboxToken || '')"],
   [/https?:\/\/cdn\.plot\.ly\/plotly-latest\.min\.js/g, LOCAL.plotly],
   [/https:\/\/stackpath\.bootstrapcdn\.com\/bootstrap\/4\.3\.1\/css\/bootstrap\.min\.css/g, LOCAL.bootstrapCss],
   [/https:\/\/stackpath\.bootstrapcdn\.com\/bootstrap\/4\.3\.1\/js\/bootstrap\.min\.js/g, LOCAL.bootstrapJs],
