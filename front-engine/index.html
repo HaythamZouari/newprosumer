@@ -1,0 +1,451 @@
+<title>NewProsumer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  /* Layout : rail de configuration à gauche, tableau de bord de résultats à droite ;
+     empilés en une colonne sous 900px. Identité : solaire tunisien (ambre STEG). */
+  :root {
+    --bg: #fcfcfb; --surface: #ffffff; --surface-2: #f1efe8;
+    --fg: #1c1a17; --muted: #6c6658; --border: #e4e0d6;
+    --accent: #e8a33d;
+    --s-auto: #e8a33d;   /* autoconsommation */
+    --s-cedee: #2fa4a0;  /* cédée au réseau */
+    --s-import: #d6555a; /* importée du réseau */
+    --grid: #ece8de;
+    --font-display: 'Archivo', system-ui, sans-serif;
+    --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #15130e; --surface: #1e1b15; --surface-2: #26221a;
+      --fg: #f3efe6; --muted: #a79f8d; --border: #332e24;
+      --accent: #efb45c; --s-auto: #efb45c; --s-cedee: #46bdb8; --s-import: #e4726f;
+      --grid: #2b2619; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #15130e; --surface: #1e1b15; --surface-2: #26221a;
+    --fg: #f3efe6; --muted: #a79f8d; --border: #332e24;
+    --accent: #efb45c; --s-auto: #efb45c; --s-cedee: #46bdb8; --s-import: #e4726f;
+    --grid: #2b2619; color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--fg); font-family: var(--font-body);
+    line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+  .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+  .wrap { padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0; max-width: 1180px; margin: 0 auto; }
+
+  header.top { border-bottom: 1px solid var(--border); background: var(--surface); }
+  .top .wrap { display: flex; align-items: center; gap: 14px; padding-block: 16px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand h1 { font-size: 1.4rem; letter-spacing: -0.01em; }
+  .brand .sun { width: 22px; height: 22px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, var(--accent), #c9892b);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); align-self: center; }
+  .brand .tag { color: var(--muted); font-size: .85rem; }
+  .top .spacer { flex: 1; }
+  .theme-btn { font: inherit; font-size: .8rem; color: var(--fg); background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+
+  .layout { display: grid; grid-template-columns: 340px 1fr; gap: 22px; padding-block: 22px 40px; align-items: start; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+  .rail { display: flex; flex-direction: column; gap: 16px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); }
+  @media (max-width: 900px) { .rail { position: static; } }
+  .rail h2 { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 10px; }
+
+  .drop { border: 1.5px dashed var(--border); border-radius: 10px; padding: 14px; text-align: center;
+    cursor: pointer; display: block; transition: border-color .15s, background .15s; background: var(--surface-2); }
+  .drop:hover, .drop.over { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+  .drop .lbl { font-weight: 600; font-size: .9rem; }
+  .drop .sub { color: var(--muted); font-size: .78rem; margin-top: 2px; }
+  .drop .state { font-family: var(--font-mono); font-size: .74rem; margin-top: 7px; color: var(--s-cedee); }
+  .drop input { display: none; }
+
+  .field { display: flex; flex-direction: column; gap: 5px; margin-top: 11px; }
+  .field label { font-size: .78rem; color: var(--muted); font-weight: 500; }
+  .field input, .field select { font: inherit; font-size: .9rem; padding: 7px 9px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--fg); }
+  .field.inline { flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; }
+  .grid4 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  fieldset { border: 1px solid var(--border); border-radius: 10px; padding: 11px 12px 13px; margin: 0; }
+  legend { font-size: .76rem; color: var(--muted); padding: 0 6px; }
+
+  .btn { font: inherit; font-weight: 600; font-family: var(--font-display); font-size: .95rem; width: 100%;
+    padding: 11px; border: none; border-radius: 10px; cursor: pointer; margin-top: 4px;
+    background: var(--accent); color: #241a08; }
+  .btn:hover { filter: brightness(1.05); }
+  .btn:focus-visible, .drop:focus-visible, .theme-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .results { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .banner { font-size: .82rem; background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border)); border-radius: 10px; padding: 9px 13px; color: var(--fg); }
+  .banner.hide { display: none; }
+
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 680px) { .kpis { grid-template-columns: 1fr 1fr; } }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; border-top: 3px solid var(--k, var(--accent)); }
+  .kpi .k-lbl { font-size: .74rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  .kpi .k-val { font-size: 1.5rem; margin-top: 6px; font-weight: 600; letter-spacing: -0.02em; }
+  .kpi .k-val small { font-size: .8rem; color: var(--muted); font-family: var(--font-body); font-weight: 400; }
+  .dot { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+
+  .card h3 { font-size: 1rem; margin-bottom: 3px; }
+  .card .cap { color: var(--muted); font-size: .8rem; margin-bottom: 12px; }
+  .chartbox { position: relative; height: 260px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: .8rem; margin-bottom: 10px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+
+  table { border-collapse: collapse; width: 100%; font-size: .84rem; }
+  .tablewrap { overflow-x: auto; }
+  th, td { text-align: right; padding: 7px 10px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { color: var(--muted); font-weight: 600; font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; }
+  tbody td { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  tfoot td { font-family: var(--font-mono); font-weight: 600; border-top: 2px solid var(--border); }
+  .muted { color: var(--muted); }
+  footer { color: var(--muted); font-size: .78rem; padding-block: 8px 28px; }
+  footer code { font-family: var(--font-mono); background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <span class="sun" aria-hidden="true"></span>
+      <h1>NewProsumer</h1>
+      <span class="tag">Calculateur d'autoconsommation solaire</span>
+    </div>
+    <span class="spacer"></span>
+    <button class="theme-btn" id="themeBtn" type="button">Thème</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="layout">
+    <!-- Rail de configuration -->
+    <aside class="rail">
+      <section class="panel">
+        <h2>Données</h2>
+        <label class="drop" id="dropConso" tabindex="0">
+          <span class="lbl">Consommation</span>
+          <span class="sub">.xlsx · .xls · .csv · .ods</span>
+          <span class="state" id="stConso"></span>
+          <input type="file" id="fileConso" accept=".xlsx,.xls,.csv,.ods">
+        </label>
+        <label class="drop" id="dropProd" tabindex="0" style="margin-top:11px">
+          <span class="lbl">Production</span>
+          <span class="sub">fichier mesuré (mêmes formats)</span>
+          <span class="state" id="stProd"></span>
+          <input type="file" id="fileProd" accept=".xlsx,.xls,.csv,.ods">
+        </label>
+      </section>
+
+      <section class="panel">
+        <h2>Tarifs (TND / kWh)</h2>
+        <fieldset>
+          <legend>Achat par poste</legend>
+          <div class="grid4">
+            <div class="field"><label for="aJour">Jour</label><input class="num" id="aJour" type="number" step="0.001" value="0.291"></div>
+            <div class="field"><label for="aEte">Pointe été</label><input class="num" id="aEte" type="number" step="0.001" value="0.417"></div>
+            <div class="field"><label for="aSoir">Soir</label><input class="num" id="aSoir" type="number" step="0.001" value="0.355"></div>
+            <div class="field"><label for="aNuit">Nuit</label><input class="num" id="aNuit" type="number" step="0.001" value="0.231"></div>
+          </div>
+        </fieldset>
+        <fieldset style="margin-top:11px">
+          <legend>Vente par poste</legend>
+          <div class="grid4">
+            <div class="field"><label for="vJour">Jour</label><input class="num" id="vJour" type="number" step="0.001" value="0.200"></div>
+            <div class="field"><label for="vEte">Pointe été</label><input class="num" id="vEte" type="number" step="0.001" value="0.260"></div>
+            <div class="field"><label for="vSoir">Soir</label><input class="num" id="vSoir" type="number" step="0.001" value="0.230"></div>
+            <div class="field"><label for="vNuit">Nuit</label><input class="num" id="vNuit" type="number" step="0.001" value="0.160"></div>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="panel">
+        <h2>Finance &amp; système</h2>
+        <div class="grid4">
+          <div class="field"><label for="capex">CAPEX (TND)</label><input class="num" id="capex" type="number" value="900000"></div>
+          <div class="field"><label for="opex">OPEX (%/an)</label><input class="num" id="opex" type="number" step="0.1" value="1.5"></div>
+          <div class="field"><label for="degr">Dégradation (%/an)</label><input class="num" id="degr" type="number" step="0.1" value="0.5"></div>
+          <div class="field"><label for="augA">Escal. achat (%)</label><input class="num" id="augA" type="number" step="0.1" value="3"></div>
+        </div>
+        <div class="field inline" style="margin-top:12px">
+          <label for="injtot">Injection totale (sans autoconso.)</label>
+          <input type="checkbox" id="injtot">
+        </div>
+        <button class="btn" id="calc" type="button">Calculer</button>
+      </section>
+    </aside>
+
+    <!-- Résultats -->
+    <main class="results">
+      <div class="banner" id="banner">Données d'exemple (30 jours simulés). Importez vos fichiers de consommation et de production pour vos résultats réels.</div>
+
+      <div class="kpis">
+        <div class="kpi" style="--k:var(--s-auto)"><div class="k-lbl"><span class="dot" style="background:var(--s-auto)"></span>Autoconsommation</div><div class="k-val"><span class="num" id="kAuto">—</span> <small>kWh</small></div></div>
+        <div class="kpi" style="--k:var(--s-cedee)"><div class="k-lbl"><span class="dot" style="background:var(--s-cedee)"></span>Cédée au réseau</div><div class="k-val"><span class="num" id="kCedee">—</span> <small>kWh</small></div></div>
+        <div class="kpi" style="--k:var(--s-import)"><div class="k-lbl"><span class="dot" style="background:var(--s-import)"></span>Importée</div><div class="k-val"><span class="num" id="kImport">—</span> <small>kWh</small></div></div>
+        <div class="kpi"><div class="k-lbl">Taux d'autoconsommation</div><div class="k-val"><span class="num" id="kTaux">—</span> <small>%</small></div></div>
+      </div>
+
+      <section class="panel card">
+        <h3>Profil journalier moyen</h3>
+        <p class="cap">Puissance moyenne par heure de la journée (kW).</p>
+        <div class="legend" id="legDay"></div>
+        <div class="chartbox"><canvas id="chartDay"></canvas></div>
+      </section>
+
+      <section class="panel card">
+        <h3>Bilan énergétique annuel</h3>
+        <p class="cap">Où va la production, et d'où vient la consommation (kWh).</p>
+        <div class="chartbox" style="height:200px"><canvas id="chartBal"></canvas></div>
+      </section>
+
+      <section class="panel card">
+        <h3>Trésorerie cumulée sur 30 ans</h3>
+        <p class="cap">Cumul des recettes (autoconsommation évitée + vente) moins les charges, après l'investissement initial (TND).</p>
+        <div class="chartbox"><canvas id="chartCash"></canvas></div>
+      </section>
+
+      <section class="panel card">
+        <h3>Détail mensuel</h3>
+        <p class="cap">Répartition par mois (kWh).</p>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Mois</th><th>Consommation</th><th>Autoconso.</th><th>Cédée</th><th>Importée</th></tr></thead>
+            <tbody id="tbody"></tbody>
+            <tfoot><tr><td>Total</td><td id="tC"></td><td id="tA"></td><td id="tCe"></td><td id="tI"></td></tr></tfoot>
+          </table>
+        </div>
+      </section>
+
+      <footer>Moteur de calcul <code>front-engine/</code> exécuté dans votre navigateur — aucune donnée n'est envoyée à un serveur.</footer>
+    </main>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script type="module">
+  import { parts } from './src/tz.js';
+  import { postHoraire } from './src/postHoraire.js';
+  import { sorteDate } from './src/dateSorting.js';
+  import { parseWorkbook } from './src/excelReader.js';
+  import { computeProjectData } from './src/projectData.js';
+  import { gainEnergieTransporterHoraire, gainEnergieCedee, fraisExploitation } from './src/financeService.js';
+
+  const $ = (id) => document.getElementById(id);
+  const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const fmt = (n, d = 0) => new Intl.NumberFormat('fr-FR', { maximumFractionDigits: d, minimumFractionDigits: d }).format(n);
+  const MOIS = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
+
+  let consoSerie = null, prodSerie = null, usingSample = true;
+
+  // --- Jeu d'exemple déterministe : 30 jours, profil bureau + cloche solaire ---
+  function sample() {
+    const start = Date.UTC(2015, 5, 1, 0, 0) / 1000;
+    const conso = [], prod = [];
+    for (let i = 0; i < 30 * 24; i++) {
+      const ts = start + i * 3600;
+      const { H, w } = parts(ts);
+      const work = w !== 0 && w !== 6;
+      const base = 28;
+      const office = work && H >= 8 && H <= 18 ? 95 * Math.sin(((H - 8) / 10) * Math.PI) : 0;
+      conso.push([ts, base + office]);
+      const solar = H >= 6 && H <= 19 ? 135 * Math.pow(Math.sin(((H - 6) / 13) * Math.PI), 1.1) : 0;
+      prod.push([ts, Math.max(0, solar)]);
+    }
+    return { conso, prod };
+  }
+
+  function readFileSerie(file) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onerror = () => reject(new Error('lecture impossible'));
+      r.onload = () => {
+        try {
+          const wb = XLSX.read(new Uint8Array(r.result), { type: 'array', raw: true });
+          resolve(parseWorkbook(XLSX, wb));
+        } catch (e) { reject(e); }
+      };
+      r.readAsArrayBuffer(file);
+    });
+  }
+
+  function sumSerie(s) { let t = 0; for (const [, v] of s) t += v; return t; }
+
+  // Moyenne de puissance par heure de la journée (0..23).
+  function dayProfile(s) {
+    const sum = new Array(24).fill(0), cnt = new Array(24).fill(0);
+    for (const [ts, v] of s) { const { H } = parts(ts); sum[H] += v; cnt[H]++; }
+    return sum.map((x, h) => (cnt[h] ? x / cnt[h] : 0));
+  }
+
+  // Somme des 4 postes d'un tableau postHoraire (13 mois) -> total mensuel.
+  const moisTot = (ph, m) => { const o = ph[m] || {}; return (o.jour || 0) + (o.ete || 0) + (o.soir || 0) + (o.nuit || 0); };
+
+  let charts = {};
+  function destroyCharts() { for (const k in charts) { charts[k].destroy(); } charts = {}; }
+
+  function baseOpts(extra = {}) {
+    const ink = css('--fg'), muted = css('--muted'), grid = css('--grid');
+    return {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: { backgroundColor: css('--surface'), titleColor: ink, bodyColor: ink,
+          borderColor: css('--border'), borderWidth: 1, padding: 10,
+          titleFont: { family: "'IBM Plex Sans'" }, bodyFont: { family: "'IBM Plex Mono'" } },
+      },
+      scales: {
+        x: { grid: { color: grid }, ticks: { color: muted, font: { family: "'IBM Plex Mono'", size: 10 } } },
+        y: { grid: { color: grid }, ticks: { color: muted, font: { family: "'IBM Plex Mono'", size: 10 } }, beginAtZero: true },
+      },
+      ...extra,
+    };
+  }
+
+  function render(res, conso, prod) {
+    const auto = res.autoConsomer[0], cedee = res.cedee[0], importer = res.importer[0];
+    const autoTot = sumSerie(auto), cedeeTot = sumSerie(cedee), importTot = sumSerie(importer);
+    const consoTot = sumSerie(conso), prodTot = sumSerie(prod);
+
+    $('kAuto').textContent = fmt(autoTot);
+    $('kCedee').textContent = fmt(cedeeTot);
+    $('kImport').textContent = fmt(importTot);
+    $('kTaux').textContent = prodTot > 0 ? fmt((autoTot / prodTot) * 100, 1) : '—';
+
+    destroyCharts();
+    const cAuto = css('--s-auto'), cCedee = css('--s-cedee'), cImport = css('--s-import');
+
+    // Profil journalier moyen
+    const pc = dayProfile(conso), pp = dayProfile(prod), pa = dayProfile(auto);
+    $('legDay').innerHTML = [['Consommation', css('--fg')], ['Production', cCedee], ['Autoconsommation', cAuto]]
+      .map(([t, c]) => `<span><span class="dot" style="background:${c}"></span>${t}</span>`).join('');
+    charts.day = new Chart($('chartDay'), {
+      type: 'line',
+      data: { labels: [...Array(24).keys()].map((h) => h + 'h'),
+        datasets: [
+          { label: 'Consommation', data: pc, borderColor: css('--fg'), borderWidth: 2, pointRadius: 0, tension: .35, borderDash: [5, 4] },
+          { label: 'Production', data: pp, borderColor: cCedee, backgroundColor: cCedee + '22', fill: true, borderWidth: 2, pointRadius: 0, tension: .35 },
+          { label: 'Autoconsommation', data: pa, borderColor: cAuto, backgroundColor: cAuto + '33', fill: true, borderWidth: 2, pointRadius: 0, tension: .35 },
+        ] },
+      options: baseOpts(),
+    });
+
+    // Bilan : production = autoconso + cédée ; consommation = autoconso + importée
+    charts.bal = new Chart($('chartBal'), {
+      type: 'bar',
+      data: { labels: ['Production', 'Consommation'],
+        datasets: [
+          { label: 'Autoconsommation', data: [autoTot, autoTot], backgroundColor: cAuto, borderRadius: 4, borderSkipped: false },
+          { label: 'Cédée', data: [cedeeTot, 0], backgroundColor: cCedee, borderRadius: 4, borderSkipped: false },
+          { label: 'Importée', data: [0, importTot], backgroundColor: cImport, borderRadius: 4, borderSkipped: false },
+        ] },
+      options: baseOpts({ indexAxis: 'y',
+        scales: { x: { stacked: true, grid: { color: css('--grid') }, ticks: { color: css('--muted'), font: { family: "'IBM Plex Mono'", size: 10 } }, beginAtZero: true },
+          y: { stacked: true, grid: { display: false }, ticks: { color: css('--fg'), font: { family: "'IBM Plex Sans'", size: 12 } } } },
+        plugins: { legend: { display: true, position: 'bottom', labels: { color: css('--muted'), boxWidth: 10, font: { family: "'IBM Plex Sans'" } } },
+          tooltip: baseOpts().plugins.tooltip } }),
+    });
+
+    // Finance : gains via le moteur (robustes à la longueur de série)
+    const finance = {
+      capex: +$('capex').value, opex: +$('opex').value, tauxActualisation: 0,
+      augTarifAchat: +$('augA').value, augTarifVende: +$('augA').value,
+    };
+    const degr = +$('degr').value;
+    const tarifA = { achat: [+$('aJour').value, +$('aEte').value, +$('aSoir').value, +$('aNuit').value] };
+    const tarifV = { vende: [+$('vJour').value, +$('vEte').value, +$('vSoir').value, +$('vNuit').value] };
+    const gAchat = gainEnergieTransporterHoraire(tarifA, degr, auto, finance, postHoraire);
+    const cedePH = res.cedeePH[0] || res.injectPH;
+    const gVente = gainEnergieCedee(tarifV, degr, cedePH, finance);
+    const opexArr = fraisExploitation(finance);
+    const cum = []; let acc = -finance.capex;
+    for (let y = 0; y < 30; y++) { acc += (gAchat[y] + gVente[y]) - opexArr[y]; cum.push(acc); }
+    const cCash = css('--accent');
+    charts.cash = new Chart($('chartCash'), {
+      type: 'line',
+      data: { labels: [...Array(30).keys()].map((y) => 'A' + (y + 1)),
+        datasets: [{ label: 'Trésorerie cumulée', data: cum, borderColor: cCash, backgroundColor: cCash + '22',
+          fill: true, borderWidth: 2, pointRadius: 0, tension: .2 }] },
+      options: baseOpts(),
+    });
+
+    // Tableau mensuel
+    const phC = postHoraire(conso), phA = postHoraire(auto), phCe = postHoraire(cedee), phI = postHoraire(importer);
+    const tb = $('tbody'); tb.innerHTML = '';
+    let sC = 0, sA = 0, sCe = 0, sI = 0;
+    for (let m = 1; m <= 12; m++) {
+      const c = moisTot(phC, m), a = moisTot(phA, m), ce = moisTot(phCe, m), im = moisTot(phI, m);
+      if (c === 0 && a === 0 && ce === 0 && im === 0) continue;
+      sC += c; sA += a; sCe += ce; sI += im;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${MOIS[m - 1]}</td><td>${fmt(c)}</td><td>${fmt(a)}</td><td>${fmt(ce)}</td><td>${fmt(im)}</td>`;
+      tb.appendChild(tr);
+    }
+    $('tC').textContent = fmt(sC); $('tA').textContent = fmt(sA); $('tCe').textContent = fmt(sCe); $('tI').textContent = fmt(sI);
+  }
+
+  function compute() {
+    let conso = consoSerie, prod = prodSerie;
+    if (!conso || !prod) { const s = sample(); conso = conso || s.conso; prod = prod || s.prod; }
+    const n = Math.min(conso.length, prod.length);
+    if (n < 2) return;
+    const c = conso.slice(0, n), p = prod.slice(0, n);
+    const aligned = sorteDate(c[0][0], p, c);
+    const res = computeProjectData({
+      consomation: [c], production: aligned,
+      transportEng: $('injtot').checked ? 1 : 0, typeTarif: 0,
+    });
+    render(res, c, aligned);
+    $('banner').classList.toggle('hide', !usingSample);
+  }
+
+  // --- Câblage UI ---
+  function wireDrop(dropId, inputId, stateId, set) {
+    const drop = $(dropId), input = $(inputId);
+    drop.addEventListener('click', () => input.click());
+    drop.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); } });
+    ['dragover', 'dragenter'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+    ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, () => drop.classList.remove('over')));
+    drop.addEventListener('drop', (e) => { e.preventDefault(); if (e.dataTransfer.files[0]) handle(e.dataTransfer.files[0]); });
+    input.addEventListener('change', () => { if (input.files[0]) handle(input.files[0]); });
+    async function handle(file) {
+      $(stateId).textContent = 'lecture…';
+      try {
+        const serie = await readFileSerie(file);
+        set(serie);
+        usingSample = !(consoSerie && prodSerie) ? usingSample : false;
+        if (consoSerie && prodSerie) usingSample = false;
+        $(stateId).textContent = `${file.name} — ${fmt(serie.length)} points`;
+        compute();
+      } catch (e) { $(stateId).textContent = 'format non reconnu'; }
+    }
+  }
+  wireDrop('dropConso', 'fileConso', 'stConso', (s) => { consoSerie = s; });
+  wireDrop('dropProd', 'fileProd', 'stProd', (s) => { prodSerie = s; });
+
+  $('calc').addEventListener('click', compute);
+
+  // Thème : bascule claire/sombre explicite (sinon suit le système)
+  $('themeBtn').addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : cur === 'light' ? null : (matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark');
+    if (next) document.documentElement.setAttribute('data-theme', next); else document.documentElement.removeAttribute('data-theme');
+    if (consoSerie || prodSerie || usingSample) compute();
+  });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => compute());
+
+  compute(); // ouvre sur les données d'exemple
+</script>
