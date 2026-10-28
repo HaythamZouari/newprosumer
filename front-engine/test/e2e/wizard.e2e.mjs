@@ -97,3 +97,33 @@ for (const t of [1, 2, 3]) {
     } finally { await s.browser.close(); s.server.close(); }
   });
 }
+
+test('administration (équivalent EasyAdmin) : liste, modification, suppression, accès refusé aux non-admins', async () => {
+  const s = await session(); const { page, url } = s;
+  try {
+    await loginNewProject(s); // alice = 1er compte => ROLE_ADMIN (mode local)
+    await page.goto(url + '/admin/'); await settle(page, 'table');
+    assert.match(page.url(), /\/admin\/User$/);
+    assert.match(await page.locator('table').innerText(), /alice/);
+    await page.click('a:has-text("modifier")'); await settle(page, '#f_societe');
+    await page.fill('#f_societe', 'Nouvelle Soc'); await page.click('button.btn-primary'); await page.waitForURL('**/admin/User');
+    assert.match(await page.locator('table').innerText(), /Nouvelle Soc/);
+    await page.goto(url + '/admin/Project'); await settle(page, 'table');
+    assert.match(await page.locator('table').innerText(), /Projet/);
+    await page.goto(url + '/admin/Consomation'); await settle(page, 'table');
+    await page.goto(url + '/admin/Project'); await settle(page, 'table');
+    await page.click('a:has-text("supprimer")'); await settle(page, 'form button.btn-danger'); await page.click('form button.btn-danger');
+    await page.waitForURL('**/admin/Project'); await page.waitForTimeout(500);
+    assert.doesNotMatch(await page.locator('table').innerText(), /Client/);
+    // un second compte (non admin) est refusé
+    await page.goto(url + '/logout'); await page.waitForTimeout(1000);
+    await page.goto(url + '/register'); await settle(page, '#user_username');
+    await page.fill('#user_username', 'bobby'); await page.fill('#user_email', 'bob@example.tn');
+    await page.fill('#user_plainPassword_first', 'secret123'); await page.fill('#user_plainPassword_second', 'secret123');
+    await page.fill('#user_fullName', 'Bob Marley'); await page.fill('#user_societe', 'Societe');
+    await page.click('#user_Register'); await settle(page, '#username');
+    await page.fill('#username', 'bobby'); await page.fill('#password', 'secret123'); await page.click('#Login'); await page.waitForURL('**/project/');
+    await page.goto(url + '/admin/User'); await page.waitForTimeout(1500);
+    assert.match(await page.locator('body').innerText(), /Access Denied/);
+  } finally { await s.browser.close(); s.server.close(); }
+});

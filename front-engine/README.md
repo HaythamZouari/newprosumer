@@ -20,3 +20,9 @@ dans `test/php`). Les API externes passent par des fonctions serverless (`api/*`
 
 ## Secrets à révoquer
 Des clés présentes dans l'historique Git de l'application d'origine (jeton renewables.ninja, clé Sejda, jeton Mapbox) sont à régénérer.
+
+## Administration (`/admin`)
+Équivalent de l'EasyAdmin d'origine : User, Project, Finance, Consomation, Pvgis, CsvProd, Ninja (liste, ajout User/Project, modification, suppression).
+Réservé à `ROLE_ADMIN`. Mode local : le 1er compte créé est administrateur de ses propres données. Mode Supabase : les comptes sont
+gérés via `api/admin-users.js` (rôle vérifié côté serveur) ; pour nommer un administrateur :
+`update public.profiles set roles = '{ROLE_USER,ROLE_ADMIN}' where username = '...';`

@@ -76,7 +76,11 @@ export async function user_register(ctx) {
       user.setConfirmationToken(randomToken(30));
       // En mode local il n'y a pas d'administrateur pour approuver : le compte est activé d'emblée.
       // (Avec Supabase, le compte reste désactivé jusqu'à /confirm/{token}, comme dans l'original.)
-      if (services.autoEnable) user.enabled = true;
+      if (services.autoEnable) {
+        user.enabled = true;
+        // mode local : le propriétaire du navigateur (1er compte) administre ses propres données
+        if (!(await repo.b.all('users')).length) user.roles = ['ROLE_USER', 'ROLE_ADMIN'];
+      }
       user.plainPassword = null;
       if (services.auth.register) {
         // Supabase Auth : le compte distant est créé (désactivé) ; rien n'est stocké localement avant la 1re connexion

@@ -41,4 +41,18 @@ export class SupabaseAuth {
     return r.ok;
   }
   logout() { this.sb.signOut(); }
+
+  /** Service d'administration des comptes (api/admin-users.js) : la vérification ROLE_ADMIN est faite côté serveur. */
+  get remoteUsers() {
+    const call = async (qs, init = {}) => {
+      const r = await this.fetch(`/api/admin-users${qs}`, { ...init, headers: { 'content-type': 'application/json', authorization: `Bearer ${this.sb.session?.access_token}` } });
+      if (!r.ok) throw new Error(`admin-users: HTTP ${r.status}`);
+      return r.json();
+    };
+    return {
+      list: async () => (await call('')).map((p) => ({ id: p.id, username: p.username, fullName: p.full_name, societe: p.societe, enabled: p.enabled, roles: p.roles, abon1: p.abon1, abon2: p.abon2 })),
+      update: (id, u) => call(`?id=${id}`, { method: 'PATCH', body: JSON.stringify({ username: u.username, full_name: u.fullName, societe: u.societe, enabled: u.enabled, roles: u.roles, abon1: u.abon1, abon2: u.abon2 }) }),
+      remove: (id) => call(`?id=${id}`, { method: 'DELETE' }),
+    };
+  }
 }

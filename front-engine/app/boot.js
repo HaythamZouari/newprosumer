@@ -79,7 +79,7 @@ async function boot() {
     s.onload = () => resolve(window.XLSX); s.onerror = () => reject(new Error('SheetJS introuvable'));
     document.head.appendChild(s);
   }));
-  const kernel = new Kernel({ repo, twig, cfg, controllers: CONTROLLERS, services: { auth, mailer, xlsx, producers: createProducers(cfg.apiBase || ''), autoEnable: !useSupabase } });
+  const kernel = new Kernel({ repo, twig, cfg, controllers: CONTROLLERS, services: { auth, remoteUsers: useSupabase ? auth.remoteUsers : null, mailer, xlsx, producers: createProducers(cfg.apiBase || ''), autoEnable: !useSupabase } });
 
   installMockServer({ kernel, currentPagePath: currentPath, mode: cfg.mode });
 

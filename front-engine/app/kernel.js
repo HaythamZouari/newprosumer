@@ -43,6 +43,11 @@ export class Kernel {
       return redirect('/login');
     }
 
+    if (/^\/admin/.test(request.path)) {
+      if (!request.user) { repo.session.set('_security.main.target_path', request.path); await repo.flushSession(); return redirect('/login'); }
+      if (!(request.user.roles || []).includes('ROLE_ADMIN')) return html('<h1>Access Denied.</h1>', 403);
+    }
+
     request.attributes = hit.params;
     const controller = this.controllers[hit.route.name];
     if (!controller) return json({ error: `Contrôleur non implémenté : ${hit.route.name}` }, 501);

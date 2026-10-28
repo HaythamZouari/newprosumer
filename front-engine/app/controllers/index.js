@@ -5,6 +5,7 @@ import * as production from './production.js';
 import * as finance from './finance.js';
 import * as result from './result.js';
 import * as rapport from './rapport.js';
+import * as admin from './admin.js';
 
 /** project_show : GET = page du wizard ; POST XHR = construction de la courbe de consommation. */
 async function project_show(ctx) {
@@ -37,4 +38,8 @@ export const CONTROLLERS = {
   project_results: result.project_results,
   results: result.results,
   rapport: rapport.index,
+  admin: admin.admin,
+  admin_list: admin.admin_list,
+  admin_do: admin.admin_do,
+  admin_new: admin.admin_new,
 };
