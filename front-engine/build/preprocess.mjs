@@ -45,7 +45,7 @@ const DROP_TAGS = [
   /<link[^>]*api\.mqcdn\.com[^>]*>\s*/g,
 ];
 
-export function preprocessTemplate(src) {
+export function preprocessTemplate(src, { absoluteAssets = false } = {}) {
   let out = src;
 
   // 1. include() fonction -> balise {% include %}
@@ -67,6 +67,12 @@ export function preprocessTemplate(src) {
   // 4. /build/ absolu -> relatif (uniquement dans les attributs src/href/url)
   out = out.replace(/(src|href)=(['"])\/build\//g, '$1=$2build/')
     .replace(/(src|href)=\/build\//g, '$1=build/');
+
+  // Mode "clean" (URL d'origine /rapport/7) : les assets doivent être absolus, sinon
+  // `build/js/x.js` se résoudrait en `/rapport/build/js/x.js`.
+  if (absoluteAssets) {
+    out = out.replace(/(src|href)=(['"]?)build\//g, '$1=$2/build/');
+  }
 
   return out;
 }
