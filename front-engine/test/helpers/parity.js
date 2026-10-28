@@ -68,7 +68,7 @@ export async function runJs(spec, { controllers = CONTROLLERS } = {}) {
   const saved = await repo.findProject(project.id);
   const dump = (o, skip = []) => Object.fromEntries(Object.entries(o).filter(([k, v]) => !skip.includes(k) && (v === null || typeof v !== 'object' || Array.isArray(v) || !('project' in v && v.constructor !== Object))));
   return { steps: out, consomation: dump(saved.getConsomation(), ['project']), project: dump(saved, ['user', 'userId', 'consomation', 'pvgis', 'ninja', 'csvProd', 'finance', 'pvwatt']), session: repo.session.data, saved,
-    entities: Object.fromEntries(['pvgis', 'ninja', 'csvProd'].map((k) => [k, saved[`get${k[0].toUpperCase()}${k.slice(1)}`]()]).map(([k, e]) => [k, e && dump(e, ['project'])])) };
+    entities: Object.fromEntries(['pvgis', 'ninja', 'csvProd', 'finance'].map((k) => [k, saved[`get${k[0].toUpperCase()}${k.slice(1)}`]()]).map(([k, e]) => [k, e && dump(e, ['project'])])) };
 }
 
 /** Comparaison récursive tolérante sur les flottants ; null/undefined/absent sont équivalents. */

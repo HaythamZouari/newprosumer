@@ -17,6 +17,9 @@
 
 const ANNEES = 30;
 
+// PHP 7 : une division par zéro émet un avertissement et vaut FALSE (0 dans les calculs suivants).
+const div = (a, b) => (b === 0 || b === null || b === undefined || Number.isNaN(b) ? 0 : a / b);
+
 // Somme des 4 postes d'un tableau de 13 entrées {jour,ete,soir,nuit}.
 function sommePostes(cedePH) {
   const p = [0, 0, 0, 0];
@@ -100,8 +103,8 @@ export function anuite(maturite, delee, finance) {
     result[i] = (finance.tauxInteret / 100) * finance.montantDette;
   }
   for (let i = delee + 1; i <= delee + maturite; i++) {
-    result[i] = ((finance.tauxInteret / 100) * finance.montantDette)
-      / (1 - Math.pow(1 + finance.tauxInteret / 100, -finance.maturiteProj));
+    result[i] = div((finance.tauxInteret / 100) * finance.montantDette,
+       (1 - Math.pow(1 + finance.tauxInteret / 100, -finance.maturiteProj)));
   }
   // La boucle de remise à zéro de la queue du PHP est un no-op (déjà à 0).
   return result;
@@ -113,11 +116,11 @@ export function factureRegularisation(gainCedee, prod, cedePH) {
   const cedeeTotal = post[0] + post[1] + post[2] + post[3];
   let prodTotal = 0;
   for (let i = 0; i < prod.length; i++) prodTotal += prod[i][1];
-  const tauxCedee = cedeeTotal / prodTotal;
+  const tauxCedee = div(cedeeTotal, prodTotal);
   const result = [];
   for (let i = 0; i < ANNEES; i++) {
     if (cedeeTotal > 0) {
-      result[i] = (gainCedee[i] / cedeeTotal) * ((tauxCedee - 0.3) * prodTotal);
+      result[i] = div(gainCedee[i], cedeeTotal) * ((tauxCedee - 0.3) * prodTotal);
     } else {
       result[i] = 0;
     }
@@ -176,12 +179,12 @@ export function llcr(finance, annuite_, cfads) {
     tmp[i] = 0;
     let k = 1;
     for (let j = i; j <= fin; j++) {
-      tmp[i] += cfads[j] / Math.pow(1 + finance.tauxInteret / 100, k);
+      tmp[i] += div(cfads[j] ?? 0, Math.pow(1 + finance.tauxInteret / 100, k));
       k++;
     }
     solderep[1] = finance.montantDette;
     solderep[i + 1] = solderep[i] * (1 + finance.tauxInteret / 100) - annuite_[i];
-    result[i] = tmp[i] / solderep[i];
+    result[i] = div(tmp[i], solderep[i]);
   }
   return result;
 }

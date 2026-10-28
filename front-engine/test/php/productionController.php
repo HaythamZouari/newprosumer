@@ -20,7 +20,9 @@ namespace {
     foreach (['Consomation', 'CsvProd', 'Finance', 'Ninja', 'Pvgis', 'Pvwatt', 'Project'] as $e) require_once $src . "Entity/$e.php";
     foreach (['PostHoraire', 'Datesorting'] as $s) require_once $src . "Service/$s.php";
     require_once $src . 'Event/ProjectListner.php';
+    foreach (['FinanceService'] as $s) require_once $src . "Service/$s.php";
     require_once $src . 'Controller/ProductionController.php';
+    require_once $src . 'Controller/FinanceController.php';
 
     use App\Entity\Project;
     use Symfony\Component\HttpFoundation\Request;
@@ -50,12 +52,13 @@ namespace {
         switch ($step['call']) {
             case 'pvgis': $r = $ctl->pvgis($logger, $dispatcher, $project, $request); break;
             case 'ninja': $r = $ctl->ninja($project, $dispatcher, $request); break;
+            case 'finance': $r = (new App\Controller\FinanceController())->index($request, $project); break;
             case 'readcsv': $r = $ctl->readcsv($dispatcher, $request, new App\Service\FileUpload(''), $project); break;
         }
         $out[] = $r->data;
     }
     $dump = function ($obj) { if ($obj === null) return null; $o = []; foreach ((new ReflectionObject($obj))->getProperties() as $p) { $p->setAccessible(true); $v = $p->getValue($obj); if (is_object($v)) continue; $o[$p->getName()] = $v; } return $o; };
     echo json_encode(['steps' => $out, 'urls' => HttpClient::$urls,
-        'pvgis' => $dump($project->getPvgis()), 'ninja' => $dump($project->getNinja()), 'csvProd' => $dump($project->getCsvProd()), 'project' => $dump($project)],
+        'pvgis' => $dump($project->getPvgis()), 'ninja' => $dump($project->getNinja()), 'csvProd' => $dump($project->getCsvProd()), 'finance' => $dump($project->getFinance()), 'project' => $dump($project)],
         JSON_PARTIAL_OUTPUT_ON_ERROR);
 }

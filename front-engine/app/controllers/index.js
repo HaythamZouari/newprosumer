@@ -2,6 +2,7 @@
 import * as basic from './basic.js';
 import * as project from './project.js';
 import * as production from './production.js';
+import * as finance from './finance.js';
 
 /** project_show : GET = page du wizard ; POST XHR = construction de la courbe de consommation. */
 async function project_show(ctx) {
@@ -30,4 +31,5 @@ export const CONTROLLERS = {
   pvgis: production.pvgis,
   ninja: production.ninja,
   readcsv: production.readcsv,
+  finance: finance.index,
 };

@@ -5,42 +5,7 @@ import assert from 'node:assert/strict';
 import { havePhp, runPhp, runJs, assertClose } from './helpers/parity.js';
 
 const skip = !havePhp && 'vendor PHP absent (composer install dans test/php)';
-const tz = 3600; // Africa/Tunis = UTC+1 fixe
-const ts = (y, m, d, h = 0) => Date.UTC(y, m - 1, d, h) / 1000 - tz;
-
-/** Courbe de consommation d'un an (heures 01:00 … 00:00), valeurs pseudo-variées. */
-function conso(startYear = 2019) {
-  const rows = []; let t = ts(startYear, 1, 1, 1);
-  const end = ts(startYear + 1, 1, 1, 0);
-  for (let i = 0; t <= end; i++, t += 3600) rows.push([t, (i % 24 > 7 && i % 24 < 20 ? 5 + (i % 5) : 1 + (i % 3))]);
-  return rows;
-}
-const consoProject = (startYear) => {
-  const c = conso(startYear);
-  return { project: { consomation: { consomation_annuel: c, allConsomation_annuel: [c], transportEng: false, type_tarif: 0 } } };
-};
-
-/** Corps « basic » de PVGIS : en-tête, lignes de données (W), pied de page. */
-function pvgisBody(scale = 1) {
-  const lines = ['time,P,G(i),H_sun,T2m,WS10m,Int'];
-  for (let i = 0; i < 8760; i++) {
-    const h = i % 24;
-    lines.push(`2015${String(1 + Math.floor(i / 744)).padStart(2, '0')}01:${String(h).padStart(2, '0')}10,${Math.max(0, Math.round(scale * 1000 * Math.sin(((h - 6) / 12) * Math.PI)))},0,0,0,0,0`);
-  }
-  lines.push('', 'P: PV system power (W)');
-  return lines.join('\n');
-}
-const ninjaBody = () => {
-  const data = {}; const t0 = Date.UTC(2015, 0, 1);
-  for (let i = 0; i < 8760; i++) data[String(t0 + i * 3600000)] = { electricity: Math.max(0, +(0.6 * Math.sin(((i % 24) - 6) / 12 * Math.PI)).toFixed(4)) };
-  return JSON.stringify({ data, metadata: { source: 'test' } });
-};
-const csvBody = () => {
-  const lines = [];
-  for (let i = 0; i < 13; i++) lines.push(`"en-tete ${i}"`);
-  for (let i = 0; i < 8760; i++) lines.push(`"01/01/14 ${i};${(i % 24) * 0.5}"`);
-  return lines.join('\n');
-};
+import { consoProject, pvgisBody, ninjaBody, csvBody } from './helpers/fixtures.js';
 
 async function compare(spec) {
   const php = runPhp('productionController.php', spec);
