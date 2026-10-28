@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "twig": "^1.17.1"
   }
 }
