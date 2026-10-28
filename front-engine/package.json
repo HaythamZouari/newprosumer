@@ -1,0 +1,10 @@
+{
+  "name": "newprosumer-front-engine",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Portage en JavaScript du moteur de calcul de NewProsumer (étape 1 de la migration front). Ne touche pas au code PHP existant.",
+  "scripts": {
+    "test": "node --test"
+  }
+}
