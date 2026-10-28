@@ -22,6 +22,18 @@ du fuseau de la machine qui exécute le code.
 | `src/postHoraire.js` | `PostHoraire` | Ventilation par mois × poste tarifaire |
 | `src/horaireAnnuel.js` | `Horaireannuel` | Ventilation annuelle par poste tarifaire |
 | `src/dateSorting.js` | `Datesorting::SorteDate` | Réalignement production ↔ consommation |
+| `src/excelReader.js` | `ExcelReader::createDataFromSpreadsheet` | Parsing des 3 formes de courbe (SheetJS) |
+
+## Les 3 formes de courbe de charge (confirmées sur fichiers réels)
+
+Distinguées par le nombre de feuilles du classeur ; toutes au pas 10 min,
+sous-échantillonnées au relevé ~xx:10 de chaque heure (fidèle au PHP).
+
+| Type | Feuilles | Date | Heure | Puissance |
+|------|----------|------|-------|-----------|
+| 1 | 1 | col 0 = date-série Excel (chaque ligne) | col 1 = fraction de jour | col 3 |
+| 2 | 2 (données en 2ᵉ) | col 0 = `JJ/MM/AAAA` (au chgt de jour) | col 1 = `HH:MM` | col 2 |
+| 3 | >2 (1 couverture + 1/jour) | titre de feuille (`jeudi 1 mars 2018`) | col 0 = fraction de jour | col 1 |
 
 ## Tests de parité
 
@@ -38,5 +50,3 @@ node --test        # nécessite php en ligne de commande
 - `FinanceService` (modèle financier sur 30 ans) — pur, portable.
 - Logique de `ProjectListner` (croisement conso/production : autoconso, cédée,
   importée) — le bloc le plus dense.
-- `ExcelReader` → SheetJS (parsing des fichiers importés), à valider sur de
-  vrais fichiers Excel.

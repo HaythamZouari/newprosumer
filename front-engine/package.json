@@ -6,5 +6,8 @@
   "description": "Portage en JavaScript du moteur de calcul de NewProsumer (étape 1 de la migration front). Ne touche pas au code PHP existant.",
   "scripts": {
     "test": "node --test"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
   }
 }
