@@ -24,7 +24,8 @@ export const TZ_OFFSET_SECONDS = 3600;
 export function parts(tsSeconds, offsetSeconds = TZ_OFFSET_SECONDS) {
   // On ajoute le décalage puis on lit les composantes UTC : cela reproduit
   // l'heure murale du fuseau de référence sans dépendre du fuseau de la machine.
-  const d = new Date((tsSeconds + offsetSeconds) * 1000);
+  // PHP : \DateTime::setTimestamp(int) tronque un float vers zéro (1536800999.9999998 -> 1536800999).
+  const d = new Date((Math.trunc(tsSeconds) + offsetSeconds) * 1000);
   return {
     y: d.getUTCFullYear(),
     m: d.getUTCMonth() + 1,

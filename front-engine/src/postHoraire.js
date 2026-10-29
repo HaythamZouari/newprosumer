@@ -62,3 +62,21 @@ export function postHoraire(data) {
 
   return month;
 }
+
+/**
+ * Poste tarifaire ('jour' | 'ete' | 'soir' | 'nuit') d'un instant — mêmes règles que postHoraire().
+ * Sert aux contrôleurs qui ré-échelonnent la courbe heure par heure selon le poste (ProjectController).
+ */
+export function posteOf(ts) {
+  const { m, d, H, w } = parts(ts);
+  if (w === 0 || estFerie(d, m)) return 'nuit';
+  if (m > 5 && m < 9) {
+    if ((H >= 0 && H <= 6) || (H > 21 && H <= 23)) return 'nuit';
+    if ((H >= 7 && H <= 8) || (H > 13 && H <= 18)) return 'jour';
+    if (H >= 9 && H <= 13) return 'ete';
+    return 'soir';
+  }
+  if (H >= 7 && H <= 17) return 'jour';
+  if ((H >= 0 && H <= 6) || (H >= 21 && H <= 23)) return 'nuit';
+  return 'soir';
+}

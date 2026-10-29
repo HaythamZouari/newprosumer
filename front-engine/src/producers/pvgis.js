@@ -73,3 +73,15 @@ export function combineSeries(series) {
   for (const s of valid) for (let i = 0; i < n; i++) out[i] += s[i];
   return out;
 }
+
+/**
+ * Lignes de la réponse « basic » à partir de la ligne d'en-tête (« time,P,… »), telles que le
+ * ProductionController d'origine les voyait avec explode(PHP_EOL) : ligne 0 = en-tête, 1.. = données,
+ * puis pied de page. L'API actuelle (v5_2) fait précéder l'en-tête de lignes de métadonnées : on les écarte
+ * pour que les indices (premier index lu = 2) restent ceux du contrôleur d'origine.
+ */
+export function parsePvgisLines(text) {
+  const lines = String(text).split('\n').map((l) => l.replace(/\r$/, ''));
+  const h = lines.findIndex((l) => /^time,/i.test(l));
+  return h < 0 ? lines : lines.slice(h);
+}

@@ -6,7 +6,7 @@
 // NINJA_TOKEN dans les variables d'environnement Vercel (ne JAMAIS committer
 // le token — celui présent dans l'ancien ProductionController.php doit être
 // révoqué/régénéré car il est exposé publiquement dans l'historique Git).
-import { buildNinjaUrl, parseNinja } from '../src/producers/ninja.js';
+import { buildNinjaUrl } from '../src/producers/ninja.js';
 
 function num(v, d = 0) {
   const n = Number(v);
@@ -38,8 +38,8 @@ export default async function handler(req, res) {
   try {
     const r = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
     if (!r.ok) return res.status(502).json({ error: `ninja ${r.status}` });
-    const values = parseNinja(await r.json());
-    return res.status(200).json({ source: 'ninja', count: values.length, values });
+    // JSON renvoyé tel quel : le contrôleur porté en tire `data` (comme `$response->toArray()` en PHP)
+    return res.status(200).json(await r.json());
   } catch (e) {
     return res.status(502).json({ error: 'ninja injoignable', detail: String(e) });
   }
